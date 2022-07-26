@@ -1,0 +1,108 @@
+.missionTitle {
+    text-align: center;
+    font-size: 3em;
+}
+
+.missionsList {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    list-style: none;
+    z-index: 1;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.mission {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 20px;
+    border-radius: 5px;
+    padding: 10px 20px;
+    width: 650px;
+    box-shadow: 0 0 10px #395B64;
+    z-index: 2;
+    
+}
+
+.headerMission {
+    display: flex;
+    justify-content: space-between;
+    background: #395B64;
+    border-radius: 5px;
+    padding: 5px;
+    color: white;
+}
+
+.infosMission {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    position: relative;
+}
+
+.map {
+    margin-right: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #395B64;
+}
+
+.missionItems {
+    
+    bottom: 0;
+}
+
+.missionItem {
+    margin: 5px;
+}
+
+.details {
+    background: #395B64;
+    border-radius: 5px;
+    padding: 5px 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
+    transition: width 500ms;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.detailsBtn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #395B64;
+    border-radius: 5px 5px 0 0;
+    padding: 5px 0;
+    color: white;
+    cursor: pointer;
+    transition: border-bottom 500ms;
+}
+
+.chevron-down {
+    margin-left: 10px;
+    transition: transform 500ms;
+}
+
+.detailsInfos {
+    align-self: start;
+    height: 0;
+    transition: height 500ms;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.infosItem {
+    margin: 10px 0;
+}
+
+.infosItem ul, .infosItem p{
+    padding: 5px 0 0 20px;
+    margin: 0;
+}
+

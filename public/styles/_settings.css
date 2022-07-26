@@ -1,0 +1,28 @@
+body {
+    font-family:'Open Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #EEE7DD;
+}
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #395B64;
+    padding: 10px 20px;
+}
+
+.navLink {
+    text-decoration: none;
+    color: white;
+}
+
+footer {
+    background-color: #2C3333;
+    padding: 10px 20px;
+}
+
+footer p {
+    text-align: center;
+    color: white;
+}

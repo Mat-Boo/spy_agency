@@ -1,0 +1,1 @@
+<h1>Delete Stash</h1>
