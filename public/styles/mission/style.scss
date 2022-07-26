@@ -1,0 +1,191 @@
+.missionTitle {
+    text-align: center;
+    font-size: 3em;
+}
+
+.filtersBox {
+    box-shadow: 0 0 10px #395B64;
+    margin: 0 50px;
+    padding: 5px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    background: #A5C9CA;
+    width: 150px;
+    transition: width 500ms;
+    .headerFilters {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px;
+        .filtersTitle {
+            display: flex;
+            align-items: center;
+            font-size: 1.5em;
+            .sliders {
+                margin-right: 10px;
+            }
+            .chevronDownFilters {
+                margin-left: 10px;
+                transition: transform 500ms;
+            }
+        }
+        .cancelFilters {
+            display: none;
+            font-size: 1em;
+            background: #395B64;
+            padding: 10px;
+            border-radius: 5px;
+            color: white;
+        }
+    }
+    .filters {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        height: 0;
+        transition: height 500ms;
+        overflow: hidden;
+        .filtersItemAndTitle {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            background: #E7F6F2;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            .filtersItem {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                .labelAndFilter {
+                    display: flex;
+                    flex-direction: column;
+                    margin: 5px;
+                    .filter {
+                        border: none;
+                        padding: 10px;
+                        border-radius: 5px;
+                        .headerSelect {
+                            border-bottom: 1px solid black;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+.missionsListBox {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    .missionsList {
+    /*     display: flex;
+        justify-content: center;
+        flex-wrap: wrap; */
+        list-style: none;
+        font-family: 'Courier New', Courier, monospace;
+        padding: 50px;
+        margin: 0;
+        .mission {
+            display: inline-block;
+            /* display: flex;
+            flex-direction: column;
+            justify-content: space-between; */
+            margin: 20px;
+            border-radius: 5px;
+            padding: 10px 20px;
+            width: 650px;
+            box-shadow: 0 0 10px #395B64;
+            .headerMission {
+                display: flex;
+                justify-content: space-between;
+                background: #395B64;
+                border-radius: 5px;
+                padding: 0 10px;
+                color: white;
+            }
+            .infosMission {
+                display: flex;
+                flex-direction: column;
+                margin: 20px;
+                position: relative;
+                .map {
+                    margin-right: 20px;
+                    border-radius: 5px;
+                    box-shadow: 0 0 10px #395B64;
+                }
+                
+                .missionItems {
+                    bottom: 0;
+                    .missionItem {
+                        margin: 5px;
+                    }
+                }
+            }
+            .details {
+                background: #395B64;
+                border-radius: 5px;
+                padding: 5px 20px;
+                color: white;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100px;
+                transition: width 500ms;
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+                .detailsBtn {
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background: #395B64;
+                    border-radius: 5px 5px 0 0;
+                    padding: 5px 0;
+                    color: white;
+                    cursor: pointer;
+                    transition: border-bottom 500ms;
+                    .chevronDownDetails {
+                        margin-left: 10px;
+                        transition: transform 500ms;
+                    }
+                }
+                .detailsInfos {
+                    align-self: start;
+                    height: 0;
+                    transition: height 500ms;
+                    overflow: hidden;
+                    .infosItem {
+                        margin: 10px 0;
+                        ul, p{
+                            list-style: none;
+                            padding: 5px 0 0 20px;
+                            margin: 0;
+                        }
+                        span {
+                            display: flex;
+                            align-items: center;
+                            svg {
+                                margin-right: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
