@@ -4,28 +4,28 @@ namespace App\Model;
 
 class Stash
 {
-    private $id_code_stash;
+    private $id_stash;
     private $address;
     private $country;
     private $type;
-    private $id_code_mission;
+    private $id_mission;
 
     /**
-     * Get the value of id_code_stash
+     * Get the value of id_stash
      */ 
-    public function getId_code_stash()
+    public function getId_stash()
     {
-        return $this->id_code_stash;
+        return $this->id_stash;
     }
 
     /**
-     * Set the value of id_code_stash
+     * Set the value of id_stash
      *
      * @return  self
      */ 
-    public function setId_code_stash($id_code_stash)
+    public function setId_stash($id_stash)
     {
-        $this->id_code_stash = $id_code_stash;
+        $this->id_stash = $id_stash;
 
         return $this;
     }
@@ -91,21 +91,21 @@ class Stash
     }
 
     /**
-     * Get the value of id_code_mission
+     * Get the value of id_mission
      */ 
-    public function getId_code_mission()
+    public function getId_mission()
     {
-        return $this->id_code_mission;
+        return $this->id_mission;
     }
 
     /**
-     * Set the value of id_code_mission
+     * Set the value of id_mission
      *
      * @return  self
      */ 
-    public function setId_code_mission($id_code_mission)
+    public function setId_mission($id_mission)
     {
-        $this->id_code_mission = $id_code_mission;
+        $this->id_mission = $id_mission;
 
         return $this;
     }

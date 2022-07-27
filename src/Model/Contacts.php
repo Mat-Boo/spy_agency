@@ -16,9 +16,9 @@ class Contacts
     {
         if (!is_null($this->pdo)) {
             $stmt = $this->pdo->query(
-                'SELECT Contact.code_name_contact, firstname, lastname, birthdate, nationality, id_code_mission
+                'SELECT Contact.id_contact, firstname, lastname, birthdate, nationality, id_mission
                 FROM Contact
-                INNER JOIN MissionContact ON Contact.code_name_contact = MissionContact.code_name_contact'
+                INNER JOIN MissionContact ON Contact.id_contact = MissionContact.id_contact'
             );
         }
         $contacts = [];
@@ -32,10 +32,31 @@ class Contacts
     {
         foreach($missions as $mission) {
             foreach($contacts as $contact) {
-                if ($mission->getId_code_mission() === $contact->getId_code_mission()) {
+                if ($mission->getId_mission() === $contact->getId_mission()) {
                     $mission->addContacts($contact);
                 }
             }
         }
+    }
+
+    public function getNames()
+    {
+        $names = [];
+        foreach($this->getContactsList() as $contact) {
+            if (!in_array($contact->getfirstname() . ' ' . $contact->getlastname(), $names)) {
+                $names[] = $contact->getfirstname() . ' ' . $contact->getlastname();
+            }
+        }
+
+        usort($names, function ($a, $b)
+        {
+            if ($a == $b) {
+                return 0;
+            } else {
+                return ($a < $b) ? -1 : 1;
+            }
+        });
+
+        return $names;
     }
 }

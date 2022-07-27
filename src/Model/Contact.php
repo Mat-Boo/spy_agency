@@ -4,29 +4,29 @@ namespace App\Model;
 
 class Contact
 {
-    private $code_name_contact;
+    private $id_contact;
     private $firstname;
     private $lastname;
     private $birthdate;
     private $nationality;
-    private $id_code_mission;
+    private $id_mission;
     
     /**
-     * Get the value of code_name_contact
+     * Get the value of id_contact
      */ 
-    public function getCode_name_contact()
+    public function getId_contact()
     {
-        return $this->code_name_contact;
+        return $this->id_contact;
     }
 
     /**
-     * Set the value of code_name_contact
+     * Set the value of id_contact
      *
      * @return  self
      */ 
-    public function setCode_name_contact($code_name_contact)
+    public function setId_contact($id_contact)
     {
-        $this->code_name_contact = $code_name_contact;
+        $this->id_contact = $id_contact;
 
         return $this;
     }
@@ -112,21 +112,21 @@ class Contact
     }
 
     /**
-     * Get the value of id_code_mission
+     * Get the value of id_mission
      */ 
-    public function getId_code_mission()
+    public function getId_mission()
     {
-        return $this->id_code_mission;
+        return $this->id_mission;
     }
 
     /**
-     * Set the value of id_code_mission
+     * Set the value of id_mission
      *
      * @return  self
      */ 
-    public function setId_code_mission($id_code_mission)
+    public function setId_mission($id_mission)
     {
-        $this->id_code_mission = $id_code_mission;
+        $this->id_mission = $id_mission;
 
         return $this;
     }

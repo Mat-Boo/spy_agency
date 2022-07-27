@@ -4,7 +4,8 @@ namespace App\Model;
 
 class Mission
 {
-    private $id_code_mission;
+    private $id_mission;
+    private $code_name;
     private $title;
     private $description;
     private $country;
@@ -19,21 +20,41 @@ class Mission
     private $stashs = [];
 
     /**
-     * Get the value of id_code_mission
+     * Get the value of id_mission
      */ 
-    public function getId_code_mission()
+    public function getId_mission()
     {
-        return $this->id_code_mission;
+        return $this->id_mission;
     }
 
     /**
-     * Set the value of id_code_mission
+     * Set the value of id_mission
      *
      * @return  self
      */ 
-    public function setId_code_mission($id_code_mission)
+    public function setId_mission($id_mission)
     {
-        $this->id_code_mission = $id_code_mission;
+        $this->id_mission = $id_mission;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of code_name
+     */ 
+    public function getCode_name()
+    {
+        return $this->code_name;
+    }
+
+    /**
+     * Set the value of code_name
+     *
+     * @return  self
+     */ 
+    public function setCode_name($code_name)
+    {
+        $this->code_name = $code_name;
 
         return $this;
     }

@@ -1,6 +1,7 @@
 .missionTitle {
   text-align: center;
   font-size: 3em;
+  color: #395B64;
 }
 
 .filtersBox {
@@ -9,9 +10,8 @@
   margin: 0 50px;
   padding: 5px 20px;
   border-radius: 5px;
-  cursor: pointer;
   background: #A5C9CA;
-  width: 150px;
+  width: 125px;
   -webkit-transition: width 500ms;
   transition: width 500ms;
 }
@@ -30,13 +30,14 @@
 }
 
 .filtersBox .headerFilters .filtersTitle {
+  cursor: pointer;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  font-size: 1.5em;
+  font-size: 1.2em;
 }
 
 .filtersBox .headerFilters .filtersTitle .sliders {
@@ -58,9 +59,34 @@
   padding: 10px;
   border-radius: 5px;
   color: white;
+  cursor: pointer;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
-.filtersBox .filters {
+.filtersBox .headerFilters .cancelFilters .cancelSvg {
+  margin-right: 5px;
+}
+
+.filtersBox .filtersAndApplyBtn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 0;
+  overflow: hidden;
+  -webkit-transition: height 500ms;
+  transition: height 500ms;
+}
+
+.filtersBox .filtersAndApplyBtn .filters {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -70,13 +96,9 @@
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: start;
-  height: 0;
-  -webkit-transition: height 500ms;
-  transition: height 500ms;
-  overflow: hidden;
 }
 
-.filtersBox .filters .filtersItemAndTitle {
+.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -92,22 +114,17 @@
           align-items: center;
   background: #E7F6F2;
   margin: 20px;
-  padding: 20px;
+  padding: 10px;
   border-radius: 5px;
+  height: 328px;
 }
 
-.filtersBox .filters .filtersItemAndTitle .filtersItem {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersBlockTitle {
+  font-size: 1.3em;
+  color: #395B64;
 }
 
-.filtersBox .filters .filtersItemAndTitle .filtersItem .labelAndFilter {
+.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -115,44 +132,117 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  margin: 5px;
-}
-
-.filtersBox .filters .filtersItemAndTitle .filtersItem .labelAndFilter .filter {
-  border: none;
-  padding: 10px;
-  border-radius: 5px;
-}
-
-.filtersBox .filters .filtersItemAndTitle .filtersItem .labelAndFilter .filter .headerSelect {
-  border-bottom: 1px solid black;
-}
-
-.missionsListBox {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  margin: 0;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 
-.missionsListBox .missionsList {
-  /*     display: flex;
-        justify-content: center;
-        flex-wrap: wrap; */
+.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .missionsFiltersLine {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .labelAndFilter {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: 15px 25px;
+}
+
+.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .labelAndFilter .filterTitle {
+  margin-bottom: 5px;
+  color: #395B64;
+}
+
+.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .labelAndFilter .statusFilter {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 300px;
+  background: white;
+  border: 1px solid #767676;
+  border-radius: 2px;
+}
+
+.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .labelAndFilter .statusFilter div {
+  margin: 5px;
+  padding: 5px;
+  border-radius: 3px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .labelAndFilter .statusFilter div label {
+  font-size: 0.9em;
+}
+
+.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .agentFilter, .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .contactFilter, .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .targetFilter, .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .stashFilter {
+  height: 262px;
+}
+
+.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem input, .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem select option {
+  padding: 5px 10px;
+}
+
+.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .headerSelect {
+  padding: 5px 10px;
+  background: #A5C9CA;
+  color: #395B64;
+}
+
+.filtersBox .filtersAndApplyBtn .applyBtn {
+  font-size: 1em;
+  background: #395B64;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  max-width: 150px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.filtersBox .filtersAndApplyBtn .applyBtn .confirmSvg {
+  margin-right: 5px;
+}
+
+.missionsList {
+  margin: 0;
   list-style: none;
   font-family: 'Courier New', Courier, monospace;
   padding: 50px;
   margin: 0;
+  text-align: center;
 }
 
-.missionsListBox .missionsList .mission {
+.missionsList .mission {
+  text-align: initial;
   display: inline-block;
-  /* display: flex;
-            flex-direction: column;
-            justify-content: space-between; */
   margin: 20px;
   border-radius: 5px;
   padding: 10px 20px;
@@ -161,7 +251,7 @@
           box-shadow: 0 0 10px #395B64;
 }
 
-.missionsListBox .missionsList .mission .headerMission {
+.missionsList .mission .headerMission {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -174,7 +264,7 @@
   color: white;
 }
 
-.missionsListBox .missionsList .mission .infosMission {
+.missionsList .mission .infosMission {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -186,22 +276,22 @@
   position: relative;
 }
 
-.missionsListBox .missionsList .mission .infosMission .map {
+.missionsList .mission .infosMission .map {
   margin-right: 20px;
   border-radius: 5px;
   -webkit-box-shadow: 0 0 10px #395B64;
           box-shadow: 0 0 10px #395B64;
 }
 
-.missionsListBox .missionsList .mission .infosMission .missionItems {
+.missionsList .mission .infosMission .missionItems {
   bottom: 0;
 }
 
-.missionsListBox .missionsList .mission .infosMission .missionItems .missionItem {
+.missionsList .mission .infosMission .missionItems .missionItem {
   margin: 5px;
 }
 
-.missionsListBox .missionsList .mission .details {
+.missionsList .mission .details {
   background: #395B64;
   border-radius: 5px;
   padding: 5px 20px;
@@ -225,7 +315,7 @@
           transform: translateX(-50%);
 }
 
-.missionsListBox .missionsList .mission .details .detailsBtn {
+.missionsList .mission .details .detailsBtn {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -245,7 +335,7 @@
   transition: border-bottom 500ms;
 }
 
-.missionsListBox .missionsList .mission .details .detailsBtn .chevronDownDetails {
+.missionsList .mission .details .detailsBtn .chevronDownDetails {
   margin-left: 10px;
   -webkit-transition: -webkit-transform 500ms;
   transition: -webkit-transform 500ms;
@@ -253,7 +343,7 @@
   transition: transform 500ms, -webkit-transform 500ms;
 }
 
-.missionsListBox .missionsList .mission .details .detailsInfos {
+.missionsList .mission .details .detailsInfos {
   -ms-flex-item-align: start;
       -ms-grid-row-align: start;
       align-self: start;
@@ -263,17 +353,17 @@
   overflow: hidden;
 }
 
-.missionsListBox .missionsList .mission .details .detailsInfos .infosItem {
+.missionsList .mission .details .detailsInfos .infosItem {
   margin: 10px 0;
 }
 
-.missionsListBox .missionsList .mission .details .detailsInfos .infosItem ul, .missionsListBox .missionsList .mission .details .detailsInfos .infosItem p {
+.missionsList .mission .details .detailsInfos .infosItem ul, .missionsList .mission .details .detailsInfos .infosItem p {
   list-style: none;
   padding: 5px 0 0 20px;
   margin: 0;
 }
 
-.missionsListBox .missionsList .mission .details .detailsInfos .infosItem span {
+.missionsList .mission .details .detailsInfos .infosItem span {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -282,7 +372,7 @@
           align-items: center;
 }
 
-.missionsListBox .missionsList .mission .details .detailsInfos .infosItem span svg {
+.missionsList .mission .details .detailsInfos .infosItem span svg {
   margin-right: 5px;
 }
 /*# sourceMappingURL=style.css.map */

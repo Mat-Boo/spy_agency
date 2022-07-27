@@ -4,14 +4,19 @@ $styleFolder = 'mission/';
 
 use App\Connection;
 use App\Model\Missions;
+use App\model\Specialities;
 use App\model\Agents;
 use App\model\Contacts;
 use App\model\Targets;
 use App\model\Stashs;
 
 $pdo = (new Connection)->getPdo();
+
 $missions = new Missions($pdo);
 $missionsList = $missions->getMissionsList();
+/* $missionsListFiltered = $missions->filterMissions($_GET); */
+
+$specialities = new Specialities($pdo);
 
 $agents = new Agents($pdo);
 $agentsList = $agents->getAgentsList();
@@ -29,6 +34,9 @@ $stashs = new Stashs($pdo);
 $stashsList = $stashs->getStashsList();
 $stashs->hydrateMissions($missionsList, $stashsList);
 
+var_dump($_GET);
+/* var_dump($missionsListFiltered); */
+
 ?>
 
 <h1 class="missionTitle">Missions</h1>
@@ -36,116 +44,137 @@ $stashs->hydrateMissions($missionsList, $stashsList);
 <div class="filtersBox">
     <div class="headerFilters">
         <div class="filtersTitle">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="sliders" viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="sliders" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M10.5 1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4H1.5a.5.5 0 0 1 0-1H10V1.5a.5.5 0 0 1 .5-.5ZM12 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5Zm-6.5 2A.5.5 0 0 1 6 6v1.5h8.5a.5.5 0 0 1 0 1H6V10a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5ZM1 8a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 1 8Zm9.5 2a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V13H1.5a.5.5 0 0 1 0-1H10v-1.5a.5.5 0 0 1 .5-.5Zm1.5 2.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5Z"/>
             </svg>
             <span>Filtres</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="chevronDownFilters" viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="chevronDownFilters" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
             </svg>
         </div>
-        <div>
-            <span class="cancelFilters">Annuler les filtres</span>
+        <div class="cancelFilters">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="cancelSvg" viewBox="0 0 16 16">
+                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+            </svg>
+            <span>Annuler les filtres</span>
         </div>
     </div>
-    <div class="filters">
-        <div class="filtersItemAndTitle missionFilter">
-            <span>Mission</span>
-            <div class="filtersItem">
-                <div class="labelAndFilter">
-                    <label for="idMissionFilter">CodeName</label>
-                    <select name="idMissionFilter" id="idMissionFilter" multiple class="filter">
-                        <option value="" disabled class="headerSelect">Sélectionnez un ou plusieurs CodeName(s)</option>
-                        <?php foreach($missionsList as $mission) : ?>
-                            <option value="<?= $mission->getId_code_mission() ?>"><?= $mission->getId_code_mission() ?></option>
+    <form action="" method="GET" class="filtersAndApplyBtn">
+        <div class="filters">
+            <div class="filtersItemAndTitle">
+                <span class="filtersBlockTitle">Mission</span>
+                <div class="filtersItem">
+                    <div class="missionsFiltersLine">
+                        <div class="labelAndFilter">
+                            <span class="filterTitle">CodeName</span>
+                            <select name="idMissionFilter[]" id="idMissionFilter" multiple class="filter">
+                                <option value="headerFilter" disabled class="headerSelect">Sélectionnez un ou plusieurs CodeName(s)</option>
+                                <?php foreach($missionsList as $mission) : ?>
+                                    <option value="<?= $mission->getId_mission() ?>"><?= $mission->getCode_name() ?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
+                        <div class='labelAndFilter'>
+                            <span class="filterTitle">Type</span>
+                            <select name="typeMissionFilter[]" id="typeMissionFilter" multiple class="filter">
+                                <option value="headerFilter" disabled class="headerSelect">Sélectionnez un ou plusieurs type(s)</option>
+                                <?php foreach($missions->getTypes() as $type) : ?>
+                                    <option value="<?= $type ?>"><?= $type ?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
+                        <div class='labelAndFilter'>
+                            <span class="filterTitle">Spécialité</span>
+                            <select name="specialityMissionFilter[]" id="specialityMissionFilter" multiple class="filter">
+                                <option value="headerFilter" disabled class="headerSelect">Sélectionnez une ou plusieurs spécialité(s)</option>
+                                <?php foreach($specialities->getNames() as $speciality) : ?>
+                                    <option value="<?= $speciality ?>"><?= $speciality ?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="missionsFiltersLine">
+                        <div class='labelAndFilter'>
+                            <span class="filterTitle">Statut</span>
+                            <div class="filter statusFilter">
+                                <?php foreach($missions->getStatus() as $status) : ?>
+                                    <div style="background:<?= $status['background'] ?>">
+                                        <input type="checkbox" id="<?= $status['status'] ?>" name="status[]" class="filter">
+                                        <label for="<?= $status['status'] ?>"><?= $status['status'] ?></label>
+                                    </div>
+                                    <?php endforeach ?>
+                            </div>
+                        </div>
+                        <div class='labelAndFilter'>
+                            <label for="country" class="filterTitle">Pays</label>
+                            <input type="text" id="country" name="country" class="filter">
+                        </div>
+                        <div class='labelAndFilter'>
+                            <label for="startDate" class="filterTitle">Date de début</label>
+                            <input type="date" id="startDate" name="startDate" class="filter">
+                        </div>
+                        <div class='labelAndFilter'>
+                            <label for="endDate" class="filterTitle">Date de fin</label>
+                            <input type="date" id="endDate" name="endDate" class="filter">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="filtersItemAndTitle">
+                <span class="filtersBlockTitle">Agent</span>
+                <div class="filtersItem">
+                    <select name="agentFilter[]" id="agentFilter" multiple class="filter agentFilter">
+                        <option value="headerFilter" disabled class="headerSelect">Sélectionnez un ou plusieurs agent(s)</option>
+                        <?php foreach($agents->getNames() as $agent) : ?>
+                            <option value="<?= $agent ?>"><?= $agent ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
-                <div class='labelAndFilter'>
-                    <label for="idMissionFilter">Statut</label>
-                    <select name="statusMissionFilter" id="statusMissionFilter" multiple class="filter">
-                        <option value="">Sélectionnez un ou plusieurs statut(s)</option>
-                        <?php foreach($missionsList as $mission) : ?>
-                            <option value="<?= $mission->getStatus()['status'] ?>"><?= $mission->getStatus()['status'] ?></option>
+            </div>
+            <div class="filtersItemAndTitle">
+                <span class="filtersBlockTitle">Contact</span>
+                <div class="filtersItem">
+                    <select name="contactFilter[]" id="contactFilter" multiple class="filter contactFilter">
+                        <option value="headerFilter" disabled class="headerSelect">Sélectionnez un ou plusieurs contact(s)</option>
+                        <?php foreach($contacts->getNames() as $contact) : ?>
+                            <option value="<?= $contact ?>"><?= $contact ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
-                <div class='labelAndFilter'>
-                    <label for="idMissionFilter">Type</label>
-                    <select name="typeMissionFilter" id="typeMissionFilter" multiple class="filter">
-                        <option value="">Sélectionnez un ou plusieurs type(s)</option>
-                        <?php foreach($missionsList as $mission) : ?>
-                            <option value="<?= $mission->getType() ?>"><?= $mission->getType() ?></option>
+            </div>
+            <div class="filtersItemAndTitle">
+                <span class="filtersBlockTitle">Cibles</span>
+                <div class="filtersItem">
+                    <select name="targetFilter[]" id="targetFilter" multiple class="filter targetFilter">
+                        <option value="headerFilter" disabled class="headerSelect">Sélectionnez une ou plusieurs cible(s)</option>
+                        <?php foreach($targets->getNames() as $target) : ?>
+                            <option value="<?= $target ?>"><?= $target ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
-                <div class='labelAndFilter'>
-                    <label for="idMissionFilter">Spécialité</label>
-                    <select name="specialityMissionFilter" id="specialityMissionFilter" multiple class="filter">
-                        <option value="">Sélectionnez une ou plusieurs spécialité(s)</option>
-                        <?php foreach($missionsList as $mission) : ?>
-                            <option value="<?= $mission->getSpeciality() ?>"><?= $mission->getSpeciality() ?></option>
+            </div>
+            <div class="filtersItemAndTitle">
+                <span class="filtersBlockTitle">Planques</span>
+                <div class="filtersItem">
+                    <select name="stashFilter[]" id="stashFilter" multiple class="filter stashFilter">
+                        <option value="headerFilter" disabled class="headerSelect">Sélectionnez une ou plusieurs planque(s)</option>
+                        <?php foreach($stashs->getTypes() as $stash) : ?>
+                            <option value="<?= $stash ?>"><?= $stash ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
-                <div class='labelAndFilter'>
-                    <label for="startDate">Date de début:</label>
-                    <input type="date" id="startDate" name="startDate" class="filter">
-                </div>
-                <div class='labelAndFilter'>
-                    <label for="endDate">Date de fin:</label>
-                    <input type="date" id="endDate" name="endDate" class="filter">
-                </div>
             </div>
         </div>
-        <div class="filtersItemAndTitle agentFilter">
-            <span>Agent</span>
-            <div class="filtersItem">
-                <select name="agentFilter" id="agentFilter" multiple class="filter">
-                    <option value="">Sélectionnez un ou plusieurs agent(s)</option>
-                    <?php foreach($agentsList as $agent) : ?>
-                        <option value="<?= $agent->getId_code_agent() ?>"><?= $agent->getFirstname() . ' ' . $agent->getLastname() ?></option>
-                    <?php endforeach ?>
-                </select>
-            </div>
-        </div>
-        <div class="filtersItemAndTitle contactFilter">
-            <span>Contact</span>
-            <div class="filtersItem">
-                <select name="contactFilter" id="contactFilter" multiple class="filter">
-                    <option value="">Sélectionnez un ou plusieurs contact(s)</option>
-                    <?php foreach($contactsList as $contact) : ?>
-                        <option value="<?= $contact->getCode_name_contact() ?>"><?= $contact->getFirstname() . ' ' . $contact->getLastname() ?></option>
-                    <?php endforeach ?>
-                </select>
-            </div>
-        </div>
-        <div class="filtersItemAndTitle targetFilter">
-            <span>Cibles</span>
-            <div class="filtersItem">
-                <select name="targetFilter" id="targetFilter" multiple class="filter">
-                    <option value="">Sélectionnez une ou plusieurs cible(s)</option>
-                    <?php foreach($targetsList as $target) : ?>
-                        <option value="<?= $target->getCode_name_target() ?>"><?= $target->getFirstname() . ' ' . $target->getLastname() ?></option>
-                    <?php endforeach ?>
-                </select>
-            </div>
-        </div>
-        <div class="filtersItemAndTitle stashFilter">
-            <span>Planques</span>
-            <div class="filtersItem">
-                <select name="stashFilter" id="stashFilter" multiple class="filter">
-                    <option value="">Sélectionnez une ou plusieurs planque(s)</option>
-                    <?php foreach($stashsList as $stash) : ?>
-                        <option value="<?= $stash->getId_code_stash() ?>"><?= $stash->getType() ?></option>
-                    <?php endforeach ?>
-                </select>
-            </div>
-        </div>
-    </div>
+        <button type="submit" class="applyBtn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="confirmSvg" viewBox="0 0 16 16">
+                <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+            </svg>
+            <span>Appliquer</span>
+        </button>
+    </form>
 </div>
 
-<div class="missionsListBox">
+
     <ul class="missionsList">
         <?php foreach($missionsList as $mission): ?>
             <li
@@ -158,7 +187,7 @@ $stashs->hydrateMissions($missionsList, $stashsList);
                     <div class="infosMission">
     
                         <div class="missionItems">
-                            <p class="missionItem"><b>Code Name: </b><?= $mission->getId_code_mission() ?></p>
+                            <p class="missionItem"><b>Code Name: </b><?= $mission->getCode_name() ?></p>
                             <p class="missionItem"><b>Pays: </b><?= $mission->getCountry() ?></p>
                             <p class="missionItem"><b>Type: </b><?= $mission->getType() ?></p>
                             <p class="missionItem"><b>Du </b><?= $mission->getStart_date() ?></p>
@@ -263,4 +292,3 @@ $stashs->hydrateMissions($missionsList, $stashsList);
             </li>
         <?php endforeach ?>
     </ul>
-</div>

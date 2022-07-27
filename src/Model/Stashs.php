@@ -16,9 +16,9 @@ class Stashs
     {
         if (!is_null($this->pdo)) {
             $stmt = $this->pdo->query(
-                'SELECT Stash.id_code_stash, address, country, type, id_code_mission
+                'SELECT Stash.id_stash, address, country, type, id_mission
                 FROM Stash
-                INNER JOIN MissionStash ON Stash.id_code_stash = MissionStash.id_code_stash'
+                INNER JOIN MissionStash ON Stash.id_stash = MissionStash.id_stash'
             );
         }
         $stashs = [];
@@ -32,10 +32,31 @@ class Stashs
     {
         foreach($missions as $mission) {
             foreach($stashs as $stash) {
-                if ($mission->getId_code_mission() === $stash->getId_code_mission()) {
+                if ($mission->getId_mission() === $stash->getId_mission()) {
                     $mission->addStashs($stash);
                 }
             }
         }
+    }
+
+    public function getTypes()
+    {
+        $types = [];
+        foreach($this->getStashsList() as $stash) {
+            if (!in_array($stash->getType(), $types)) {
+                $types[] = $stash->getType();
+            }
+        }
+
+        usort($types, function ($a, $b)
+        {
+            if ($a == $b) {
+                return 0;
+            } else {
+                return ($a < $b) ? -1 : 1;
+            }
+        });
+
+        return $types;
     }
 }

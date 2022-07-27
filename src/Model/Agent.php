@@ -4,30 +4,30 @@ namespace App\Model;
 
 class Agent
 {
-    private $id_code_agent;
+    private $id_agent;
     private $firstname;
     private $lastname;
     private $birthdate;
     private $nationality;
-    private $id_code_mission;
+    private $id_mission;
     
 
     /**
-     * Get the value of id_code_agent
+     * Get the value of id_agent
      */ 
     public function getId_code_agent()
     {
-        return $this->id_code_agent;
+        return $this->id_agent;
     }
 
     /**
-     * Set the value of id_code_agent
+     * Set the value of id_agent
      *
      * @return  self
      */ 
-    public function setId_code_agent($id_code_agent)
+    public function setId_code_agent($id_agent)
     {
-        $this->id_code_agent = $id_code_agent;
+        $this->id_agent = $id_agent;
 
         return $this;
     }
@@ -113,21 +113,21 @@ class Agent
     }
 
     /**
-     * Get the value of id_code_mission
+     * Get the value of id_mission
      */ 
-    public function getId_code_mission()
+    public function getId_mission()
     {
-        return $this->id_code_mission;
+        return $this->id_mission;
     }
 
     /**
-     * Set the value of id_code_mission
+     * Set the value of id_mission
      *
      * @return  self
      */ 
-    public function setId_code_mission($id_code_mission)
+    public function setId_mission($id_mission)
     {
-        $this->id_code_mission = $id_code_mission;
+        $this->id_mission = $id_mission;
 
         return $this;
     }

@@ -16,9 +16,9 @@ class Targets
     {
         if (!is_null($this->pdo)) {
             $stmt = $this->pdo->query(
-                'SELECT Target.code_name_target, firstname, lastname, birthdate, nationality, id_code_mission
+                'SELECT Target.id_target, firstname, lastname, birthdate, nationality, id_mission
                 FROM Target
-                INNER JOIN MissionTarget ON Target.code_name_target = MissionTarget.code_name_target'
+                INNER JOIN MissionTarget ON Target.id_target = MissionTarget.id_target'
             );
         }
         $targets = [];
@@ -32,10 +32,31 @@ class Targets
     {
         foreach($missions as $mission) {
             foreach($targets as $target) {
-                if ($mission->getId_code_mission() === $target->getId_code_mission()) {
+                if ($mission->getId_mission() === $target->getId_mission()) {
                     $mission->addTargets($target);
                 }
             }
         }
+    }
+
+    public function getNames()
+    {
+        $names = [];
+        foreach($this->getTargetsList() as $target) {
+            if (!in_array($target->getfirstname() . ' ' . $target->getlastname(), $names)) {
+                $names[] = $target->getfirstname() . ' ' . $target->getlastname();
+            }
+        }
+
+        usort($names, function ($a, $b)
+        {
+            if ($a == $b) {
+                return 0;
+            } else {
+                return ($a < $b) ? -1 : 1;
+            }
+        });
+
+        return $names;
     }
 }

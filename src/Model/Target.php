@@ -4,29 +4,29 @@ namespace App\Model;
 
 class Target
 {
-    private $code_name_target;
+    private $id_target;
     private $firstname;
     private $lastname;
     private $birthdate;
     private $nationality;
-    private $id_code_mission;
+    private $id_mission;
     
     /**
-     * Get the value of code_name_target
+     * Get the value of id_target
      */ 
-    public function getCode_name_target()
+    public function getId_target()
     {
-        return $this->code_name_target;
+        return $this->id_target;
     }
     
     /**
-     * Set the value of code_name_target
+     * Set the value of id_target
      *
      * @return  self
      */ 
-    public function setCode_name_target($code_name_target)
+    public function setId_target($id_target)
     {
-        $this->code_name_target = $code_name_target;
+        $this->id_target = $id_target;
     
         return $this;
     }
@@ -112,21 +112,21 @@ class Target
     }
 
     /**
-     * Get the value of id_code_mission
+     * Get the value of id_mission
      */ 
-    public function getId_code_mission()
+    public function getId_mission()
     {
-        return $this->id_code_mission;
+        return $this->id_mission;
     }
 
     /**
-     * Set the value of id_code_mission
+     * Set the value of id_mission
      *
      * @return  self
      */ 
-    public function setId_code_mission($id_code_mission)
+    public function setId_mission($id_mission)
     {
-        $this->id_code_mission = $id_code_mission;
+        $this->id_mission = $id_mission;
 
         return $this;
     }

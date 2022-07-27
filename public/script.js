@@ -1,26 +1,44 @@
 let filtersTitle = document.querySelector('.filtersTitle');
-let filters = document.querySelector('.filters');
+let filtersAndApplyBtn = document.querySelector('.filtersAndApplyBtn');
 let filtersBox = document.querySelector('.filtersBox');
 let chevronDownFilters = document.querySelector('.chevronDownFilters');
 let filtersOpened = false;
+let cancelFilters = document.querySelector('.cancelFilters');
+let filtersForm = document.querySelectorAll('.filter');
 
 filtersTitle.addEventListener('click', () => {
     if (!filtersOpened) {
         filtersBox.style.width = 'calc(100% - 140px)';
         setTimeout(() => {
-            filters.style.height = '350px';
+            filtersAndApplyBtn.style.height = '440px';
             chevronDownFilters.style.transform = 'rotate(-180deg)';
+            cancelFilters.style.display = 'flex';
         }, 500);
         filtersOpened = true;
     } else {
-        filters.style.height = 0;
+        filtersAndApplyBtn.style.height = 0;
         setTimeout(() => {
-            filtersBox.style.width = '150px';           
+            cancelFilters.style.display = 'none';
+            filtersBox.style.width = '125px';           
             chevronDownFilters.style.transform = 'rotate(0)';
         }, 500);
         filtersOpened = false;
     }
 })
+
+cancelFilters.addEventListener('click', () => {
+    console.log(filtersForm);
+    filtersForm.forEach((filterForm) => {
+        if (filterForm.localName = 'input') {
+            filterForm.value = '';
+            filterForm.checked = false;
+        } else if (filterForm.localName = 'select') {
+            filterForm.value = 'Assassinat';
+            filterForm.value = '';
+        }
+    })
+})
+
 
 let detailsBtn = document.querySelectorAll('.detailsBtn');
 let detailsInfos = document.querySelectorAll('.detailsInfos');

@@ -1,16 +1,15 @@
 .missionTitle {
     text-align: center;
     font-size: 3em;
+    color: #395B64;
 }
-
 .filtersBox {
     box-shadow: 0 0 10px #395B64;
     margin: 0 50px;
     padding: 5px 20px;
     border-radius: 5px;
-    cursor: pointer;
     background: #A5C9CA;
-    width: 150px;
+    width: 125px;
     transition: width 500ms;
     .headerFilters {
         display: flex;
@@ -18,9 +17,10 @@
         align-items: center;
         padding: 5px;
         .filtersTitle {
+            cursor: pointer;
             display: flex;
             align-items: center;
-            font-size: 1.5em;
+            font-size: 1.2em;
             .sliders {
                 margin-right: 10px;
             }
@@ -36,140 +36,194 @@
             padding: 10px;
             border-radius: 5px;
             color: white;
+            cursor: pointer;
+            align-items: center;
+            .cancelSvg {
+                margin-right: 5px;
+            }
         }
     }
-    .filters {
+    .filtersAndApplyBtn {
         display: flex;
-        justify-content: space-between;
-        align-items: start;
+        flex-direction: column;
+        align-items: center;
         height: 0;
-        transition: height 500ms;
         overflow: hidden;
-        .filtersItemAndTitle {
+        transition: height 500ms;
+        .filters {
             display: flex;
-            flex-direction: column;
             justify-content: space-between;
-            align-items: center;
-            background: #E7F6F2;
-            margin: 20px;
-            padding: 20px;
-            border-radius: 5px;
-            .filtersItem {
+            align-items: start;
+            .filtersItemAndTitle {
                 display: flex;
-                justify-content: center;
-                flex-wrap: wrap;
-                .labelAndFilter {
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                background: #E7F6F2;
+                margin: 20px;
+                padding: 10px;
+                border-radius: 5px;
+                height: 328px;
+                .filtersBlockTitle {
+                    font-size: 1.3em;
+                    color: #395B64;
+                }
+                .filtersItem {
                     display: flex;
                     flex-direction: column;
-                    margin: 5px;
-                    .filter {
-                        border: none;
-                        padding: 10px;
-                        border-radius: 5px;
-                        .headerSelect {
-                            border-bottom: 1px solid black;
+                    justify-content: center;
+                    flex-wrap: wrap;
+                    .missionsFiltersLine {
+                        display: flex;
+                        justify-content: space-between;
+                        margin-bottom: 10px;
+                    }
+                    .labelAndFilter {
+                        display: flex;
+                        flex-direction: column;
+                        margin: 15px 25px;
+                        .filterTitle {
+                            margin-bottom: 5px;
+                            color: #395B64;
+                        }
+                        .statusFilter {
+                            display: flex;
+                            flex-wrap: wrap;
+                            justify-content: center;
+                            width: 300px;
+                            background: white;
+                            border: 1px solid #767676;
+                            border-radius: 2px;
+                            div {
+                                margin: 5px;
+                                padding: 5px;
+                                border-radius: 3px;
+                                display: flex;
+                                align-items: center;
+                                label {
+                                    font-size: 0.9em;
+                                }
+                            }
                         }
                     }
+                    .agentFilter, .contactFilter, .targetFilter, .stashFilter {
+                        height: 262px;         
+                    }
+                    input, select option {
+                        padding: 5px 10px;
+                    }
+                    .headerSelect {
+                        padding: 5px 10px;
+                        background:#A5C9CA ;
+                        color:#395B64 ;
+                    }
                 }
+            }
+        }
+        .applyBtn {
+            font-size: 1em;
+            background: #395B64;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            max-width: 150px;
+            display: flex;
+            align-items: center;
+            .confirmSvg {
+                margin-right: 5px;
             }
         }
     }
 }
-.missionsListBox {
-    display: flex;
-    justify-content: center;
+.missionsList {
     margin: 0;
-    .missionsList {
-    /*     display: flex;
-        justify-content: center;
-        flex-wrap: wrap; */
-        list-style: none;
-        font-family: 'Courier New', Courier, monospace;
-        padding: 50px;
-        margin: 0;
-        .mission {
-            display: inline-block;
-            /* display: flex;
-            flex-direction: column;
-            justify-content: space-between; */
-            margin: 20px;
+    list-style: none;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 50px;
+    margin: 0;
+    text-align: center;
+    .mission {
+        text-align:initial ;
+        display: inline-block;
+        margin: 20px;
+        border-radius: 5px;
+        padding: 10px 20px;
+        width: 650px;
+        box-shadow: 0 0 10px #395B64;
+        .headerMission {
+            display: flex;
+            justify-content: space-between;
+            background: #395B64;
             border-radius: 5px;
-            padding: 10px 20px;
-            width: 650px;
-            box-shadow: 0 0 10px #395B64;
-            .headerMission {
-                display: flex;
-                justify-content: space-between;
-                background: #395B64;
+            padding: 0 10px;
+            color: white;
+        }
+        .infosMission {
+            display: flex;
+            flex-direction: column;
+            margin: 20px;
+            position: relative;
+            .map {
+                margin-right: 20px;
                 border-radius: 5px;
-                padding: 0 10px;
-                color: white;
+                box-shadow: 0 0 10px #395B64;
             }
-            .infosMission {
-                display: flex;
-                flex-direction: column;
-                margin: 20px;
-                position: relative;
-                .map {
-                    margin-right: 20px;
-                    border-radius: 5px;
-                    box-shadow: 0 0 10px #395B64;
-                }
-                
-                .missionItems {
-                    bottom: 0;
-                    .missionItem {
-                        margin: 5px;
-                    }
+            
+            .missionItems {
+                bottom: 0;
+                .missionItem {
+                    margin: 5px;
                 }
             }
-            .details {
-                background: #395B64;
-                border-radius: 5px;
-                padding: 5px 20px;
-                color: white;
+        }
+        .details {
+            background: #395B64;
+            border-radius: 5px;
+            padding: 5px 20px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100px;
+            transition: width 500ms;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            .detailsBtn {
+                width: 100%;
                 display: flex;
-                flex-direction: column;
+                justify-content: center;
                 align-items: center;
-                width: 100px;
-                transition: width 500ms;
-                position: relative;
-                left: 50%;
-                transform: translateX(-50%);
-                .detailsBtn {
-                    width: 100%;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    background: #395B64;
-                    border-radius: 5px 5px 0 0;
-                    padding: 5px 0;
-                    color: white;
-                    cursor: pointer;
-                    transition: border-bottom 500ms;
-                    .chevronDownDetails {
-                        margin-left: 10px;
-                        transition: transform 500ms;
-                    }
+                background: #395B64;
+                border-radius: 5px 5px 0 0;
+                padding: 5px 0;
+                color: white;
+                cursor: pointer;
+                transition: border-bottom 500ms;
+                .chevronDownDetails {
+                    margin-left: 10px;
+                    transition: transform 500ms;
                 }
-                .detailsInfos {
-                    align-self: start;
-                    height: 0;
-                    transition: height 500ms;
-                    overflow: hidden;
-                    .infosItem {
-                        margin: 10px 0;
-                        ul, p{
-                            list-style: none;
-                            padding: 5px 0 0 20px;
-                            margin: 0;
-                        }
-                        span {
-                            display: flex;
-                            align-items: center;
-                            svg {
-                                margin-right: 5px;
-                            }
+            }
+            .detailsInfos {
+                align-self: start;
+                height: 0;
+                transition: height 500ms;
+                overflow: hidden;
+                .infosItem {
+                    margin: 10px 0;
+                    ul, p{
+                        list-style: none;
+                        padding: 5px 0 0 20px;
+                        margin: 0;
+                    }
+                    span {
+                        display: flex;
+                        align-items: center;
+                        svg {
+                            margin-right: 5px;
                         }
                     }
                 }

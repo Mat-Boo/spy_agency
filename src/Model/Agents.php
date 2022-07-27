@@ -16,9 +16,9 @@ class Agents
     {
         if (!is_null($this->pdo)) {
             $stmt = $this->pdo->query(
-                'SELECT Agent.id_code_agent, firstname, lastname, birthdate, nationality, id_code_mission
+                'SELECT Agent.id_agent, firstname, lastname, birthdate, nationality, id_mission
                 FROM Agent
-                INNER JOIN MissionAgent ON Agent.id_code_agent = MissionAgent.id_code_agent'
+                INNER JOIN MissionAgent ON Agent.id_agent = MissionAgent.id_agent'
             );
         }
         $agents = [];
@@ -32,10 +32,31 @@ class Agents
     {
         foreach($missions as $mission) {
             foreach($agents as $agent) {
-                if ($mission->getId_code_mission() === $agent->getId_code_mission()) {
+                if ($mission->getId_mission() === $agent->getId_mission()) {
                     $mission->addAgents($agent);
                 }
             }
         }
+    }
+
+    public function getNames()
+    {
+        $names = [];
+        foreach($this->getAgentsList() as $agent) {
+            if (!in_array($agent->getfirstname() . ' ' . $agent->getlastname(), $names)) {
+                $names[] = $agent->getfirstname() . ' ' . $agent->getlastname();
+            }
+        }
+
+        usort($names, function ($a, $b)
+        {
+            if ($a == $b) {
+                return 0;
+            } else {
+                return ($a < $b) ? -1 : 1;
+            }
+        });
+
+        return $names;
     }
 }
