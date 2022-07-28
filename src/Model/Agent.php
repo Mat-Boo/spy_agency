@@ -15,7 +15,7 @@ class Agent
     /**
      * Get the value of id_agent
      */ 
-    public function getId_code_agent()
+    public function getId_agent()
     {
         return $this->id_agent;
     }
@@ -25,7 +25,7 @@ class Agent
      *
      * @return  self
      */ 
-    public function setId_code_agent($id_agent)
+    public function setId_agent($id_agent)
     {
         $this->id_agent = $id_agent;
 

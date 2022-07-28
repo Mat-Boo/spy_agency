@@ -39,24 +39,33 @@ class Agents
         }
     }
 
-    public function getNames()
+    public function getAgents()
     {
-        $names = [];
-        foreach($this->getAgentsList() as $agent) {
-            if (!in_array($agent->getfirstname() . ' ' . $agent->getlastname(), $names)) {
-                $names[] = $agent->getfirstname() . ' ' . $agent->getlastname();
+        if (!is_null($this->pdo)) {
+            $stmt = $this->pdo->query("SELECT id_agent, firstname, lastname, birthdate, nationality FROM Agent ORDER BY lastname");
+            $agents = [];
+            while ($agent = $stmt->fetchObject(Agent::class)) {
+                $agents[] = $agent;
             }
         }
+        return $agents;
+    }
 
-        usort($names, function ($a, $b)
-        {
-            if ($a == $b) {
-                return 0;
-            } else {
-                return ($a < $b) ? -1 : 1;
+    public function filterAgents(array $filterOptions): array
+    {
+        if (!is_null($this->pdo)) {
+            $agentFilter = isset($filterOptions['agentFilter']) ? " WHERE id_agent IN (" . implode(",", $filterOptions['agentFilter']) . ")" : '';
+
+            $stmt = $this->pdo->query(
+                "SELECT id_mission
+                FROM MissionAgent"
+                .$agentFilter
+            );
+            $missionIdsFromAgents = [];
+            while ($missionIdFromAgent = $stmt->fetchColumn()) {
+                $missionIdsFromAgents[] = $missionIdFromAgent;
             }
-        });
-
-        return $names;
+        }
+        return $missionIdsFromAgents;
     }
 }

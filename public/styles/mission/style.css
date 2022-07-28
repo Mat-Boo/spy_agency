@@ -52,7 +52,7 @@
   transition: transform 500ms, -webkit-transform 500ms;
 }
 
-.filtersBox .headerFilters .cancelFilters {
+.filtersBox .headerFilters .cancelFiltersBtn {
   display: none;
   font-size: 1em;
   background: #395B64;
@@ -65,7 +65,7 @@
           align-items: center;
 }
 
-.filtersBox .headerFilters .cancelFilters .cancelSvg {
+.filtersBox .headerFilters .cancelFiltersBtn .cancelSvg {
   margin-right: 5px;
 }
 
@@ -165,7 +165,7 @@
   color: #395B64;
 }
 
-.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .labelAndFilter .statusFilter {
+.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .labelAndFilter .statusMissionFilter {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -180,7 +180,7 @@
   border-radius: 2px;
 }
 
-.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .labelAndFilter .statusFilter div {
+.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .labelAndFilter .statusMissionFilter div {
   margin: 5px;
   padding: 5px;
   border-radius: 3px;
@@ -190,9 +190,10 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  width: 130px;
 }
 
-.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .labelAndFilter .statusFilter div label {
+.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .labelAndFilter .statusMissionFilter div label {
   font-size: 0.9em;
 }
 
@@ -210,7 +211,7 @@
   color: #395B64;
 }
 
-.filtersBox .filtersAndApplyBtn .applyBtn {
+.filtersBox .filtersAndApplyBtn .applyFiltersBtn {
   font-size: 1em;
   background: #395B64;
   padding: 10px;
@@ -227,14 +228,15 @@
           align-items: center;
 }
 
-.filtersBox .filtersAndApplyBtn .applyBtn .confirmSvg {
+.filtersBox .filtersAndApplyBtn .applyFiltersBtn .confirmSvg {
   margin-right: 5px;
 }
 
 .missionsList {
   margin: 0;
   list-style: none;
-  font-family: 'Courier New', Courier, monospace;
+  /*     font-family: 'Courier New', Courier, monospace;
+ */
   padding: 50px;
   margin: 0;
   text-align: center;

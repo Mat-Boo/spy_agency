@@ -1,6 +1,8 @@
 <?php
 
 namespace App\model;
+
+use App\Model\Contact;
 use PDO;
 
 class Contacts
@@ -39,24 +41,33 @@ class Contacts
         }
     }
 
-    public function getNames()
+    public function getContacts()
     {
-        $names = [];
-        foreach($this->getContactsList() as $contact) {
-            if (!in_array($contact->getfirstname() . ' ' . $contact->getlastname(), $names)) {
-                $names[] = $contact->getfirstname() . ' ' . $contact->getlastname();
+        if (!is_null($this->pdo)) {
+            $stmt = $this->pdo->query("SELECT id_contact, firstname, lastname, birthdate, nationality FROM Contact ORDER BY lastname");
+            $contacts = [];
+            while ($contact = $stmt->fetchObject(Contact::class)) {
+                $contacts[] = $contact;
             }
         }
+        return $contacts;
+    }
 
-        usort($names, function ($a, $b)
-        {
-            if ($a == $b) {
-                return 0;
-            } else {
-                return ($a < $b) ? -1 : 1;
+    public function filterContacts(array $filterOptions): array
+    {
+        if (!is_null($this->pdo)) {
+            $contactFilter = isset($filterOptions['contactFilter']) ? " WHERE id_contact IN (" . implode(",", $filterOptions['contactFilter']) . ")" : '';
+
+            $stmt = $this->pdo->query(
+                "SELECT id_mission
+                FROM MissionContact"
+                .$contactFilter
+            );
+            $missionIdsFromContacts = [];
+            while ($missionIdFromContact = $stmt->fetchColumn()) {
+                $missionIdsFromContacts[] = $missionIdFromContact;
             }
-        });
-
-        return $names;
+        }
+        return $missionIdsFromContacts;
     }
 }

@@ -3,42 +3,64 @@ let filtersAndApplyBtn = document.querySelector('.filtersAndApplyBtn');
 let filtersBox = document.querySelector('.filtersBox');
 let chevronDownFilters = document.querySelector('.chevronDownFilters');
 let filtersOpened = false;
-let cancelFilters = document.querySelector('.cancelFilters');
+let cancelFiltersBtn = document.querySelector('.cancelFiltersBtn');
 let filtersForm = document.querySelectorAll('.filter');
+let timeTransition = 500;
+
+openFilters = () => {
+    filtersBox.style.transition = 'width ' + timeTransition + 'ms';
+    filtersAndApplyBtn.style.transition = 'height ' + timeTransition + 'ms';
+    chevronDownFilters.style.transition = 'transform ' + timeTransition + 'ms';
+    filtersBox.style.width = 'calc(100% - 140px)';
+    setTimeout(() => {
+        filtersAndApplyBtn.style.height = '440px';
+        chevronDownFilters.style.transform = 'rotate(-180deg)';
+        cancelFiltersBtn.style.display = 'flex';
+    }, timeTransition);
+    filtersOpened = true;
+}
+
+closeFilters = () => {
+    filtersBox.style.transition = 'width ' + timeTransition + 'ms';
+    filtersAndApplyBtn.style.transition = 'height ' + timeTransition + 'ms';
+    chevronDownFilters.style.transition = 'transform ' + timeTransition + 'ms';
+    filtersAndApplyBtn.style.height = 0;
+    setTimeout(() => {
+        cancelFiltersBtn.style.display = 'none';
+        filtersBox.style.width = '125px';           
+        chevronDownFilters.style.transform = 'rotate(0)';
+    }, timeTransition);
+    filtersOpened = false;
+}
 
 filtersTitle.addEventListener('click', () => {
     if (!filtersOpened) {
-        filtersBox.style.width = 'calc(100% - 140px)';
-        setTimeout(() => {
-            filtersAndApplyBtn.style.height = '440px';
-            chevronDownFilters.style.transform = 'rotate(-180deg)';
-            cancelFilters.style.display = 'flex';
-        }, 500);
-        filtersOpened = true;
+        openFilters();
     } else {
-        filtersAndApplyBtn.style.height = 0;
-        setTimeout(() => {
-            cancelFilters.style.display = 'none';
-            filtersBox.style.width = '125px';           
-            chevronDownFilters.style.transform = 'rotate(0)';
-        }, 500);
-        filtersOpened = false;
+        closeFilters();
     }
 })
 
-cancelFilters.addEventListener('click', () => {
-    console.log(filtersForm);
+if (!emptyGet) {
+    filtersBox.style.transition = 'none';
+    filtersAndApplyBtn.style.transition = 'none';
+    chevronDownFilters.style.transition = 'none';
+    timeTransition = 0;
+    openFilters();
+    timeTransition = 500;
+} 
+
+cancelFiltersBtn.addEventListener('click', () => {
     filtersForm.forEach((filterForm) => {
         if (filterForm.localName = 'input') {
             filterForm.value = '';
             filterForm.checked = false;
         } else if (filterForm.localName = 'select') {
-            filterForm.value = 'Assassinat';
+            filterForm.value = 'headerFilter';
             filterForm.value = '';
         }
     })
 })
-
 
 let detailsBtn = document.querySelectorAll('.detailsBtn');
 let detailsInfos = document.querySelectorAll('.detailsInfos');

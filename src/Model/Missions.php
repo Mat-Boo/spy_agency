@@ -16,23 +16,13 @@ class Missions
     public function getMissionsList(): array
     {
         if (!is_null($this->pdo)) {
-            /* $stmt = $this->pdo->query(
-                'SELECT Mission.id_mission, code_name, title, description, Mission.country, Mission.type,
-                status, start_date, end_date, 
-                Speciality.name AS speciality
+            $stmt = $this->pdo->query(
+                'SELECT Mission.id_mission, code_name, title, description, country, type,
+                status, start_date, end_date, Speciality.name AS speciality
                 FROM Mission
                 INNER JOIN Speciality ON Mission.id_speciality = Speciality.id_speciality
                 ORDER BY start_date, title;'
-            ); */
-            $stmt = $this->pdo->query(
-                "SELECT Mission.id_mission, code_name, title, description, Mission.country, Mission.type,
-                status, start_date, end_date, 
-                Speciality.name AS speciality
-                FROM Mission
-                INNER JOIN Speciality ON Mission.id_speciality = Speciality.id_speciality
-                WHERE Mission.id_speciality IN (" . implode(",", [1,2,3,9]) . ");"
             );
-            
         }
         $missions = [];
         while ($mission = $stmt->fetchObject(Mission::class)) {
@@ -83,22 +73,64 @@ class Missions
         return $types;
     }
 
-/*     public function filterMissions($filterOptions): array
+    public function convertToStringList(array $arrayToConvert, string $formItem): string
     {
-        if (!empty($filterOptions)) {
-            $filterMissions = [];
-            foreach($this->getMissionsList() as $mission) {
-                if (
-                    in_array($mission->getId_mission(), ($filterOptions['idMissionFilter'])) &&
-                    in_array($mission->getType(), $filterOptions['typeMissionFilter'])
-                ) 
-                {
-                    $filterMissions[] = $mission;
-                }
+        $newString = '';
+        if ($formItem === 'checkbox') {
+            foreach($arrayToConvert as $key => $item) {
+                $newString .= "'" . str_replace('_', ' ', $key) . "'" . ",";
             }
-            return $filterMissions;
+        } else if ($formItem === 'select') {
+            foreach($arrayToConvert as $item) {
+                $newString .= "'" . $item . "'" . ",";
+            }
         }
+        return $newString = substr($newString, 0, -1);
+    }
 
-        return $this->getMissionsList();
-    } */
+    public function filterMissions(array $filterOptions, array $missionIdsFromAgents, array $missionIdsFromContacts, array $missionIdsFromTargets, array $missionIdsFromStashs): array
+    {
+        if (!is_null($this->pdo)) {
+            $stmt1 = $this->pdo->query("SELECT id_mission FROM Mission ORDER BY id_mission");
+            $missionIds = [];
+            while ($missionId = $stmt1->fetchColumn()) {
+                $missionIds[] = $missionId;
+            }
+
+            $missionFilter = isset($filterOptions['idMissionFilter']) ? " WHERE Mission.id_mission IN (" . implode(",", $filterOptions['idMissionFilter']) . ")" : " WHERE Mission.id_mission IN (" . implode(",", $missionIds) . ")";
+            $countryMissionFilter = isset($filterOptions['countryMissionFilter']) && strlen($filterOptions['countryMissionFilter']) > 0 ? " AND country = '" . $filterOptions['countryMissionFilter'] . "'" : '';
+            $typeMissionFilter = isset($filterOptions['typeMissionFilter']) ? " AND type IN (" . $this->convertToStringList($filterOptions['typeMissionFilter'], 'select') . ")" : '';
+            $specialityMissionFilter = isset($filterOptions['specialityMissionFilter']) ? " AND Mission.id_speciality IN (" . implode(",", $filterOptions['specialityMissionFilter']) . ")" : '';
+            $statusMissionFilter = isset($filterOptions['statusMissionFilter']) ? " AND status IN (" . str_replace('_', ' ', $this->convertToStringList($filterOptions['statusMissionFilter'], 'checkbox')) . ")" : '';
+            $startDateMissionFilter = isset($filterOptions['startDateMissionFilter']) && strlen($filterOptions['startDateMissionFilter']) > 0 ? " AND start_date >= '" . $filterOptions['startDateMissionFilter'] . "'" : '';
+            $endDateMissionFilter = isset($filterOptions['endDateMissionFilter']) && strlen($filterOptions['endDateMissionFilter']) > 0 ? " AND end_date <= '" . $filterOptions['endDateMissionFilter'] . "'" : '';
+            $agentFilter = isset($filterOptions['agentFilter']) ? " AND Mission.id_mission IN (" . implode(",", $missionIdsFromAgents) . ")" :'';
+            $contactFilter = isset($filterOptions['contactFilter']) ? " AND Mission.id_mission IN (" . implode(",", $missionIdsFromContacts) . ")" :'';
+            $targetFilter = isset($filterOptions['targetFilter']) ? " AND Mission.id_mission IN (" . implode(",", $missionIdsFromTargets) . ")" :'';
+            $stashFilter = isset($filterOptions['stashFilter']) ? " AND Mission.id_mission IN (" . implode(",", $missionIdsFromStashs) . ")" :'';
+
+            $stmt2 = $this->pdo->query( 
+                "SELECT Mission.id_mission, code_name, title, description, country, type,
+                status, start_date, end_date, Speciality.name AS speciality
+                FROM Mission
+                INNER JOIN Speciality ON Mission.id_speciality = Speciality.id_speciality"
+                . $missionFilter
+                . $typeMissionFilter
+                . $specialityMissionFilter
+                . $statusMissionFilter
+                . $countryMissionFilter
+                . $startDateMissionFilter
+                . $endDateMissionFilter
+                . $agentFilter
+                . $contactFilter
+                . $targetFilter
+                . $stashFilter
+            );
+        }
+        $missions = [];
+        while ($mission = $stmt2->fetchObject(Mission::class)) {
+            $missions[] = $mission;
+        }
+        return $missions;
+    }
 }

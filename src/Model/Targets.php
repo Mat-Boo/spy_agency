@@ -39,24 +39,33 @@ class Targets
         }
     }
 
-    public function getNames()
+    public function getTargets()
     {
-        $names = [];
-        foreach($this->getTargetsList() as $target) {
-            if (!in_array($target->getfirstname() . ' ' . $target->getlastname(), $names)) {
-                $names[] = $target->getfirstname() . ' ' . $target->getlastname();
+        if (!is_null($this->pdo)) {
+            $stmt = $this->pdo->query("SELECT id_target, firstname, lastname, birthdate, nationality FROM Target ORDER BY lastname");
+            $targets = [];
+            while ($target = $stmt->fetchObject(Target::class)) {
+                $targets[] = $target;
             }
         }
+        return $targets;
+    }
 
-        usort($names, function ($a, $b)
-        {
-            if ($a == $b) {
-                return 0;
-            } else {
-                return ($a < $b) ? -1 : 1;
+    public function filterTargets(array $filterOptions): array
+    {
+        if (!is_null($this->pdo)) {
+            $targetFilter = isset($filterOptions['targetFilter']) ? " WHERE id_target IN (" . implode(",", $filterOptions['targetFilter']) . ")" : '';
+
+            $stmt = $this->pdo->query(
+                "SELECT id_mission
+                FROM MissionTarget"
+                .$targetFilter
+            );
+            $missionIdsFromTargets = [];
+            while ($missionIdFromTarget = $stmt->fetchColumn()) {
+                $missionIdsFromTargets[] = $missionIdFromTarget;
             }
-        });
-
-        return $names;
+        }
+        return $missionIdsFromTargets;
     }
 }

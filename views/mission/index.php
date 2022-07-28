@@ -14,30 +14,42 @@ $pdo = (new Connection)->getPdo();
 
 $missions = new Missions($pdo);
 $missionsList = $missions->getMissionsList();
-/* $missionsListFiltered = $missions->filterMissions($_GET); */
 
 $specialities = new Specialities($pdo);
 
 $agents = new Agents($pdo);
-$agentsList = $agents->getAgentsList();
-$agents->hydrateMissions($missionsList, $agentsList);
-
+$agentsListFiltered = $agents->filterAgents($_GET);
 $contacts = new Contacts($pdo);
-$contactsList = $contacts->getContactsList();
-$contacts->hydrateMissions($missionsList, $contactsList);
-
+$contactsListFiltered = $contacts->filterContacts($_GET);
 $targets = new Targets($pdo);
-$targetsList = $targets->getTargetsList();
-$targets->hydrateMissions($missionsList, $targetsList);
-
+$targetsListFiltered = $targets->filterTargets($_GET);
 $stashs = new Stashs($pdo);
-$stashsList = $stashs->getStashsList();
-$stashs->hydrateMissions($missionsList, $stashsList);
+$stashsListFiltered = $stashs->filterStashs($_GET);
+$missionsListFiltered = $missions->filterMissions($_GET, $agentsListFiltered, $contactsListFiltered, $targetsListFiltered, $stashsListFiltered);
 
-var_dump($_GET);
+var_dump($stashsListFiltered);
+
+$agentsList = $agents->getAgentsList();
+$agents->hydrateMissions($missionsListFiltered, $agentsList);
+
 /* var_dump($missionsListFiltered); */
 
+$contactsList = $contacts->getContactsList();
+$contacts->hydrateMissions($missionsListFiltered, $contactsList);
+
+$targetsList = $targets->getTargetsList();
+$targets->hydrateMissions($missionsListFiltered, $targetsList);
+
+$stashsList = $stashs->getStashsList();
+$stashs->hydrateMissions($missionsListFiltered, $stashsList);
+
+var_dump($_GET);
+
 ?>
+
+<script>
+    let emptyGet = <?= json_encode(empty($_GET)) ?>;
+</script>
 
 <h1 class="missionTitle">Missions</h1>
 
@@ -52,7 +64,7 @@ var_dump($_GET);
                 <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
             </svg>
         </div>
-        <div class="cancelFilters">
+        <div class="cancelFiltersBtn">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="cancelSvg" viewBox="0 0 16 16">
                 <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
             </svg>
@@ -70,7 +82,14 @@ var_dump($_GET);
                             <select name="idMissionFilter[]" id="idMissionFilter" multiple class="filter">
                                 <option value="headerFilter" disabled class="headerSelect">Sélectionnez un ou plusieurs CodeName(s)</option>
                                 <?php foreach($missionsList as $mission) : ?>
-                                    <option value="<?= $mission->getId_mission() ?>"><?= $mission->getCode_name() ?></option>
+                                    <option
+                                        value="<?= $mission->getId_mission() ?>"
+                                        <?php if (isset($_GET['idMissionFilter'])): ?>
+                                            <?php if (in_array($mission->getId_mission(), $_GET['idMissionFilter'])): ?>
+                                                selected
+                                            <?php endif ?>
+                                        <?php endif ?>
+                                    ><?= $mission->getCode_name() ?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>
@@ -79,7 +98,14 @@ var_dump($_GET);
                             <select name="typeMissionFilter[]" id="typeMissionFilter" multiple class="filter">
                                 <option value="headerFilter" disabled class="headerSelect">Sélectionnez un ou plusieurs type(s)</option>
                                 <?php foreach($missions->getTypes() as $type) : ?>
-                                    <option value="<?= $type ?>"><?= $type ?></option>
+                                    <option
+                                        value="<?= $type ?>"
+                                        <?php if (isset($_GET['typeMissionFilter'])): ?>
+                                            <?php if (in_array($type, $_GET['typeMissionFilter'])): ?>
+                                                selected
+                                            <?php endif ?>
+                                        <?php endif ?>
+                                    ><?= $type ?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>
@@ -87,8 +113,15 @@ var_dump($_GET);
                             <span class="filterTitle">Spécialité</span>
                             <select name="specialityMissionFilter[]" id="specialityMissionFilter" multiple class="filter">
                                 <option value="headerFilter" disabled class="headerSelect">Sélectionnez une ou plusieurs spécialité(s)</option>
-                                <?php foreach($specialities->getNames() as $speciality) : ?>
-                                    <option value="<?= $speciality ?>"><?= $speciality ?></option>
+                                <?php foreach($specialities->getSpecialitiesList() as $speciality) : ?>
+                                    <option
+                                        value="<?= $speciality->getId_speciality() ?>"
+                                        <?php if (isset($_GET['specialityMissionFilter'])): ?>
+                                            <?php if (in_array($speciality->getId_speciality(), $_GET['specialityMissionFilter'])): ?>
+                                                selected
+                                            <?php endif ?>
+                                        <?php endif ?>
+                                    ><?= $speciality->getName() ?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>
@@ -96,26 +129,59 @@ var_dump($_GET);
                     <div class="missionsFiltersLine">
                         <div class='labelAndFilter'>
                             <span class="filterTitle">Statut</span>
-                            <div class="filter statusFilter">
+                            <div class="filter statusMissionFilter">
                                 <?php foreach($missions->getStatus() as $status) : ?>
                                     <div style="background:<?= $status['background'] ?>">
-                                        <input type="checkbox" id="<?= $status['status'] ?>" name="status[]" class="filter">
+                                        <input
+                                            type="checkbox"
+                                            id="<?= $status['status'] ?>"
+                                            name=<?= "statusMissionFilter[" . str_replace(' ', '_', $status['status']) . "]" ?> class="filter"
+                                            <?php if (isset($_GET['statusMissionFilter'])): ?>
+                                                <?php if (array_key_exists(str_replace(' ', '_', $status['status']), $_GET['statusMissionFilter'])): ?>
+                                                    checked
+                                                <?php endif ?>
+                                            <?php endif ?>
+                                        >
                                         <label for="<?= $status['status'] ?>"><?= $status['status'] ?></label>
                                     </div>
                                     <?php endforeach ?>
                             </div>
                         </div>
                         <div class='labelAndFilter'>
-                            <label for="country" class="filterTitle">Pays</label>
-                            <input type="text" id="country" name="country" class="filter">
+                            <label for="countryMissionFilter" class="filterTitle">Pays</label>
+                            <input
+                                type="text"
+                                id="countryMissionFilter"
+                                name="countryMissionFilter"
+                                class="filter"
+                                <?php if (isset($_GET['countryMissionFilter'])): ?>              
+                                    value=<?= $_GET['countryMissionFilter'] ?>
+                                <?php endif ?>
+                            >
                         </div>
                         <div class='labelAndFilter'>
-                            <label for="startDate" class="filterTitle">Date de début</label>
-                            <input type="date" id="startDate" name="startDate" class="filter">
+                            <label for="startDateMissionFilter" class="filterTitle">Date de début</label>
+                            <input
+                                type="date"
+                                id="startDateMissionFilter"
+                                name="startDateMissionFilter"
+                                class="filter"
+                                <?php if (isset($_GET['startDateMissionFilter'])): ?>              
+                                    value=<?= $_GET['startDateMissionFilter'] ?>
+                                <?php endif ?>
+                            >
                         </div>
                         <div class='labelAndFilter'>
-                            <label for="endDate" class="filterTitle">Date de fin</label>
-                            <input type="date" id="endDate" name="endDate" class="filter">
+                            <label for="endDateMissionFilter" class="filterTitle">Date de fin</label>
+                            <input
+                                type="date"
+                                id="endDateMissionFilter"
+                                name="endDateMissionFilter"
+                                class="filter"
+                                <?php if (isset($_GET['endDateMissionFilter'])): ?>              
+                                    value=<?= $_GET['endDateMissionFilter'] ?>
+                                <?php endif ?>
+                            >
                         </div>
                     </div>
                 </div>
@@ -125,8 +191,15 @@ var_dump($_GET);
                 <div class="filtersItem">
                     <select name="agentFilter[]" id="agentFilter" multiple class="filter agentFilter">
                         <option value="headerFilter" disabled class="headerSelect">Sélectionnez un ou plusieurs agent(s)</option>
-                        <?php foreach($agents->getNames() as $agent) : ?>
-                            <option value="<?= $agent ?>"><?= $agent ?></option>
+                        <?php foreach($agents->getAgents() as $agent) : ?>
+                            <option 
+                                value="<?= $agent->getId_agent() ?>"
+                                <?php if (isset($_GET['agentFilter'])): ?>
+                                    <?php if (in_array($agent->getId_agent(), $_GET['agentFilter'])): ?>
+                                        selected
+                                    <?php endif ?>
+                                <?php endif ?>
+                            ><?= $agent->getLastname() . ' ' . $agent->getfirstname() ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
@@ -136,8 +209,15 @@ var_dump($_GET);
                 <div class="filtersItem">
                     <select name="contactFilter[]" id="contactFilter" multiple class="filter contactFilter">
                         <option value="headerFilter" disabled class="headerSelect">Sélectionnez un ou plusieurs contact(s)</option>
-                        <?php foreach($contacts->getNames() as $contact) : ?>
-                            <option value="<?= $contact ?>"><?= $contact ?></option>
+                        <?php foreach($contacts->getContacts() as $contact) : ?>
+                            <option
+                                value="<?= $contact->getId_contact() ?>"
+                                <?php if (isset($_GET['contactFilter'])): ?>
+                                    <?php if (in_array($contact->getId_contact(), $_GET['contactFilter'])): ?>
+                                        selected
+                                    <?php endif ?>
+                                <?php endif ?>
+                            ><?= $contact->getLastname() . ' ' . $contact->getFirstname() ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
@@ -147,8 +227,15 @@ var_dump($_GET);
                 <div class="filtersItem">
                     <select name="targetFilter[]" id="targetFilter" multiple class="filter targetFilter">
                         <option value="headerFilter" disabled class="headerSelect">Sélectionnez une ou plusieurs cible(s)</option>
-                        <?php foreach($targets->getNames() as $target) : ?>
-                            <option value="<?= $target ?>"><?= $target ?></option>
+                        <?php foreach($targets->getTargets() as $target) : ?>
+                            <option
+                                value="<?= $target->getId_target() ?>"
+                                <?php if (isset($_GET['targetFilter'])): ?>
+                                    <?php if (in_array($target->getId_target(), $_GET['targetFilter'])): ?>
+                                        selected
+                                    <?php endif ?>
+                                <?php endif ?>
+                            ><?= $target->getLastname() . ' ' . $target->getFirstname() ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
@@ -159,13 +246,20 @@ var_dump($_GET);
                     <select name="stashFilter[]" id="stashFilter" multiple class="filter stashFilter">
                         <option value="headerFilter" disabled class="headerSelect">Sélectionnez une ou plusieurs planque(s)</option>
                         <?php foreach($stashs->getTypes() as $stash) : ?>
-                            <option value="<?= $stash ?>"><?= $stash ?></option>
+                            <option
+                                value="<?= $stash ?>"
+                                <?php if (isset($_GET['stashFilter'])): ?>
+                                    <?php if (in_array($stash, $_GET['stashFilter'])): ?>
+                                        selected
+                                    <?php endif ?>
+                                <?php endif ?>
+                            ><?= $stash ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
             </div>
         </div>
-        <button type="submit" class="applyBtn">
+        <button type="submit" class="applyFiltersBtn">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="confirmSvg" viewBox="0 0 16 16">
                 <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
             </svg>
@@ -176,7 +270,7 @@ var_dump($_GET);
 
 
     <ul class="missionsList">
-        <?php foreach($missionsList as $mission): ?>
+        <?php foreach($missionsListFiltered as $mission): ?>
             <li
                 class="mission"
                 style="background:<?= $mission->getStatus()['background'] ?>">

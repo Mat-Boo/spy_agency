@@ -25,10 +25,19 @@ class Specialities
             $specialities[] = $speciality;
         }
         
+        usort($specialities, function ($a, $b)
+        {
+            if ($a->getName() == $b->getName()) {
+                return 0;
+            } else {
+                return ($a->getName() < $b->getName()) ? -1 : 1;
+            }
+        });
+
         return $specialities;
     }
 
-    public function getNames()
+/*     public function getNames()
     {
         $specialities = [];
         foreach($this->getSpecialitiesList() as $speciality) {
@@ -47,5 +56,5 @@ class Specialities
         });
 
         return $specialities;
-    }
+    } */
 }

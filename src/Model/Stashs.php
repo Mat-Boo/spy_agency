@@ -59,4 +59,37 @@ class Stashs
 
         return $types;
     }
+
+    public function convertToStringList(array $arrayToConvert, string $formItem): string
+    {
+        $newString = '';
+        if ($formItem === 'checkbox') {
+            foreach($arrayToConvert as $key => $item) {
+                $newString .= "'" . str_replace('_', ' ', $key) . "'" . ",";
+            }
+        } else if ($formItem === 'select') {
+            foreach($arrayToConvert as $item) {
+                $newString .= "'" . $item . "'" . ",";
+            }
+        }
+        return $newString = substr($newString, 0, -1);
+    }
+
+    public function filterStashs(array $filterOptions): array
+    {
+        if (!is_null($this->pdo)) {
+            $stashFilter = isset($filterOptions['stashFilter']) ? " WHERE type IN (" . $this->convertToStringList($filterOptions['stashFilter'], 'select') . ")" : '';
+            $stmt = $this->pdo->query(
+                "SELECT id_mission
+                FROM MissionStash
+                INNER JOIN Stash ON MissionStash.id_stash = Stash.id_stash"
+                .$stashFilter
+            );
+            $missionIdsFromStashs = [];
+            while ($missionIdFromStash = $stmt->fetchColumn()) {
+                $missionIdsFromStashs[] = $missionIdFromStash;
+            }
+        }
+        return $missionIdsFromStashs;
+    }
 }

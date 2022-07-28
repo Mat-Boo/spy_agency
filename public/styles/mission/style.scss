@@ -29,7 +29,7 @@
                 transition: transform 500ms;
             }
         }
-        .cancelFilters {
+        .cancelFiltersBtn {
             display: none;
             font-size: 1em;
             background: #395B64;
@@ -86,7 +86,7 @@
                             margin-bottom: 5px;
                             color: #395B64;
                         }
-                        .statusFilter {
+                        .statusMissionFilter {
                             display: flex;
                             flex-wrap: wrap;
                             justify-content: center;
@@ -100,6 +100,7 @@
                                 border-radius: 3px;
                                 display: flex;
                                 align-items: center;
+                                width: 130px;
                                 label {
                                     font-size: 0.9em;
                                 }
@@ -120,7 +121,7 @@
                 }
             }
         }
-        .applyBtn {
+        .applyFiltersBtn {
             font-size: 1em;
             background: #395B64;
             padding: 10px;
@@ -140,8 +141,8 @@
 .missionsList {
     margin: 0;
     list-style: none;
-    font-family: 'Courier New', Courier, monospace;
-    padding: 50px;
+/*     font-family: 'Courier New', Courier, monospace;
+ */    padding: 50px;
     margin: 0;
     text-align: center;
     .mission {
