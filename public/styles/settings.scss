@@ -10,6 +10,14 @@ nav {
     align-items: center;
     background-color: #395B64;
     padding: 10px 20px;
+    margin-bottom: 50px;
+    .adminMenu {
+        list-style: none;
+        display: flex;
+        .navItem {
+            padding: 15px;
+        }
+    }
 }
 
 .navLink {
@@ -20,6 +28,7 @@ nav {
 footer {
     background-color: #2C3333;
     padding: 10px 20px;
+    margin-top: 50px;
 }
 
 footer p {

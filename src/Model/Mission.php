@@ -178,8 +178,13 @@ class Mission
 
     /**
      * Get the value of start_date
-     */ 
+     */
     public function getStart_date()
+    {
+        return $this->start_date;
+    }
+
+    public function getConvertedStart_date()
     {
         $convertedDate = date("d/m/Y", strtotime($this->start_date));
         return $convertedDate;
@@ -201,6 +206,11 @@ class Mission
      * Get the value of end_date
      */ 
     public function getEnd_date()
+    {
+        return $this->end_date;
+    }
+
+    public function getConvertedEnd_date()
     {
         $convertedDate = date("d/m/Y", strtotime($this->end_date));
         return $convertedDate;

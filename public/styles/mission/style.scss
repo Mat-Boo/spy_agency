@@ -2,10 +2,11 @@
     text-align: center;
     font-size: 3em;
     color: #395B64;
+    margin: 0;
 }
 .filtersBox {
     box-shadow: 0 0 10px #395B64;
-    margin: 0 50px;
+    margin: 50px 50px 0 50px;
     padding: 5px 20px;
     border-radius: 5px;
     background: #A5C9CA;
@@ -38,6 +39,7 @@
             color: white;
             cursor: pointer;
             align-items: center;
+            border: none;
             .cancelSvg {
                 margin-right: 5px;
             }
@@ -141,13 +143,13 @@
 .missionsList {
     margin: 0;
     list-style: none;
-/*     font-family: 'Courier New', Courier, monospace;
- */    padding: 50px;
+    /* font-family: 'Courier New', Courier, monospace; */
+    padding: 50px;
     margin: 0;
     text-align: center;
     .mission {
-        text-align:initial ;
         display: inline-block;
+        text-align:initial ;
         margin: 20px;
         border-radius: 5px;
         padding: 10px 20px;
@@ -163,19 +165,56 @@
         }
         .infosMission {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             margin: 20px;
             position: relative;
-            .map {
+            /* .map {
                 margin-right: 20px;
                 border-radius: 5px;
                 box-shadow: 0 0 10px #395B64;
-            }
-            
+            } */
             .missionItems {
                 bottom: 0;
                 .missionItem {
                     margin: 5px;
+                }
+            }
+            .actionBtns {
+                align-self: flex-end;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                .actionBtn {
+                    text-decoration: none;
+                    display: flex;
+                    border: 1px solid #395B64;
+                    color: white;
+                    padding: 9px 12px;
+                    border-radius: 5px;
+                    width: 16px;
+                    transition: width 500ms;
+                    overflow: hidden;
+                    cursor: pointer;
+                    opacity: 0.8;
+                    &:hover {
+                        opacity: 1;
+                        width: 100px;
+                    }
+                    span {
+                        display: flex;
+                        align-items: center;
+                        font-size: 0.9em;
+                    }
+                    .actionSvg {
+                        margin-right: 12px;
+                    }
+                }
+                .editBtn {
+                    background: rgb(42, 96, 179);
+                    margin-bottom: 5px;
+                }
+                .deleteBtn {
+                    background: rgb(221, 76, 76);
                 }
             }
         }

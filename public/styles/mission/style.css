@@ -2,12 +2,13 @@
   text-align: center;
   font-size: 3em;
   color: #395B64;
+  margin: 0;
 }
 
 .filtersBox {
   -webkit-box-shadow: 0 0 10px #395B64;
           box-shadow: 0 0 10px #395B64;
-  margin: 0 50px;
+  margin: 50px 50px 0 50px;
   padding: 5px 20px;
   border-radius: 5px;
   background: #A5C9CA;
@@ -63,6 +64,7 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  border: none;
 }
 
 .filtersBox .headerFilters .cancelFiltersBtn .cancelSvg {
@@ -235,16 +237,15 @@
 .missionsList {
   margin: 0;
   list-style: none;
-  /*     font-family: 'Courier New', Courier, monospace;
- */
+  /* font-family: 'Courier New', Courier, monospace; */
   padding: 50px;
   margin: 0;
   text-align: center;
 }
 
 .missionsList .mission {
-  text-align: initial;
   display: inline-block;
+  text-align: initial;
   margin: 20px;
   border-radius: 5px;
   padding: 10px 20px;
@@ -270,19 +271,16 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   margin: 20px;
   position: relative;
-}
-
-.missionsList .mission .infosMission .map {
-  margin-right: 20px;
-  border-radius: 5px;
-  -webkit-box-shadow: 0 0 10px #395B64;
-          box-shadow: 0 0 10px #395B64;
+  /* .map {
+                margin-right: 20px;
+                border-radius: 5px;
+                box-shadow: 0 0 10px #395B64;
+            } */
 }
 
 .missionsList .mission .infosMission .missionItems {
@@ -291,6 +289,66 @@
 
 .missionsList .mission .infosMission .missionItems .missionItem {
   margin: 5px;
+}
+
+.missionsList .mission .infosMission .actionBtns {
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+
+.missionsList .mission .infosMission .actionBtns .actionBtn {
+  text-decoration: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border: 1px solid #395B64;
+  color: white;
+  padding: 9px 12px;
+  border-radius: 5px;
+  width: 16px;
+  -webkit-transition: width 500ms;
+  transition: width 500ms;
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.missionsList .mission .infosMission .actionBtns .actionBtn:hover {
+  opacity: 1;
+  width: 100px;
+}
+
+.missionsList .mission .infosMission .actionBtns .actionBtn span {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 0.9em;
+}
+
+.missionsList .mission .infosMission .actionBtns .actionBtn .actionSvg {
+  margin-right: 12px;
+}
+
+.missionsList .mission .infosMission .actionBtns .editBtn {
+  background: #2a60b3;
+  margin-bottom: 5px;
+}
+
+.missionsList .mission .infosMission .actionBtns .deleteBtn {
+  background: #dd4c4c;
 }
 
 .missionsList .mission .details {

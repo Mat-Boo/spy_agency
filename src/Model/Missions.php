@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use App\Model\Exception\NotFoundException;
+use Exception;
 use PDO;
 
 class Missions
@@ -132,5 +134,30 @@ class Missions
             $missions[] = $mission;
         }
         return $missions;
+    }
+
+    public function delete(int $idMission): void
+    {
+        $query = $this->pdo->prepare("DELETE FROM Mission WHERE id_mission = :idMission");
+        $ok = $query->execute(['idMission' => $idMission]);
+        if ($ok === false) {
+            throw new Exception("Impossible de supprimer l'enregistrement $idMission dans la table Mission");
+        }
+    }
+
+    public function find(int $idMission)
+    {
+        $query = $this->pdo->prepare(
+            'SELECT Mission.id_mission, code_name, title, description, country, type,
+            status, start_date, end_date, Speciality.name AS speciality
+            FROM Mission
+            INNER JOIN Speciality ON Mission.id_speciality = Speciality.id_speciality
+            WHERE id_mission = :idMission');
+        $query->execute(['idMission' => $idMission]);
+        $foundMission = $query->fetchObject(Mission::class);
+        if ($foundMission === false) {
+            throw new NotFoundException('Mission', $idMission);
+        }
+        return $foundMission;
     }
 }

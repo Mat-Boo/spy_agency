@@ -93,3 +93,9 @@ for (let i = 0 ; i < detailsBtn.length ; i++) {
         }
     })
 }
+
+let deleteBtn = document.querySelector('.deleteBtn');
+
+deleteBtn.addEventListener('click', () => {
+    
+})

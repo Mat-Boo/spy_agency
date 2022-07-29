@@ -52,9 +52,9 @@ class Router
     {
         $match = $this->router->match();
         $view = $match['target'] ?: 'e404';
-        /* $params = $match['params']; */
+        $params = $match['params'];
         $router= $this;
-        $isAdmin = strpos($view, 'admin') !== false;
+        $isAdmin = strpos($_SERVER['REQUEST_URI'], 'admin') !== false;
         $layout = $isAdmin ? 'admin/layouts/default' : 'layouts/default';
         try {
             ob_start();

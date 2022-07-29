@@ -1,0 +1,49 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #EEE7DD;
+}
+
+nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #395B64;
+  padding: 10px 20px;
+  margin-bottom: 50px;
+}
+
+nav .adminMenu {
+  list-style: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+nav .adminMenu .navItem {
+  padding: 15px;
+}
+
+.navLink {
+  text-decoration: none;
+  color: white;
+}
+
+footer {
+  background-color: #2C3333;
+  padding: 10px 20px;
+  margin-top: 50px;
+}
+
+footer p {
+  text-align: center;
+  color: white;
+}
+/*# sourceMappingURL=settings.css.map */

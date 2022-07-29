@@ -1,3 +1,7 @@
+<?php
+$isAdmin = strpos($_SERVER['REQUEST_URI'], 'admin') !== false;
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -5,8 +9,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= isset($title) ? htmlentities($title) : 'Spy Agency' ?></title>
-    <link rel="stylesheet" href="styles/_settings.css">
-    <link rel="stylesheet" href="<?= 'styles/' . $styleFolder . 'style.css' ?>">
+    <link rel="stylesheet" href="<?= $styleFolder . 'settings.css' ?>">
+    <link rel="stylesheet" href="<?= $styleFolder . $styleSubFolder . 'style.css' ?>">
 </head>
 <body>
     <nav>
