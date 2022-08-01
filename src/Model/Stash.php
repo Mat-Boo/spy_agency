@@ -8,7 +8,6 @@ class Stash
     private $address;
     private $country;
     private $type;
-    private $id_mission;
 
     /**
      * Get the value of id_stash
@@ -86,26 +85,6 @@ class Stash
     public function setType($type)
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of id_mission
-     */ 
-    public function getId_mission()
-    {
-        return $this->id_mission;
-    }
-
-    /**
-     * Set the value of id_mission
-     *
-     * @return  self
-     */ 
-    public function setId_mission($id_mission)
-    {
-        $this->id_mission = $id_mission;
 
         return $this;
     }

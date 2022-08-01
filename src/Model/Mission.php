@@ -268,11 +268,6 @@ class Mission
         return $this;
     }
 
-    public function addAgents(Agent $agent): void
-    {
-        $this->agents[] = $agent;
-    }
-
     /**
      * Get the value of contacts
      */ 
@@ -291,11 +286,6 @@ class Mission
         $this->contacts = $contacts;
 
         return $this;
-    }
-
-    public function addContacts(Contact $contact): void
-    {
-        $this->contacts[] = $contact;
     }
 
     /**
@@ -318,9 +308,11 @@ class Mission
         return $this;
     }
 
-    public function addTargets(target$target): void
+    public function addPersons(Person $person, string $personItem): void
     {
-        $this->targets[] = $target;
+        if (!in_array($person, $this->{$personItem . 's'})) {
+            $this->{$personItem . 's'}[] = $person;
+        }
     }
 
     /**

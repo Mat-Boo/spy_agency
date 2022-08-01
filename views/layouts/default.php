@@ -26,6 +26,6 @@ $isAdmin = strpos($_SERVER['REQUEST_URI'], 'admin') !== false;
     <footer>
         <p>Créé par Mathieu Bouthors</p>
     </footer>
-    <script src="script.js"></script>
+    <script src="scripts\mission\script.js"></script>
 </body>
 </html>

@@ -48,7 +48,12 @@
 }
 
 .missionEdit .mission select option {
-  font-size: 1.1em;
+  font-size: 1rem;
+  padding: 5px 10px;
+}
+
+.missionEdit .mission .countryMissionSelect {
+  font-size: 1em;
   padding: 5px 10px;
 }
 
@@ -101,9 +106,8 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
   margin: 50px 0;
 }
 
@@ -112,7 +116,13 @@
 }
 
 .missionEdit .mission .infosMission .missionItem {
-  margin: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .missionEdit .mission .details {
@@ -202,7 +212,6 @@
 }
 
 .missionEdit .mission .details .detailsInfos .InfosItems .infosItem {
-  width: 350px;
   margin: 10px 0;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -244,6 +253,12 @@
   margin-top: 20px;
 }
 
+.missionEdit .mission .actionBtns .CancelAndConfirmBtns {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
 .missionEdit .mission .actionBtns .actionBtn {
   text-decoration: none;
   display: -webkit-box;
@@ -274,12 +289,25 @@
   margin-right: 12px;
 }
 
-.missionEdit .mission .actionBtns .editBtn {
-  background: #2a60b3;
-}
-
 .missionEdit .mission .actionBtns .deleteBtn {
   background: #dd4c4c;
   margin-right: 5px;
 }
-/*# sourceMappingURL=style.css.map */
+
+.missionEdit .mission .actionBtns .cancelBtn {
+  background: #e77d36;
+  margin-right: 20px;
+}
+
+.missionEdit .mission .actionBtns .cancelBtn a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-decoration: none;
+  color: white;
+}
+
+.missionEdit .mission .actionBtns .confirmBtn {
+  background: #2ab37a;
+}
+/*# sourceMappingURL=editMission_style.css.map */

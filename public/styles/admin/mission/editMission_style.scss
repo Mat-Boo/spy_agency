@@ -24,9 +24,14 @@
                 color:#395B64 ;
             }
             option {
-                font-size: 1.1em;
+                font-size: 1rem;
                 padding: 5px 10px;
             }
+        }
+        .countryMissionSelect {
+            font-size: 1em;
+            padding: 5px 10px;
+
         }
         background: #A5C9CA;
         width: 100%;
@@ -65,13 +70,14 @@
         }
         .infosMission {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
             margin: 50px 0;
             label {
                 margin: 0 10px 10px 0;
             }
             .missionItem {
-                margin: 5px;
+                display: flex;
+                flex-direction: column;
             }
         }
         .details {
@@ -121,7 +127,7 @@
                     justify-content: space-between;
                     margin: 30px 0;
                     .infosItem {
-                        width: 350px;
+                       
                         margin: 10px 0;
                         display: flex;
                         flex-direction: column;
@@ -148,6 +154,9 @@
             justify-content: space-between;
             align-items: center;
             margin-top: 20px;
+            .CancelAndConfirmBtns {
+                display: flex;
+            }
             .actionBtn {
                 text-decoration: none;
                 display: flex;
@@ -168,12 +177,21 @@
                     margin-right: 12px;
                 }
             }
-            .editBtn {
-                background: rgb(42, 96, 179);
-            }
             .deleteBtn {
                 background: rgb(221, 76, 76);
                 margin-right: 5px;
+            }
+            .cancelBtn {
+                background: rgb(231, 125, 54);
+                margin-right: 20px;
+                a {
+                    display: flex;
+                    text-decoration: none;
+                    color: white;
+                }
+            }
+            .confirmBtn {
+                background: rgb(42, 179, 122);
             }
         }
     }

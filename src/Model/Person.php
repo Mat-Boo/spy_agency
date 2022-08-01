@@ -1,32 +1,32 @@
 <?php
 
-namespace App\Model;
+namespace App\model;
 
-class Contact
+class Person
 {
-    private $id_contact;
+    private $id;
     private $firstname;
     private $lastname;
     private $birthdate;
     private $nationality;
-    private $id_mission;
-    
+    private $specialities = [];
+
     /**
-     * Get the value of id_contact
+     * Get the value of id
      */ 
-    public function getId_contact()
+    public function getId()
     {
-        return $this->id_contact;
+        return $this->id;
     }
 
     /**
-     * Set the value of id_contact
+     * Set the value of id
      *
      * @return  self
      */ 
-    public function setId_contact($id_contact)
+    public function setId($id)
     {
-        $this->id_contact = $id_contact;
+        $this->id = $id;
 
         return $this;
     }
@@ -110,24 +110,29 @@ class Contact
 
         return $this;
     }
-
+    
     /**
-     * Get the value of id_mission
+     * Get the value of specialities
      */ 
-    public function getId_mission()
+    public function getSpecialities()
     {
-        return $this->id_mission;
+        return $this->specialities;
     }
-
+    
     /**
-     * Set the value of id_mission
+     * Set the value of specialities
      *
      * @return  self
      */ 
-    public function setId_mission($id_mission)
+    public function setSpecialities($specialities)
     {
-        $this->id_mission = $id_mission;
-
+        $this->specialities = $specialities;
+        
         return $this;
+    }
+
+    public function addSpecialities(Speciality $speciality): void
+    {
+        $this->specialities[] = $speciality;
     }
 }

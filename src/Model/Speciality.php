@@ -6,6 +6,8 @@ class Speciality
 {
     private $id_speciality;
     private $name;
+    private $missions = [];
+    private $agents = [];
 
     /**
      * Get the value of id_speciality
@@ -46,4 +48,9 @@ class Speciality
 
         return $this;
     }
+
+/*     public function addAgents(Agent $agent): void
+    {
+        $this->agents[] = $agent;
+    } */
 }

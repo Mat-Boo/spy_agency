@@ -1,4 +1,4 @@
-.missionTitle {
+.agentTitle {
     text-align: center;
     font-size: 3em;
     color: #395B64;
@@ -75,7 +75,7 @@
                     flex-direction: column;
                     justify-content: center;
                     flex-wrap: wrap;
-                    .missionsFiltersLine {
+                    .agentsFiltersLine {
                         display: flex;
                         justify-content: space-between;
                         margin-bottom: 10px;
@@ -146,13 +146,13 @@
         }
     }
 }
-.missionsList {
+.agentsList {
     margin: 0;
     list-style: none;
     padding: 50px;
     margin: 0;
     text-align: center;
-    .mission {
+    .agent {
         display: inline-block;
         text-align:initial ;
         margin: 20px;
@@ -160,7 +160,8 @@
         padding: 10px 20px;
         width: 650px;
         box-shadow: 0 0 10px #395B64;
-        .headerMission {
+        background: #A5C9CA;
+        .headerAgent {
             display: flex;
             justify-content: space-between;
             background: #395B64;
@@ -168,14 +169,19 @@
             padding: 0 10px;
             color: white;
         }
-        .infosMission {
+        .infosAgent {
             display: flex;
             justify-content: space-between;
             margin: 20px;
             position: relative;
-            .missionItems {
+            /* .map {
+                margin-right: 20px;
+                border-radius: 5px;
+                box-shadow: 0 0 10px #395B64;
+            } */
+            .AgentItems {
                 bottom: 0;
-                .missionItem {
+                .AgentItem {
                     margin: 5px;
                 }
             }

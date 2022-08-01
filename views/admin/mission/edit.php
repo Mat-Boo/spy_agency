@@ -2,15 +2,12 @@
 
 $title = 'Spy Agency - Missions - Admin';
 $styleFolder = '../../../styles/';
-$styleSubFolder = 'admin/mission/';
+$styleSubFolder = 'admin/mission/editMission_';
 
 use App\Connection;
 use App\Model\Missions;
 use App\model\Specialities;
-use App\model\Agents;
-use App\model\Contacts;
-use App\model\Targets;
-use App\model\Stashs;
+use App\Model\Countries;
 
 $pdo = (new Connection)->getPdo();
 
@@ -21,7 +18,15 @@ $missionArray[] = $mission;
 $specialities = new Specialities($pdo);
 $specialitiesList = $specialities->getSpecialitiesList();
 
-$agents = new Agents($pdo);
+$countries = new Countries($pdo);
+$countriesList = $countries->getCountriesList();
+
+$missionsVars = $missions->createVariables($_GET);
+
+//Hydratation de la mission éditée avec les personnes (agents, contacts, cibles) et les planques
+$missions->hydrateMissionsFromTables($missionsVars, $missionArray);
+
+/* $agents = new Agents($pdo);
 $agentsList = $agents->getAgentsList();
 $agents->hydrateMissions($missionArray, $agentsList);
 
@@ -35,31 +40,20 @@ $targets->hydrateMissions($missionArray, $targetsList);
 
 $stashs = new Stashs($pdo);
 $stashsList = $stashs->getStashsList();
-$stashs->hydrateMissions($missionArray, $stashsList);
+$stashs->hydrateMissions($missionArray, $stashsList); */
 
+if (!empty($_POST)) {
+    $missions->update($_POST, $mission->getId_mission());
+    header('location: /admin/mission');
+}
 
-
-/* $missionsList = $missions->getMissionsList();
-
-
-$agentsListFiltered = $agents->filterAgents($_GET);
-$contactsListFiltered = $contacts->filterContacts($_GET);
-$targetsListFiltered = $targets->filterTargets($_GET);
-$stashsListFiltered = $stashs->filterStashs($_GET);
-$missionsListFiltered = $missions->filterMissions($_GET, $agentsListFiltered, $contactsListFiltered, $targetsListFiltered, $stashsListFiltered);
- */
-
-/* var_dump($missionsListFiltered); */
-
-
-/* var_dump($_GET); */
 
 ?>
 
 <div class="missionEdit">
     <h1 class="missionEditTitle"><?= 'Édition de la mission ' .  $mission->getId_mission() ?></h1>
     <form 
-        action="/admin/mission"
+        action=""
         method="POST"
         class="mission"
         >
@@ -72,9 +66,10 @@ $missionsListFiltered = $missions->filterMissions($_GET, $agentsListFiltered, $c
                 <?php foreach($missions->getStatus() as $status) : ?>
                     <div style="background:<?= $status['background'] ?>">
                         <input
-                            type="checkbox"
+                            type="radio"
                             id="<?= $status['status'] ?>"
-                            name="<?= $status['status'] ?>"
+                            name="status"
+                            value="<?= $status['status'] ?>"
                             <?php if ($status['status'] === $mission->getStatus()['status']): ?>
                                 checked
                             <?php endif ?>
@@ -91,7 +86,17 @@ $missionsListFiltered = $missions->filterMissions($_GET, $agentsListFiltered, $c
             </div>
             <div class="missionItem">
                 <label for="countryMission"><b>Pays: </b></label>
-                <input type="text" id="countryMission" name="countryMission" value="<?= $mission->getCountry() ?>">
+                <select name="countryMission" id="countryMission" class="filter countryMissionSelect">
+                    <option value="" class="headerSelect">Sélectionnez un pays</option>
+                    <?php foreach($countriesList as $country) : ?>
+                        <option
+                            value="<?= $country['country'] ?>"
+                                <?php if ($country['country'] === $mission->getCountry()): ?>
+                                    selected
+                                <?php endif ?>
+                        ><?= $country['country'] ?></option>
+                    <?php endforeach ?>
+                </select>
             </div>
             <div class="missionItem">
                 <label for="typeMission"><b>Type: </b></label>
@@ -122,73 +127,43 @@ $missionsListFiltered = $missions->filterMissions($_GET, $agentsListFiltered, $c
                     <textarea id="descriptionMission" name="descriptionMission" rows="5"><?= $mission->getDescription() ?></textarea>
                 </div>
                 <div class="InfosItems">
-                    <div class="infosItem agents">
-                        <label for="missionAgent">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 448 512">
-                                <path d="M377.7 338.8l37.15-92.87C419 235.4 411.3 224 399.1 224h-57.48C348.5 209.2 352 193 352 176c0-4.117-.8359-8.057-1.217-12.08C390.7 155.1 416 142.3 416 128c0-16.08-31.75-30.28-80.31-38.99C323.8 45.15 304.9 0 277.4 0c-10.38 0-19.62 4.5-27.38 10.5c-15.25 11.88-36.75 11.88-52 0C190.3 4.5 181.1 0 170.7 0C143.2 0 124.4 45.16 112.5 88.98C63.83 97.68 32 111.9 32 128c0 14.34 25.31 27.13 65.22 35.92C96.84 167.9 96 171.9 96 176C96 193 99.47 209.2 105.5 224H48.02C36.7 224 28.96 235.4 33.16 245.9l37.15 92.87C27.87 370.4 0 420.4 0 477.3C0 496.5 15.52 512 34.66 512H413.3C432.5 512 448 496.5 448 477.3C448 420.4 420.1 370.4 377.7 338.8zM176 479.1L128 288l64 32l16 32L176 479.1zM271.1 479.1L240 352l16-32l64-32L271.1 479.1zM320 186C320 207 302.8 224 281.6 224h-12.33c-16.46 0-30.29-10.39-35.63-24.99C232.1 194.9 228.4 192 224 192S215.9 194.9 214.4 199C209 213.6 195.2 224 178.8 224h-12.33C145.2 224 128 207 128 186V169.5C156.3 173.6 188.1 176 224 176s67.74-2.383 96-6.473V186z"/>
-                            </svg>
-                            <b>Agent(s) :</b>
-                        </label>
-                        <select name="agentMission[]" id="agentMission" multiple class="agentMission">
-                            <option value="headerFilter" disabled class="headerSelect">Sélectionnez un ou plusieurs agent(s)</option>
-                            <?php foreach($agents->getAgents() as $agent) : ?>
-                                <option 
-                                    value="<?= $agent->getId_agent() ?>"
-                                    <?php foreach($mission->getAgents() as $agentMission): ?>
-                                        <?php if ($agent->getId_agent() === $agentMission->getId_agent()): ?>
-                                            selected
-                                        <?php endif ?>
-                                    <?php endforeach ?>
-                                ><?= $agent->getLastname() . ' ' . $agent->getfirstname() ?></option>
-                            <?php endforeach ?>
-                        </select>
-                    </div>
-                    <div class="infosItem contacts">
-                        <label for="missionContact">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-badge" viewBox="0 0 16 16">
-                                <path d="M6.5 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                                <path d="M4.5 0A2.5 2.5 0 0 0 2 2.5V14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5A2.5 2.5 0 0 0 11.5 0h-7zM3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v10.795a4.2 4.2 0 0 0-.776-.492C11.392 12.387 10.063 12 8 12s-3.392.387-4.224.803a4.2 4.2 0 0 0-.776.492V2.5z"/>
-                            </svg>
-                            <b>Contact(s) :</b>
-                        </label>
-                        <select name="contactMission[]" id="contactMission" multiple class="contactMission">
-                            <option value="headerFilter" disabled class="headerSelect">Sélectionnez un ou plusieurs contact(s)</option>
-                            <?php foreach($contacts->getContacts() as $contact) : ?>
-                                <option
-                                    value="<?= $contact->getId_contact() ?>"
-                                    <?php foreach($mission->getContacts() as $contactMission): ?>
-                                        <?php if ($contact->getId_contact() === $contactMission->getId_contact()): ?>
-                                            selected
-                                        <?php endif ?>
-                                    <?php endforeach ?>
-                                ><?= $contact->getLastname() . ' ' . $contact->getFirstname() ?></option>
-                            <?php endforeach ?>
-                        </select>
-                    </div>
-                    <div class="infosItem targets">
-                        <label for="missionTarget">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bullseye" viewBox="0 0 16 16">
-                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                <path d="M8 13A5 5 0 1 1 8 3a5 5 0 0 1 0 10zm0 1A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"/>
-                                <path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/>
-                                <path d="M9.5 8a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                            </svg>
-                            <b>Cible(s) :</b>
-                        </label>
-                        <select name="targetMission[]" id="targetMission" multiple class="targetMission">
-                            <option value="headerFilter" disabled class="headerSelect">Sélectionnez une ou plusieurs cible(s)</option>
-                            <?php foreach($targets->getTargets() as $target) : ?>
-                                <option
-                                    value="<?= $target->getId_target() ?>"
-                                    <?php foreach($mission->getTargets() as $targetMission): ?>
-                                        <?php if ($target->getId_target() === $targetMission->getId_target()): ?>
-                                            selected
-                                        <?php endif ?>
-                                    <?php endforeach ?>
-                                ><?= $target->getLastname() . ' ' . $target->getFirstname() ?></option>
-                            <?php endforeach ?>
-                        </select>
-                    </div>
+                    <?php foreach(['agent', 'contact', 'target'] as $person): ?>
+                        <div class="infosItem <?= $person . 's' ?>">
+                            <label for="mission<?= $person ?>">
+                                <?php if($person === 'agent'): ?>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 448 512">
+                                        <path d="M377.7 338.8l37.15-92.87C419 235.4 411.3 224 399.1 224h-57.48C348.5 209.2 352 193 352 176c0-4.117-.8359-8.057-1.217-12.08C390.7 155.1 416 142.3 416 128c0-16.08-31.75-30.28-80.31-38.99C323.8 45.15 304.9 0 277.4 0c-10.38 0-19.62 4.5-27.38 10.5c-15.25 11.88-36.75 11.88-52 0C190.3 4.5 181.1 0 170.7 0C143.2 0 124.4 45.16 112.5 88.98C63.83 97.68 32 111.9 32 128c0 14.34 25.31 27.13 65.22 35.92C96.84 167.9 96 171.9 96 176C96 193 99.47 209.2 105.5 224H48.02C36.7 224 28.96 235.4 33.16 245.9l37.15 92.87C27.87 370.4 0 420.4 0 477.3C0 496.5 15.52 512 34.66 512H413.3C432.5 512 448 496.5 448 477.3C448 420.4 420.1 370.4 377.7 338.8zM176 479.1L128 288l64 32l16 32L176 479.1zM271.1 479.1L240 352l16-32l64-32L271.1 479.1zM320 186C320 207 302.8 224 281.6 224h-12.33c-16.46 0-30.29-10.39-35.63-24.99C232.1 194.9 228.4 192 224 192S215.9 194.9 214.4 199C209 213.6 195.2 224 178.8 224h-12.33C145.2 224 128 207 128 186V169.5C156.3 173.6 188.1 176 224 176s67.74-2.383 96-6.473V186z"/>
+                                    </svg>
+                                <?php elseif($person === 'contact'): ?>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-badge" viewBox="0 0 16 16">
+                                        <path d="M6.5 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                        <path d="M4.5 0A2.5 2.5 0 0 0 2 2.5V14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5A2.5 2.5 0 0 0 11.5 0h-7zM3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v10.795a4.2 4.2 0 0 0-.776-.492C11.392 12.387 10.063 12 8 12s-3.392.387-4.224.803a4.2 4.2 0 0 0-.776.492V2.5z"/>
+                                    </svg>
+                                <?php elseif($person === 'target'): ?>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bullseye" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                        <path d="M8 13A5 5 0 1 1 8 3a5 5 0 0 1 0 10zm0 1A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"/>
+                                        <path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/>
+                                        <path d="M9.5 8a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                                    </svg> 
+                                <?php endif ?>
+                                <b><?=$person === 'target' ? 'Cible' : ucfirst($person) ?>(s) :</b>
+                            </label>
+                            <select name="<?= $person ?>Mission[]" id="<?= $person ?>Mission" multiple class="<?= $person ?>Mission">
+                                <option value="headerFilter" disabled class="headerSelect">Sélectionnez <?= $person === 'target' ? 'une' : 'un' ?> ou plusieurs <?= $person ?>(s)</option>
+                                <?php foreach($missionsVars[$person . 'sList'] as ${$person}) : ?>
+                                    <option 
+                                        value="<?= ${$person}->getId() ?>"
+                                        <?php foreach($mission->{'get' . ucfirst($person) . 's'}() as ${$person . 'Mission'}): ?>
+                                            <?php if (${$person}->getId() === ${$person . 'Mission'}->getId()): ?>
+                                                selected
+                                            <?php endif ?>
+                                        <?php endforeach ?>
+                                    ><?= ${$person}->getLastname() . ' ' . ${$person}->getfirstname() ?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
+                    <?php endforeach ?>
                     <div class="infosItem stashs">
                         <label for="missionStash">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
@@ -199,15 +174,21 @@ $missionsListFiltered = $missions->filterMissions($_GET, $agentsListFiltered, $c
                         </label>
                         <select name="stashMission[]" id="stashMission" multiple class="tashMission">
                             <option value="headerFilter" disabled class="headerSelect">Sélectionnez une ou plusieurs planque(s)</option>
-                            <?php foreach($stashs->getTypes() as $stash) : ?>
+                            <?php foreach($missionsVars['stashsList'] as $stash) : ?>
                                 <option
-                                    value="<?= $stash ?>"
+                                    value="<?= $stash->getId_stash() ?>"
                                     <?php foreach($mission->getStashs() as $stashMission): ?>
-                                        <?php if ($stash === $stashMission->getType()): ?>
+                                        <?php if ($stash->getId_stash() === $stashMission->getId_stash()): ?>
                                             selected
                                         <?php endif ?>
                                     <?php endforeach ?>
-                                ><?= $stash ?></option>
+                                >
+                                    <div>
+                                        <p><?= $stash->getCountry() . ' | ' ?></p>
+                                        <p><?= $stash->getType() . ' | ' ?></p>
+                                        <p><?= $stash->getaddress() ?></p>
+                                    </div>
+                                </option>
                             <?php endforeach ?>
                         </select>
                     </div>
@@ -219,7 +200,7 @@ $missionsListFiltered = $missions->filterMissions($_GET, $agentsListFiltered, $c
                         </svg>
                         <b>Spécialité :</b>
                     </label>
-                    <select name="specialityMission[]" id="specialityMission">
+                    <select name="specialityMission" id="specialityMission">
                         <option value="headerFilter" disabled class="headerSelect">Sélectionnez une spécialité</option>
                         <?php foreach($specialitiesList as $speciality) : ?>
                             <option
@@ -234,7 +215,7 @@ $missionsListFiltered = $missions->filterMissions($_GET, $agentsListFiltered, $c
             </div>
         </div>
         <div class="actionBtns">
-            <button type="" class="deleteBtn actionBtn">
+            <button type="button" class="deleteBtn actionBtn">
                 <span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="deleteSvg actionSvg" viewBox="0 0 16 16">
                         <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
@@ -242,14 +223,24 @@ $missionsListFiltered = $missions->filterMissions($_GET, $agentsListFiltered, $c
                     Supprimer
                 </span>
             </button>
-            <button type="submit" class="editBtn actionBtn">
-                <span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="confirmSvg actionSvg" viewBox="0 0 16 16">
-                        <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
-                    </svg>
-                    Valider
-                </span>
-            </button>
+            <div class="CancelAndConfirmBtns">
+                <button type="button" class="cancelBtn actionBtn">
+                    <a href="<?= $router->url('admin_mission') ?>">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="cancelSvg actionSvg" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                        </svg>
+                        Annuler
+                    </a>
+                </button>
+                <button type="submit" class="confirmBtn actionBtn">
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="confirmSvg actionSvg" viewBox="0 0 16 16">
+                            <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+                        </svg>
+                        Valider
+                    </span>
+                </button>
+            </div>
         </div>
     </form>
 </div>

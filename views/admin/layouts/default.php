@@ -1,5 +1,7 @@
 <?php
 $isAdmin = strpos($_SERVER['REQUEST_URI'], 'admin') !== false;
+$isEdit = strpos($_SERVER['REQUEST_URI'], 'edit') !== false;
+
 ?>
 
 <!DOCTYPE html>
@@ -57,6 +59,10 @@ $isAdmin = strpos($_SERVER['REQUEST_URI'], 'admin') !== false;
     <footer class="footer">
         <p>Créé par Mathieu Bouthors</p>
     </footer>
-    <script src="../script.js"></script>
+    <?php if ($isEdit): ?>
+        <script src="../../../scripts/admin/mission/script.js"></script>
+    <?php else: ?>
+        <script src="../scripts/mission/script.js"></script>
+    <?php endif ?>
 </body>
 </html>
