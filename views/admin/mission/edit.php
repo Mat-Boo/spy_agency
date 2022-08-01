@@ -21,26 +21,11 @@ $specialitiesList = $specialities->getSpecialitiesList();
 $countries = new Countries($pdo);
 $countriesList = $countries->getCountriesList();
 
-$missionsVars = $missions->createVariables($_GET);
+$personsLists = $missions->createPersonsLists();
+$personsFilters = $missions->createPersonsFilters([]);
 
 //Hydratation de la mission éditée avec les personnes (agents, contacts, cibles) et les planques
-$missions->hydrateMissionsFromTables($missionsVars, $missionArray);
-
-/* $agents = new Agents($pdo);
-$agentsList = $agents->getAgentsList();
-$agents->hydrateMissions($missionArray, $agentsList);
-
-$contacts = new Contacts($pdo);
-$contactsList = $contacts->getContactsList();
-$contacts->hydrateMissions($missionArray, $contactsList);
-
-$targets = new Targets($pdo);
-$targetsList = $targets->getTargetsList();
-$targets->hydrateMissions($missionArray, $targetsList);
-
-$stashs = new Stashs($pdo);
-$stashsList = $stashs->getStashsList();
-$stashs->hydrateMissions($missionArray, $stashsList); */
+$missions->hydrateMissionsFromTables($missionArray, $personsLists, $personsFilters);
 
 if (!empty($_POST)) {
     $missions->update($_POST, $mission->getId_mission());
@@ -151,7 +136,7 @@ if (!empty($_POST)) {
                             </label>
                             <select name="<?= $person ?>Mission[]" id="<?= $person ?>Mission" multiple class="<?= $person ?>Mission">
                                 <option value="headerFilter" disabled class="headerSelect">Sélectionnez <?= $person === 'target' ? 'une' : 'un' ?> ou plusieurs <?= $person ?>(s)</option>
-                                <?php foreach($missionsVars[$person . 'sList'] as ${$person}) : ?>
+                                <?php foreach($personsLists[$person . 'sList'] as ${$person}) : ?>
                                     <option 
                                         value="<?= ${$person}->getId() ?>"
                                         <?php foreach($mission->{'get' . ucfirst($person) . 's'}() as ${$person . 'Mission'}): ?>
@@ -174,7 +159,7 @@ if (!empty($_POST)) {
                         </label>
                         <select name="stashMission[]" id="stashMission" multiple class="tashMission">
                             <option value="headerFilter" disabled class="headerSelect">Sélectionnez une ou plusieurs planque(s)</option>
-                            <?php foreach($missionsVars['stashsList'] as $stash) : ?>
+                            <?php foreach($personsLists['stashsList'] as $stash) : ?>
                                 <option
                                     value="<?= $stash->getId_stash() ?>"
                                     <?php foreach($mission->getStashs() as $stashMission): ?>

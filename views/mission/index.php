@@ -5,26 +5,41 @@ $styleFolder = $isAdmin ? '../styles/': 'styles/';
 $styleSubFolder = 'mission/';
 
 use App\Connection;
+use App\Controllers\MissionsController;
+use App\Controllers\MissionsPersonsController;
+use App\Controllers\MissionsStashsController;
+use App\Controllers\PersonsController;
+use App\Controllers\StashsController;
 use App\Model\Missions;
 use App\model\Specialities;
 use App\Model\Countries;
 
-$pdo = (new Connection)->getPdo();
+$missionsController = new MissionsController;
+$personsController = new PersonsController;
+$stashsController = new StashsController;
+$missionsPersonsController = new MissionsPersonsController;
+$missionsStashsController = new MissionsStashsController;
 
-$missions = new Missions($pdo);
-$missionsList = $missions->getMissionsList(); //Besoin pour Lister toutes les missions uniques dans le filtre CodeName
-$missionsVars = $missions->createVariables($_GET);
+$missions = new Missions((new Connection)->getPdo());
+
+$personsLists = $personsController->getPersonsLists();
+$stashsLists = $stashsController->getStashsLists();
+
+$personsFilters = $missionsPersonsController->getPersonsFilters($_GET);
+$stashsFilters = $missionsStashsController->getStashsFilters($_GET);
+
+
 
 //Application du filtre de recherches sur les missions
-$missionsListFiltered = $missions->filterMissions($_GET, $missionsVars['agentsListFiltered'], $missionsVars['contactsListFiltered'], $missionsVars['targetsListFiltered'], $missionsVars['stashsListFiltered']);
+$missionsListFiltered = $missions->filterMissions($_GET, $personsFilters['agentsListFiltered'], $personsFilters['contactsListFiltered'], $personsFilters['targetsListFiltered'], $stashsFilters['stashsListFiltered']);
 
 //Hydratation des missions avec les personnes (agents, contacts, cibles) et les planques
-$missions->hydrateMissionsFromTables($missionsVars, $missionsListFiltered);
+$missionsController->hydrateMissionsFromTables($missionsListFiltered, $personsLists, $personsFilters, $stashsLists, $stashsFilters);
 
-$specialities = new Specialities($pdo);
-$specialitiesUniqueList = $specialities->getSpecialitiesList(); //Besoin pour Lister toutes les spécialités uniques dans le filtre Spécialités
+$specialities = new Specialities((new Connection)->getPdo());
+$specialitiesList = $specialities->getSpecialitiesList(); //Besoin pour Lister toutes les spécialités uniques dans le filtre Spécialités
 
-$countries = new Countries($pdo);
+$countries = new Countries((new Connection)->getPdo());
 $countriesList = $countries->getCountriesList(); //Besoin pour Lister tous les pays dans le filtre Pays
 
 ?>
@@ -69,7 +84,7 @@ $countriesList = $countries->getCountriesList(); //Besoin pour Lister tous les p
                             <label for="idMissionfilter" class="filterTitle">CodeName</label>
                             <select name="idMissionFilter[]" id="idMissionFilter" multiple class="filter">
                                 <option value="headerFilter" disabled class="headerSelect">Sélectionnez un ou plusieurs CodeName(s)</option>
-                                <?php foreach($missionsList as $mission) : ?>
+                                <?php foreach($missionsController->getMissionsLists() as $mission) : ?>
                                     <option
                                         value="<?= $mission->getId_mission() ?>"
                                         <?php if (isset($_GET['idMissionFilter'])): ?>
@@ -101,7 +116,7 @@ $countriesList = $countries->getCountriesList(); //Besoin pour Lister tous les p
                             <label for="specialityMissionfilter" class="filterTitle">Spécialité</label>
                             <select name="specialityMissionFilter[]" id="specialityMissionFilter" multiple class="filter">
                                 <option value="headerFilter" disabled class="headerSelect">Sélectionnez une ou plusieurs spécialité(s)</option>
-                                <?php foreach($specialitiesUniqueList as $speciality) : ?>
+                                <?php foreach($specialitiesList as $speciality) : ?>
                                     <option
                                         value="<?= $speciality->getId_speciality() ?>"
                                         <?php if (isset($_GET['specialityMissionFilter'])): ?>
@@ -186,7 +201,7 @@ $countriesList = $countries->getCountriesList(); //Besoin pour Lister tous les p
                     <div class="filtersItem">
                         <select name="<?= $person . 'Filter[]' ?>" id="<?= $person . 'Filter[]' ?>" multiple class="<?= 'filter ' . $person . 'Filter' ?>">
                             <option value="headerFilter" disabled class="headerSelect">Sélectionnez <?= $person === 'target' ? 'une' : 'un' ?> ou plusieurs <?= $person ?>(s)</option>
-                            <?php foreach($missionsVars[$person . 'sList'] as ${$person}) : ?>
+                            <?php foreach($personsLists[$person . 'sList'] as ${$person}) : ?>
                                 <option 
                                     value="<?= ${$person}->getId() ?>"
                                     <?php if (isset($_GET[$person . 'Filter'])): ?>
@@ -205,7 +220,7 @@ $countriesList = $countries->getCountriesList(); //Besoin pour Lister tous les p
                 <div class="filtersItem">
                     <select name="stashFilter[]" id="stashFilter" multiple class="filter stashFilter">
                         <option value="headerFilter" disabled class="headerSelect">Sélectionnez une ou plusieurs planque(s)</option>
-                        <?php foreach($missionsVars['stashsList'] as $stash) : ?>
+                        <?php foreach($personsLists['stashsList'] as $stash) : ?>
                                 <option
                                     value="<?= $stash->getId_stash() ?>"
                                     <?php if (isset($_GET['stashFilter'])): ?>

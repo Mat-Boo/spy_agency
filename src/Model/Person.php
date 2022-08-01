@@ -133,6 +133,8 @@ class Person
 
     public function addSpecialities(Speciality $speciality): void
     {
-        $this->specialities[] = $speciality;
+        if (!in_array($speciality, $this->specialities)) {
+            $this->specialities[] = $speciality;
+        }
     }
 }

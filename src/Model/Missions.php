@@ -33,38 +33,42 @@ class Missions
         return $missions;
     }
 
-    public function createVariables(array $filterOptions): array
+/*     public function createPersonsLists(): array
     {
-        $missionsVars = [];
-        // Création des variables utiles pour les personnes (Agents, contacts et cibles)
+        $personsLists = [];
         foreach(['agent', 'contact', 'target'] as $person) {
             ${$person . 's'} = new Persons($this-> pdo, $person);
-            $missionsVars[$person . 'sList'] = ${$person . 's'}->getPersonsList(); //Besoin pour lister tous les Agents/Contacts/Targets dans les filtres et alimenter l'hydratation
-            $missionsVars['missions' . ucfirst($person . 's')] = new MissionsPersons($this->pdo, $person);
-            $missionsVars[$person . 'sListFiltered'] = $missionsVars['missions' . ucfirst($person . 's')]->filterPersons($filterOptions); //Besoin pour filtrer selon les personnes (Agents, contacts et cibles)
+            $personsLists[$person . 'sList'] = ${$person . 's'}->getPersonsList();
         }
-        //
-        //Création des variables utiles pour les planques
         $stashs = new Stashs($this->pdo);
-        $missionsVars['stashsList'] = $stashs->getStashsList(); //Besoin pour lister tous les types de planques uniques dans le filtre et alimenter l'hydratation
-        $missionsVars['missionsStashs'] = new MissionsStashs($this->pdo);
-        $missionsVars['stashsListFiltered'] = $missionsVars['missionsStashs']->filterStashs($filterOptions); //Besoin pour filtrer selon les planques
-        //
-        return $missionsVars;
+        $personsLists['stashsList'] = $stashs->getStashsList();
+        return $personsLists;
     }
 
-    public function hydrateMissionsFromTables(array $missionsVars, array $missionsListFiltered)
+    public function createPersonsFilters(array $filterOptions): array
+    {
+        $personsFilters = [];
+        foreach(['agent', 'contact', 'target'] as $person) {
+            $personsFilters['missions' . ucfirst($person . 's')] = new MissionsPersons($this->pdo, $person);
+            $personsFilters[$person . 'sListFiltered'] = $personsFilters['missions' . ucfirst($person . 's')]->filterPersons($filterOptions); //Besoin pour filtrer selon les personnes (Agents, contacts et cibles)
+        }
+        $personsFilters['missionsStashs'] = new MissionsStashs($this->pdo);
+        $personsFilters['stashsListFiltered'] = $personsFilters['missionsStashs']->filterStashs($filterOptions); //Besoin pour filtrer selon les planques
+        return $personsFilters;
+    } */
+
+    /* public function hydrateMissionsFromTables(array $missionsListFiltered, array $personsLists, array $personsFilters, array $stashsLists, array $stashsFilters)
     {
         // Hydratation des missions avec les personnes (Agents, contacts, et cibles)
         foreach(['agent', 'contact', 'target'] as $person) {
-            $missionsVars['missions' . ucfirst($person . 's')]->hydrateMissions($missionsListFiltered, $missionsVars[$person . 'sList']); //Besoin pour hydrater les missions filtrées    
+            $personsFilters['missions' . ucfirst($person . 's')]->hydrateMissions($missionsListFiltered, $personsLists[$person . 'sList']); //Besoin pour hydrater les missions filtrées    
         }
         //
 
         // Hydratation des missions avec les planques
-        $missionsVars['missionsStashs']->hydrateMissions($missionsListFiltered, $missionsVars['stashsList']);
+        $stashsFilters['missionsStashs']->hydrateMissions($missionsListFiltered, $stashsLists['stashsList']);
         //
-    }
+    } */
 
     public function getStatus(): array
     {
