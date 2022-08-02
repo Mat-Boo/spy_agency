@@ -4,43 +4,36 @@ $title = $isAdmin ? 'Spy Agency - Missions - Admin' : 'Spy Agency - Missions';
 $styleFolder = $isAdmin ? '../styles/': 'styles/';
 $styleSubFolder = 'mission/';
 
-use App\Connection;
 use App\Controllers\MissionsController;
-use App\Controllers\MissionsPersonsController;
-use App\Controllers\MissionsStashsController;
 use App\Controllers\PersonsController;
 use App\Controllers\StashsController;
-use App\Model\Missions;
-use App\model\Specialities;
-use App\Model\Countries;
+use App\Controllers\MissionsPersonsController;
+use App\Controllers\MissionsStashsController;
+use App\Controllers\SpecialitiesController;
+use App\Controllers\CountriesController;
 
 $missionsController = new MissionsController;
 $personsController = new PersonsController;
 $stashsController = new StashsController;
 $missionsPersonsController = new MissionsPersonsController;
 $missionsStashsController = new MissionsStashsController;
+$specialitiesController = new SpecialitiesController;
+$countriesController = new CountriesController;
 
-$missions = new Missions((new Connection)->getPdo());
-
+//Récupération des listes
+$missionsList = $missionsController->getMissionsList();
 $personsLists = $personsController->getPersonsLists();
-$stashsLists = $stashsController->getStashsLists();
+$stashsList = $stashsController->getStashsList();
+$specialitiesList = $specialitiesController->getSpecialitiesList();
+$countriesList = $countriesController->getCountriesList();
 
+//Application des filtre de recherche sur les missions
 $personsFilters = $missionsPersonsController->getPersonsFilters($_GET);
 $stashsFilters = $missionsStashsController->getStashsFilters($_GET);
-
-
-
-//Application du filtre de recherches sur les missions
-$missionsListFiltered = $missions->filterMissions($_GET, $personsFilters['agentsListFiltered'], $personsFilters['contactsListFiltered'], $personsFilters['targetsListFiltered'], $stashsFilters['stashsListFiltered']);
+$missionsListFiltered = $missionsController->filterMissions($_GET, $personsFilters, $stashsFilters);
 
 //Hydratation des missions avec les personnes (agents, contacts, cibles) et les planques
-$missionsController->hydrateMissionsFromTables($missionsListFiltered, $personsLists, $personsFilters, $stashsLists, $stashsFilters);
-
-$specialities = new Specialities((new Connection)->getPdo());
-$specialitiesList = $specialities->getSpecialitiesList(); //Besoin pour Lister toutes les spécialités uniques dans le filtre Spécialités
-
-$countries = new Countries((new Connection)->getPdo());
-$countriesList = $countries->getCountriesList(); //Besoin pour Lister tous les pays dans le filtre Pays
+$missionsController->hydrateMissionsFromTables($missionsListFiltered, $personsLists, $personsFilters, $stashsList, $stashsFilters);
 
 ?>
 
@@ -84,7 +77,7 @@ $countriesList = $countries->getCountriesList(); //Besoin pour Lister tous les p
                             <label for="idMissionfilter" class="filterTitle">CodeName</label>
                             <select name="idMissionFilter[]" id="idMissionFilter" multiple class="filter">
                                 <option value="headerFilter" disabled class="headerSelect">Sélectionnez un ou plusieurs CodeName(s)</option>
-                                <?php foreach($missionsController->getMissionsLists() as $mission) : ?>
+                                <?php foreach($missionsList as $mission) : ?>
                                     <option
                                         value="<?= $mission->getId_mission() ?>"
                                         <?php if (isset($_GET['idMissionFilter'])): ?>
@@ -100,7 +93,7 @@ $countriesList = $countries->getCountriesList(); //Besoin pour Lister tous les p
                             <label for="typeMissionfilter" class="filterTitle">Type</label>
                             <select name="typeMissionFilter[]" id="typeMissionFilter" multiple class="filter">
                                 <option value="headerFilter" disabled class="headerSelect">Sélectionnez un ou plusieurs type(s)</option>
-                                <?php foreach($missions->getTypes() as $type) : ?>
+                                <?php foreach($missionsController->getTypes() as $type) : ?>
                                     <option
                                         value="<?= $type ?>"
                                         <?php if (isset($_GET['typeMissionFilter'])): ?>
@@ -133,7 +126,7 @@ $countriesList = $countries->getCountriesList(); //Besoin pour Lister tous les p
                         <div class='labelAndFilter'>
                             <label class="filterTitle">Statut</label>
                             <div class="filter statusMissionFilter">
-                                <?php foreach($missions->getStatus() as $status) : ?>
+                                <?php foreach($missionsController->getStatus() as $status) : ?>
                                     <div style="background:<?= $status['background'] ?>">
                                         <input
                                             type="checkbox"
@@ -220,7 +213,7 @@ $countriesList = $countries->getCountriesList(); //Besoin pour Lister tous les p
                 <div class="filtersItem">
                     <select name="stashFilter[]" id="stashFilter" multiple class="filter stashFilter">
                         <option value="headerFilter" disabled class="headerSelect">Sélectionnez une ou plusieurs planque(s)</option>
-                        <?php foreach($personsLists['stashsList'] as $stash) : ?>
+                        <?php foreach($stashsList as $stash) : ?>
                                 <option
                                     value="<?= $stash->getId_stash() ?>"
                                     <?php if (isset($_GET['stashFilter'])): ?>

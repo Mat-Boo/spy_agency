@@ -7,7 +7,7 @@ use App\model\Stashs;
 
 class StashsController
 {
-    public function getStashsLists(): array
+    public function getStashsList(): array
     {
         $stashs = new Stashs((new Connection)->getPdo());
         return $stashs->getStashsList();
