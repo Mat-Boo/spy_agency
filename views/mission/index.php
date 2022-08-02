@@ -22,19 +22,19 @@ $countriesController = new CountriesController;
 
 //Récupération des listes
 $missionsList = $missionsController->getMissionsList();
-$personsLists = $personsController->getPersonsLists();
+$personsLists = $personsController->getPersonsLists('lastname');
 $stashsList = $stashsController->getStashsList();
 $specialitiesList = $specialitiesController->getSpecialitiesList();
 $countriesList = $countriesController->getCountriesList();
 
 //Application des filtre de recherche sur les missions
-$personsFilters = $missionsPersonsController->getPersonsFilters($_GET);
+$personsFilters = $missionsPersonsController->filterPersons($_GET);
 $stashsFilters = $missionsStashsController->getStashsFilters($_GET);
 $missionsListFiltered = $missionsController->filterMissions($_GET, $personsFilters, $stashsFilters);
 
 //Hydratation des missions avec les personnes (agents, contacts, cibles) et les planques
-$missionsController->hydrateMissionsFromTables($missionsListFiltered, $personsLists, $personsFilters, $stashsList, $stashsFilters);
-
+$missionsPersonsController->hydrateMissions($missionsListFiltered, $personsLists, $personsFilters);
+$missionsStashsController->hydrateMissions($missionsListFiltered, $stashsList, $stashsFilters);
 ?>
 
 <script>
@@ -193,7 +193,7 @@ $missionsController->hydrateMissionsFromTables($missionsListFiltered, $personsLi
                     <span class="filtersBlockTitle"><?= $person === 'target' ? 'Cible' : ucfirst($person) ?></span>
                     <div class="filtersItem">
                         <select name="<?= $person . 'Filter[]' ?>" id="<?= $person . 'Filter[]' ?>" multiple class="<?= 'filter ' . $person . 'Filter' ?>">
-                            <option value="headerFilter" disabled class="headerSelect">Sélectionnez <?= $person === 'target' ? 'une' : 'un' ?> ou plusieurs <?= $person ?>(s)</option>
+                            <option value="headerFilter" disabled class="headerSelect">Sélectionnez <?= $person === 'target' ? 'une' : 'un' ?> ou plusieurs <?= $person === 'target' ? 'cible' : $person ?>(s)</option>
                             <?php foreach($personsLists[$person . 'sList'] as ${$person}) : ?>
                                 <option 
                                     value="<?= ${$person}->getId() ?>"

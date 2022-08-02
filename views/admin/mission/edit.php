@@ -4,34 +4,44 @@ $title = 'Spy Agency - Missions - Admin';
 $styleFolder = '../../../styles/';
 $styleSubFolder = 'admin/mission/editMission_';
 
-use App\Connection;
-use App\Model\Missions;
-use App\model\Specialities;
-use App\Model\Countries;
+use App\Controllers\MissionsController;
+use App\Controllers\PersonsController;
+use App\Controllers\StashsController;
+use App\Controllers\MissionsPersonsController;
+use App\Controllers\MissionsStashsController;
+use App\Controllers\SpecialitiesController;
+use App\Controllers\CountriesController;
 
-$pdo = (new Connection)->getPdo();
+$missionsController = new MissionsController;
+$personsController = new PersonsController;
+$stashsController = new StashsController;
+$missionsPersonsController = new MissionsPersonsController;
+$missionsStashsController = new MissionsStashsController;
+$specialitiesController = new SpecialitiesController;
+$countriesController = new CountriesController;
 
-$missions = new Missions($pdo);
-$mission = $missions->find($params['id']);
+//Récupération des listes
+$personsLists = $personsController->getPersonsLists('lastname');
+$stashsList = $stashsController->getStashsList();
+$specialitiesList = $specialitiesController->getSpecialitiesList();
+$countriesList = $countriesController->getCountriesList();
+
+//Application des filtre de recherche sur les missions
+$personsFilters = $missionsPersonsController->filterPersons($_GET);
+$stashsFilters = $missionsStashsController->getStashsFilters($_GET);
+$missionsListFiltered = $missionsController->filterMissions($_GET, $personsFilters, $stashsFilters);
+
+$mission = $missionsController->find($params['id']);
 $missionArray[] = $mission;
 
-$specialities = new Specialities($pdo);
-$specialitiesList = $specialities->getSpecialitiesList();
-
-$countries = new Countries($pdo);
-$countriesList = $countries->getCountriesList();
-
-$personsLists = $missions->createPersonsLists();
-$personsFilters = $missions->createPersonsFilters([]);
-
 //Hydratation de la mission éditée avec les personnes (agents, contacts, cibles) et les planques
-$missions->hydrateMissionsFromTables($missionArray, $personsLists, $personsFilters);
+$missionsPersonsController->hydrateMissions($missionArray, $personsLists, $personsFilters);
+$missionsStashsController->hydrateMissions($missionArray, $stashsList, $stashsFilters);
 
 if (!empty($_POST)) {
-    $missions->update($_POST, $mission->getId_mission());
+    $missionsController ->update($_POST, $mission->getId_mission());
     header('location: /admin/mission');
 }
-
 
 ?>
 
@@ -48,7 +58,7 @@ if (!empty($_POST)) {
                 <input type="text" id="titleMission" name="titleMission" value="<?= $mission->getTitle() ?>">
             </div>
             <div class="filter statusMission">
-                <?php foreach($missions->getStatus() as $status) : ?>
+                <?php foreach($missionsController->getStatus() as $status) : ?>
                     <div style="background:<?= $status['background'] ?>">
                         <input
                             type="radio"
@@ -159,7 +169,7 @@ if (!empty($_POST)) {
                         </label>
                         <select name="stashMission[]" id="stashMission" multiple class="tashMission">
                             <option value="headerFilter" disabled class="headerSelect">Sélectionnez une ou plusieurs planque(s)</option>
-                            <?php foreach($personsLists['stashsList'] as $stash) : ?>
+                            <?php foreach($stashsList as $stash) : ?>
                                 <option
                                     value="<?= $stash->getId_stash() ?>"
                                     <?php foreach($mission->getStashs() as $stashMission): ?>

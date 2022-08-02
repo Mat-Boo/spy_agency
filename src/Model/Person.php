@@ -9,6 +9,7 @@ class Person
     private $lastname;
     private $birthdate;
     private $nationality;
+    private $missions = [];
     private $specialities = [];
 
     /**
@@ -79,6 +80,12 @@ class Person
         return $this->birthdate;
     }
 
+    public function getConvertedBirthdate()
+    {
+        $convertedDate = date("d/m/Y", strtotime($this->birthdate));
+        return $convertedDate;
+    }
+
     /**
      * Set the value of birthdate
      *
@@ -109,6 +116,33 @@ class Person
         $this->nationality = $nationality;
 
         return $this;
+    }
+
+    /**
+     * Get the value of missions
+     */ 
+    public function getMissions()
+    {
+        return $this->missions;
+    }
+
+    /**
+     * Set the value of missions
+     *
+     * @return  self
+     */ 
+    public function setMissions($missions)
+    {
+        $this->missions = $missions;
+
+        return $this;
+    }
+
+    public function addMissions(Mission $mission): void
+    {
+        if (!in_array($mission, $this->missions)) {
+            $this->missions[] = $mission;
+        }
     }
     
     /**

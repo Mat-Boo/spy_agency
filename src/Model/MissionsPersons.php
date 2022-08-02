@@ -14,7 +14,7 @@ class MissionsPersons
         $this->personItem = $personItem;
     }
 
-    public function getMissionsPersons(): array
+    public function getMissionsPersonsLists(): array
     {
         if (!is_null($this->pdo)) {
             $stmt = $this->pdo->query(
@@ -33,10 +33,25 @@ class MissionsPersons
     {
         foreach($missions as $mission) {
             foreach($persons as $person) {
-                    foreach($this->getMissionsPersons() as $missionPerson) {
+                    foreach($this->getMissionsPersonsLists() as $missionPerson) {
                     if ($mission->getId_mission() === $missionPerson->getId_mission()) {
                         if ($person->getId() === $missionPerson->getId()) {
                             $mission->addPersons($person, $this->personItem);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public function hydratePersons(array $persons, array $missions): void
+    {
+        foreach($persons as $person) {
+            foreach($missions as $mission) {
+                    foreach($this->getMissionsPersonsLists() as $missionPerson) {
+                    if ($person->getId() === $missionPerson->getId()) {
+                        if ($mission->getId_mission() === $missionPerson->getId_mission()) {
+                            $person->addMissions($mission, $this->personItem);
                         }
                     }
                 }
@@ -60,5 +75,23 @@ class MissionsPersons
             }
         }
         return ${'missionIdsFrom' . $this->personItem . 's'};
+    }
+
+    public function filterMissions(array $filterOptions): array
+    {
+        if (!is_null($this->pdo)) {
+            $MissionFilter = isset($filterOptions['missionsFilter']) ? " WHERE id_mission IN (" . implode(",", $filterOptions['missionsFilter']) . ")" : '';
+
+            $stmt = $this->pdo->query(
+                "SELECT id
+                FROM Mission" . ucfirst($this->personItem)
+                . $MissionFilter
+            );
+            $personIdsFromMissions = [];
+            while ($personIdsFromMission = $stmt->fetchColumn()) {
+                $personIdsFromMissions[] = $personIdsFromMission;
+            }
+        }
+        return $personIdsFromMissions;
     }
 }

@@ -12,7 +12,7 @@ class AgentsSpecialities
         $this->pdo = $pdo;
     }
 
-    public function getAgentsSpecialities(): array
+    public function getAgentsSpecialitiesList(): array
     {
         if (!is_null($this->pdo)) {
             $stmt = $this->pdo->query(
@@ -31,7 +31,7 @@ class AgentsSpecialities
     {
         foreach($agents as $agent) {
             foreach($specialities as $speciality) {
-                    foreach($this->getAgentsSpecialities() as $agentSpeciality) {
+                    foreach($this->getAgentsSpecialitiesList() as $agentSpeciality) {
                     if ($agent->getId() === $agentSpeciality->getId()) {
                         if ($speciality->getId_speciality() === $agentSpeciality->getId_speciality()) {
                             $agent->addSpecialities($speciality);
@@ -45,16 +45,16 @@ class AgentsSpecialities
     public function filterSpecialities(array $filterOptions): array
     {
         if (!is_null($this->pdo)) {
-            $specialityFilter = isset($filterOptions['specialityFilter']) ? " WHERE id_speciality IN (" . implode(",", $filterOptions['specialityFilter']) . ")" : '';
+            $specialityFilter = isset($filterOptions['specialitiesPersonFilter']) ? " WHERE id_speciality IN (" . implode(",", $filterOptions['specialitiesPersonFilter']) . ")" : '';
 
             $stmt = $this->pdo->query(
                 "SELECT id
-                FROM agentSpeciality"
+                FROM AgentSpeciality"
                 . $specialityFilter
             );
             $agentIdsFromSpecialities = [];
-            while ($agentIdsFromspeciality = $stmt->fetchColumn()) {
-                $agentIdsFromSpecialities[] = $agentIdsFromspeciality;
+            while ($agentIdsFromSpeciality = $stmt->fetchColumn()) {
+                $agentIdsFromSpecialities[] = $agentIdsFromSpeciality;
             }
         }
         return $agentIdsFromSpecialities;

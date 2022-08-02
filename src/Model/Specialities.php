@@ -25,18 +25,6 @@ class Specialities
         while ($speciality = $stmt->fetchObject(Speciality::class)) {
             $specialities[] = $speciality;
         }
-
         return $specialities;
     }
-
-/*     public function hydrateAgents(array $agents, array $specialities): void
-    {
-        foreach($agents as $agent) {
-            foreach($specialities as $speciality) {
-                if ($agent->getId_agent() === $speciality->getId_agent()) {
-                    $agent->addSpecialities($speciality);
-                }
-            }
-        }
-    } */
 }

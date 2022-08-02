@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Connection;
+use App\Model\Mission;
 use App\Model\Missions;
 
 class MissionsController
@@ -11,19 +12,6 @@ class MissionsController
     {
         $missions = new Missions((new Connection)->getPdo());
         return $missions->getMissionsList();
-    }
-
-    public function hydrateMissionsFromTables(array $missionsListFiltered, array $personsLists, array $personsFilters, array $stashsLists, array $stashsFilters)
-    {
-        // Hydratation des missions avec les personnes (Agents, contacts, et cibles)
-        foreach(['agent', 'contact', 'target'] as $person) {
-            $personsFilters['missions' . ucfirst($person . 's')]->hydrateMissions($missionsListFiltered, $personsLists[$person . 'sList']); //Besoin pour hydrater les missions filtrées    
-        }
-        //
-
-        // Hydratation des missions avec les planques
-        $stashsFilters['missionsStashs']->hydrateMissions($missionsListFiltered, $stashsLists);
-        //
     }
 
     public function getStatus(): array
@@ -107,5 +95,18 @@ class MissionsController
         $missions = new Missions((new Connection)->getPdo());
 
         return $missions->filterMissions($filterConditions);
+    }
+
+    public function find(int $idMission): Mission
+    {
+        $missions = new Missions((new Connection)->getPdo());
+        return $missions->find($idMission);
+        
+    }
+
+    public function update(array $mission, int $id_mission): void
+    {
+        $missions = new Missions((new Connection)->getPdo());
+        $missions->update($mission, $id_mission);
     }
 }

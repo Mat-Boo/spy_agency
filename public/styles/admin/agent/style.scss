@@ -1,4 +1,4 @@
-.agentTitle {
+.personTitle {
     text-align: center;
     font-size: 3em;
     color: #395B64;
@@ -75,7 +75,7 @@
                     flex-direction: column;
                     justify-content: center;
                     flex-wrap: wrap;
-                    .agentsFiltersLine {
+                    .personsFiltersLine {
                         display: flex;
                         justify-content: space-between;
                         margin-bottom: 10px;
@@ -88,34 +88,14 @@
                             margin-bottom: 5px;
                             color: #395B64;
                         }
-                        .statusMissionFilter {
-                            display: flex;
-                            flex-wrap: wrap;
-                            justify-content: center;
-                            width: 300px;
-                            background: white;
-                            border: 1px solid #767676;
-                            border-radius: 2px;
-                            div {
-                                margin: 5px;
-                                padding: 5px;
-                                border-radius: 3px;
-                                display: flex;
-                                align-items: center;
-                                width: 130px;
-                                label {
-                                    font-size: 0.9em;
-                                }
-                            }
-                        }
                     }
-                    .agentFilter, .contactFilter, .targetFilter, .stashFilter {
-                        height: 262px;         
+                    .missionFilter {
+                        height: 262px;
                     }
                     input, select option {
                         padding: 5px 10px;
                     }
-                    .countryMissionSelect {
+                    .nationalityPersonSelect {
                         padding: 5px 10px;
                         option {
                             padding: 5px 10px;
@@ -146,13 +126,13 @@
         }
     }
 }
-.agentsList {
+.personsList {
     margin: 0;
     list-style: none;
     padding: 50px;
     margin: 0;
     text-align: center;
-    .agent {
+    .person {
         display: inline-block;
         text-align:initial ;
         margin: 20px;
@@ -161,7 +141,7 @@
         width: 650px;
         box-shadow: 0 0 10px #395B64;
         background: #A5C9CA;
-        .headerAgent {
+        .headerPerson {
             display: flex;
             justify-content: space-between;
             background: #395B64;
@@ -169,7 +149,7 @@
             padding: 0 10px;
             color: white;
         }
-        .infosAgent {
+        .infosPerson {
             display: flex;
             justify-content: space-between;
             margin: 20px;
@@ -179,9 +159,9 @@
                 border-radius: 5px;
                 box-shadow: 0 0 10px #395B64;
             } */
-            .AgentItems {
+            .personItems {
                 bottom: 0;
-                .AgentItem {
+                .personItem {
                     margin: 5px;
                 }
             }

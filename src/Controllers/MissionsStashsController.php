@@ -15,4 +15,9 @@ class MissionsStashsController
         $stashsFilters['stashsListFiltered'] = $stashsFilters['missionsStashs']->filterStashs($filterOptions); //Besoin pour filtrer selon les planques
         return $stashsFilters;
     }
+
+    public function hydrateMissions(array $missionsListFiltered, array $stashsLists, array $stashsFilters)
+    {
+        $stashsFilters['missionsStashs']->hydrateMissions($missionsListFiltered, $stashsLists);
+    }
 }
