@@ -97,16 +97,16 @@ class MissionsController
         return $missions->filterMissions($filterConditions);
     }
 
-    public function find(int $idMission): Mission
+    public function findMission(int $idMission): Mission
     {
         $missions = new Missions((new Connection)->getPdo());
-        return $missions->find($idMission);
+        return $missions->findMission($idMission);
         
     }
 
-    public function update(array $mission, int $id_mission): void
+    public function updateMission(array $mission, int $id_mission): void
     {
         $missions = new Missions((new Connection)->getPdo());
-        $missions->update($mission, $id_mission);
+        $missions->updateMission($mission, $id_mission);
     }
 }

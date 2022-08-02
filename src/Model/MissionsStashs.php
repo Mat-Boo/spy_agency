@@ -1,6 +1,8 @@
 <?php
 
 namespace App\model;
+
+use Exception;
 use PDO;
 
 class MissionsStashs
@@ -58,5 +60,29 @@ class MissionsStashs
             }
         }
         return $missionIdsFromStashs;
+    }
+
+    public function updateMissionsStashs(array $mission, int $id_mission)
+    {
+        $this->pdo->exec("DELETE FROM MissionStash WHERE id_mission = " . $id_mission);
+
+        $query = $this->pdo->prepare(
+            "INSERT INTO Missionstash SET 
+            id_mission = :id_mission,
+            id_stash = :id_stash
+        ");
+
+        foreach($mission['stashMission'] as $id_stash) {
+            $updateMissionStashs[] = $query->execute(
+                [
+                    'id_mission' => $id_mission,
+                    'id_stash' => $id_stash
+                ]
+            );
+        }
+
+        if ($updateMissionStashs === false) {
+            throw new Exception("Impossible de modifier l'enregistrement {$id_mission} dans la table 'MissionStash'");
+        }
     }
 }

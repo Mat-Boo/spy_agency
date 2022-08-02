@@ -1,6 +1,8 @@
 <?php
 
 namespace App\model;
+
+use Exception;
 use PDO;
 
 class MissionsPersons
@@ -93,5 +95,30 @@ class MissionsPersons
             }
         }
         return $personIdsFromMissions;
+    }
+
+    public function updateMissionsPersons(array $mission, int $id_mission)
+    {
+        foreach(['Agent', 'Contact', 'Target'] as $item) {
+            $this->pdo->exec("DELETE FROM Mission" . $item . " WHERE id_mission = " . $id_mission);
+    
+            $query = $this->pdo->prepare(
+                "INSERT INTO Mission" . $item . " SET 
+                id_mission = :id_mission,
+                id = :id
+            ");
+    
+            foreach($mission[strtolower($item) . 'Mission'] as $id) {
+                ${'updateMission' . $item}[] = $query->execute(
+                    [
+                        'id_mission' => $id_mission,
+                        'id' => $id
+                    ]
+                );
+            }
+            if (${'updateMission' . $item} === false) {
+                throw new Exception("Impossible de modifier l'enregistrement {$id_mission} dans la table 'Mission" . $item . "'");
+            }
+        }
     }
 }

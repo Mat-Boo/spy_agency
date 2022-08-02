@@ -1,4 +1,4 @@
-.missionEdit {
+.personEdit {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -11,14 +11,14 @@
           align-items: center;
 }
 
-.missionEdit .missionEditTitle {
+.personEdit .personEditTitle {
   text-align: center;
   font-size: 3em;
   color: #395B64;
   margin: 0;
 }
 
-.missionEdit .mission {
+.personEdit .person {
   background: #A5C9CA;
   width: 100%;
   max-width: 1500px;
@@ -29,35 +29,35 @@
           box-shadow: 0 0 10px #395B64;
 }
 
-.missionEdit .mission input, .missionEdit .mission textarea {
+.personEdit .person input {
   padding: 5px 10px;
   font-size: 1rem;
   border-radius: 5px;
   border: none;
 }
 
-.missionEdit .mission select {
+.personEdit .person select {
   border: none;
   border-radius: 5px;
 }
 
-.missionEdit .mission select .headerSelect {
+.personEdit .person select .headerSelect {
   padding: 5px 10px;
   background: #A5C9CA;
   color: #395B64;
 }
 
-.missionEdit .mission select option {
+.personEdit .person select option {
   font-size: 1rem;
   padding: 5px 10px;
 }
 
-.missionEdit .mission .countryMissionSelect {
+.personEdit .person .nationalityPersonSelect {
   font-size: 1em;
   padding: 5px 10px;
 }
 
-.missionEdit .mission .headerMission {
+.personEdit .person .headerPerson {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -69,40 +69,15 @@
           align-items: center;
   background: #395B64;
   border-radius: 5px;
-  padding: 0 10px;
+  padding: 20px;
   color: white;
 }
 
-.missionEdit .mission .headerMission .titleItem label {
+.personEdit .person .headerPerson .titleItem label {
   margin: 0 10px 10px 0;
 }
 
-.missionEdit .mission .headerMission .statusMission {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  width: 350px;
-}
-
-.missionEdit .mission .headerMission .statusMission div {
-  margin: 5px;
-  padding: 5px;
-  border-radius: 3px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  width: 150px;
-}
-
-.missionEdit .mission .infosMission {
+.personEdit .person .infosPerson {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -111,11 +86,11 @@
   margin: 50px 0;
 }
 
-.missionEdit .mission .infosMission label {
+.personEdit .person .infosPerson label {
   margin: 0 10px 10px 0;
 }
 
-.missionEdit .mission .infosMission .missionItem {
+.personEdit .person .infosPerson .personItem {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -125,7 +100,7 @@
           flex-direction: column;
 }
 
-.missionEdit .mission .details {
+.personEdit .person .details {
   background: #395B64;
   border-radius: 5px;
   padding: 5px 20px;
@@ -142,11 +117,11 @@
           align-items: center;
 }
 
-.missionEdit .mission .details label {
+.personEdit .person .details label {
   margin: 0 10px 10px 0;
 }
 
-.missionEdit .mission .details .detailsBtn {
+.personEdit .person .details .detailsBtn {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -165,49 +140,19 @@
   font-size: 1.2em;
 }
 
-.missionEdit .mission .details .detailsInfos {
+.personEdit .person .details .detailsInfos {
   -ms-flex-item-align: start;
       align-self: start;
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
 }
 
-.missionEdit .mission .details .detailsInfos .descriptionItem {
-  width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  margin-top: 30px;
-}
-
-.missionEdit .mission .details .detailsInfos .descriptionItem #missionDescription {
-  width: 100%;
-}
-
-.missionEdit .mission .details .detailsInfos .InfosItems {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  margin: 30px 0;
-}
-
-.missionEdit .mission .details .detailsInfos .InfosItems .infosItem {
-  margin: 10px 0;
+.personEdit .person .details .detailsInfos .infosItem {
+  margin: 40px 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -217,25 +162,21 @@
           flex-direction: column;
 }
 
-.missionEdit .mission .details .detailsInfos .InfosItems .infosItem select {
-  height: 200px;
+.personEdit .person .details .detailsInfos .infosItem select {
+  height: 240px;
 }
 
-.missionEdit .mission .details .detailsInfos .specialityItem {
-  margin-bottom: 30px;
+.personEdit .person .details .detailsInfos .infosItem .textMissions {
+  font-size: 0.65em;
+  width: 300px;
+  margin-top: 10px;
 }
 
-.missionEdit .mission .details .detailsInfos .specialityItem label {
-  margin-right: 10px;
+.personEdit .person .details .detailsInfos .infosItem .textMissions p {
+  margin: 0 20px;
 }
 
-.missionEdit .mission .details .detailsInfos .specialityItem select {
-  padding: 5px 10px;
-  font-size: 1rem;
-  width: 250px;
-}
-
-.missionEdit .mission .actionBtns {
+.personEdit .person .actionBtns {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -248,13 +189,13 @@
   margin-top: 20px;
 }
 
-.missionEdit .mission .actionBtns .CancelAndConfirmBtns {
+.personEdit .person .actionBtns .CancelAndConfirmBtns {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.missionEdit .mission .actionBtns .actionBtn {
+.personEdit .person .actionBtns .actionBtn {
   text-decoration: none;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -267,11 +208,11 @@
   opacity: 0.8;
 }
 
-.missionEdit .mission .actionBtns .actionBtn:hover {
+.personEdit .person .actionBtns .actionBtn:hover {
   opacity: 1;
 }
 
-.missionEdit .mission .actionBtns .actionBtn span {
+.personEdit .person .actionBtns .actionBtn span {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -280,21 +221,21 @@
           align-items: center;
 }
 
-.missionEdit .mission .actionBtns .actionBtn .actionSvg {
+.personEdit .person .actionBtns .actionBtn .actionSvg {
   margin-right: 12px;
 }
 
-.missionEdit .mission .actionBtns .deleteBtn {
+.personEdit .person .actionBtns .deleteBtn {
   background: #dd4c4c;
   margin-right: 5px;
 }
 
-.missionEdit .mission .actionBtns .cancelBtn {
+.personEdit .person .actionBtns .cancelBtn {
   background: #e77d36;
   margin-right: 20px;
 }
 
-.missionEdit .mission .actionBtns .cancelBtn a {
+.personEdit .person .actionBtns .cancelBtn a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -302,7 +243,7 @@
   color: white;
 }
 
-.missionEdit .mission .actionBtns .confirmBtn {
+.personEdit .person .actionBtns .confirmBtn {
   background: #2ab37a;
 }
-/*# sourceMappingURL=editMission_style.css.map */
+/*# sourceMappingURL=editPerson_style.css.map */

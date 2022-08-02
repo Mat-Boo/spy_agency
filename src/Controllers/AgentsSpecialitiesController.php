@@ -24,4 +24,10 @@ class AgentsSpecialitiesController
         $agentsSpecialities = new AgentsSpecialities((new Connection)->getPdo());
         return $agentsSpecialities->filterSpecialities($filterOptions);
     }
+
+    public function updateAgentsSpecialities(array $agent, int $id_agent): void
+    {
+        $agentsSpecialities = new AgentsSpecialities((new Connection)->getPdo());
+        $agentsSpecialities->updateAgentsSpecialities($agent, $id_agent);
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Connection;
+use App\model\Person;
 use App\Model\Persons;
 
 class PersonsController
@@ -37,5 +38,17 @@ class PersonsController
         $persons = new Persons((new Connection)->getPdo(), $personItem);
 
         return $persons->filterPersons($filterConditions);
+    }
+
+    public function findPerson(int $idPerson, string $personItem): Person
+    {
+        $persons = new Persons((new Connection)->getPdo(), $personItem);
+        return $persons->findPerson($idPerson);
+    }
+
+    public function updatePerson(array $person, int $id_person, string $personItem): void
+    {
+        $persons = new Persons((new Connection)->getPdo(), $personItem);
+        $persons->updatePerson($person, $id_person);
     }
 }

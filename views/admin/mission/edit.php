@@ -31,27 +31,31 @@ $personsFilters = $missionsPersonsController->filterPersons($_GET);
 $stashsFilters = $missionsStashsController->getStashsFilters($_GET);
 $missionsListFiltered = $missionsController->filterMissions($_GET, $personsFilters, $stashsFilters);
 
-$mission = $missionsController->find($params['id']);
+$mission = $missionsController->findMission($params['id']);
 $missionArray[] = $mission;
 
 //Hydratation de la mission éditée avec les personnes (agents, contacts, cibles) et les planques
 $missionsPersonsController->hydrateMissions($missionArray, $personsLists, $personsFilters);
 $missionsStashsController->hydrateMissions($missionArray, $stashsList, $stashsFilters);
 
+//Validation des modifications et retour à la liste des missions
 if (!empty($_POST)) {
-    $missionsController ->update($_POST, $mission->getId_mission());
+    $missionsController->updateMission($_POST, $mission->getId_mission());
+    $missionsPersonsController->updateMissionsPersons($_POST, $mission->getId_mission());
+    $missionsStashsController->updateMissionsStashs($_POST, $mission->getId_mission());
     header('location: /admin/mission');
 }
 
 ?>
 
 <div class="missionEdit">
-    <h1 class="missionEditTitle"><?= 'Édition de la mission ' .  $mission->getId_mission() ?></h1>
-    <form 
-        action=""
-        method="POST"
-        class="mission"
-        >
+    <h1 class="missionEditTitle">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M5 4a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1H5z"/>
+            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"/>
+        </svg> 
+        <?= 'Administration / Édition de la mission ' .  $mission->getId_mission() ?></h1>
+    <form action="" method="POST" class="mission">
         <div class="headerMission">
             <div class="titleItem">
                 <label for="titleMission"><b>Titre:</b></label>
@@ -167,7 +171,7 @@ if (!empty($_POST)) {
                             </svg>
                             <b>Planque(s) :</b>
                         </label>
-                        <select name="stashMission[]" id="stashMission" multiple class="tashMission">
+                        <select name="stashMission[]" id="stashMission" multiple class="stashMission">
                             <option value="headerFilter" disabled class="headerSelect">Sélectionnez une ou plusieurs planque(s)</option>
                             <?php foreach($stashsList as $stash) : ?>
                                 <option
@@ -181,7 +185,7 @@ if (!empty($_POST)) {
                                     <div>
                                         <p><?= $stash->getCountry() . ' | ' ?></p>
                                         <p><?= $stash->getType() . ' | ' ?></p>
-                                        <p><?= $stash->getaddress() ?></p>
+                                        <p><?= $stash->getAddress() ?></p>
                                     </div>
                                 </option>
                             <?php endforeach ?>

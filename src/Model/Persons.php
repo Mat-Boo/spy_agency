@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use App\Model\Exception\NotFoundException;
+use Exception;
 use PDO;
 
 class Persons
@@ -45,5 +47,53 @@ class Persons
             $persons[] = $person;
         }
         return $persons;
+    }
+
+    /* public function delete(int $idMission): void
+    {
+        $query = $this->pdo->prepare("DELETE FROM Mission WHERE id_mission = :idMission");
+        $ok = $query->execute(['idMission' => $idMission]);
+        if ($ok === false) {
+            throw new Exception("Impossible de supprimer l'enregistrement $idMission dans la table Mission");
+        }
+    } */
+
+    public function findPerson(int $idPerson): Person
+    {
+        $query = $this->pdo->prepare(
+            "SELECT id, firstname, lastname, birthdate, nationality
+            FROM " . ucfirst($this->personItem) . "
+            WHERE id = :id");
+        $query->execute(['id' => $idPerson]);
+        $foundPerson = $query->fetchObject(Person::class);
+        if ($foundPerson === false) {
+            throw new NotFoundException('Person', $idPerson);
+        }
+        return $foundPerson;
+    }
+
+    public function updatePerson(array $person, int $id_person): void
+    {
+        $query = $this->pdo->prepare(
+            "UPDATE " . ucfirst($this->personItem) . " SET 
+            id = :id,
+            firstname = :firstname,
+            lastname = :lastname,
+            birthdate = :birthdate,
+            nationality = :nationality
+            WHERE id = :id
+        ");
+        $updatePerson = $query->execute(
+            [
+                'id' => $person['idPerson'],
+                'firstname' => $person['firstnamePerson'],
+                'lastname' => $person['lastnamePerson'],
+                'birthdate' => $person['birthdatePerson'],
+                'nationality' => $person['nationalityPerson'],
+            ]
+        );
+        if ($updatePerson === false) {
+            throw new Exception("Impossible de modifier l'enregistrement {$id_person} dans la table '" . ucfirst($this->personItem) . "'");
+        }
     }
 }

@@ -1,6 +1,8 @@
 <?php
 
 namespace App\model;
+
+use Exception;
 use PDO;
 
 class AgentsSpecialities
@@ -58,5 +60,29 @@ class AgentsSpecialities
             }
         }
         return $agentIdsFromSpecialities;
+    }
+
+    public function updateAgentsSpecialities($agent, $id_agent)
+    {
+        $this->pdo->exec("DELETE FROM AgentSpeciality WHERE id = " . $id_agent);
+
+        $query = $this->pdo->prepare(
+            "INSERT INTO AgentSpeciality SET 
+            id = :id,
+            id_speciality = :id_speciality
+        ");
+
+        foreach($agent['personSpecialities'] as $id_speciality) {
+            $updateAgentsSpecialities[] = $query->execute(
+                [
+                    'id' => $id_agent,
+                    'id_speciality' => $id_speciality
+                ]
+            );
+        }
+
+        if ($updateAgentsSpecialities === false) {
+            throw new Exception("Impossible de modifier l'enregistrement {$id_agent} dans la table 'AgentSpeciality'");
+        }
     }
 }

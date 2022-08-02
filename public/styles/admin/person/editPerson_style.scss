@@ -1,14 +1,14 @@
-.missionEdit {
+.personEdit {
     display: flex;
     flex-direction: column;
     align-items: center;
-    .missionEditTitle {
+    .personEditTitle {
         text-align: center;
         font-size: 3em;
         color: #395B64;
         margin: 0;
     }
-    .mission {
+    .person {
         background: #A5C9CA;
         width: 100%;
         max-width: 1500px;
@@ -16,7 +16,7 @@
         border-radius: 5px;
         padding: 10px 20px;
         box-shadow: 0 0 10px #395B64;
-        input, textarea {
+        input {
             padding: 5px 10px;
             font-size: 1rem;
             border-radius: 5px;
@@ -35,54 +35,37 @@
                 padding: 5px 10px;
             }
         }
-        .countryMissionSelect {
+        .nationalityPersonSelect {
             font-size: 1em;
             padding: 5px 10px;
         }
-        .headerMission {
+        .headerPerson {
             display: flex;
             justify-content: space-between;
             align-items: center;
             background: #395B64;
             border-radius: 5px;
-            padding: 0 10px;
+            padding: 20px;
             color: white;
             .titleItem {
                 label {
                     margin: 0 10px 10px 0;
                 }
             }
-            .statusMission {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                width: 350px;
-                div {
-                    margin: 5px;
-                    padding: 5px;
-                    border-radius: 3px;
-                    display: flex;
-                    align-items: center;
-                    width: 150px;
-                }
-            }
         }
-        .infosMission {
+        .infosPerson {
             display: flex;
             justify-content: space-around;
             margin: 50px 0;
             label {
                 margin: 0 10px 10px 0;
             }
-            .missionItem {
+            .personItem {
                 display: flex;
                 flex-direction: column;
             }
         }
         .details {
-            label {
-                margin: 0 10px 10px 0;
-            }
             background: #395B64;
             border-radius: 5px;
             padding: 5px 20px;
@@ -90,6 +73,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            label {
+                margin: 0 10px 10px 0;
+            }
             .detailsBtn {
                 width: 100%;
                 display: flex;
@@ -106,39 +92,21 @@
                 align-self: start;
                 width: 100%;
                 display: flex;
-                flex-direction: column;
-                .descriptionItem {
-                    width: 100%;
+                justify-content: space-around;
+                .infosItem {
+                    margin: 40px 0;
                     display: flex;
                     flex-direction: column;
-                    margin-top: 30px;
-                    #missionDescription {
-                        width: 100%;
-                    }
-                }
-                .InfosItems {
-                    display: flex;
-                    flex-wrap: wrap;
-                    justify-content: space-between;
-                    margin: 30px 0;
-                    .infosItem {
-                        margin: 10px 0;
-                        display: flex;
-                        flex-direction: column;
-                        select {
-                            height: 200px;
-                        }
-                    }
-                }
-                .specialityItem {
-                    margin-bottom: 30px;
-                    label {
-                        margin-right: 10px;
-                    }
                     select {
-                        padding: 5px 10px;
-                        font-size: 1rem;
-                        width: 250px;
+                        height: 240px;
+                    }
+                    .textMissions {
+                        font-size: 0.65em;
+                        width: 300px;
+                        margin-top: 10px;
+                        p {
+                            margin: 0 20px;
+                        }
                     }
                 }
             }

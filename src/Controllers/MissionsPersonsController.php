@@ -41,4 +41,12 @@ class MissionsPersonsController
         $personsMissions = new MissionsPersons((new Connection)->getPdo(), $personItem);
         return $personsMissions->filterMissions($filterOptions);
     }
+
+    public function updateMissionsPersons(array $mission, int $id_mission): void
+    {
+        foreach(['agent', 'contact', 'cible'] as $personItem) {
+            $missionsPersons = new MissionsPersons((new Connection)->getPdo(), $personItem);
+            $missionsPersons->updateMissionsPersons($mission, $id_mission);
+        }
+    }
 }
