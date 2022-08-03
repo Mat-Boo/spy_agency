@@ -30,16 +30,16 @@ class MissionsPersonsController
         return $personsFilters;
     }
 
-    public function hydratePersons(array $persons, array $missions, string $personItem): void
-    {
-        $missionsPersons = new MissionsPersons((new Connection)->getPdo(), $personItem);
-        $missionsPersons->hydratePersons($persons, $missions);
-    }
-
     public function filterMissions(array $filterOptions, $personItem): array
     {
         $personsMissions = new MissionsPersons((new Connection)->getPdo(), $personItem);
         return $personsMissions->filterMissions($filterOptions);
+    }
+    
+    public function hydratePersons(array $persons, array $missions, string $personItem): void
+    {
+        $missionsPersons = new MissionsPersons((new Connection)->getPdo(), $personItem);
+        $missionsPersons->hydratePersons($persons, $missions);
     }
 
     public function updateMissionsPersons(array $mission, int $id_mission): void

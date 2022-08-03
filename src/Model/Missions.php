@@ -109,4 +109,33 @@ class Missions
             throw new Exception("Impossible de modifier l'enregistrement {$id_mission} dans la table 'Mission'");
         }
     }
+
+    public function filterMissionsForSpeciality(array $filterOptions): array
+    {
+        if (!is_null($this->pdo)) {
+            $missionFilter = isset($filterOptions['missionsFilter']) ? " WHERE id_mission IN (" . implode(",", $filterOptions['missionsFilter']) . ")" : '';
+
+            $stmt = $this->pdo->query(
+                "SELECT id_speciality
+                FROM Mission"
+                . $missionFilter
+            );
+            $specialityIdsFromMissions = [];
+            while ($specialityIdsFromMission = $stmt->fetchColumn()) {
+                $specialityIdsFromMissions[] = $specialityIdsFromMission;
+            }
+        }
+        return $specialityIdsFromMissions;
+    }
+
+    public function hydrateSpecialities(array $specialities): void
+    {
+        foreach($specialities as $speciality) {
+            foreach($this->getMissionsList() as $mission) {
+                if ($speciality->getName() === $mission->getSpeciality()) {
+                    $speciality->addMissions($mission);
+                }
+            }
+        }
+    }
 }

@@ -1,0 +1,250 @@
+.specialityEdit {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.specialityEdit .specialityEditTitle {
+  text-align: center;
+  font-size: 3em;
+  color: #395B64;
+  margin: 0;
+}
+
+.specialityEdit .speciality {
+  background: #A5C9CA;
+  width: 100%;
+  max-width: 1500px;
+  margin-top: 50px;
+  border-radius: 5px;
+  padding: 10px 20px;
+  -webkit-box-shadow: 0 0 10px #395B64;
+          box-shadow: 0 0 10px #395B64;
+}
+
+.specialityEdit .speciality input {
+  padding: 5px 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+}
+
+.specialityEdit .speciality select {
+  border: none;
+  border-radius: 5px;
+}
+
+.specialityEdit .speciality select .headerSelect {
+  padding: 5px 10px;
+  background: #A5C9CA;
+  color: #395B64;
+}
+
+.specialityEdit .speciality select option {
+  font-size: 1rem;
+  padding: 5px 10px;
+}
+
+.specialityEdit .speciality .countrySpecialitySelect {
+  font-size: 1em;
+  padding: 5px 10px;
+}
+
+.specialityEdit .speciality .headerSpeciality {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: #395B64;
+  border-radius: 5px;
+  padding: 20px;
+  color: white;
+}
+
+.specialityEdit .speciality .headerSpeciality .titleItem label {
+  margin: 0 10px 10px 0;
+}
+
+.specialityEdit .speciality .infosSpeciality {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  margin: 50px 0;
+}
+
+.specialityEdit .speciality .infosSpeciality label {
+  margin: 0 10px 10px 0;
+}
+
+.specialityEdit .speciality .infosSpeciality .specialityItem {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.specialityEdit .speciality .details {
+  background: #395B64;
+  border-radius: 5px;
+  padding: 5px 20px;
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.specialityEdit .speciality .details label {
+  margin: 0 10px 10px 0;
+}
+
+.specialityEdit .speciality .details .detailsBtn {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: #395B64;
+  border-radius: 5px 5px 0 0;
+  padding: 5px 0;
+  color: white;
+  border-bottom: solid 1px white;
+  font-size: 1.2em;
+}
+
+.specialityEdit .speciality .details .detailsInfos {
+  -ms-flex-item-align: start;
+      align-self: start;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.specialityEdit .speciality .details .detailsInfos .infosItem {
+  margin: 40px 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.specialityEdit .speciality .details .detailsInfos .infosItem select {
+  height: 240px;
+}
+
+.specialityEdit .speciality .details .detailsInfos .infosItem .textMissions {
+  font-size: 0.65em;
+  width: 300px;
+  margin-top: 10px;
+  font-style: italic;
+}
+
+.specialityEdit .speciality .details .detailsInfos .infosItem .textMissions p {
+  margin: 0 20px;
+}
+
+.specialityEdit .speciality .actionBtns {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 20px;
+}
+
+.specialityEdit .speciality .actionBtns .CancelAndConfirmBtns {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.specialityEdit .speciality .actionBtns .actionBtn {
+  text-decoration: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border: 1px solid #395B64;
+  color: white;
+  padding: 9px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.specialityEdit .speciality .actionBtns .actionBtn:hover {
+  opacity: 1;
+}
+
+.specialityEdit .speciality .actionBtns .actionBtn span {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.specialityEdit .speciality .actionBtns .actionBtn .actionSvg {
+  margin-right: 12px;
+}
+
+.specialityEdit .speciality .actionBtns .deleteBtn {
+  background: #dd4c4c;
+  margin-right: 5px;
+}
+
+.specialityEdit .speciality .actionBtns .cancelBtn {
+  background: #e77d36;
+  margin-right: 20px;
+}
+
+.specialityEdit .speciality .actionBtns .cancelBtn a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-decoration: none;
+  color: white;
+}
+
+.specialityEdit .speciality .actionBtns .confirmBtn {
+  background: #2ab37a;
+}
+/*# sourceMappingURL=editSpeciality_style.css.map */

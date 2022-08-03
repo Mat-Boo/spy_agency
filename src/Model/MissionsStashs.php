@@ -14,7 +14,7 @@ class MissionsStashs
         $this->pdo = $pdo;
     }
 
-    public function getMissionsStashs(): array
+    public function getMissionsStashsList(): array
     {
         if (!is_null($this->pdo)) {
             $stmt = $this->pdo->query(
@@ -33,7 +33,7 @@ class MissionsStashs
     {
         foreach($missions as $mission) {
             foreach($stashs as $stash) {
-                    foreach($this->getMissionsStashs() as $missionStash) {
+                    foreach($this->getMissionsStashsList() as $missionStash) {
                     if ($mission->getId_mission() === $missionStash->getId_mission()) {
                         if ($stash->getId_stash() === $missionStash->getId_stash()) {
                             $mission->addStashs($stash);
@@ -83,6 +83,50 @@ class MissionsStashs
 
         if ($updateMissionStashs === false) {
             throw new Exception("Impossible de modifier l'enregistrement {$id_mission} dans la table 'MissionStash'");
+        }
+    }
+
+    public function filterMissions(array $filterOptions): array
+    {
+        if (!is_null($this->pdo)) {
+            $MissionFilter = isset($filterOptions['missionsFilter']) ? " WHERE id_mission IN (" . implode(",", $filterOptions['missionsFilter']) . ")" : '';
+
+            $stmt = $this->pdo->query(
+                "SELECT id_stash
+                FROM MissionStash"
+                . $MissionFilter
+            );
+            $stashIdsFromMissions = [];
+            while ($stashIdsFromMission = $stmt->fetchColumn()) {
+                $stashIdsFromMissions[] = $stashIdsFromMission;
+            }
+        }
+        return $stashIdsFromMissions;
+    }
+
+    public function hydrateStashs(array $stashs, array $missions): void
+    {
+        foreach($stashs as $stash) {
+            foreach($missions as $mission) {
+                    foreach($this->getMissionsStashsList() as $missionStash) {
+                    if ($stash->getId_stash() === $missionStash->getId_stash()) {
+                        if ($mission->getId_mission() === $missionStash->getId_mission()) {
+                            $stash->addMissions($mission);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public function deleteMissionStash(int $id_stash): void
+    {
+        $query = $this->pdo->prepare(
+            "DELETE FROM MissionStash 
+            WHERE id_stash = :id_stash");
+        $deleteMissionStash = $query->execute(['id_stash' => $id_stash]);
+        if ($deleteMissionStash === false) {
+            throw new Exception("Impossible de supprimer l'enregistrement $id_stash dans la table 'MissionStash'");
         }
     }
 }

@@ -22,8 +22,8 @@ $countriesController = new CountriesController;
 
 //Récupération des listes
 $personsLists = $personsController->getPersonsLists('lastname');
-$stashsList = $stashsController->getStashsList();
-$specialitiesList = $specialitiesController->getSpecialitiesList();
+$stashsList = $stashsController->getStashsList('country, type');
+$specialitiesList = $specialitiesController->getSpecialitiesList('id_speciality');
 $countriesList = $countriesController->getCountriesList();
 
 //Application des filtre de recherche sur les missions
@@ -31,6 +31,7 @@ $personsFilters = $missionsPersonsController->filterPersons($_GET);
 $stashsFilters = $missionsStashsController->getStashsFilters($_GET);
 $missionsListFiltered = $missionsController->filterMissions($_GET, $personsFilters, $stashsFilters);
 
+//Récupération de la mission à éditer
 $mission = $missionsController->findMission($params['id']);
 $missionArray[] = $mission;
 
@@ -43,7 +44,7 @@ if (!empty($_POST)) {
     $missionsController->updateMission($_POST, $mission->getId_mission());
     $missionsPersonsController->updateMissionsPersons($_POST, $mission->getId_mission());
     $missionsStashsController->updateMissionsStashs($_POST, $mission->getId_mission());
-    header('location: /admin/mission');
+    header('location: ' . $router->url('admin_mission'));
 }
 
 ?>

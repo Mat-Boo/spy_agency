@@ -30,4 +30,22 @@ class AgentsSpecialitiesController
         $agentsSpecialities = new AgentsSpecialities((new Connection)->getPdo());
         $agentsSpecialities->updateAgentsSpecialities($agent, $id_agent);
     }
+
+    public function filterAgents(array $filterOptions): array
+    {
+        $agentsSpecialities = new AgentsSpecialities((new Connection)->getPdo());
+        return $agentsSpecialities->filterAgents($filterOptions);
+    }
+
+    public function hydrateSpecialities(array $specialities, array $agents): void
+    {
+        $agentsSpecialities = new AgentsSpecialities((new Connection)->getPdo());
+        $agentsSpecialities->hydrateSpecialities($specialities, $agents);
+    }
+
+    public function deleteAgentSpeciality(int $id_speciality): void
+    {
+        $agentsSpecialities = new AgentsSpecialities((new Connection)->getPdo());
+        $agentsSpecialities->deleteAgentSpeciality($id_speciality);
+    }
 }

@@ -1,0 +1,174 @@
+.stashEdit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .stashEditTitle {
+        text-align: center;
+        font-size: 3em;
+        color: #395B64;
+        margin: 0;
+    }
+    .stash {
+        background: #A5C9CA;
+        width: 100%;
+        max-width: 1500px;
+        margin-top: 50px;
+        border-radius: 5px;
+        padding: 10px 20px;
+        box-shadow: 0 0 10px #395B64;
+        input {
+            padding: 5px 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: none;
+        }
+        select {
+            border: none;
+            border-radius: 5px;
+            .headerSelect {
+                padding: 5px 10px;
+                background:#A5C9CA ;
+                color:#395B64 ;
+            }
+            option {
+                font-size: 1rem;
+                padding: 5px 10px;
+            }
+        }
+        .countryStashSelect {
+            font-size: 1em;
+            padding: 5px 10px;
+        }
+        .headerStash {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #395B64;
+            border-radius: 5px;
+            padding: 20px;
+            color: white;
+            .titleItem {
+                label {
+                    margin: 0 10px 10px 0;
+                }
+            }
+        }
+        .infosStash {
+            display: flex;
+            justify-content: space-around;
+            margin: 50px 0;
+            label {
+                margin: 0 10px 10px 0;
+            }
+            .stashItem {
+                display: flex;
+                flex-direction: column;
+            }
+        }
+        .details {
+            background: #395B64;
+            border-radius: 5px;
+            padding: 5px 20px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            label {
+                margin: 0 10px 10px 0;
+            }
+            .detailsBtn {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: #395B64;
+                border-radius: 5px 5px 0 0;
+                padding: 5px 0;
+                color: white;
+                border-bottom: solid 1px white;
+                font-size: 1.2em;
+            }
+            .detailsInfos {
+                align-self: start;
+                width: 100%;
+                display: flex;
+                justify-content: space-around;
+                .infosItem {
+                    margin: 40px 0;
+                    display: flex;
+                    flex-direction: column;
+                    select {
+                        height: 240px;
+                    }
+                    .textMissions {
+                        font-size: 0.65em;
+                        width: 300px;
+                        margin-top: 10px;
+                        font-style: italic;
+                        p {
+                            margin: 0 20px;
+                        }
+                    }
+                }
+            }
+        }
+        .actionBtns {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            .CancelAndConfirmBtns {
+                display: flex;
+            }
+            .actionBtn {
+                text-decoration: none;
+                display: flex;
+                border: 1px solid #395B64;
+                color: white;
+                padding: 9px 12px;
+                border-radius: 5px;
+                cursor: pointer;
+                opacity: 0.8;
+                &:hover {
+                    opacity: 1;
+                }
+                span {
+                    display: flex;
+                    align-items: center;
+                }
+                .actionSvg {
+                    margin-right: 12px;
+                }
+            }
+            .deleteBtn {
+                background: rgb(221, 76, 76);
+                margin-right: 5px;
+            }
+            .cancelBtn {
+                background: rgb(231, 125, 54);
+                margin-right: 20px;
+                a {
+                    display: flex;
+                    text-decoration: none;
+                    color: white;
+                }
+            }
+            .confirmBtn {
+                background: rgb(42, 179, 122);
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

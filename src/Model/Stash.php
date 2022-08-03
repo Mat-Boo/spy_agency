@@ -8,6 +8,7 @@ class Stash
     private $address;
     private $country;
     private $type;
+    private $missions = [];
 
     /**
      * Get the value of id_stash
@@ -87,5 +88,32 @@ class Stash
         $this->type = $type;
 
         return $this;
+    }
+
+    /**
+     * Get the value of missions
+     */ 
+    public function getMissions()
+    {
+        return $this->missions;
+    }
+
+    /**
+     * Set the value of missions
+     *
+     * @return  self
+     */ 
+    public function setMissions($missions)
+    {
+        $this->missions = $missions;
+
+        return $this;
+    }
+
+    public function addMissions(Mission $mission): void
+    {
+        if (!in_array($mission, $this->missions)) {
+            $this->missions[] = $mission;
+        }
     }
 }

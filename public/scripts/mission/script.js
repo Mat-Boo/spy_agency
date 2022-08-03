@@ -94,8 +94,12 @@ for (let i = 0 ; i < detailsBtn.length ; i++) {
     })
 }
 
-let deleteBtn = document.querySelector('.deleteBtn');
+let deleteConfirmMessage = document.querySelector('.deleteConfirmMessage');
 
-deleteBtn.addEventListener('click', () => {
-    
-})
+deleteConfirmMessage.style.opacity = 1;
+setTimeout(() => {
+    deleteConfirmMessage.style.opacity = 0;
+}, 3000);
+setTimeout(() => {
+    deleteConfirmMessage.style.display = 'none';
+}, 4000);

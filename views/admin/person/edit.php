@@ -22,14 +22,15 @@ $countriesController = new CountriesController;
 //Récupération des listes
 $missionsList = $missionsController->getMissionsList();
 $personsList = $personsController->getPersonsLists('id')[$personItem . 'sList'];
-$specialitiesList = $specialitiesController->getSpecialitiesList();
+$specialitiesList = $specialitiesController->getSpecialitiesList('id_speciality');
 $countriesList = $countriesController->getCountriesList();
 
 //Application des filtre de recherche sur les missions
-$specialitiesFilters = $agentsSpecialitiesController->filterSpecialities($_GET);
+/* $specialitiesFilters = $agentsSpecialitiesController->filterSpecialities($_GET);
 $missionsFilters = $missionsPersonsController->filterMissions($_GET, $personItem);
-$personsListFiltered = $personsController->filterPersons($_GET, $specialitiesFilters, $missionsFilters, $personItem);
+$personsListFiltered = $personsController->filterPersons($_GET, $specialitiesFilters, $missionsFilters, $personItem); */
 
+//Récupération de la personne à éditer
 $person = $personsController->findPerson($params['id'], $personItem);
 $personArray[] = $person;
 
@@ -45,7 +46,7 @@ if (!empty($_POST)) {
     if ($personItem === 'agent') {
         $agentsSpecialitiesController->updateAgentsSpecialities($_POST, $person->getId(), $personItem);
     }
-    header('location: /admin/' . $personItem);
+    header('location: ' . $router->url('admin_' . $personItem));
 }
 
 ?>
@@ -154,9 +155,19 @@ if (!empty($_POST)) {
                         <b>Mission(s) :</b>
                     </span>
                     <ul class="missionsList">
-                        <?php foreach($person->getMissions() as $mission): ?>
-                            <li><?= $mission->getCode_name() ?></li>
-                        <?php endforeach ?>
+                        <?php if (count($person->getMissions()) === 0): ?>
+                            <?php if ($personItem === 'agent'): ?>
+                                <p>Cet agent n'est affecté à aucune mission.</p>
+                            <?php elseif ($personItem === 'contact'): ?>
+                                <p>Ce contact n'est affecté à aucune mission.</p>
+                            <?php elseif ($personItem === 'target'): ?>
+                                <p>Cette cible n'est affectée à aucune mission.</p>
+                            <?php endif ?>
+                        <?php else: ?>
+                            <?php foreach($person->getMissions() as $mission): ?>
+                                <li><?= $mission->getCode_name() ?></li>
+                            <?php endforeach ?>
+                        <?php endif ?>
                     </ul>
                     <div class="textMissions">
                         <p>Les missions ne sont pas modifiables.</p>

@@ -9,7 +9,7 @@
     transition: opacity 1000ms;
     margin-left: 20px;
 }
-.missionTitle {
+.stashTitle {
     text-align: center;
     font-size: 3em;
     color: #395B64;
@@ -40,13 +40,13 @@
     }
 }
 .filtersBox {
-    box-shadow: 0 0 10px #395B64;
-    margin: 50px 50px 0 50px;
-    padding: 5px 20px;
-    border-radius: 5px;
-    background: #A5C9CA;
-    width: 125px;
-    transition: width 500ms;
+box-shadow: 0 0 10px #395B64;
+margin: 50px 50px 0 50px;
+padding: 5px 20px;
+border-radius: 5px;
+background: #A5C9CA;
+width: 125px;
+transition: width 500ms;
     .headerFilters {
         display: flex;
         justify-content: space-between;
@@ -100,66 +100,46 @@
                 margin: 20px;
                 padding: 10px;
                 border-radius: 5px;
-                height: 328px;
+
                 .filtersBlockTitle {
                     font-size: 1.3em;
                     color: #395B64;
                 }
                 .filtersItem {
                     display: flex;
-                    flex-direction: column;
                     justify-content: center;
                     flex-wrap: wrap;
-                    .missionsFiltersLine {
-                        display: flex;
-                        justify-content: space-between;
-                        margin-bottom: 10px;
-                    }
-                    .labelAndFilter {
+                    .stashsFilterColumn {
                         display: flex;
                         flex-direction: column;
-                        margin: 15px 25px;
-                        .filterTitle {
-                            margin-bottom: 5px;
-                            color: #395B64;
-                        }
-                        .statusMissionFilter {
+                        justify-content: space-between;
+                        .labelAndFilter {
                             display: flex;
-                            flex-wrap: wrap;
-                            justify-content: center;
-                            width: 300px;
-                            background: white;
-                            border: 1px solid #767676;
-                            border-radius: 2px;
-                            div {
-                                margin: 5px;
-                                padding: 5px;
-                                border-radius: 3px;
-                                display: flex;
-                                align-items: center;
-                                width: 130px;
-                                label {
-                                    font-size: 0.9em;
+                            flex-direction: column;
+                            margin: 15px 25px;
+                            .filterTitle {
+                                margin-bottom: 5px;
+                                color: #395B64;
+                            }
+                            input {
+                                padding: 5px 10px;
+                            }
+                            select {
+                                padding: 5px 10px;
+                                option {
+                                    padding: 5px 10px;
+                                }
+                                .headerSelect {
+                                    padding: 5px 10px;
+                                    background:#A5C9CA ;
+                                    color:#395B64 ;
                                 }
                             }
+                            .typeStashFilter, .missionFilter {
+                                padding: 0;
+                                height: 160px;
+                            }
                         }
-                    }
-                    .agentFilter, .contactFilter, .targetFilter, .stashFilter {
-                        height: 262px;         
-                    }
-                    input, select option {
-                        padding: 5px 10px;
-                    }
-                    .countryMissionSelect {
-                        padding: 5px 10px;
-                        option {
-                            padding: 5px 10px;
-                        }
-                    }
-                    .headerSelect {
-                        padding: 5px 10px;
-                        background:#A5C9CA ;
-                        color:#395B64 ;
                     }
                 }
             }
@@ -181,13 +161,13 @@
         }
     }
 }
-.missionsList {
-    margin: 0;
-    list-style: none;
-    padding: 50px 0;
-    margin: 0;
-    text-align: center;
-    .mission {
+.stashsList {
+margin: 0;
+list-style: none;
+padding: 50px 0;
+margin: 0;
+text-align: center;
+    .stash {
         display: inline-block;
         text-align:initial ;
         margin: 20px;
@@ -195,7 +175,8 @@
         padding: 10px 20px;
         width: 650px;
         box-shadow: 0 0 10px #395B64;
-        .headerMission {
+        background: #A5C9CA;
+        .headerStash {
             display: flex;
             justify-content: space-between;
             background: #395B64;
@@ -203,14 +184,14 @@
             padding: 0 10px;
             color: white;
         }
-        .infosMission {
+        .infosStash {
             display: flex;
             justify-content: space-between;
             margin: 20px;
             position: relative;
-            .missionItems {
+            .stashItems {
                 bottom: 0;
-                .missionItem {
+                .stashItem {
                     margin: 5px;
                 }
             }
@@ -313,15 +294,3 @@
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-

@@ -85,4 +85,48 @@ class AgentsSpecialities
             throw new Exception("Impossible de modifier l'enregistrement {$id_agent} dans la table 'AgentSpeciality'");
         }
     }
+
+    public function filterAgents(array $filterOptions): array
+    {
+        if (!is_null($this->pdo)) {
+            $agentFilter = isset($filterOptions['agentsFilter']) ? " WHERE id IN (" . implode(",", $filterOptions['agentsFilter']) . ")" : '';
+
+            $stmt = $this->pdo->query(
+                "SELECT id_speciality
+                FROM AgentSpeciality"
+                . $agentFilter
+            );
+            $specialityIdsFromAgents = [];
+            while ($specialityIdsFromAgent = $stmt->fetchColumn()) {
+                $specialityIdsFromAgents[] = $specialityIdsFromAgent;
+            }
+        }
+        return $specialityIdsFromAgents;
+    }
+
+    public function hydrateSpecialities(array $specialities, array $agents): void
+    {
+        foreach($specialities as $speciality) {
+            foreach($agents as $agent) {
+                foreach($this->getAgentsSpecialitiesList() as $agentsSpecialities) {
+                    if ($speciality->getId_speciality() === $agentsSpecialities->getId_speciality()) {
+                        if ($agent->getId() === $agentsSpecialities->getId()) {
+                            $speciality->addAgents($agent);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public function deleteAgentSpeciality($id_speciality): void
+    {
+        $query = $this->pdo->prepare(
+            "DELETE FROM AgentSpeciality 
+            WHERE id_speciality = :id_speciality");
+        $deleteAgentSpeciality = $query->execute(['id_speciality' => $id_speciality]);
+        if ($deleteAgentSpeciality === false) {
+            throw new Exception("Impossible de supprimer l'enregistrement $id_speciality dans la table 'AgentSpeciality'");
+        }
+    }
 }

@@ -49,8 +49,57 @@ class Speciality
         return $this;
     }
 
-/*     public function addAgents(Agent $agent): void
+    /**
+     * Get the value of missions
+     */ 
+    public function getMissions()
     {
-        $this->agents[] = $agent;
-    } */
+        return $this->missions;
+    }
+
+    /**
+     * Set the value of missions
+     *
+     * @return  self
+     */ 
+    public function setMissions($missions)
+    {
+        $this->missions = $missions;
+
+        return $this;
+    }
+
+    public function addMissions(Mission $mission): void
+    {
+        if (!in_array($mission, $this->missions)) {
+            $this->missions[] = $mission;
+        }
+    }
+
+    /**
+     * Get the value of agents
+     */ 
+    public function getAgents()
+    {
+        return $this->agents;
+    }
+
+    /**
+     * Set the value of agents
+     *
+     * @return  self
+     */ 
+    public function setAgents($agents)
+    {
+        $this->agents = $agents;
+
+        return $this;
+    }
+
+    public function addAgents(Person $agent): void
+    {
+        if (!in_array($agent, $this->agents)) {
+            $this->agents[] = $agent;
+        }
+    }
 }
