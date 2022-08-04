@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
     .stashEditTitle {
         text-align: center;
         font-size: 3em;
@@ -114,7 +115,7 @@
         }
         .actionBtns {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
             align-items: center;
             margin-top: 20px;
             .CancelAndConfirmBtns {
@@ -140,10 +141,6 @@
                     margin-right: 12px;
                 }
             }
-            .deleteBtn {
-                background: rgb(221, 76, 76);
-                margin-right: 5px;
-            }
             .cancelBtn {
                 background: rgb(231, 125, 54);
                 margin-right: 20px;
@@ -156,6 +153,37 @@
             .confirmBtn {
                 background: rgb(42, 179, 122);
             }
+        }
+    }
+    .deleteBtn {
+        position: absolute;
+        left: 0;
+        bottom: 10px;
+        text-decoration: none;
+        display: flex;
+        border: 1px solid #395B64;
+        color: white;
+        padding: 9px 12px;
+        border-radius: 5px;
+        cursor: pointer;
+        opacity: 0.8;
+        &:hover {
+            opacity: 1;
+        }
+        span {
+            display: flex;
+            align-items: center;
+        }
+        .actionSvg {
+            margin-right: 12px;
+        }
+        background: rgb(221, 76, 76);
+        button {
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: white;
+            padding: 0;
         }
     }
 }

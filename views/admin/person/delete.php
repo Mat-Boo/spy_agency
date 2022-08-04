@@ -8,10 +8,10 @@ $personsController = new PersonsController;
 $missionsPersonsController = new MissionsPersonsController;
 $agentsSpecialitiesController = new AgentsSpecialitiesController;
 
-/* $missionsPersonsController->deleteMissionPerson($params['id'], $personItem);
-if ($personItem === 'agent') {
-    $agentsSpecialitiesController->deleteAgentSpeciality($params['id']);
+$missionsPersonsController->deleteMissionPersonFromPerson($params['id'], substr($match['name'], 6, -7));
+if (substr($match['name'], 6, -7) === 'agent') {
+    $agentsSpecialitiesController->deleteAgentSpecialityFromAgent($params['id']);
 }
-$personsController->deletePerson($params['id'], $personItem); */
-header('Location: ' . $router->url('admin_' . $personItem) . '?delete=' . $params['id']);
+$personsController->deletePerson($params['id'], substr($match['name'], 6, -7));
+header('Location: ' . $router->url('admin_' . substr($match['name'], 6, -7)) . '?delete=' . $params['id']);
 ?>

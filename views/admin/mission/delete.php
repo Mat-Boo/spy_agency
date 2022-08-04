@@ -8,8 +8,10 @@ $missionsPersonsController = new MissionsPersonsController;
 $missionsStashsController = new MissionsStashsController;
 $missionsController = new MissionsController;
 
-/* $missionsPersonsController->deleteMissionPerson($params['id']);
-$missionsStashsController->deleteMissionStash($params['id']);
-$missionsController->deleteMission($params['id']); */
+foreach(['agent', 'contact', 'target'] as $personItem) {
+    $missionsPersonsController->deleteMissionPersonFromMission($params['id'], $personItem);
+}
+$missionsStashsController->deleteMissionStashFromMission($params['id']);
+$missionsController->deleteMission($params['id']);
 header('Location: ' . $router->url('admin_mission') . '?delete=' . $params['id']);
 ?>

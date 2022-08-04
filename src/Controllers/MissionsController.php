@@ -121,4 +121,10 @@ class MissionsController
         $missions = new Missions((new Connection)->getPdo());
         $missions->hydrateSpecialities($specialities);
     }
+
+    public function deleteMission(int $id): void
+    {
+        $missions = new Missions((new Connection)->getPdo());
+        $missions->deleteMission($id);
+    }
 }

@@ -138,4 +138,15 @@ class Missions
             }
         }
     }
+
+    public function deleteMission(int $id_mission): void
+    {
+        $query = $this->pdo->prepare(
+            "DELETE FROM Mission
+            WHERE id_mission = :id_mission");
+        $deleteMission = $query->execute(['id_mission' => $id_mission]);
+        if ($deleteMission === false) {
+            throw new Exception("Impossible de supprimer l'enregistrement $id_mission dans la table 'Mission'");
+        }
+    }
 }

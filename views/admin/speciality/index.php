@@ -30,9 +30,12 @@ $missionsController->hydrateSpecialities($specialitiesListFiltered);
 ?>
 
 <script>
-    let emptyGet = <?= json_encode(empty($_GET)) ?>;
+    let emptyGet = <?= json_encode(empty($_GET) || isset($_GET['delete'])) ?>;
 </script>
 
+<?php if (isset($_GET['delete'])): ?>
+    <p class="deleteConfirmMessage"> <?= 'La spécialité ' . $_GET['delete'] . ' a bien été supprimée.' ?></p>
+<?php endif ?>
 <h1 class="specialityTitle">
     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
@@ -40,7 +43,14 @@ $missionsController->hydrateSpecialities($specialitiesListFiltered);
     </svg>
     Administration / Spécialités
 </h1>
-
+<button type="button" class="newBtn actionBtn">
+    <a href="<?= $router->url('admin_speciality_new') ?>">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="newSvg" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+    </svg>
+        Nouveau
+    </a>
+</button>
 <form action="" method="GET" class="filtersBox">
     <div class="headerFilters">
         <div class="filtersTitle">
@@ -159,12 +169,14 @@ $missionsController->hydrateSpecialities($specialitiesListFiltered);
                                 Modifier
                             </span>
                         </a>
-                        <form action="<?= $router->url('admin_speciality_delete', ['id' => $speciality->getId_speciality()]) ?>" method="POST" class="deleteBtn actionBtn"
+                        <form action="<?= !empty($speciality->getMissions()) ? $router->url('admin_speciality') : $router->url('admin_speciality_delete', ['id' => $speciality->getId_speciality()]) ?>" method="POST" class="deleteBtn actionBtn"
                             onsubmit="
                                 <?php if (!empty($speciality->getMissions())): ?>
-                                    return confirm('<?= $specialitiesController->checkMissionBeforeDelete($speciality) ?>')
+                                    return alert('***** ATTENTION ***** \n<?= $specialitiesController->checkMissionBeforeDelete($speciality)?>')
+                                <?php elseif(!empty($speciality->getAgents())): ?>
+                                    return confirm('***** ATTENTION ***** \n<?= $specialitiesController->checkAgentBeforeDelete($speciality)?>\n\nVoulez-vous tout de même la supprimer ?')
                                 <?php else: ?>
-                                    return confirm('Voulez-vous vraiment supprimer la planque <?=$speciality->getId_stash() ?> ?')
+                                    return confirm('Voulez-vous vraiment supprimer la spécialité <?=$speciality->getId_speciality() . ' - ' . strtoupper($speciality->getName()) ?> ?')
                                 <?php endif ?>
                             ">
                             <button type="submit" >

@@ -40,9 +40,16 @@ class MissionsStashsController
         $missionsStashs->hydrateStashs($stashs, $missions);
     }
 
-    public function deleteMissionStash(int $id_stash): void
+    public function deleteMissionStashFromStash(int $id_stash): void
     {
         $missionsStashs = new MissionsStashs((new Connection)->getPdo());
-        $missionsStashs->deleteMissionStash($id_stash);
+        $missionsStashs->deleteMissionStashFromStash($id_stash);
     }
+
+    public function deleteMissionStashFromMission(int $id_stash): void
+    {
+        $missionsStashs = new MissionsStashs((new Connection)->getPdo());
+        $missionsStashs->deleteMissionStashFromMission($id_stash);
+    }
+    
 }

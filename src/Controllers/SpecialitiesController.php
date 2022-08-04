@@ -52,20 +52,24 @@ class SpecialitiesController
             }
         }
         return 
-            "ATTENTION, la specialité " . $speciality->getId_speciality() . ' - ' . strtoupper($speciality->getName()) . " est encore affectée "
-            . (count($speciality->getMissions()) > 1 ? 'aux missions:\\n' : ' à la mission:\\n')
-            . implode('\\n', $missionIds) . " \\nVoulez-vous tout de même la supprimer ?";
+            "La specialité " . $speciality->getId_speciality() . " - " . strtoupper($speciality->getName()) . " est encore affectée "
+            . (count($speciality->getMissions()) > 1 ? "aux missions:\\n" : " à la mission:\\n")
+            . implode('\\n', $missionIds) . "\\n\\nLa spécialité étant requise sur une mission, si vous souhaitez vraiment la supprimer, veuillez d\'abord "
+            . ((count($speciality->getMissions())) > 1 ? "la désaffecter des missions concernées" : "la désaffecter de la mission concernée" . " et en affecter une autre.");
     }
 
-    public function checkAgentBeforeDelete(Speciality $speciality): array
+    public function checkAgentBeforeDelete(Speciality $speciality): string
     {
         if (!empty($speciality->getAgents())) {
             $agentIds = [];
             foreach($speciality->getAgents() as $agent) {
-                $agentIds[] = $agent->getId();
+                $agentIds[] = $agent->getId() . ' - ' . strtoupper($agent->getFirstname() . ' ' . strtoupper($agent->getLastname()));
             }
         }
-        return $agentIds;
+        return 
+            "La specialité " . $speciality->getId_speciality() . ' - ' . strtoupper($speciality->getName()) . " est encore affectée "
+            . (count($speciality->getAgents()) > 1 ? 'aux agents:\\n' : ' à l\'agent: \\n')
+            . implode('\\n', $agentIds);
     }
 
     public function deleteSpeciality(int $id_speciality): void

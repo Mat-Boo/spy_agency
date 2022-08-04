@@ -31,6 +31,7 @@ $missionsStashsController->hydrateStashs($stashsListFiltered, $missionsList);
 <script>
     let emptyGet = <?= json_encode(empty($_GET) || isset($_GET['delete'])) ?>;
 </script>
+
 <?php if (isset($_GET['delete'])): ?>
     <p class="deleteConfirmMessage"> <?= 'La planque ' . $_GET['delete'] . ' a bien été supprimée.' ?></p>
 <?php endif ?>
@@ -171,7 +172,7 @@ $missionsStashsController->hydrateStashs($stashsListFiltered, $missionsList);
                         <form action="<?= $router->url('admin_stash_delete', ['id' => $stash->getId_stash()]) ?>" method="POST" class="deleteBtn actionBtn"
                             onsubmit="
                                 <?php if (!empty($stash->getMissions())): ?>
-                                    return confirm('<?= $stashsController->checkMissionBeforeDelete($stash) ?>')
+                                    return confirm('***** ATTENTION ***** \n<?= $stashsController->checkMissionBeforeDelete($stash) ?>\n\nVoulez-vous tout de même la supprimer ?')
                                 <?php else: ?>
                                     return confirm('Voulez-vous vraiment supprimer la planque <?=$stash->getId_stash() ?> ?')
                                 <?php endif ?>

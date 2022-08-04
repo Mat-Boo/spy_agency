@@ -49,4 +49,16 @@ class MissionsPersonsController
             $missionsPersons->updateMissionsPersons($mission, $id_mission);
         }
     }
+
+    public function deleteMissionPersonFromPerson(int $id, string $personItem): void
+    {
+        $missionsPersons = new MissionsPersons((new Connection)->getPdo(), $personItem);
+        $missionsPersons->deleteMissionPersonFromPerson($id);
+    }
+
+    public function deleteMissionPersonFromMission(int $id_mission, string $personItem): void
+    {
+        $missionsPersons = new MissionsPersons((new Connection)->getPdo(), $personItem);
+        $missionsPersons->deleteMissionPersonFromMission($id_mission);
+    }
 }

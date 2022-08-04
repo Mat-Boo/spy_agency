@@ -96,4 +96,15 @@ class Persons
             throw new Exception("Impossible de modifier l'enregistrement {$id_person} dans la table '" . ucfirst($this->personItem) . "'");
         }
     }
+
+    public function deletePerson(int $id): void
+    {
+        $query = $this->pdo->prepare(
+            "DELETE FROM " . ucfirst($this->personItem) . "
+            WHERE id = :id");
+        $deletePerson = $query->execute(['id' => $id]);
+        if ($deletePerson === false) {
+            throw new Exception("Impossible de supprimer l'enregistrement $id dans la table '" . ucfirst($this->personItem) . "'");
+        }
+    }
 }

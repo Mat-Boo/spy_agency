@@ -119,7 +119,7 @@ class AgentsSpecialities
         }
     }
 
-    public function deleteAgentSpeciality($id_speciality): void
+    public function deleteAgentSpecialityFromSpeciality($id_speciality): void
     {
         $query = $this->pdo->prepare(
             "DELETE FROM AgentSpeciality 
@@ -127,6 +127,17 @@ class AgentsSpecialities
         $deleteAgentSpeciality = $query->execute(['id_speciality' => $id_speciality]);
         if ($deleteAgentSpeciality === false) {
             throw new Exception("Impossible de supprimer l'enregistrement $id_speciality dans la table 'AgentSpeciality'");
+        }
+    }
+
+    public function deleteAgentSpecialityFromAgent($id_agent): void
+    {
+        $query = $this->pdo->prepare(
+            "DELETE FROM AgentSpeciality 
+            WHERE id = :id_agent");
+        $deleteAgentSpeciality = $query->execute(['id_agent' => $id_agent]);
+        if ($deleteAgentSpeciality === false) {
+            throw new Exception("Impossible de supprimer l'enregistrement $id_agent dans la table 'AgentSpeciality'");
         }
     }
 }

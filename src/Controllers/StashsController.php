@@ -89,9 +89,9 @@ class StashsController
             }
         }
         return 
-            "ATTENTION, la planque " . $stash->getId_stash() . " est encore affectée "
+            "La planque " . $stash->getId_stash() . " est encore affectée "
             . (count($stash->getMissions()) > 1 ? 'aux missions:\\n' : ' à la mission:\\n')
-            . implode('\\n', $missionIds) . " \\nVoulez-vous tout de même la supprimer ?";
+            . implode('\\n', $missionIds);
     }
 
     public function deleteStash(int $id_stash): void

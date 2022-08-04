@@ -121,4 +121,26 @@ class MissionsPersons
             }
         }
     }
+
+     public function deleteMissionPersonFromPerson($id): void
+     {
+        $query = $this->pdo->prepare(
+            "DELETE FROM Mission" . ucfirst($this->personItem) .
+            " WHERE id = :id");
+        $deleteMissionAgent = $query->execute(['id' => $id]);
+        if ($deleteMissionAgent === false) {
+            throw new Exception("Impossible de supprimer l'enregistrement $id dans la table 'Mission" . $this->personItem . "'");
+        }
+     }
+
+     public function deleteMissionPersonFromMission($id_mission): void
+     {
+        $query = $this->pdo->prepare(
+            "DELETE FROM Mission" . ucfirst($this->personItem) .
+            " WHERE id_mission = :id_mission");
+        $deleteMissionAgent = $query->execute(['id_mission' => $id_mission]);
+        if ($deleteMissionAgent === false) {
+            throw new Exception("Impossible de supprimer l'enregistrement $id_mission dans la table 'Mission" . $this->personItem . "'");
+        }
+     }
 }

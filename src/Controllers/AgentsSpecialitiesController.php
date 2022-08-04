@@ -43,9 +43,15 @@ class AgentsSpecialitiesController
         $agentsSpecialities->hydrateSpecialities($specialities, $agents);
     }
 
-    public function deleteAgentSpeciality(int $id_speciality): void
+    public function deleteAgentSpecialityFromSpeciality(int $id_speciality): void
     {
         $agentsSpecialities = new AgentsSpecialities((new Connection)->getPdo());
-        $agentsSpecialities->deleteAgentSpeciality($id_speciality);
+        $agentsSpecialities->deleteAgentSpecialityFromSpeciality($id_speciality);
+    }
+
+    public function deleteAgentSpecialityFromAgent(int $id_agent): void
+    {
+        $agentsSpecialities = new AgentsSpecialities((new Connection)->getPdo());
+        $agentsSpecialities->deleteAgentSpecialityFromAgent($id_agent);
     }
 }

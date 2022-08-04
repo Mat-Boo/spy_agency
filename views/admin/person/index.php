@@ -36,12 +36,28 @@ if ($personItem === 'agent') {
 }
 $missionsPersonsController->hydratePersons($personsListFiltered, $missionsList, $personItem);
 
+//Permet de récupérer la liste des ids des missions affectées aux personnes concernées, sert à la suppression d'une personne
+$missionIds = [];
+foreach($personsListFiltered as $person) {
+    foreach($person->getMissions() as $mission) {
+        $missionIds[] = $mission->getId_mission();
+    }
+}
+/* foreach($personsListFiltered as $person) {
+    echo $personItem . $person->getId() . '</br>';
+    $personsController->checkMissionBeforeDelete($person, $personItem, $missionIds);
+    echo '____________________________________________</br>';
+} */
+
 ?>
 
 <script>
-    let emptyGet = <?= json_encode(empty($_GET)) ?>;
+    let emptyGet = <?= json_encode(empty($_GET) || isset($_GET['delete'])) ?>;
 </script>
 
+<?php if (isset($_GET['delete'])): ?>
+    <p class="deleteConfirmMessage"><?= $personItem === 'agent' ? 'L\'agent ' . $_GET['delete'] . ' a bien été supprimé.' : ($personItem === 'contact' ? 'Le contact ' . $_GET['delete'] . ' a bien été supprimé.' : 'La cible ' . $_GET['delete'] . ' a bien été supprimée.') ?></p>
+<?php endif ?>
 <h1 class="personTitle">
 <?php if($personItem === 'agent'): ?>
     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 448 512">
@@ -62,7 +78,14 @@ $missionsPersonsController->hydratePersons($personsListFiltered, $missionsList, 
 <?php endif ?>
     <?= 'Administration / ' . ($personItem === 'target' ? 'Cible' : ucfirst($personItem)) . 's' ?>
 </h1>
-
+<button type="button" class="newBtn actionBtn">
+    <a href="<?= $router->url('admin_' . $personItem . '_new') ?>">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="newSvg" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+    </svg>
+        Nouveau
+    </a>
+</button>
 <form action="" method="GET" class="filtersBox">
     <div class="headerFilters">
         <div class="filtersTitle">
@@ -216,8 +239,10 @@ $missionsPersonsController->hydratePersons($personsListFiltered, $missionsList, 
                                 Modifier
                             </span>
                         </a>
-                        <form action="<?= $router->url('admin_' . $personItem .'_delete', ['id' => $person->getId()]) ?>" method="POST" class="deleteBtn actionBtn"
-                            onsubmit="return confirm('Voulez-vous vraiment supprimer <?= $personItem === 'agent' ? 'l\'agent ' : ($personItem === 'contact' ? 'le contact ' : 'la cible ') . $person->getId() ?> ?')">
+                        <form action="<?= $personsController->checkMissionBeforeDelete($person, $personItem, $missionIds)['routerUrl'] ? $router->url('admin_' . $personItem .'_delete', ['id' => $person->getId()]) : $router->url('admin_' . $personItem) ?>" method="POST" class="deleteBtn actionBtn"
+                            onsubmit="
+                                return <?= $personsController->checkMissionBeforeDelete($person, $personItem, $missionIds)['onsubmitMessage'] ?>
+                            ">
                             <button type="submit" >
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="deleteSvg actionSvg" viewBox="0 0 16 16">

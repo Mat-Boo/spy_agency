@@ -4,12 +4,11 @@ use App\Controllers\SpecialitiesController;
 use App\Controllers\AgentsSpecialitiesController;
 use App\Controllers\MissionsController;
 
-$stashsController = new SpecialitiesController;
+$specialitiesController = new SpecialitiesController;
 $agentsSpecialitiesController = new AgentsSpecialitiesController;
 $missionsController = new MissionsController;
 
-/* $agentsSpecialitiesController->deleteAgentSpeciality($params['id']);
-$missionsController->deleteMissionSpeciality($params['id']);
-$specialitiesController->deleteSpeciality($params['id']); */
+$agentsSpecialitiesController->deleteAgentSpecialityFromSpeciality($params['id']);
+$specialitiesController->deleteSpeciality($params['id']);
 header('Location: ' . $router->url('admin_speciality') . '?delete=' . $params['id']);
 ?>

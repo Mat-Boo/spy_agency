@@ -119,7 +119,7 @@ class MissionsStashs
         }
     }
 
-    public function deleteMissionStash(int $id_stash): void
+    public function deleteMissionStashFromStash(int $id_stash): void
     {
         $query = $this->pdo->prepare(
             "DELETE FROM MissionStash 
@@ -127,6 +127,17 @@ class MissionsStashs
         $deleteMissionStash = $query->execute(['id_stash' => $id_stash]);
         if ($deleteMissionStash === false) {
             throw new Exception("Impossible de supprimer l'enregistrement $id_stash dans la table 'MissionStash'");
+        }
+    }
+
+    public function deleteMissionStashFromMission(int $id_mission): void
+    {
+        $query = $this->pdo->prepare(
+            "DELETE FROM MissionStash 
+            WHERE id_mission = :id_mission");
+        $deleteMissionStash = $query->execute(['id_mission' => $id_mission]);
+        if ($deleteMissionStash === false) {
+            throw new Exception("Impossible de supprimer l'enregistrement $id_mission dans la table 'MissionStash'");
         }
     }
 }

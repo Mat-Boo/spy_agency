@@ -9,6 +9,7 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  position: relative;
 }
 
 .personEdit .personEditTitle {
@@ -180,9 +181,9 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -225,11 +226,6 @@
   margin-right: 12px;
 }
 
-.personEdit .person .actionBtns .deleteBtn {
-  background: #dd4c4c;
-  margin-right: 5px;
-}
-
 .personEdit .person .actionBtns .cancelBtn {
   background: #e77d36;
   margin-right: 20px;
@@ -245,5 +241,47 @@
 
 .personEdit .person .actionBtns .confirmBtn {
   background: #2ab37a;
+}
+
+.personEdit .deleteBtn {
+  position: absolute;
+  left: 0;
+  bottom: 10px;
+  text-decoration: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border: 1px solid #395B64;
+  color: white;
+  padding: 9px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  opacity: 0.8;
+  background: #dd4c4c;
+}
+
+.personEdit .deleteBtn:hover {
+  opacity: 1;
+}
+
+.personEdit .deleteBtn span {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.personEdit .deleteBtn .actionSvg {
+  margin-right: 12px;
+}
+
+.personEdit .deleteBtn button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: white;
+  padding: 0;
 }
 /*# sourceMappingURL=editPerson_style.css.map */
