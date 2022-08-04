@@ -90,4 +90,22 @@ class Specialities
             throw new Exception("Impossible de supprimer l'enregistrement $id_speciality dans la table 'Speciality'");
         }
     }
+
+    public function createSpeciality(array $newSpeciality): void
+    {
+        $query = $this->pdo->prepare(
+            "INSERT INTO Speciality SET 
+            id_speciality = :id_speciality,
+            name = :name
+        ");
+        $createSpeciality = $query->execute(
+            [
+                'id_speciality' => $newSpeciality['idSpeciality'],
+                'name' => $newSpeciality['nameSpeciality']
+            ]
+        );
+        if ($createSpeciality === false) {
+            throw new Exception("Impossible de créer le nouvel enregistrement {$newSpeciality['idSpeciality']} dans la table 'Speciality'");
+        }
+    }
 }

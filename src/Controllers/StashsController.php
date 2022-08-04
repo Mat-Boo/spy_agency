@@ -99,4 +99,10 @@ class StashsController
         $stashs = new Stashs((new Connection)->getPdo());
         $stashs->deleteStash($id_stash);
     }
+
+    public function createStash(array $newStash): void
+    {
+        $stashs = new Stashs((new Connection)->getPdo());
+        $stashs->createStash($newStash);
+    }
 }

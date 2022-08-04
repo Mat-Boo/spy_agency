@@ -24,20 +24,29 @@ $agentsList = $personsController->getPersonsLists('id')['agentsList'];
 $missionsFilters = $missionsController->filterMissionsForSpeciality($_GET);
 $specialitiesListFiltered = $specialitiesController->filterSpecialities($_GET, $agentsFilters, $missionsFilters); */
 
-//Récupération de la spécialité à éditer
-$speciality = $specialitiesController->findSpeciality($params['id']);
-$specialityArray[] = $speciality;
+if (!empty($params)) {
+    //Récupération de la spécialité à éditer
+    $speciality = $specialitiesController->findSpeciality($params['id']);
+    $specialityArray[] = $speciality;
+    
+    //Hydratation des spécialités avec les agents et les missions
+    $agentsSpecialitiesController->hydrateSpecialities($specialityArray, $agentsList);
+    $missionsController->hydrateSpecialities($specialityArray);
+    
+    //Validation des modifications et retour à la liste des spécialités
+    if (!empty($_POST)) {
+        var_dump($_POST);
+        $specialitiesController->updateSpeciality($_POST, $speciality->getId_speciality());
+        header('location: ' . $router->url('admin_speciality'));
+    }
+}
 
-//Hydratation des spécialités avec les agents et les missions
-$agentsSpecialitiesController->hydrateSpecialities($specialityArray, $agentsList);
-$missionsController->hydrateSpecialities($specialityArray);
-
-//Validation des modifications et retour à la liste des spécialités
+//Création de la nouvelle spécialité et retour à la liste des spécialités
 if (!empty($_POST)) {
-    var_dump($_POST);
-    $specialitiesController->updateSpeciality($_POST, $speciality->getId_speciality());
+    $specialitiesController->createSpeciality($_POST);
     header('location: ' . $router->url('admin_speciality'));
 }
+
 ?>
 
 <script>
@@ -50,22 +59,22 @@ if (!empty($_POST)) {
             <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
             <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
         </svg>
-        Administration / Édition de la spécialités 
-        <?= $speciality->getId_speciality() ?>
+        <?= !empty($params) ? 'Administration / Édition de la spécialité ' . $stash->getId_stash() : 'Administration / Nouvelle spécialité'?>
     </h1>
     <form action="" method="POST" class="speciality">
         <div class="headerSpeciality">
             <div class="titleItem">
                 <label for="idSpeciality"><b>Code:</b></label>
-                <input type="text" id="idSpeciality" name="idSpeciality" value="<?= $speciality->getId_speciality() ?>">
+                <input type="text" id="idSpeciality" name="idSpeciality" value="<?= !empty($params) ? $speciality->getId_speciality() : '' ?>">
             </div>
         </div>
         <div class="infosSpeciality">
             <div class="specialityItems">
                 <label for="nameSpeciality"><b>Titre:</b></label>
-                <input type="text" id="nameSpeciality" name="nameSpeciality" value="<?= $speciality->getName() ?>">
+                <input type="text" id="nameSpeciality" name="nameSpeciality" value="<?= !empty($params) ? $speciality->getName() : '' ?>">
             </div>
         </div>
+        <?php if(!empty($params)): ?>
         <div class="details">
             <div class="detailsBtn">
                 <span>Détails</span>
@@ -116,6 +125,7 @@ if (!empty($_POST)) {
                 </div>
             </div>
         </div>
+        <?php endif ?>
         <div class="actionBtns">
             <div class="CancelAndConfirmBtns">
                 <button type="button" class="cancelBtn actionBtn">
@@ -137,6 +147,7 @@ if (!empty($_POST)) {
             </div>
         </div>
     </form>
+    <?php if(!empty($params)): ?>
     <form action="<?= !empty($speciality->getMissions()) ? $router->url('admin_speciality_edit', $params) : $router->url('admin_speciality_delete', ['id' => $speciality->getId_speciality()]) ?>" method="POST" class="deleteBtn actionBtn"
         onsubmit="
             <?php if (!empty($speciality->getMissions())): ?>
@@ -156,4 +167,5 @@ if (!empty($_POST)) {
             </span>
         </button>
     </form>
+    <?php endif ?>
 </div>

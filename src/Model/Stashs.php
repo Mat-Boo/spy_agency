@@ -94,4 +94,26 @@ class Stashs
             throw new Exception("Impossible de supprimer l'enregistrement $id_stash dans la table 'Stash'");
         }
     }
+
+    public function createStash(array $newStash): void
+    {
+        $query = $this->pdo->prepare(
+            "INSERT INTO Stash SET 
+            id_stash = :id_stash,
+            address = :address,
+            country = :country,
+            type = :type
+        ");
+        $createStash = $query->execute(
+            [
+                'id_stash' => $newStash['idStash'],
+                'address' => $newStash['addressStash'],
+                'country' => $newStash['countryStash'],
+                'type' => $newStash['typeStash']
+            ]
+        );
+        if ($createStash === false) {
+            throw new Exception("Impossible de créer le nouvel enregistrement {$newStash['idStash']} dans la table 'Stash'");
+        }
+    }
 }

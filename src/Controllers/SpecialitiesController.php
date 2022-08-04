@@ -77,4 +77,10 @@ class SpecialitiesController
         $specialities = new Specialities((new Connection)->getPdo());
         $specialities->deleteSpeciality($id_speciality);
     }
+
+    public function createSpeciality(array $newSpeciality): void
+    {
+        $specialities = new Specialities((new Connection)->getPdo());
+        $specialities->createSpeciality($newSpeciality);
+    }
 }

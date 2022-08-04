@@ -208,7 +208,7 @@ $missionsController->hydrateSpecialities($specialitiesListFiltered);
                         </span>
                         <ul class="agentsList">
                             <?php if (count($speciality->getAgents()) === 0): ?>
-                                <p>Cette spécialité ne concerne aucune agent.</p>
+                                <p>Cette spécialité ne concerne aucun agent.</p>
                             <?php else: ?>
                                 <?php foreach($speciality->getAgents() as $agent): ?>
                                     <li><?= $agent->getFirstname() . ' ' . $agent->getLastname() ?></li>
