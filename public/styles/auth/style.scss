@@ -1,0 +1,57 @@
+.alertMessage {
+    color: rgb(99, 7, 7);
+    padding: 10px 40px;
+    background: rgb(212, 140, 140);
+    border-radius: 5px;
+    opacity: 0;
+    transition: opacity 1000ms;
+    margin-bottom: 20px;
+}
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid #395B64;
+    padding: 50px;
+    border-radius: 10px;
+    background:#A5C9CA;
+    width: 600px;
+    .emailBox, .pwdBox {
+        font-size: 1.3em;
+        margin: 20px;
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+        label {
+            color: #395B64;
+        }
+        input {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+    }
+    
+    .loginBtn {
+        background: #395B64;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #395B64;
+        color: white;
+        padding: 9px 12px;
+        border-radius: 5px;
+        cursor: pointer;
+        opacity: 0.8;
+        margin-top: 50px;
+        width: 200px;
+        font-size: 1.2em;
+        &:hover {
+            opacity: 1;
+        }
+        .loginSvg {
+            margin-right: 10px;
+        }
+    }
+}

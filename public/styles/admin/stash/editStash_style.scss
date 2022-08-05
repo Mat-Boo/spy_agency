@@ -3,17 +3,10 @@
     flex-direction: column;
     align-items: center;
     position: relative;
-    .stashEditTitle {
-        text-align: center;
-        font-size: 3em;
-        color: #395B64;
-        margin: 0;
-    }
     .stash {
         background: #A5C9CA;
         width: 100%;
         max-width: 1500px;
-        margin-top: 50px;
         border-radius: 5px;
         padding: 10px 20px;
         box-shadow: 0 0 10px #395B64;

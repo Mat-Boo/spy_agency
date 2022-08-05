@@ -107,4 +107,29 @@ class Persons
             throw new Exception("Impossible de supprimer l'enregistrement $id dans la table '" . ucfirst($this->personItem) . "'");
         }
     }
+
+    public function createPerson(array $newPerson): int
+    {
+        $query = $this->pdo->prepare(
+            "INSERT INTO " . ucfirst($this->personItem) . " SET 
+            id = :id,
+            firstname = :firstname,
+            lastname = :lastname,
+            birthdate = :birthdate,
+            nationality = :nationality
+        ");
+        $createPerson = $query->execute(
+            [
+                'id' => $newPerson['idPerson'],
+                'firstname' => $newPerson['firstnamePerson'],
+                'lastname' => $newPerson['lastnamePerson'],
+                'birthdate' => $newPerson['birthdatePerson'],
+                'nationality' => $newPerson['nationalityPerson']
+            ]
+        );
+        if ($createPerson === false) {
+            throw new Exception("Impossible de créer le nouvel enregistrement {$newPerson['idPerson']} dans la table '" . ucfirst($this->personItem) . "'");
+        }
+        return $this->pdo->lastInsertId();
+    }
 }

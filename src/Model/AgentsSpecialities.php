@@ -79,11 +79,11 @@ class AgentsSpecialities
                     'id_speciality' => $id_speciality
                 ]
             );
+            if ($updateAgentsSpecialities === false) {
+                throw new Exception("Impossible de modifier l'enregistrement {$id_agent} dans la table 'AgentSpeciality'");
+            }
         }
 
-        if ($updateAgentsSpecialities === false) {
-            throw new Exception("Impossible de modifier l'enregistrement {$id_agent} dans la table 'AgentSpeciality'");
-        }
     }
 
     public function filterAgents(array $filterOptions): array
@@ -138,6 +138,27 @@ class AgentsSpecialities
         $deleteAgentSpeciality = $query->execute(['id_agent' => $id_agent]);
         if ($deleteAgentSpeciality === false) {
             throw new Exception("Impossible de supprimer l'enregistrement $id_agent dans la table 'AgentSpeciality'");
+        }
+    }
+
+    public function createAgentSpeciality(array $newAgent): void
+    {
+        $query = $this->pdo->prepare(
+            "INSERT INTO AgentSpeciality SET 
+            id = :id,
+            id_speciality = :id_speciality
+        ");
+        foreach($newAgent['personSpecialities'] as $id_speciality) {
+            $createAgentSpeciality = $query->execute(
+                [
+                    'id' => $newAgent['idPerson'],
+                    'id_speciality' => $id_speciality
+                ]
+            );
+            if ($createAgentSpeciality === false) {
+                throw new Exception("Impossible de créer le nouvel enregistrement {$newAgent['id']} . " - " . $id_speciality dans la table 'AgentSpeciality'");
+            }
+
         }
     }
 }

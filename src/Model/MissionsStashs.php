@@ -140,4 +140,25 @@ class MissionsStashs
             throw new Exception("Impossible de supprimer l'enregistrement $id_mission dans la table 'MissionStash'");
         }
     }
+
+    public function createMissionStash(array $newMissionStash, int $newId_mission): void
+    {
+        $query = $this->pdo->prepare(
+            "INSERT INTO MissionStash SET 
+            id_mission = :id_mission,
+            id_stash = :id_stash
+        ");
+        foreach($newMissionStash['stashMission'] as $idStash) {
+            $createMissionStash = $query->execute(
+                [
+                    'id_mission' => $newId_mission,
+                    'id_stash' => $idStash
+                ]
+            );
+            if ($createMissionStash === false) {
+                throw new Exception("Impossible de créer le nouvel enregistrement " . $newId_mission . " - " . $idStash . " dans la table 'MissionStash'");
+            }
+
+        }
+    }
 }

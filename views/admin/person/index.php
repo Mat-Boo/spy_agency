@@ -43,20 +43,19 @@ foreach($personsListFiltered as $person) {
         $missionIds[] = $mission->getId_mission();
     }
 }
-/* foreach($personsListFiltered as $person) {
-    echo $personItem . $person->getId() . '</br>';
-    $personsController->checkMissionBeforeDelete($person, $personItem, $missionIds);
-    echo '____________________________________________</br>';
-} */
 
 ?>
 
 <script>
-    let emptyGet = <?= json_encode(empty($_GET) || isset($_GET['delete'])) ?>;
+    let emptyGet = <?= json_encode(empty($_GET) || isset($_GET['deleted']) || isset($_GET['updated']) || isset($_GET['created'])) ?>;
 </script>
 
-<?php if (isset($_GET['delete'])): ?>
-    <p class="deleteConfirmMessage"><?= $personItem === 'agent' ? 'L\'agent ' . $_GET['delete'] . ' a bien été supprimé.' : ($personItem === 'contact' ? 'Le contact ' . $_GET['delete'] . ' a bien été supprimé.' : 'La cible ' . $_GET['delete'] . ' a bien été supprimée.') ?></p>
+<?php if (isset($_GET['deleted'])): ?>
+    <p class="alertMessage"><?= $personItem === 'agent' ? 'L\'agent ' . $_GET['deleted'] . ' a bien été supprimé.' : ($personItem === 'contact' ? 'Le contact ' . $_GET['deleted'] . ' a bien été supprimé.' : 'La cible ' . $_GET['deleted'] . ' a bien été supprimée.') ?></p>
+<?php elseif (isset($_GET['updated'])): ?>
+    <p class="alertMessage"><?= $personItem === 'agent' ? 'L\'agent ' . $_GET['updated'] . ' a bien été mis à jour.' : ($personItem === 'contact' ? 'Le contact ' . $_GET['updated'] . ' a bien été mis à jour.' : 'La cible ' . $_GET['updated'] . ' a bien été mise à jour.') ?></p>
+<?php elseif (isset($_GET['created'])): ?>
+    <p class="alertMessage"><?= $personItem === 'agent' ? 'L\'agent ' . $_GET['created'] . ' a bien été créé.' : ($personItem === 'contact' ? 'Le contact ' . $_GET['created'] . ' a bien été créé.' : 'La cible ' . $_GET['created'] . ' a bien été créée.') ?></p>
 <?php endif ?>
 <h1 class="personTitle">
 <?php if($personItem === 'agent'): ?>
@@ -78,14 +77,16 @@ foreach($personsListFiltered as $person) {
 <?php endif ?>
     <?= 'Administration / ' . ($personItem === 'target' ? 'Cible' : ucfirst($personItem)) . 's' ?>
 </h1>
-<button type="button" class="newBtn actionBtn">
-    <a href="<?= $router->url('admin_' . $personItem . '_new') ?>">
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="newSvg" viewBox="0 0 16 16">
-        <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
-    </svg>
-        Nouveau
-    </a>
-</button>
+<?php if($isAdmin): ?>
+    <button type="button" class="newBtn actionBtn">
+        <a href="<?= $router->url('admin_' . $personItem . '_new') ?>">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="newSvg" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+        </svg>
+            Nouveau
+        </a>
+    </button>
+<?php endif ?>
 <form action="" method="GET" class="filtersBox">
     <div class="headerFilters">
         <div class="filtersTitle">

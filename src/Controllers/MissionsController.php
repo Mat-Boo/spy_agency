@@ -127,4 +127,10 @@ class MissionsController
         $missions = new Missions((new Connection)->getPdo());
         $missions->deleteMission($id);
     }
+
+    public function createMission(array $newMission): int
+    {
+        $missions = new Missions((new Connection)->getPdo());
+        return $missions->createMission($newMission);
+    }
 }

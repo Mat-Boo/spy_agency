@@ -3,17 +3,10 @@
     flex-direction: column;
     align-items: center;
     position: relative;
-    .personEditTitle {
-        text-align: center;
-        font-size: 3em;
-        color: #395B64;
-        margin: 0;
-    }
     .person {
         background: #A5C9CA;
         width: 100%;
         max-width: 1500px;
-        margin-top: 50px;
         border-radius: 5px;
         padding: 10px 20px;
         box-shadow: 0 0 10px #395B64;
@@ -29,11 +22,15 @@
             .headerSelect {
                 padding: 5px 10px;
                 background:#A5C9CA ;
-                color:#395B64 ;
+                color:#395B64;
+                border-bottom: 2px solid #395B64;
             }
             option {
                 font-size: 1rem;
                 padding: 5px 10px;
+                &:checked {
+                    background: #A5C9CA;
+                }
             }
         }
         .nationalityPersonSelect {

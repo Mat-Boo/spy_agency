@@ -19,11 +19,6 @@ $missionsList = $missionsController->getMissionsList();
 $specialitiesList = $specialitiesController->getSpecialitiesList('id_speciality');
 $agentsList = $personsController->getPersonsLists('id')['agentsList'];
 
-//Application des filtre de recherche sur les spécialités
-/* $agentsFilters = $agentsSpecialitiesController->filterAgents($_GET);
-$missionsFilters = $missionsController->filterMissionsForSpeciality($_GET);
-$specialitiesListFiltered = $specialitiesController->filterSpecialities($_GET, $agentsFilters, $missionsFilters); */
-
 if (!empty($params)) {
     //Récupération de la spécialité à éditer
     $speciality = $specialitiesController->findSpeciality($params['id']);
@@ -35,16 +30,15 @@ if (!empty($params)) {
     
     //Validation des modifications et retour à la liste des spécialités
     if (!empty($_POST)) {
-        var_dump($_POST);
         $specialitiesController->updateSpeciality($_POST, $speciality->getId_speciality());
-        header('location: ' . $router->url('admin_speciality'));
+        header('location: ' . $router->url('admin_speciality') . '?updated=' . $params['id']);
     }
 }
 
 //Création de la nouvelle spécialité et retour à la liste des spécialités
 if (!empty($_POST)) {
-    $specialitiesController->createSpeciality($_POST);
-    header('location: ' . $router->url('admin_speciality'));
+    $newIdSpeciality = $specialitiesController->createSpeciality($_POST);
+    header('location: ' . $router->url('admin_speciality') . '?created=' . $newIdSpeciality);
 }
 
 ?>
@@ -59,7 +53,7 @@ if (!empty($_POST)) {
             <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
             <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
         </svg>
-        <?= !empty($params) ? 'Administration / Édition de la spécialité ' . $stash->getId_stash() : 'Administration / Nouvelle spécialité'?>
+        <?= !empty($params) ? 'Administration / Édition de la spécialité ' . $speciality->getId_speciality() : 'Administration / Nouvelle spécialité'?>
     </h1>
     <form action="" method="POST" class="speciality">
         <div class="headerSpeciality">
@@ -148,24 +142,24 @@ if (!empty($_POST)) {
         </div>
     </form>
     <?php if(!empty($params)): ?>
-    <form action="<?= !empty($speciality->getMissions()) ? $router->url('admin_speciality_edit', $params) : $router->url('admin_speciality_delete', ['id' => $speciality->getId_speciality()]) ?>" method="POST" class="deleteBtn actionBtn"
-        onsubmit="
-            <?php if (!empty($speciality->getMissions())): ?>
-                return alert('***** ATTENTION ***** \n<?= $specialitiesController->checkMissionBeforeDelete($speciality)?>')
-            <?php elseif(!empty($speciality->getAgents())): ?>
-                return confirm('***** ATTENTION ***** \n<?= $specialitiesController->checkAgentBeforeDelete($speciality)?>\n\nVoulez-vous tout de même la supprimer ?')
-            <?php else: ?>
-                return confirm('Voulez-vous vraiment supprimer la spécialité <?=$speciality->getId_speciality() . ' - ' . strtoupper($speciality->getName()) ?> ?')
-            <?php endif ?>
-        ">
-        <button type="submit" >
-            <span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="deleteSvg actionSvg" viewBox="0 0 16 16">
-                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                </svg>
-                Supprimer
-            </span>
-        </button>
-    </form>
+        <form action="<?= !empty($speciality->getMissions()) ? $router->url('admin_speciality_edit', $params) : $router->url('admin_speciality_delete', ['id' => $speciality->getId_speciality()]) ?>" method="POST" class="deleteBtn actionBtn"
+            onsubmit="
+                <?php if (!empty($speciality->getMissions())): ?>
+                    return alert('***** ATTENTION ***** \n<?= $specialitiesController->checkMissionBeforeDelete($speciality)?>')
+                <?php elseif(!empty($speciality->getAgents())): ?>
+                    return confirm('***** ATTENTION ***** \n<?= $specialitiesController->checkAgentBeforeDelete($speciality)?>\n\nVoulez-vous tout de même la supprimer ?')
+                <?php else: ?>
+                    return confirm('Voulez-vous vraiment supprimer la spécialité <?=$speciality->getId_speciality() . ' - ' . strtoupper($speciality->getName()) ?> ?')
+                <?php endif ?>
+            ">
+            <button type="submit" >
+                <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="deleteSvg actionSvg" viewBox="0 0 16 16">
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                    </svg>
+                    Supprimer
+                </span>
+            </button>
+        </form>
     <?php endif ?>
 </div>

@@ -100,9 +100,9 @@ class StashsController
         $stashs->deleteStash($id_stash);
     }
 
-    public function createStash(array $newStash): void
+    public function createStash(array $newStash): int
     {
         $stashs = new Stashs((new Connection)->getPdo());
-        $stashs->createStash($newStash);
+        return $stashs->createStash($newStash);
     }
 }

@@ -99,27 +99,27 @@ class MissionsPersons
 
     public function updateMissionsPersons(array $mission, int $id_mission)
     {
-        foreach(['Agent', 'Contact', 'Target'] as $item) {
-            $this->pdo->exec("DELETE FROM Mission" . $item . " WHERE id_mission = " . $id_mission);
+        /* foreach(['Agent', 'Contact', 'Target'] as $item) { */
+            $this->pdo->exec("DELETE FROM Mission" . ucfirst($this->personItem) . " WHERE id_mission = " . $id_mission);
     
             $query = $this->pdo->prepare(
-                "INSERT INTO Mission" . $item . " SET 
+                "INSERT INTO Mission" . ucfirst($this->personItem) . " SET 
                 id_mission = :id_mission,
                 id = :id
             ");
     
-            foreach($mission[strtolower($item) . 'Mission'] as $id) {
-                ${'updateMission' . $item}[] = $query->execute(
+            foreach($mission[$this->personItem . 'Mission'] as $id) {
+                'updateMission' . $this->personItem = $query->execute(
                     [
                         'id_mission' => $id_mission,
                         'id' => $id
                     ]
                 );
+                if ('updateMission' . $this->personItem === false) {
+                    throw new Exception("Impossible de modifier l'enregistrement {$id_mission} dans la table 'Mission" . ucfirst($this->personItem) . "'");
+                }
             }
-            if (${'updateMission' . $item} === false) {
-                throw new Exception("Impossible de modifier l'enregistrement {$id_mission} dans la table 'Mission" . $item . "'");
-            }
-        }
+        /* } */
     }
 
      public function deleteMissionPersonFromPerson($id): void
@@ -143,4 +143,25 @@ class MissionsPersons
             throw new Exception("Impossible de supprimer l'enregistrement $id_mission dans la table 'Mission" . $this->personItem . "'");
         }
      }
+
+     public function createMissionPerson(array $newMissionPerson, int $newId_mission): void
+    {
+        $query = $this->pdo->prepare(
+            "INSERT INTO Mission" . ucfirst($this->personItem) . " SET 
+            id_mission = :id_mission,
+            id = :id
+        ");
+        foreach($newMissionPerson[$this->personItem . 'Mission'] as $idPerson) {
+            $createMissionPerson = $query->execute(
+                [
+                    'id_mission' => $newId_mission,
+                    'id' => $idPerson
+                ]
+            );
+            if ($createMissionPerson === false) {
+                throw new Exception("Impossible de créer le nouvel enregistrement " . $newId_mission . " - " . $idPerson . " dans la table 'Mission" . $this->personItem . "'");
+            }
+
+        }
+    }
 }

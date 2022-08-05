@@ -51,15 +51,6 @@ class Missions
         return $missions;
     }
 
-    /* public function delete(int $idMission): void
-    {
-        $query = $this->pdo->prepare("DELETE FROM Mission WHERE id_mission = :idMission");
-        $ok = $query->execute(['idMission' => $idMission]);
-        if ($ok === false) {
-            throw new Exception("Impossible de supprimer l'enregistrement $idMission dans la table Mission");
-        }
-    } */
-
     public function findMission(int $idMission): Mission
     {
         $query = $this->pdo->prepare(
@@ -148,5 +139,38 @@ class Missions
         if ($deleteMission === false) {
             throw new Exception("Impossible de supprimer l'enregistrement $id_mission dans la table 'Mission'");
         }
+    }
+
+    public function createMission(array $newMission)
+    {
+        $query = $this->pdo->prepare(
+            "INSERT INTO Mission SET 
+            code_name = :code_name,
+            title = :title,
+            description = :description,
+            country = :country,
+            type = :type,
+            status = :status,
+            start_date = :start_date,
+            end_date = :end_date,
+            id_speciality = :id_speciality
+        ");
+        $createMission = $query->execute(
+            [
+                'code_name' => $newMission['codeNameMission'],
+                'title' => $newMission['titleMission'],
+                'description' => $newMission['descriptionMission'],
+                'country' => $newMission['countryMission'],
+                'type' => $newMission['typeMission'],
+                'status' => $newMission['status'],
+                'start_date' => $newMission['startDateMission'],
+                'end_date' => $newMission['endDateMission'],
+                'id_speciality' => $newMission['specialityMission'],
+                ]
+            );
+            if ($createMission === false) {
+                throw new Exception("Impossible de créer le nouvel enregistrement {$newMission['codeNameMission']} dans la table 'Mission'");
+            }
+        return $this->pdo->lastInsertId();
     }
 }

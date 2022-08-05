@@ -1,8 +1,14 @@
+html {
+    height: 100%;
+}
 body {
     font-family:'Open Sans', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #EEE7DD;
+    background-color: #EEEAE7;
+    height: 100%;
+    position: relative;
+    box-sizing: border-box;
 }
 nav {
     display: flex;
@@ -11,18 +17,54 @@ nav {
     background-color: #395B64;
     padding: 10px 20px;
     margin-bottom: 50px;
+    height: 93px;
     .adminMenu {
         list-style: none;
         display: flex;
-        .navItem {
-            padding: 15px;
+    }
+    .navLink {
+        text-decoration: none;
+        color: white;
+        padding: 15px;
+    }
+    .loginBtn {
+        background: #A5C9CA;
+        color: #395B64;
+        border-radius: 5px;
+        padding: 10px;
+        opacity: 0.8;
+        display: flex;
+        align-items: center;
+        font-size: 1.2em;
+        &:hover {
+            opacity: 1;
+        }
+        .loginSvg {
+            margin-right: 10px;
         }
     }
-}
-
-.navLink {
-    text-decoration: none;
-    color: white;
+    .logoutBtn {
+        background: #A5C9CA;
+        border-radius: 5px;
+        padding: 10px;
+        opacity: 0.8;
+        &:hover {
+            opacity: 1;
+        }
+        button {
+            display: flex;
+            align-items: center;
+            font-size: 1.2em;
+            cursor: pointer;
+            color: #395B64;
+            background: none;
+            border: none;
+            padding: 0;
+            .logoutSvg {
+                margin-right: 10px;
+            }
+        }
+    }
 }
 
 main {
@@ -31,9 +73,19 @@ main {
     flex-direction: column;
     align-items: center;
     margin: 0 170px;
+    min-height: calc(100vh - 287px);
+    h1 {
+        text-align: center;
+        font-size: 3em;
+        color: #395B64;
+        margin-top: 0;
+        margin-bottom: 50px;
+    }
 }
 
 footer {
+    bottom: 0;
+
     background-color: #2C3333;
     padding: 10px 20px;
     margin-top: 50px;

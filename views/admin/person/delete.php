@@ -13,5 +13,5 @@ if (substr($match['name'], 6, -7) === 'agent') {
     $agentsSpecialitiesController->deleteAgentSpecialityFromAgent($params['id']);
 }
 $personsController->deletePerson($params['id'], substr($match['name'], 6, -7));
-header('Location: ' . $router->url('admin_' . substr($match['name'], 6, -7)) . '?delete=' . $params['id']);
+header('Location: ' . $router->url('admin_' . substr($match['name'], 6, -7)) . '?deleted=' . $params['id']);
 ?>

@@ -8,5 +8,5 @@ $missionsStashsController = new MissionsStashsController;
 
 $missionsStashsController->deleteMissionStashFromStash($params['id']);
 $stashsController->deleteStash($params['id']);
-header('Location: ' . $router->url('admin_stash') . '?delete=' . $params['id']);
+header('Location: ' . $router->url('admin_stash') . '?deleted=' . $params['id']);
 ?>

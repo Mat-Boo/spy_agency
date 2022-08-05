@@ -1,5 +1,9 @@
 <?php
-$personItem = substr($match['name'], 6, -5);
+if (!empty($params)) {
+    $personItem = substr($match['name'], 6, -5);
+} else {
+    $personItem = substr($match['name'], 6, -4);
+}
 
 $title = 'Spy Agency - ' . ($personItem === 'target' ? 'Cible' : ucfirst($personItem)) . 's - Admin';
 $styleFolder = '../../../styles/';
@@ -22,41 +26,46 @@ $countriesController = new CountriesController;
 //Récupération des listes
 $missionsList = $missionsController->getMissionsList();
 $personsList = $personsController->getPersonsLists('id')[$personItem . 'sList'];
-$specialitiesList = $specialitiesController->getSpecialitiesList('id_speciality');
+$specialitiesList = $specialitiesController->getSpecialitiesList('name');
 $countriesList = $countriesController->getCountriesList();
 
-//Application des filtre de recherche sur les missions
-/* $specialitiesFilters = $agentsSpecialitiesController->filterSpecialities($_GET);
-$missionsFilters = $missionsPersonsController->filterMissions($_GET, $personItem);
-$personsListFiltered = $personsController->filterPersons($_GET, $specialitiesFilters, $missionsFilters, $personItem); */
+if (!empty($params)) {
+    //Récupération de la personne à éditer
+    $person = $personsController->findPerson($params['id'], $personItem);
+    $personArray[] = $person;
 
-//Récupération de la personne à éditer
-$person = $personsController->findPerson($params['id'], $personItem);
-$personArray[] = $person;
-
-//Hydratation des personnes avec les spécialités (pour les agents) et les missions
-if ($personItem === 'agent') {
-    $agentsSpecialitiesController->hydrateAgents($personArray, $specialitiesList);
-}
-$missionsPersonsController->hydratePersons($personArray, $missionsList, $personItem);
-
-//Validation des modifications et retour à la liste des personnes concernées
-if (!empty($_POST)) {
-    $personsController->updatePerson($_POST, $person->getId(), $personItem);
+    //Hydratation des personnes avec les spécialités (pour les agents) et les missions
     if ($personItem === 'agent') {
-        $agentsSpecialitiesController->updateAgentsSpecialities($_POST, $person->getId(), $personItem);
+        $agentsSpecialitiesController->hydrateAgents($personArray, $specialitiesList);
     }
-    header('location: ' . $router->url('admin_' . $personItem));
+    $missionsPersonsController->hydratePersons($personArray, $missionsList, $personItem);
+
+    //Validation des modifications et retour à la liste des personnes concernées
+    if (!empty($_POST)) {
+        $personsController->updatePerson($_POST, $person->getId(), $personItem);
+        if ($personItem === 'agent') {
+            $agentsSpecialitiesController->updateAgentsSpecialities($_POST, $person->getId(), $personItem);
+        }
+        header('location: ' . $router->url('admin_' . $personItem) . '?updated=' . $params['id']);
+    }
+    //Permet de récupérer la liste des ids des missions affectées aux personnes concernées, sert à la suppression d'une personne
+    $missionIds = [];
+    foreach($personArray as $person) {
+        foreach($person->getMissions() as $mission) {
+            $missionIds[] = $mission->getId_mission();
+        }
+    }
 }
 
-//Permet de récupérer la liste des ids des missions affectées aux personnes concernées, sert à la suppression d'une personne
-$missionIds = [];
-foreach($personArray as $person) {
-    foreach($person->getMissions() as $mission) {
-        $missionIds[] = $mission->getId_mission();
+//Création de la nouvelle personne et retour à la liste des personnes concernées
+if (!empty($_POST)) {
+    $newIdPerson = $personsController->createPerson($_POST, $personItem);
+    if ($personItem === 'agent') {
+        $agentsSpecialitiesController->createAgentSpeciality($_POST);
     }
+    header('location: ' . $router->url('admin_' . $personItem) . '?created=' . $newIdPerson);
 }
-var_dump($missionIds);
+
 
 ?>
 
@@ -70,13 +79,13 @@ var_dump($missionIds);
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 448 512">
                 <path d="M377.7 338.8l37.15-92.87C419 235.4 411.3 224 399.1 224h-57.48C348.5 209.2 352 193 352 176c0-4.117-.8359-8.057-1.217-12.08C390.7 155.1 416 142.3 416 128c0-16.08-31.75-30.28-80.31-38.99C323.8 45.15 304.9 0 277.4 0c-10.38 0-19.62 4.5-27.38 10.5c-15.25 11.88-36.75 11.88-52 0C190.3 4.5 181.1 0 170.7 0C143.2 0 124.4 45.16 112.5 88.98C63.83 97.68 32 111.9 32 128c0 14.34 25.31 27.13 65.22 35.92C96.84 167.9 96 171.9 96 176C96 193 99.47 209.2 105.5 224H48.02C36.7 224 28.96 235.4 33.16 245.9l37.15 92.87C27.87 370.4 0 420.4 0 477.3C0 496.5 15.52 512 34.66 512H413.3C432.5 512 448 496.5 448 477.3C448 420.4 420.1 370.4 377.7 338.8zM176 479.1L128 288l64 32l16 32L176 479.1zM271.1 479.1L240 352l16-32l64-32L271.1 479.1zM320 186C320 207 302.8 224 281.6 224h-12.33c-16.46 0-30.29-10.39-35.63-24.99C232.1 194.9 228.4 192 224 192S215.9 194.9 214.4 199C209 213.6 195.2 224 178.8 224h-12.33C145.2 224 128 207 128 186V169.5C156.3 173.6 188.1 176 224 176s67.74-2.383 96-6.473V186z"/>
             </svg>
-            Administration / Édition de l'agent 
+            <?= !empty($params) ? 'Administration / Édition de l\'agent ' . $person->getId() : 'Administration / Nouvel agent'?>
         <?php elseif($personItem === 'contact'): ?>
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-person-badge" viewBox="0 0 16 16">
                 <path d="M6.5 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
                 <path d="M4.5 0A2.5 2.5 0 0 0 2 2.5V14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5A2.5 2.5 0 0 0 11.5 0h-7zM3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v10.795a4.2 4.2 0 0 0-.776-.492C11.392 12.387 10.063 12 8 12s-3.392.387-4.224.803a4.2 4.2 0 0 0-.776.492V2.5z"/>
             </svg>
-            Administration / Édition du contact 
+            <?= !empty($params) ? 'Administration / Édition du contact ' . $person->getId() : 'Administration / Nouveau contact'?>
         <?php elseif($personItem === 'target'): ?>
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-bullseye" viewBox="0 0 16 16">
                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
@@ -84,29 +93,28 @@ var_dump($missionIds);
                 <path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/>
                 <path d="M9.5 8a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
             </svg> 
-            Administration / Édition de la cible 
+            <?= !empty($params) ? 'Administration / Édition de la cible ' . $person->getId() : 'Administration / Nouvelle cible'?>
         <?php endif ?>
-        <?= $person->getId() ?>
     </h1>
     <form action="" method="POST" class="person">
         <div class="headerPerson">
             <div class="titleItem">
                 <label for="idPerson"><b>Code d'identification:</b></label>
-                <input type="text" id="idPerson" name="idPerson" value="<?= $person->getId() ?>">
+                <input type="text" id="idPerson" name="idPerson" value="<?= !empty($params) ? $person->getId() : '' ?>">
             </div>
         </div>
         <div class="infosPerson">
             <div class="personItem">
                 <label for="firstnamePerson"><b>Prénom:</b></label>
-                <input type="text" id="firstnamePerson" name="firstnamePerson" value="<?= $person->getFirstname() ?>">
+                <input type="text" id="firstnamePerson" name="firstnamePerson" value="<?= !empty($params) ? $person->getFirstname() : '' ?>">
             </div>
             <div class="personItem">
                 <label for="lastnamePerson"><b>Nom:</b></label>
-                <input type="text" id="lastnamePerson" name="lastnamePerson" value="<?= $person->getLastname() ?>">
+                <input type="text" id="lastnamePerson" name="lastnamePerson" value="<?= !empty($params) ? $person->getLastname() : '' ?>">
             </div>
             <div class="personItem">
                 <label for="birthdatePerson"><b>Date de naissance: </b></label>
-                <input type="date" id="birthdatePerson" name="birthdatePerson" value="<?= $person->getBirthdate() ?>">
+                <input type="date" id="birthdatePerson" name="birthdatePerson" value="<?= !empty($params) ? $person->getBirthdate() : '' ?>">
             </div>
             <div class="personItem">
                 <label for="nationalityPerson"><b>Nationalité: </b></label>
@@ -115,20 +123,22 @@ var_dump($missionIds);
                     <?php foreach($countriesList as $country) : ?>
                         <option
                             value="<?= $country['country'] ?>"
+                            <?php if (!empty($params)): ?>
                                 <?php if ($country['country'] === $person->getNationality()): ?>
                                     selected
                                 <?php endif ?>
+                            <?php endif ?>
                         ><?= $country['country'] ?></option>
                     <?php endforeach ?>
                 </select>
             </div>
         </div>
-        <div class="details">
-            <div class="detailsBtn">
-                <span>Détails</span>
-            </div>
-            <div class="detailsInfos">
-                <?php if($personItem === 'agent'): ?>
+        <?php if($personItem === 'agent'): ?>
+            <div class="details">
+                <div class="detailsBtn">
+                    <span>Détails</span>
+                </div>
+                <div class="detailsInfos">
                     <div class="infosItem specialities">
                         <label for="personSpecialities">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 512 512">
@@ -141,11 +151,13 @@ var_dump($missionIds);
                             <?php foreach($specialitiesList as $speciality) : ?>
                                 <option
                                     value="<?= $speciality->getId_speciality() ?>"
-                                    <?php foreach($person->getSpecialities() as $specialityAgent): ?>
-                                        <?php if ($speciality->getId_speciality() === $specialityAgent->getId_speciality()): ?>
-                                            selected
-                                        <?php endif ?>
-                                    <?php endforeach ?>
+                                    <?php if (!empty($params)): ?>
+                                        <?php foreach($person->getSpecialities() as $specialityAgent): ?>
+                                            <?php if ($speciality->getId_speciality() === $specialityAgent->getId_speciality()): ?>
+                                                selected
+                                            <?php endif ?>
+                                        <?php endforeach ?>
+                                    <?php endif ?>
                                 >
                                     <div>
                                         <p><?= $speciality->getName() ?></p>
@@ -154,37 +166,39 @@ var_dump($missionIds);
                             <?php endforeach ?>
                         </select>
                     </div>
-                <?php endif ?>
-                <div class="infosItem missions">
-                    <span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M5 4a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1H5z"/>
-                            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"/>
-                        </svg>
-                        <b>Mission(s) :</b>
-                    </span>
-                    <ul class="missionsList">
-                        <?php if (count($person->getMissions()) === 0): ?>
-                            <?php if ($personItem === 'agent'): ?>
-                                <p>Cet agent n'est affecté à aucune mission.</p>
-                            <?php elseif ($personItem === 'contact'): ?>
-                                <p>Ce contact n'est affecté à aucune mission.</p>
-                            <?php elseif ($personItem === 'target'): ?>
-                                <p>Cette cible n'est affectée à aucune mission.</p>
-                            <?php endif ?>
-                        <?php else: ?>
-                            <?php foreach($person->getMissions() as $mission): ?>
-                                <li><?= $mission->getCode_name() ?></li>
-                            <?php endforeach ?>
-                        <?php endif ?>
-                    </ul>
-                    <div class="textMissions">
-                        <p>Les missions ne sont pas modifiables.</p>
-                        <p>Pour affecter une mission à une personne, veuillez vous rendre sur l'édition de la mission concernée.</p>
-                    </div>
+                    <?php if(!empty($params)): ?>
+                        <div class="infosItem missions">
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M5 4a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1H5z"/>
+                                    <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"/>
+                                </svg>
+                                <b>Mission(s) :</b>
+                            </span>
+                            <ul class="missionsList">
+                                <?php if (count($person->getMissions()) === 0): ?>
+                                    <?php if ($personItem === 'agent'): ?>
+                                        <p>Cet agent n'est affecté à aucune mission.</p>
+                                    <?php elseif ($personItem === 'contact'): ?>
+                                        <p>Ce contact n'est affecté à aucune mission.</p>
+                                    <?php elseif ($personItem === 'target'): ?>
+                                        <p>Cette cible n'est affectée à aucune mission.</p>
+                                    <?php endif ?>
+                                <?php else: ?>
+                                    <?php foreach($person->getMissions() as $mission): ?>
+                                        <li><?= $mission->getCode_name() ?></li>
+                                    <?php endforeach ?>
+                                <?php endif ?>
+                            </ul>
+                            <div class="textMissions">
+                                <p>Les missions ne sont pas modifiables.</p>
+                                <p>Pour affecter une mission à une personne, veuillez vous rendre sur l'édition de la mission concernée.</p>
+                            </div>
+                        </div>
+                    <?php endif ?>
                 </div>
             </div>
-        </div>
+        <?php endif ?>
         <div class="actionBtns">
             <div class="CancelAndConfirmBtns">
                 <button type="button" class="cancelBtn actionBtn">
@@ -206,17 +220,19 @@ var_dump($missionIds);
             </div>
         </div>
     </form>
-    <form action="<?= $personsController->checkMissionBeforeDelete($person, $personItem, $missionIds)['routerUrl'] ? $router->url('admin_' . $personItem .'_delete', ['id' => $person->getId()]) : $router->url('admin_' . $personItem . '_edit', $params) ?>" method="POST" class="deleteBtn actionBtn"
-        onsubmit="
-            return <?= $personsController->checkMissionBeforeDelete($person, $personItem, $missionIds)['onsubmitMessage'] ?>
-        ">
-        <button type="submit" >
-            <span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="deleteSvg actionSvg" viewBox="0 0 16 16">
-                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                </svg>
-                Supprimer
-            </span>
-        </button>
-    </form>
+    <?php if(!empty($params)): ?>
+        <form action="<?= $personsController->checkMissionBeforeDelete($person, $personItem, $missionIds)['routerUrl'] ? $router->url('admin_' . $personItem .'_delete', ['id' => $person->getId()]) : $router->url('admin_' . $personItem . '_edit', $params) ?>" method="POST" class="deleteBtn actionBtn"
+            onsubmit="
+                return <?= $personsController->checkMissionBeforeDelete($person, $personItem, $missionIds)['onsubmitMessage'] ?>
+            ">
+            <button type="submit" >
+                <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="deleteSvg actionSvg" viewBox="0 0 16 16">
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                    </svg>
+                    Supprimer
+                </span>
+            </button>
+        </form>
+    <?php endif ?>
 </div>

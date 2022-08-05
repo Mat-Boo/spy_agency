@@ -1,0 +1,83 @@
+.alertMessage {
+  color: #630707;
+  padding: 10px 40px;
+  background: #d48c8c;
+  border-radius: 5px;
+  opacity: 0;
+  -webkit-transition: opacity 1000ms;
+  transition: opacity 1000ms;
+  margin-bottom: 20px;
+}
+
+.loginForm {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border: 2px solid #395B64;
+  padding: 50px;
+  border-radius: 10px;
+  background: #A5C9CA;
+  width: 600px;
+}
+
+.loginForm .emailBox, .loginForm .pwdBox {
+  font-size: 1.3em;
+  margin: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 80%;
+}
+
+.loginForm .emailBox label, .loginForm .pwdBox label {
+  color: #395B64;
+}
+
+.loginForm .emailBox input, .loginForm .pwdBox input {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.loginForm .loginBtn {
+  background: #395B64;
+  text-decoration: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border: 1px solid #395B64;
+  color: white;
+  padding: 9px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  opacity: 0.8;
+  margin-top: 50px;
+  width: 200px;
+  font-size: 1.2em;
+}
+
+.loginForm .loginBtn:hover {
+  opacity: 1;
+}
+
+.loginForm .loginBtn .loginSvg {
+  margin-right: 10px;
+}
+/*# sourceMappingURL=style.css.map */

@@ -44,7 +44,7 @@ class MissionsPersonsController
 
     public function updateMissionsPersons(array $mission, int $id_mission): void
     {
-        foreach(['agent', 'contact', 'cible'] as $personItem) {
+        foreach(['agent', 'contact', 'target'] as $personItem) {
             $missionsPersons = new MissionsPersons((new Connection)->getPdo(), $personItem);
             $missionsPersons->updateMissionsPersons($mission, $id_mission);
         }
@@ -60,5 +60,13 @@ class MissionsPersonsController
     {
         $missionsPersons = new MissionsPersons((new Connection)->getPdo(), $personItem);
         $missionsPersons->deleteMissionPersonFromMission($id_mission);
+    }
+
+    public function createMissionPerson(array $newMissionPerson, int $newId_mission): void
+    {
+        foreach(['agent', 'contact', 'target'] as $personItem) {
+            $missionsPersons = new MissionsPersons((new Connection)->getPdo(), $personItem);
+            $missionsPersons->createMissionPerson($newMissionPerson, $newId_mission);
+        }
     }
 }

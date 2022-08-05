@@ -54,6 +54,7 @@ class Router
         $view = $match['target'] ?: 'e404';
         $params = $match['params'];
         $router= $this;
+        /* $isAdmin = strpos($_SERVER['REQUEST_URI'], 'admin') !== false; */
         $isAdmin = strpos($_SERVER['REQUEST_URI'], 'admin') !== false;
         $layout = $isAdmin ? 'admin/layouts/default' : 'layouts/default';
         try {
@@ -63,7 +64,7 @@ class Router
             require $this->viewPath . DIRECTORY_SEPARATOR . $layout . '.php';
         } catch (Exception $e) {
             /* header('Location: ' . $this->url('login') . '?forbidden=1'); */
-            echo $e->getMessage();
+             echo $e->getMessage();
             exit();
         }
         return $this;

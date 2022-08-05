@@ -51,5 +51,11 @@ class MissionsStashsController
         $missionsStashs = new MissionsStashs((new Connection)->getPdo());
         $missionsStashs->deleteMissionStashFromMission($id_stash);
     }
+
+    public function createMissionStash(array $newMissionStash, int $newId_mission): void
+    {
+        $missionsStashs = new MissionsStashs((new Connection)->getPdo());
+        $missionsStashs->createMissionStash($newMissionStash, $newId_mission);
+    }
     
 }

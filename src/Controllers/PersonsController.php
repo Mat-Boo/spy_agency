@@ -109,4 +109,10 @@ class PersonsController
         $persons = new Persons((new Connection)->getPdo(), $personItem);
         $persons->deletePerson($id);
     }
+
+    public function createPerson(array $newPerson, string $personItem): int
+    {
+        $persons = new Persons((new Connection)->getPdo(), $personItem);
+        return $persons->createPerson($newPerson);
+    }
 }

@@ -30,11 +30,15 @@ $missionsController->hydrateSpecialities($specialitiesListFiltered);
 ?>
 
 <script>
-    let emptyGet = <?= json_encode(empty($_GET) || isset($_GET['delete'])) ?>;
+    let emptyGet = <?= json_encode(empty($_GET) || isset($_GET['deleted']) || isset($_GET['updated']) || isset($_GET['created'])) ?>;
 </script>
 
-<?php if (isset($_GET['delete'])): ?>
-    <p class="deleteConfirmMessage"> <?= 'La spécialité ' . $_GET['delete'] . ' a bien été supprimée.' ?></p>
+<?php if (isset($_GET['deleted'])): ?>
+    <p class="alertMessage"> <?= 'La spécialité ' . $_GET['deleted'] . ' a bien été supprimée.' ?></p>
+<?php elseif (isset($_GET['updated'])): ?>
+    <p class="alertMessage"> <?= 'La spécialité ' . $_GET['updated'] . ' a bien été mise à jour.' ?></p>
+<?php elseif (isset($_GET['created'])): ?>
+    <p class="alertMessage"> <?= 'La spécialité ' . $_GET['created'] . ' a bien été créée.' ?></p>
 <?php endif ?>
 <h1 class="specialityTitle">
     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
@@ -43,14 +47,16 @@ $missionsController->hydrateSpecialities($specialitiesListFiltered);
     </svg>
     Administration / Spécialités
 </h1>
-<button type="button" class="newBtn actionBtn">
-    <a href="<?= $router->url('admin_speciality_new') ?>">
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="newSvg" viewBox="0 0 16 16">
-        <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
-    </svg>
-        Nouveau
-    </a>
-</button>
+<?php if($isAdmin): ?>
+    <button type="button" class="newBtn actionBtn">
+        <a href="<?= $router->url('admin_speciality_new') ?>">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="newSvg" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+        </svg>
+            Nouveau
+        </a>
+    </button>
+<?php endif ?>
 <form action="" method="GET" class="filtersBox">
     <div class="headerFilters">
         <div class="filtersTitle">

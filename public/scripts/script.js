@@ -94,12 +94,9 @@ for (let i = 0 ; i < detailsBtn.length ; i++) {
     })
 }
 
-let deleteConfirmMessage = document.querySelector('.deleteConfirmMessage');
+let alertMessage = document.querySelector('.alertMessage');
 
-deleteConfirmMessage.style.opacity = 1;
+alertMessage.style.opacity = 1;
 setTimeout(() => {
-    deleteConfirmMessage.style.opacity = 0;
+    alertMessage.style.opacity = 0;
 }, 3000);
-setTimeout(() => {
-    deleteConfirmMessage.style.display = 'none';
-}, 4000);

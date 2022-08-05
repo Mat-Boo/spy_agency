@@ -54,4 +54,10 @@ class AgentsSpecialitiesController
         $agentsSpecialities = new AgentsSpecialities((new Connection)->getPdo());
         $agentsSpecialities->deleteAgentSpecialityFromAgent($id_agent);
     }
+
+    public function createAgentSpeciality(array $newAgent): void
+    {
+        $agentsSpecialities = new AgentsSpecialities((new Connection)->getPdo());
+        $agentsSpecialities->createAgentSpeciality($newAgent);
+    }
 }

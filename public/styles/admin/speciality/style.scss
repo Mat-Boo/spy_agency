@@ -1,4 +1,4 @@
-.deleteConfirmMessage {
+.alertMessage {
     position: absolute;
     left: 0;
     color: rgb(7, 99, 60);
@@ -8,12 +8,6 @@
     opacity: 0;
     transition: opacity 1000ms;
     margin-left: 20px;
-}
-.specialityTitle {
-    text-align: center;
-    font-size: 3em;
-    color: #395B64;
-    margin: 0;
 }
 .newBtn {
     position: absolute;
@@ -41,7 +35,7 @@
 }
 .filtersBox {
     box-shadow: 0 0 10px #395B64;
-    margin: 50px 50px 0 50px;
+    margin: 0 50px;
     padding: 5px 20px;
     border-radius: 5px;
     background: #A5C9CA;

@@ -12,18 +12,10 @@
   position: relative;
 }
 
-.personEdit .personEditTitle {
-  text-align: center;
-  font-size: 3em;
-  color: #395B64;
-  margin: 0;
-}
-
 .personEdit .person {
   background: #A5C9CA;
   width: 100%;
   max-width: 1500px;
-  margin-top: 50px;
   border-radius: 5px;
   padding: 10px 20px;
   -webkit-box-shadow: 0 0 10px #395B64;
@@ -46,11 +38,16 @@
   padding: 5px 10px;
   background: #A5C9CA;
   color: #395B64;
+  border-bottom: 2px solid #395B64;
 }
 
 .personEdit .person select option {
   font-size: 1rem;
   padding: 5px 10px;
+}
+
+.personEdit .person select option:checked {
+  background: #A5C9CA;
 }
 
 .personEdit .person .nationalityPersonSelect {

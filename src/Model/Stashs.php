@@ -95,7 +95,7 @@ class Stashs
         }
     }
 
-    public function createStash(array $newStash): void
+    public function createStash(array $newStash): int
     {
         $query = $this->pdo->prepare(
             "INSERT INTO Stash SET 
@@ -115,5 +115,6 @@ class Stashs
         if ($createStash === false) {
             throw new Exception("Impossible de créer le nouvel enregistrement {$newStash['idStash']} dans la table 'Stash'");
         }
+        return $this->pdo->lastInsertId();
     }
 }

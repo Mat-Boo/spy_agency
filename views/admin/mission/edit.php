@@ -23,28 +23,38 @@ $countriesController = new CountriesController;
 //Récupération des listes
 $personsLists = $personsController->getPersonsLists('lastname');
 $stashsList = $stashsController->getStashsList('country, type');
-$specialitiesList = $specialitiesController->getSpecialitiesList('id_speciality');
+$specialitiesList = $specialitiesController->getSpecialitiesList('name');
 $countriesList = $countriesController->getCountriesList();
 
 //Application des filtre de recherche sur les missions
 $personsFilters = $missionsPersonsController->filterPersons($_GET);
 $stashsFilters = $missionsStashsController->getStashsFilters($_GET);
-$missionsListFiltered = $missionsController->filterMissions($_GET, $personsFilters, $stashsFilters);
 
-//Récupération de la mission à éditer
-$mission = $missionsController->findMission($params['id']);
-$missionArray[] = $mission;
+if (!empty($params)) {
+    //Récupération de la mission à éditer
+    $mission = $missionsController->findMission($params['id']);
+    $missionArray[] = $mission;
+    
+    //Hydratation de la mission éditée avec les personnes (agents, contacts, cibles) et les planques
+    $missionsPersonsController->hydrateMissions($missionArray, $personsLists, $personsFilters);
+    $missionsStashsController->hydrateMissions($missionArray, $stashsList, $stashsFilters);
+    
+    //Validation des modifications et retour à la liste des missions
+    if (!empty($_POST)) {
+        $missionsController->updateMission($_POST, $mission->getId_mission());
+        $missionsPersonsController->updateMissionsPersons($_POST, $mission->getId_mission());
+        $missionsStashsController->updateMissionsStashs($_POST, $mission->getId_mission());
+        header('location: ' . $router->url('admin_mission'));
+        header('Location: ' . $router->url('admin_mission') . '?updated=' . $params['id']);
+    }
+}
 
-//Hydratation de la mission éditée avec les personnes (agents, contacts, cibles) et les planques
-$missionsPersonsController->hydrateMissions($missionArray, $personsLists, $personsFilters);
-$missionsStashsController->hydrateMissions($missionArray, $stashsList, $stashsFilters);
-
-//Validation des modifications et retour à la liste des missions
+//Création de la nouvelle mission et retour à la liste des missions
 if (!empty($_POST)) {
-    $missionsController->updateMission($_POST, $mission->getId_mission());
-    $missionsPersonsController->updateMissionsPersons($_POST, $mission->getId_mission());
-    $missionsStashsController->updateMissionsStashs($_POST, $mission->getId_mission());
-    header('location: ' . $router->url('admin_mission'));
+    $newIdMission = $missionsController->createMission($_POST);
+    $missionsPersonsController->createMissionPerson($_POST, $newIdMission);
+    $missionsStashsController->createMissionStash($_POST, $newIdMission);
+    header('Location: ' . $router->url('admin_mission') . '?created=' . $newIdMission);
 }
 
 ?>
@@ -55,12 +65,13 @@ if (!empty($_POST)) {
             <path d="M5 4a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1H5z"/>
             <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"/>
         </svg> 
-        <?= 'Administration / Édition de la mission ' .  $mission->getId_mission() ?></h1>
+        <?= !empty($params) ? 'Administration / Édition de la mission ' . $mission->getId_mission() : 'Administration / Nouvelle mission'?>
+    </h1>
     <form action="" method="POST" class="mission">
         <div class="headerMission">
             <div class="titleItem">
                 <label for="titleMission"><b>Titre:</b></label>
-                <input type="text" id="titleMission" name="titleMission" value="<?= $mission->getTitle() ?>">
+                <input type="text" id="titleMission" name="titleMission" value="<?= !empty($params) ? $mission->getTitle() : '' ?>">
             </div>
             <div class="filter statusMission">
                 <?php foreach($missionsController->getStatus() as $status) : ?>
@@ -70,8 +81,10 @@ if (!empty($_POST)) {
                             id="<?= $status['status'] ?>"
                             name="status"
                             value="<?= $status['status'] ?>"
-                            <?php if ($status['status'] === $mission->getStatus()['status']): ?>
-                                checked
+                            <?php if (!empty($params)): ?>
+                                <?php if ($status['status'] === $mission->getStatus()['status']): ?>
+                                    checked
+                                <?php endif ?>
                             <?php endif ?>
                         >
                         <label for="<?= $status['status'] ?>"><?= $status['status'] ?></label>
@@ -82,7 +95,7 @@ if (!empty($_POST)) {
         <div class="infosMission">
             <div class="missionItem">
                 <label for="codeNameMission"><b>Code Name:</b></label>
-                <input type="text" id="codeNameMission" name="codeNameMission" value="<?= $mission->getCode_name() ?>">
+                <input type="text" id="codeNameMission" name="codeNameMission" value="<?= !empty($params) ? $mission->getCode_name() : '' ?>">
             </div>
             <div class="missionItem">
                 <label for="countryMission"><b>Pays: </b></label>
@@ -91,24 +104,26 @@ if (!empty($_POST)) {
                     <?php foreach($countriesList as $country) : ?>
                         <option
                             value="<?= $country['country'] ?>"
+                            <?php if (!empty($params)): ?>
                                 <?php if ($country['country'] === $mission->getCountry()): ?>
                                     selected
                                 <?php endif ?>
+                            <?php endif ?>
                         ><?= $country['country'] ?></option>
                     <?php endforeach ?>
                 </select>
             </div>
             <div class="missionItem">
                 <label for="typeMission"><b>Type: </b></label>
-                <input type="text" id="typeMission" name="typeMission" value="<?= $mission->getType() ?>">
+                <input type="text" id="typeMission" name="typeMission" value="<?= !empty($params) ? $mission->getType() : '' ?>">
             </div>
             <div class="missionItem">
                 <label for="startDateMission"><b>Date de début: </b></label>
-                <input type="date" id="startDateMission" name="startDateMission" value="<?= $mission->getStart_date() ?>">
+                <input type="date" id="startDateMission" name="startDateMission" value="<?= !empty($params) ? $mission->getStart_date() : '' ?>">
             </div>
             <div class="missionItem">
                 <label for="endDateMission"><b>Date de fin: </b></label>
-                <input type="date" id="endDateMission" name="endDateMission" value="<?= $mission->getEnd_date() ?>">
+                <input type="date" id="endDateMission" name="endDateMission" value="<?= !empty($params) ? $mission->getEnd_date() : '' ?>">
             </div>
         </div>
         <div class="details">
@@ -124,7 +139,7 @@ if (!empty($_POST)) {
                         </svg>
                         <b>Description: </b>
                     </label>
-                    <textarea id="descriptionMission" name="descriptionMission" rows="5"><?= $mission->getDescription() ?></textarea>
+                    <textarea id="descriptionMission" name="descriptionMission" rows="5"><?= !empty($params) ? $mission->getDescription() : '' ?></textarea>
                 </div>
                 <div class="InfosItems">
                     <?php foreach(['agent', 'contact', 'target'] as $person): ?>
@@ -154,11 +169,13 @@ if (!empty($_POST)) {
                                 <?php foreach($personsLists[$person . 'sList'] as ${$person}) : ?>
                                     <option 
                                         value="<?= ${$person}->getId() ?>"
-                                        <?php foreach($mission->{'get' . ucfirst($person) . 's'}() as ${$person . 'Mission'}): ?>
-                                            <?php if (${$person}->getId() === ${$person . 'Mission'}->getId()): ?>
-                                                selected
-                                            <?php endif ?>
-                                        <?php endforeach ?>
+                                        <?php if (!empty($params)): ?>
+                                            <?php foreach($mission->{'get' . ucfirst($person) . 's'}() as ${$person . 'Mission'}): ?>
+                                                <?php if (${$person}->getId() === ${$person . 'Mission'}->getId()): ?>
+                                                    selected
+                                                <?php endif ?>
+                                            <?php endforeach ?>
+                                        <?php endif ?>
                                     ><?= ${$person}->getLastname() . ' ' . ${$person}->getfirstname() ?></option>
                                 <?php endforeach ?>
                             </select>
@@ -177,11 +194,13 @@ if (!empty($_POST)) {
                             <?php foreach($stashsList as $stash) : ?>
                                 <option
                                     value="<?= $stash->getId_stash() ?>"
-                                    <?php foreach($mission->getStashs() as $stashMission): ?>
-                                        <?php if ($stash->getId_stash() === $stashMission->getId_stash()): ?>
-                                            selected
-                                        <?php endif ?>
-                                    <?php endforeach ?>
+                                    <?php if (!empty($params)): ?>
+                                        <?php foreach($mission->getStashs() as $stashMission): ?>
+                                            <?php if ($stash->getId_stash() === $stashMission->getId_stash()): ?>
+                                                selected
+                                            <?php endif ?>
+                                        <?php endforeach ?>
+                                    <?php endif ?>
                                 >
                                     <div>
                                         <p><?= $stash->getCountry() . ' | ' ?></p>
@@ -201,12 +220,14 @@ if (!empty($_POST)) {
                         <b>Spécialité :</b>
                     </label>
                     <select name="specialityMission" id="specialityMission">
-                        <option value="headerFilter" disabled class="headerSelect">Sélectionnez une spécialité</option>
+                        <option value="headerFilter" class="headerSelect">Sélectionnez une spécialité</option>
                         <?php foreach($specialitiesList as $speciality) : ?>
                             <option
                                 value="<?= $speciality->getId_speciality() ?>"
-                                <?php if ($speciality->getName() === $mission->getSpeciality()): ?>
-                                    selected
+                                <?php if (!empty($params)): ?>
+                                    <?php if ($speciality->getName() === $mission->getSpeciality()): ?>
+                                        selected
+                                    <?php endif ?>
                                 <?php endif ?>
                             ><?= $speciality->getName() ?></option>
                         <?php endforeach ?>
@@ -235,15 +256,17 @@ if (!empty($_POST)) {
             </div>
         </div>
     </form>
-    <form action="<?= $router->url('admin_mission_delete', ['id' => $mission->getId_mission()]) ?>" method="POST" class="deleteBtn actionBtn"
-        onsubmit="return confirm('Voulez-vous vraiment supprimer la mission <?=$mission->getId_mission() ?> ?')">
-        <button type="submit" >
-            <span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="deleteSvg actionSvg" viewBox="0 0 16 16">
-                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                </svg>
-                Supprimer
-            </span>
-        </button>
-    </form>
+    <?php if (!empty($params)): ?>
+        <form action="<?= $router->url('admin_mission_delete', ['id' => $mission->getId_mission()]) ?>" method="POST" class="deleteBtn actionBtn"
+            onsubmit="return confirm('Voulez-vous vraiment supprimer la mission <?=$mission->getId_mission() ?> ?')">
+            <button type="submit" >
+                <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="deleteSvg actionSvg" viewBox="0 0 16 16">
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                    </svg>
+                    Supprimer
+                </span>
+            </button>
+        </form>
+    <?php endif ?>
 </div>

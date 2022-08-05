@@ -91,7 +91,7 @@ class Specialities
         }
     }
 
-    public function createSpeciality(array $newSpeciality): void
+    public function createSpeciality(array $newSpeciality): int
     {
         $query = $this->pdo->prepare(
             "INSERT INTO Speciality SET 
@@ -107,5 +107,6 @@ class Specialities
         if ($createSpeciality === false) {
             throw new Exception("Impossible de créer le nouvel enregistrement {$newSpeciality['idSpeciality']} dans la table 'Speciality'");
         }
+        return $this->pdo->lastInsertId();
     }
 }
