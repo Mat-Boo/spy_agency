@@ -13,7 +13,7 @@ class MissionsStashsController
     {
         $stashsFilters = [];
         $stashsFilters['missionsStashs'] = new MissionsStashs((new Connection)->getPdo());
-        $stashsFilters['stashsListFiltered'] = $stashsFilters['missionsStashs']->filterStashs($filterOptions); //Besoin pour filtrer selon les planques
+        $stashsFilters['stashsListFiltered'] = $stashsFilters['missionsStashs']->filterStashs($filterOptions);
         return $stashsFilters;
     }
 

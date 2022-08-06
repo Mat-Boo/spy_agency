@@ -33,11 +33,11 @@ $missionsStashsController->hydrateStashs($stashsListFiltered, $missionsList);
 </script>
 
 <?php if (isset($_GET['deleted'])): ?>
-    <p class="alertMessage"> <?= 'La planque ' . $_GET['deleted'] . ' a bien été supprimée.' ?></p>
+    <p class="confirmMessage"> <?= 'La planque ' . $_GET['deleted'] . ' a bien été supprimée.' ?></p>
 <?php elseif (isset($_GET['updated'])): ?>
-    <p class="alertMessage"> <?= 'La planque ' . $_GET['updated'] . ' a bien été mise à jour.' ?></p>
+    <p class="confirmMessage"> <?= 'La planque ' . $_GET['updated'] . ' a bien été mise à jour.' ?></p>
 <?php elseif (isset($_GET['created'])): ?>
-    <p class="alertMessage"> <?= 'La planque ' . $_GET['created'] . ' a bien été créée.' ?></p>
+    <p class="confirmMessage"> <?= 'La planque ' . $_GET['created'] . ' a bien été créée.' ?></p>
 <?php endif ?>
 <h1 class="stashTitle">
     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
@@ -80,6 +80,10 @@ $missionsStashsController->hydrateStashs($stashsListFiltered, $missionsList);
                 <span class="filtersBlockTitle">Planque</span>
                 <div class="filtersItem">
                     <div class="stashsFilterColumn">
+                        <div class="labelAndFilter">
+                            <label for="codenameStashFilter" class="filterTitle">Code Name</label>
+                            <input type="text" id="codenameStashFilter" name="codenameStashFilter" value="<?= isset($_GET['codenameStashFilter']) ? $_GET['codenameStashFilter'] : '' ?>">
+                        </div>
                         <div class="labelAndFilter">
                             <label for="addressStashFilter" class="filterTitle">Adresse</label>
                             <input type="text" id="addressStashFilter" name="addressStashFilter" value="<?= isset($_GET['addressStashFilter']) ? $_GET['addressStashFilter'] : '' ?>">
@@ -157,7 +161,7 @@ $missionsStashsController->hydrateStashs($stashsListFiltered, $missionsList);
     <?php foreach($stashsListFiltered as $stash): ?>
         <li class="stash">
             <div class="headerStash">
-                <p class="stashItem"><?= 'Planque ' . $stash->getId_stash() ?></p>
+                <p class="stashItem"><?= 'Planque ' . $stash->getCode_name() ?></p>
             </div>
             <div class="infosStash">
                 <div class="stashItems">
@@ -180,7 +184,7 @@ $missionsStashsController->hydrateStashs($stashsListFiltered, $missionsList);
                                 <?php if (!empty($stash->getMissions())): ?>
                                     return confirm('***** ATTENTION ***** \n<?= $stashsController->checkMissionBeforeDelete($stash) ?>\n\nVoulez-vous tout de même la supprimer ?')
                                 <?php else: ?>
-                                    return confirm('Voulez-vous vraiment supprimer la planque <?=$stash->getId_stash() ?> ?')
+                                    return confirm('Voulez-vous vraiment supprimer la planque <?=$stash->getCode_name() ?> ?')
                                 <?php endif ?>
                             ">
                             <button type="submit" >

@@ -34,11 +34,11 @@ $missionsController->hydrateSpecialities($specialitiesListFiltered);
 </script>
 
 <?php if (isset($_GET['deleted'])): ?>
-    <p class="alertMessage"> <?= 'La spécialité ' . $_GET['deleted'] . ' a bien été supprimée.' ?></p>
+    <p class="confirmMessage"> <?= 'La spécialité ' . $_GET['deleted'] . ' a bien été supprimée.' ?></p>
 <?php elseif (isset($_GET['updated'])): ?>
-    <p class="alertMessage"> <?= 'La spécialité ' . $_GET['updated'] . ' a bien été mise à jour.' ?></p>
+    <p class="confirmMessage"> <?= 'La spécialité ' . $_GET['updated'] . ' a bien été mise à jour.' ?></p>
 <?php elseif (isset($_GET['created'])): ?>
-    <p class="alertMessage"> <?= 'La spécialité ' . $_GET['created'] . ' a bien été créée.' ?></p>
+    <p class="confirmMessage"> <?= 'La spécialité ' . $_GET['created'] . ' a bien été créée.' ?></p>
 <?php endif ?>
 <h1 class="specialityTitle">
     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">

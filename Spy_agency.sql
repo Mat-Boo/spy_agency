@@ -6,6 +6,7 @@ CREATE DATABASE IF NOT EXISTS spy_agency CHARACTER SET utf8mb4 COLLATE utf8mb4_g
 /* Création de toutes les tables avec les contraintes */
 CREATE TABLE IF NOT EXISTS Agent (
     id INTEGER(4) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    code_name VARCHAR(50) NOT NULL UNIQUE,
     firstname VARCHAR(50) NOT NULL,
     lastname VARCHAR(50) NOT NULL,
     birthdate DATE NOT NULL,
@@ -49,6 +50,7 @@ CREATE TABLE IF NOT EXISTS MissionAgent (
 
 CREATE TABLE IF NOT EXISTS Contact (
     id INTEGER(4) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    code_name VARCHAR(50) NOT NULL UNIQUE,
     firstname VARCHAR(50) NOT NULL,
     lastname VARCHAR(50) NOT NULL,
     birthdate DATE NOT NULL,
@@ -65,6 +67,7 @@ CREATE TABLE IF NOT EXISTS MissionContact (
 
 CREATE TABLE IF NOT EXISTS Target (
     id INTEGER(4) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    code_name VARCHAR(50) NOT NULL UNIQUE,
     firstname VARCHAR(50) NOT NULL,
     lastname VARCHAR(50) NOT NULL,
     birthdate DATE NOT NULL,
@@ -81,6 +84,7 @@ CREATE TABLE IF NOT EXISTS MissionTarget (
 
 CREATE TABLE IF NOT EXISTS Stash (
     id_stash INTEGER(4) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    code_name VARCHAR(50) NOT NULL UNIQUE,
     address TEXT NOT NULL,
     country VARCHAR(50) NOT NULL,
     type VARCHAR(50) NOT NULL
@@ -106,26 +110,26 @@ CREATE TABLE IF NOT EXISTS Administrator (
 /**********************************************************************************************/
 
 /* Insertion de valeurs exemples dans l'ensemble des tables */
-INSERT INTO Agent (id, firstname, lastname, birthdate, nationality) VALUES (1, 'Devin', 'Dale', '1993-03-17', 'Chine');
-INSERT INTO Agent (id, firstname, lastname, birthdate, nationality) VALUES (2, 'Quinlan', 'Dawidman', '1993-10-15', 'Japon');
-INSERT INTO Agent (id, firstname, lastname, birthdate, nationality) VALUES (3, 'Addi', 'Gourdon', '1988-02-07', 'Chine');
-INSERT INTO Agent (id, firstname, lastname, birthdate, nationality) VALUES (4, 'Delly', 'Dorre', '1989-06-27', 'Laos');
-INSERT INTO Agent (id, firstname, lastname, birthdate, nationality) VALUES (5, 'Alix', 'Wright', '1982-08-01', 'Pologne');
-INSERT INTO Agent (id, firstname, lastname, birthdate, nationality) VALUES (6, 'Claudetta', 'Jeanin', '1991-05-20', 'Jordanie');
-INSERT INTO Agent (id, firstname, lastname, birthdate, nationality) VALUES (7, 'Annora', 'Landsman', '1986-05-19', 'Suede');
-INSERT INTO Agent (id, firstname, lastname, birthdate, nationality) VALUES (8, 'Darb', 'Stagg', '1995-02-15', 'Iran');
-INSERT INTO Agent (id, firstname, lastname, birthdate, nationality) VALUES (9, 'Daniela', 'Logie', '1990-02-03', 'Chine');
-INSERT INTO Agent (id, firstname, lastname, birthdate, nationality) VALUES (10, 'Alain', 'Jesper', '1999-03-31', 'Indonesie');
-INSERT INTO Agent (id, firstname, lastname, birthdate, nationality) VALUES (11, 'Bendite', 'Bosche', '1985-03-26', 'Vietnam');
-INSERT INTO Agent (id, firstname, lastname, birthdate, nationality) VALUES (12, 'Ikey', 'Bruggen', '1982-10-30', 'Afghanistan');
-INSERT INTO Agent (id, firstname, lastname, birthdate, nationality) VALUES (13, 'Rudie', 'Bogaert', '1997-05-19', 'Russie');
-INSERT INTO Agent (id, firstname, lastname, birthdate, nationality) VALUES (14, 'Isobel', 'Burgh', '1991-12-23', 'Afrique du Sud');
-INSERT INTO Agent (id, firstname, lastname, birthdate, nationality) VALUES (15, 'Jena', 'Deehan', '1998-08-18', 'Indonesie');
-INSERT INTO Agent (id, firstname, lastname, birthdate, nationality) VALUES (16, 'Madella', 'Widdicombe', '1999-01-16', 'Portugal');
-INSERT INTO Agent (id, firstname, lastname, birthdate, nationality) VALUES (17, 'Ansel', 'Thornthwaite', '1983-04-14', 'Portugal');
-INSERT INTO Agent (id, firstname, lastname, birthdate, nationality) VALUES (18, 'Muriel', 'Minney', '1982-12-18', 'Pologne');
-INSERT INTO Agent (id, firstname, lastname, birthdate, nationality) VALUES (19, 'Corrine', 'Leeson', '1990-12-19', 'Etats-Unis');
-INSERT INTO Agent (id, firstname, lastname, birthdate, nationality) VALUES (20, 'Ethan', 'Fellgate', '1997-10-02', 'Philippines');
+INSERT INTO Agent (id, code_name, firstname, lastname, birthdate, nationality) VALUES (1, '1', 'Devin', 'Dale', '1993-03-17', 'Chine');
+INSERT INTO Agent (id, code_name, firstname, lastname, birthdate, nationality) VALUES (2, '2', 'Quinlan', 'Dawidman', '1993-10-15', 'Japon');
+INSERT INTO Agent (id, code_name, firstname, lastname, birthdate, nationality) VALUES (3, '3', 'Addi', 'Gourdon', '1988-02-07', 'Chine');
+INSERT INTO Agent (id, code_name, firstname, lastname, birthdate, nationality) VALUES (4, '4', 'Delly', 'Dorre', '1989-06-27', 'Laos');
+INSERT INTO Agent (id, code_name, firstname, lastname, birthdate, nationality) VALUES (5, '5', 'Alix', 'Wright', '1982-08-01', 'Pologne');
+INSERT INTO Agent (id, code_name, firstname, lastname, birthdate, nationality) VALUES (6, '6', 'Claudetta', 'Jeanin', '1991-05-20', 'Jordanie');
+INSERT INTO Agent (id, code_name, firstname, lastname, birthdate, nationality) VALUES (7, '7', 'Annora', 'Landsman', '1986-05-19', 'Suede');
+INSERT INTO Agent (id, code_name, firstname, lastname, birthdate, nationality) VALUES (8, '8', 'Darb', 'Stagg', '1995-02-15', 'Iran');
+INSERT INTO Agent (id, code_name, firstname, lastname, birthdate, nationality) VALUES (9, '9', 'Daniela', 'Logie', '1990-02-03', 'Chine');
+INSERT INTO Agent (id, code_name, firstname, lastname, birthdate, nationality) VALUES (10, '10', 'Alain', 'Jesper', '1999-03-31', 'Indonesie');
+INSERT INTO Agent (id, code_name, firstname, lastname, birthdate, nationality) VALUES (11, '11', 'Bendite', 'Bosche', '1985-03-26', 'Vietnam');
+INSERT INTO Agent (id, code_name, firstname, lastname, birthdate, nationality) VALUES (12, '12', 'Ikey', 'Bruggen', '1982-10-30', 'Afghanistan');
+INSERT INTO Agent (id, code_name, firstname, lastname, birthdate, nationality) VALUES (13, '13', 'Rudie', 'Bogaert', '1997-05-19', 'Russie');
+INSERT INTO Agent (id, code_name, firstname, lastname, birthdate, nationality) VALUES (14, '14', 'Isobel', 'Burgh', '1991-12-23', 'Afrique du Sud');
+INSERT INTO Agent (id, code_name, firstname, lastname, birthdate, nationality) VALUES (15, '15', 'Jena', 'Deehan', '1998-08-18', 'Indonesie');
+INSERT INTO Agent (id, code_name, firstname, lastname, birthdate, nationality) VALUES (16, '16', 'Madella', 'Widdicombe', '1999-01-16', 'Portugal');
+INSERT INTO Agent (id, code_name, firstname, lastname, birthdate, nationality) VALUES (17, '17', 'Ansel', 'Thornthwaite', '1983-04-14', 'Portugal');
+INSERT INTO Agent (id, code_name, firstname, lastname, birthdate, nationality) VALUES (18, '18', 'Muriel', 'Minney', '1982-12-18', 'Pologne');
+INSERT INTO Agent (id, code_name, firstname, lastname, birthdate, nationality) VALUES (19, '19', 'Corrine', 'Leeson', '1990-12-19', 'Etats-Unis');
+INSERT INTO Agent (id, code_name, firstname, lastname, birthdate, nationality) VALUES (20, '20', 'Ethan', 'Fellgate', '1997-10-02', 'Philippines');
 
 INSERT INTO Speciality (id_speciality, name) VALUES (1, 'Art Martiaux');
 INSERT INTO Speciality (id_speciality, name) VALUES (2, 'Cryptologie');
@@ -206,26 +210,26 @@ INSERT INTO MissionAgent (id_mission, id) VALUES (13, 17);
 INSERT INTO MissionAgent (id_mission, id) VALUES (14, 19);
 INSERT INTO MissionAgent (id_mission, id) VALUES (15, 12);
 
-INSERT INTO Contact (id, firstname, lastname, birthdate, nationality) VALUES (1, 'Gilly', 'Juggings', '1982-09-08', 'France');
-INSERT INTO Contact (id, firstname, lastname, birthdate, nationality) VALUES (2, 'Karel', 'Edensor', '1991-08-27', 'Pérou');
-INSERT INTO Contact (id, firstname, lastname, birthdate, nationality) VALUES (3, 'Bartel', 'Swalwell', '2002-04-03', 'Royaume-Uni');
-INSERT INTO Contact (id, firstname, lastname, birthdate, nationality) VALUES (4, 'Derril', 'Grent', '1996-10-09', 'Russie');
-INSERT INTO Contact (id, firstname, lastname, birthdate, nationality) VALUES (5, 'Suzie', 'McMakin', '2001-04-20', 'Chine');
-INSERT INTO Contact (id, firstname, lastname, birthdate, nationality) VALUES (6, 'Bess', 'Willey', '1999-06-29', 'Japon');
-INSERT INTO Contact (id, firstname, lastname, birthdate, nationality) VALUES (7, 'Isabelle', 'Feron', '1985-05-28', 'Thaïlande');
-INSERT INTO Contact (id, firstname, lastname, birthdate, nationality) VALUES (8, 'Emelyne', 'Humbert', '1988-08-25', 'Italie');
-INSERT INTO Contact (id, firstname, lastname, birthdate, nationality) VALUES (9, 'Elden', 'Cawthery', '1982-02-24', 'Canada');
-INSERT INTO Contact (id, firstname, lastname, birthdate, nationality) VALUES (10, 'Rosco', 'Cliffe', '1989-05-16', 'Espagne');
-INSERT INTO Contact (id, firstname, lastname, birthdate, nationality) VALUES (11, 'Cammi', 'Crossby', '1992-11-12', 'Inde');
-INSERT INTO Contact (id, firstname, lastname, birthdate, nationality) VALUES (12, 'Laina', 'MacGettigen', '1983-04-11', 'Népal');
-INSERT INTO Contact (id, firstname, lastname, birthdate, nationality) VALUES (13, 'Mord', 'Carstairs', '1992-12-29', 'France');
-INSERT INTO Contact (id, firstname, lastname, birthdate, nationality) VALUES (14, 'Noellyn', 'Outright', '1999-08-07', 'États-Unis');
-INSERT INTO Contact (id, firstname, lastname, birthdate, nationality) VALUES (15, 'Conchita', 'Ballham', '1996-11-10', 'Brésil');
-INSERT INTO Contact (id, firstname, lastname, birthdate, nationality) VALUES (16, 'Scotti', 'Waddam', '1994-01-21', 'Russie');
-INSERT INTO Contact (id, firstname, lastname, birthdate, nationality) VALUES (17, 'Davidde', 'Curragh', '1982-03-16', 'Chine');
-INSERT INTO Contact (id, firstname, lastname, birthdate, nationality) VALUES (18, 'Rikki', 'MacPadene', '1997-05-25', 'Inde');
-INSERT INTO Contact (id, firstname, lastname, birthdate, nationality) VALUES (19, 'Celia', 'Collings', '2000-07-16', 'Brésil');
-INSERT INTO Contact (id, firstname, lastname, birthdate, nationality) VALUES (20, 'Rutger', 'Messager', '1987-12-17', 'France');
+INSERT INTO Contact (id, code_name, firstname, lastname, birthdate, nationality) VALUES (1, '1', 'Gilly', 'Juggings', '1982-09-08', 'France');
+INSERT INTO Contact (id, code_name, firstname, lastname, birthdate, nationality) VALUES (2, '2', 'Karel', 'Edensor', '1991-08-27', 'Pérou');
+INSERT INTO Contact (id, code_name, firstname, lastname, birthdate, nationality) VALUES (3, '3', 'Bartel', 'Swalwell', '2002-04-03', 'Royaume-Uni');
+INSERT INTO Contact (id, code_name, firstname, lastname, birthdate, nationality) VALUES (4, '4', 'Derril', 'Grent', '1996-10-09', 'Russie');
+INSERT INTO Contact (id, code_name, firstname, lastname, birthdate, nationality) VALUES (5, '5', 'Suzie', 'McMakin', '2001-04-20', 'Chine');
+INSERT INTO Contact (id, code_name, firstname, lastname, birthdate, nationality) VALUES (6, '6', 'Bess', 'Willey', '1999-06-29', 'Japon');
+INSERT INTO Contact (id, code_name, firstname, lastname, birthdate, nationality) VALUES (7, '7', 'Isabelle', 'Feron', '1985-05-28', 'Thaïlande');
+INSERT INTO Contact (id, code_name, firstname, lastname, birthdate, nationality) VALUES (8, '8', 'Emelyne', 'Humbert', '1988-08-25', 'Italie');
+INSERT INTO Contact (id, code_name, firstname, lastname, birthdate, nationality) VALUES (9, '9', 'Elden', 'Cawthery', '1982-02-24', 'Canada');
+INSERT INTO Contact (id, code_name, firstname, lastname, birthdate, nationality) VALUES (10, '10', 'Rosco', 'Cliffe', '1989-05-16', 'Espagne');
+INSERT INTO Contact (id, code_name, firstname, lastname, birthdate, nationality) VALUES (11, '11', 'Cammi', 'Crossby', '1992-11-12', 'Inde');
+INSERT INTO Contact (id, code_name, firstname, lastname, birthdate, nationality) VALUES (12, '12', 'Laina', 'MacGettigen', '1983-04-11', 'Népal');
+INSERT INTO Contact (id, code_name, firstname, lastname, birthdate, nationality) VALUES (13, '13', 'Mord', 'Carstairs', '1992-12-29', 'France');
+INSERT INTO Contact (id, code_name, firstname, lastname, birthdate, nationality) VALUES (14, '14', 'Noellyn', 'Outright', '1999-08-07', 'États-Unis');
+INSERT INTO Contact (id, code_name, firstname, lastname, birthdate, nationality) VALUES (15, '15', 'Conchita', 'Ballham', '1996-11-10', 'Brésil');
+INSERT INTO Contact (id, code_name, firstname, lastname, birthdate, nationality) VALUES (16, '16', 'Scotti', 'Waddam', '1994-01-21', 'Russie');
+INSERT INTO Contact (id, code_name, firstname, lastname, birthdate, nationality) VALUES (17, '17', 'Davidde', 'Curragh', '1982-03-16', 'Chine');
+INSERT INTO Contact (id, code_name, firstname, lastname, birthdate, nationality) VALUES (18, '18', 'Rikki', 'MacPadene', '1997-05-25', 'Inde');
+INSERT INTO Contact (id, code_name, firstname, lastname, birthdate, nationality) VALUES (19, '19', 'Celia', 'Collings', '2000-07-16', 'Brésil');
+INSERT INTO Contact (id, code_name, firstname, lastname, birthdate, nationality) VALUES (20, '20', 'Rutger', 'Messager', '1987-12-17', 'France');
 
 INSERT INTO MissionContact (id_mission, id) VALUES (1, 1);
 INSERT INTO MissionContact (id_mission, id) VALUES (1, 20);
@@ -248,26 +252,26 @@ INSERT INTO MissionContact (id_mission, id) VALUES (14, 14);
 INSERT INTO MissionContact (id_mission, id) VALUES (15, 15);
 INSERT INTO MissionContact (id_mission, id) VALUES (15, 19);
 
-INSERT INTO Target (id, firstname, lastname, birthdate, nationality) VALUES (1, 'Kirstin', 'De La Coste', '1987-11-22', 'Slovenie');
-INSERT INTO Target (id, firstname, lastname, birthdate, nationality) VALUES (2, 'Chrissie', 'Milbank', '2000-07-18', 'Chine');
-INSERT INTO Target (id, firstname, lastname, birthdate, nationality) VALUES (3, 'Mead', 'Lamberth', '1981-04-19', 'Portugal');
-INSERT INTO Target (id, firstname, lastname, birthdate, nationality) VALUES (4, 'Maurise', 'Kyston', '1989-10-07', 'Chine');
-INSERT INTO Target (id, firstname, lastname, birthdate, nationality) VALUES (5, 'Rosalinde', 'Kener', '1992-06-03', 'Afghanistan');
-INSERT INTO Target (id, firstname, lastname, birthdate, nationality) VALUES (6, 'Jorie', 'Lonsdale', '1988-02-21', 'Indonesie');
-INSERT INTO Target (id, firstname, lastname, birthdate, nationality) VALUES (7, 'Felic', 'De Vaux', '1992-10-08', 'Libye');
-INSERT INTO Target (id, firstname, lastname, birthdate, nationality) VALUES (8, 'Petey', 'Scarman', '1999-09-22', 'Indonesie');
-INSERT INTO Target (id, firstname, lastname, birthdate, nationality) VALUES (9, 'Reeva', 'Winham', '1993-10-24', 'Indonesie');
-INSERT INTO Target (id, firstname, lastname, birthdate, nationality) VALUES (10, 'Sarina', 'Pillifant', '1982-04-14', 'Argentine');
-INSERT INTO Target (id, firstname, lastname, birthdate, nationality) VALUES (11, 'Toddy', 'Matteini', '1989-12-11', 'Chine');
-INSERT INTO Target (id, firstname, lastname, birthdate, nationality) VALUES (12, 'Antonella', 'Pendred', '1996-02-10', 'Philippines');
-INSERT INTO Target (id, firstname, lastname, birthdate, nationality) VALUES (13, 'Linnea', 'Ames', '1999-04-17', 'Indonesie');
-INSERT INTO Target (id, firstname, lastname, birthdate, nationality) VALUES (14, 'Stevy', 'Dell ''Orto', '1986-04-27', 'Burundi');
-INSERT INTO Target (id, firstname, lastname, birthdate, nationality) VALUES (15, 'Ennis', 'Gower', '1995-06-19', 'France');
-INSERT INTO Target (id, firstname, lastname, birthdate, nationality) VALUES (16, 'Lowell', 'Youngman', '1986-06-28', 'Russie');
-INSERT INTO Target (id, firstname, lastname, birthdate, nationality) VALUES (17, 'Lewes', 'Taylot', '1998-04-02', 'Chine');
-INSERT INTO Target (id, firstname, lastname, birthdate, nationality) VALUES (18, 'Trudi', 'Burk', '1999-10-04', 'Portugal');
-INSERT INTO Target (id, firstname, lastname, birthdate, nationality) VALUES (19, 'Walther', 'Fowells', '1984-10-16', 'Suede');
-INSERT INTO Target (id, firstname, lastname, birthdate, nationality) VALUES (20, 'Raviv', 'Oleszkiewicz', '2001-09-10', 'Philippines');
+INSERT INTO Target (id, code_name, firstname, lastname, birthdate, nationality) VALUES (1, '1', 'Kirstin', 'De La Coste', '1987-11-22', 'Slovenie');
+INSERT INTO Target (id, code_name, firstname, lastname, birthdate, nationality) VALUES (2, '2', 'Chrissie', 'Milbank', '2000-07-18', 'Chine');
+INSERT INTO Target (id, code_name, firstname, lastname, birthdate, nationality) VALUES (3, '3', 'Mead', 'Lamberth', '1981-04-19', 'Portugal');
+INSERT INTO Target (id, code_name, firstname, lastname, birthdate, nationality) VALUES (4, '4', 'Maurise', 'Kyston', '1989-10-07', 'Chine');
+INSERT INTO Target (id, code_name, firstname, lastname, birthdate, nationality) VALUES (5, '5', 'Rosalinde', 'Kener', '1992-06-03', 'Afghanistan');
+INSERT INTO Target (id, code_name, firstname, lastname, birthdate, nationality) VALUES (6, '6', 'Jorie', 'Lonsdale', '1988-02-21', 'Indonesie');
+INSERT INTO Target (id, code_name, firstname, lastname, birthdate, nationality) VALUES (7, '7', 'Felic', 'De Vaux', '1992-10-08', 'Libye');
+INSERT INTO Target (id, code_name, firstname, lastname, birthdate, nationality) VALUES (8, '8', 'Petey', 'Scarman', '1999-09-22', 'Indonesie');
+INSERT INTO Target (id, code_name, firstname, lastname, birthdate, nationality) VALUES (9, '9', 'Reeva', 'Winham', '1993-10-24', 'Indonesie');
+INSERT INTO Target (id, code_name, firstname, lastname, birthdate, nationality) VALUES (10, '10', 'Sarina', 'Pillifant', '1982-04-14', 'Argentine');
+INSERT INTO Target (id, code_name, firstname, lastname, birthdate, nationality) VALUES (11, '11', 'Toddy', 'Matteini', '1989-12-11', 'Chine');
+INSERT INTO Target (id, code_name, firstname, lastname, birthdate, nationality) VALUES (12, '12', 'Antonella', 'Pendred', '1996-02-10', 'Philippines');
+INSERT INTO Target (id, code_name, firstname, lastname, birthdate, nationality) VALUES (13, '13', 'Linnea', 'Ames', '1999-04-17', 'Indonesie');
+INSERT INTO Target (id, code_name, firstname, lastname, birthdate, nationality) VALUES (14, '14', 'Stevy', 'Dell ''Orto', '1986-04-27', 'Burundi');
+INSERT INTO Target (id, code_name, firstname, lastname, birthdate, nationality) VALUES (15, '15', 'Ennis', 'Gower', '1995-06-19', 'France');
+INSERT INTO Target (id, code_name, firstname, lastname, birthdate, nationality) VALUES (16, '16', 'Lowell', 'Youngman', '1986-06-28', 'Russie');
+INSERT INTO Target (id, code_name, firstname, lastname, birthdate, nationality) VALUES (17, '17', 'Lewes', 'Taylot', '1998-04-02', 'Chine');
+INSERT INTO Target (id, code_name, firstname, lastname, birthdate, nationality) VALUES (18, '18', 'Trudi', 'Burk', '1999-10-04', 'Portugal');
+INSERT INTO Target (id, code_name, firstname, lastname, birthdate, nationality) VALUES (19, '19', 'Walther', 'Fowells', '1984-10-16', 'Suede');
+INSERT INTO Target (id, code_name, firstname, lastname, birthdate, nationality) VALUES (20, '20', 'Raviv', 'Oleszkiewicz', '2001-09-10', 'Philippines');
 
 INSERT INTO MissionTarget (id_mission, id) VALUES (1, 1);
 INSERT INTO MissionTarget (id_mission, id) VALUES (2, 3);
@@ -290,26 +294,26 @@ INSERT INTO MissionTarget (id_mission, id) VALUES (14, 20);
 INSERT INTO MissionTarget (id_mission, id) VALUES (15, 15);
 INSERT INTO MissionTarget (id_mission, id) VALUES (15, 18);
 
-INSERT INTO Stash (id_stash, address, country, type) VALUES (1, '8 Vahlen Pass, Paris', 'France', 'Maison');
-INSERT INTO Stash (id_stash, address, country, type) VALUES (2, '36 Myrtle Park, Lima', 'Pérou', 'Cave');
-INSERT INTO Stash (id_stash, address, country, type) VALUES (3, '231 Butternut Street, Londres', 'Angleterre', 'Cave');
-INSERT INTO Stash (id_stash, address, country, type) VALUES (4, '4 Rowland Center, Moscou', 'Russie', 'Camion');
-INSERT INTO Stash (id_stash, address, country, type) VALUES (5, '23 Amoth Point, Pékin', 'Chine', 'Cave');
-INSERT INTO Stash (id_stash, address, country, type) VALUES (6, '441 Bellgrove Place, Tokyo', 'Japon', 'Appartement');
-INSERT INTO Stash (id_stash, address, country, type) VALUES (7, '75059 Brown Point, Bangkok', 'Thaïlande', 'Appartement');
-INSERT INTO Stash (id_stash, address, country, type) VALUES (8, '230 Independence Place, Rome', 'Italie', 'Bureau');
-INSERT INTO Stash (id_stash, address, country, type) VALUES (9, '809 Ohio Pass, Montréal', 'Canada', 'Appartement');
-INSERT INTO Stash (id_stash, address, country, type) VALUES (10, '97 Hollow Ridge Lane, Madrid', 'Espagne', 'Maison');
-INSERT INTO Stash (id_stash, address, country, type) VALUES (11, '7058 Banding Parkway, Bombay', 'Inde', 'Cave');
-INSERT INTO Stash (id_stash, address, country, type) VALUES (12, '84 Service Street, Katmandou', 'Népal', 'Appartement');
-INSERT INTO Stash (id_stash, address, country, type) VALUES (13, '64265 Sommers Drive, Lyon', 'France', 'Bureau');
-INSERT INTO Stash (id_stash, address, country, type) VALUES (14, '2 Westerfield Way, Washington', 'États-Unis', 'Appartement');
-INSERT INTO Stash (id_stash, address, country, type) VALUES (15, '8357 Bayside Drive, Rio de Janeiro', 'Brésil', 'Maison');
-INSERT INTO Stash (id_stash, address, country, type) VALUES (16, '755 Luster Hill, Milan', 'Italie', 'Maison');
-INSERT INTO Stash (id_stash, address, country, type) VALUES (17, '0057 Ramsey Point, Shanghai', 'Chine', 'Bureau');
-INSERT INTO Stash (id_stash, address, country, type) VALUES (18, '3 Blue Bill Park Plaza, New-Delhi', 'Inde', 'Camion');
-INSERT INTO Stash (id_stash, address, country, type) VALUES (19, '361 Eliot Road, Pokhara', 'Népal', 'Cave');
-INSERT INTO Stash (id_stash, address, country, type) VALUES (20, '30110 Brentwood Way, Cuzco', 'Pérou', 'Bureau');
+INSERT INTO Stash (id_stash, code_name, address, country, type) VALUES (1, '1', '8 Vahlen Pass, Paris', 'France', 'Maison');
+INSERT INTO Stash (id_stash, code_name, address, country, type) VALUES (2, '2', '36 Myrtle Park, Lima', 'Pérou', 'Cave');
+INSERT INTO Stash (id_stash, code_name, address, country, type) VALUES (3, '3', '231 Butternut Street, Londres', 'Angleterre', 'Cave');
+INSERT INTO Stash (id_stash, code_name, address, country, type) VALUES (4, '4', '4 Rowland Center, Moscou', 'Russie', 'Camion');
+INSERT INTO Stash (id_stash, code_name, address, country, type) VALUES (5, '5', '23 Amoth Point, Pékin', 'Chine', 'Cave');
+INSERT INTO Stash (id_stash, code_name, address, country, type) VALUES (6, '6', '441 Bellgrove Place, Tokyo', 'Japon', 'Appartement');
+INSERT INTO Stash (id_stash, code_name, address, country, type) VALUES (7, '7', '75059 Brown Point, Bangkok', 'Thaïlande', 'Appartement');
+INSERT INTO Stash (id_stash, code_name, address, country, type) VALUES (8, '8', '230 Independence Place, Rome', 'Italie', 'Bureau');
+INSERT INTO Stash (id_stash, code_name, address, country, type) VALUES (9, '9', '809 Ohio Pass, Montréal', 'Canada', 'Appartement');
+INSERT INTO Stash (id_stash, code_name, address, country, type) VALUES (10, '10', '97 Hollow Ridge Lane, Madrid', 'Espagne', 'Maison');
+INSERT INTO Stash (id_stash, code_name, address, country, type) VALUES (11, '11', '7058 Banding Parkway, Bombay', 'Inde', 'Cave');
+INSERT INTO Stash (id_stash, code_name, address, country, type) VALUES (12, '12', '84 Service Street, Katmandou', 'Népal', 'Appartement');
+INSERT INTO Stash (id_stash, code_name, address, country, type) VALUES (13, '13', '64265 Sommers Drive, Lyon', 'France', 'Bureau');
+INSERT INTO Stash (id_stash, code_name, address, country, type) VALUES (14, '14', '2 Westerfield Way, Washington', 'États-Unis', 'Appartement');
+INSERT INTO Stash (id_stash, code_name, address, country, type) VALUES (15, '15', '8357 Bayside Drive, Rio de Janeiro', 'Brésil', 'Maison');
+INSERT INTO Stash (id_stash, code_name, address, country, type) VALUES (16, '16', '755 Luster Hill, Milan', 'Italie', 'Maison');
+INSERT INTO Stash (id_stash, code_name, address, country, type) VALUES (17, '17', '0057 Ramsey Point, Shanghai', 'Chine', 'Bureau');
+INSERT INTO Stash (id_stash, code_name, address, country, type) VALUES (18, '18', '3 Blue Bill Park Plaza, New-Delhi', 'Inde', 'Camion');
+INSERT INTO Stash (id_stash, code_name, address, country, type) VALUES (19, '19', '361 Eliot Road, Pokhara', 'Népal', 'Cave');
+INSERT INTO Stash (id_stash, code_name, address, country, type) VALUES (20, '20', '30110 Brentwood Way, Cuzco', 'Pérou', 'Bureau');
 
 INSERT INTO MissionStash (id_mission, id_stash) VALUES (1, 1);
 INSERT INTO MissionStash (id_mission, id_stash) VALUES (2, 2);

@@ -17,20 +17,11 @@ class StashsController
     public function getTypes(): array
     {
         $types = [];
-        foreach($this->getStashsList('id_stash') as $stash) {
+        foreach($this->getStashsList('type') as $stash) {
             if (!in_array($stash->getType(), $types)) {
                 $types[] = $stash->getType();
             }
-        }
-
-        usort($types, function ($a, $b)
-        {
-            if ($a == $b) {
-                return 0;
-            } else {
-                return ($a < $b) ? -1 : 1;
-            }
-        });
+        }       
 
         return $types;
     }
@@ -58,7 +49,8 @@ class StashsController
         }
 
         $filterConditions = [];
-        $filterConditions['addressStashFilter'] = isset($filterOptions['addressStashFilter']) ? " WHERE address LIKE '%" . $filterOptions['addressStashFilter'] . "%'" : " WHERE id_stash IN (" . implode(",", $stashIds) . ")";
+        $filterConditions['codenameStashFilter'] = isset($filterOptions['codenameStashFilter']) ? " WHERE code_name LIKE '%" . $filterOptions['codenameStashFilter'] . "%'" : " WHERE id_stash IN (" . implode(",", $stashIds) . ")";
+        $filterConditions['addressStashFilter'] = isset($filterOptions['addressStashFilter']) ? " AND address LIKE '%" . $filterOptions['addressStashFilter'] . "%'" : '';
         $filterConditions['countryStashFilter'] = isset($filterOptions['countryStashFilter']) && strlen($filterOptions['countryStashFilter']) > 0 ? " AND country = '" . $filterOptions['countryStashFilter'] . "'" : '';
         $filterConditions['typeStashFilter'] = isset($filterOptions['typeStashFilter']) ? " AND type IN (" . $this->convertToStringList($filterOptions['typeStashFilter']) . ")" : '';
         $filterConditions['missionsFilter'] = isset($filterOptions['missionsFilter']) ? " AND id_stash IN (" . implode(",", $missionsFilter) . ")" : '';
@@ -89,7 +81,7 @@ class StashsController
             }
         }
         return 
-            "La planque " . $stash->getId_stash() . " est encore affectée "
+            "La planque " . $stash->getCode_name() . " est encore affectée "
             . (count($stash->getMissions()) > 1 ? 'aux missions:\\n' : ' à la mission:\\n')
             . implode('\\n', $missionIds);
     }

@@ -51,11 +51,11 @@ foreach($personsListFiltered as $person) {
 </script>
 
 <?php if (isset($_GET['deleted'])): ?>
-    <p class="alertMessage"><?= $personItem === 'agent' ? 'L\'agent ' . $_GET['deleted'] . ' a bien été supprimé.' : ($personItem === 'contact' ? 'Le contact ' . $_GET['deleted'] . ' a bien été supprimé.' : 'La cible ' . $_GET['deleted'] . ' a bien été supprimée.') ?></p>
+    <p class="confirmMessage"><?= $personItem === 'agent' ? 'L\'agent ' . $_GET['deleted'] . ' a bien été supprimé.' : ($personItem === 'contact' ? 'Le contact ' . $_GET['deleted'] . ' a bien été supprimé.' : 'La cible ' . $_GET['deleted'] . ' a bien été supprimée.') ?></p>
 <?php elseif (isset($_GET['updated'])): ?>
-    <p class="alertMessage"><?= $personItem === 'agent' ? 'L\'agent ' . $_GET['updated'] . ' a bien été mis à jour.' : ($personItem === 'contact' ? 'Le contact ' . $_GET['updated'] . ' a bien été mis à jour.' : 'La cible ' . $_GET['updated'] . ' a bien été mise à jour.') ?></p>
+    <p class="confirmMessage"><?= $personItem === 'agent' ? 'L\'agent ' . $_GET['updated'] . ' a bien été mis à jour.' : ($personItem === 'contact' ? 'Le contact ' . $_GET['updated'] . ' a bien été mis à jour.' : 'La cible ' . $_GET['updated'] . ' a bien été mise à jour.') ?></p>
 <?php elseif (isset($_GET['created'])): ?>
-    <p class="alertMessage"><?= $personItem === 'agent' ? 'L\'agent ' . $_GET['created'] . ' a bien été créé.' : ($personItem === 'contact' ? 'Le contact ' . $_GET['created'] . ' a bien été créé.' : 'La cible ' . $_GET['created'] . ' a bien été créée.') ?></p>
+    <p class="confirmMessage"><?= $personItem === 'agent' ? 'L\'agent ' . $_GET['created'] . ' a bien été créé.' : ($personItem === 'contact' ? 'Le contact ' . $_GET['created'] . ' a bien été créé.' : 'La cible ' . $_GET['created'] . ' a bien été créée.') ?></p>
 <?php endif ?>
 <h1 class="personTitle">
 <?php if($personItem === 'agent'): ?>

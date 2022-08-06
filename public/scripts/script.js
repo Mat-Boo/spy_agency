@@ -94,9 +94,11 @@ for (let i = 0 ; i < detailsBtn.length ; i++) {
     })
 }
 
-let alertMessage = document.querySelector('.alertMessage');
-
-alertMessage.style.opacity = 1;
+let confirmMessage = document.querySelector('.confirmMessage');
+confirmMessage.style.opacity = 1;
 setTimeout(() => {
-    alertMessage.style.opacity = 0;
+    confirmMessage.style.opacity = 0;
 }, 3000);
+
+let alertMessage = document.querySelector('.alertMessage');
+alertMessage.style.opacity = 1;

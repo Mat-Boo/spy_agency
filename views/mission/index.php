@@ -42,11 +42,11 @@ $missionsStashsController->hydrateMissions($missionsListFiltered, $stashsList, $
 </script>
 
 <?php if (isset($_GET['deleted'])): ?>
-    <p class="alertMessage"> <?= 'La mission ' . $_GET['deleted'] . ' a bien été supprimée.' ?></p>
+    <p class="confirmMessage"> <?= 'La mission ' . $_GET['deleted'] . ' a bien été supprimée.' ?></p>
 <?php elseif (isset($_GET['updated'])): ?>
-    <p class="alertMessage"> <?= 'La mission ' . $_GET['updated'] . ' a bien été mise à jour.' ?></p>
+    <p class="confirmMessage"> <?= 'La mission ' . $_GET['updated'] . ' a bien été mise à jour.' ?></p>
 <?php elseif (isset($_GET['created'])): ?>
-    <p class="alertMessage"> <?= 'La mission ' . $_GET['created'] . ' a bien été créée.' ?></p>
+    <p class="confirmMessage"> <?= 'La mission ' . $_GET['created'] . ' a bien été créée.' ?></p>
 <?php endif ?>
 <h1 class="missionTitle">
     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16">

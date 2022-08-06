@@ -5,6 +5,7 @@ namespace App\model;
 class Person
 {
     private $id;
+    private $code_name;
     private $firstname;
     private $lastname;
     private $birthdate;
@@ -28,6 +29,26 @@ class Person
     public function setId($id)
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of code_name
+     */ 
+    public function getCode_name()
+    {
+        return $this->code_name;
+    }
+
+    /**
+     * Set the value of code_name
+     *
+     * @return  self
+     */ 
+    public function setCode_name($code_name)
+    {
+        $this->code_name = $code_name;
 
         return $this;
     }

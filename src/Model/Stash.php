@@ -5,6 +5,7 @@ namespace App\Model;
 class Stash
 {
     private $id_stash;
+    private $code_name;
     private $address;
     private $country;
     private $type;
@@ -26,6 +27,26 @@ class Stash
     public function setId_stash($id_stash)
     {
         $this->id_stash = $id_stash;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of code_name
+     */ 
+    public function getCode_name()
+    {
+        return $this->code_name;
+    }
+
+    /**
+     * Set the value of code_name
+     *
+     * @return  self
+     */ 
+    public function setCode_name($code_name)
+    {
+        $this->code_name = $code_name;
 
         return $this;
     }

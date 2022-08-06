@@ -19,7 +19,7 @@ class Stashs
     {
         if (!is_null($this->pdo)) {
             $stmt = $this->pdo->query(
-                'SELECT Stash.id_stash, address, country, type
+                'SELECT *
                 FROM Stash
                 ORDER BY ' . $sortBy
             );
@@ -35,7 +35,7 @@ class Stashs
     {
         if (!is_null($this->pdo)) {
             $stmt = $this->pdo->query( 
-                "SELECT id_stash, address, country, type
+                "SELECT *
                 FROM Stash"
                 . implode('', $filterConditions)
             );
@@ -50,7 +50,7 @@ class Stashs
     public function findStash(int $idStash): Stash
     {
         $query = $this->pdo->prepare(
-            "SELECT id_stash, address, country, type
+            "SELECT *
             FROM Stash
             WHERE id_stash = :id_stash");
         $query->execute(['id_stash' => $idStash]);
@@ -65,7 +65,7 @@ class Stashs
     {
         $query = $this->pdo->prepare(
             "UPDATE Stash SET 
-            id_stash = :id_stash,
+            code_name = :code_name,
             address = :address,
             country = :country,
             type = :type
@@ -73,10 +73,11 @@ class Stashs
         ");
         $updateStash = $query->execute(
             [
-                'id_stash' => $stash['idStash'],
+                'code_name' => $stash['codenameStash'],
                 'address' => $stash['addressStash'],
                 'country' => $stash['countryStash'],
-                'type' => $stash['typeStash']
+                'type' => $stash['typeStash'],
+                'id_stash' => $id_stash
             ]
         );
         if ($updateStash === false) {
@@ -99,21 +100,21 @@ class Stashs
     {
         $query = $this->pdo->prepare(
             "INSERT INTO Stash SET 
-            id_stash = :id_stash,
+            code_name = :code_name,
             address = :address,
             country = :country,
             type = :type
         ");
         $createStash = $query->execute(
             [
-                'id_stash' => $newStash['idStash'],
+                'code_name' => $newStash['codenameStash'],
                 'address' => $newStash['addressStash'],
                 'country' => $newStash['countryStash'],
                 'type' => $newStash['typeStash']
             ]
         );
         if ($createStash === false) {
-            throw new Exception("Impossible de créer le nouvel enregistrement {$newStash['idStash']} dans la table 'Stash'");
+            throw new Exception("Impossible de créer le nouvel enregistrement {$newStash['codenameStash']} dans la table 'Stash'");
         }
         return $this->pdo->lastInsertId();
     }
