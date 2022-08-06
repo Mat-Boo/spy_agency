@@ -9,41 +9,47 @@ class ManageJsController
         $jsScripts = [];
         switch ($urlName) {
             case 'mission':
-                $jsScripts[] = 'filters';
-                $jsScripts[] = 'detailsItem';
+                $jsScripts[] = 'scripts\filters.js';
+                $jsScripts[] = 'scripts\detailsItem.js';
             break;
             case 'login':
-                $jsScripts[] = 'alertMessage';
+                $jsScripts[] = 'scripts\alertMessage.js';
             break;
             case 'admin_mission':
-                $jsScripts[] = 'filters';
-                $jsScripts[] = 'detailsItem';
-                $jsScripts[] = 'confirmMessage';
+                $jsScripts[] = '..\scripts\filters.js';
+                $jsScripts[] = '..\scripts\detailsItem.js';
+                $jsScripts[] = '..\scripts\confirmMessage.js';
             break;
             case 'admin_agent':
-                $jsScripts[] = 'filters';
-                $jsScripts[] = 'detailsItem';
-                $jsScripts[] = 'confirmMessage';
+                $jsScripts[] = '..\scripts\filters.js';
+                $jsScripts[] = '..\scripts\detailsItem.js';
+                $jsScripts[] = '..\scripts\confirmMessage.js';
             break;
             case 'admin_contact':
-                $jsScripts[] = 'filters';
-                $jsScripts[] = 'detailsItem';
-                $jsScripts[] = 'confirmMessage';
+                $jsScripts[] = '..\scripts\filters.js';
+                $jsScripts[] = '..\scripts\detailsItem.js';
+                $jsScripts[] = '..\scripts\confirmMessage.js';
             break;
             case 'admin_target':
-                $jsScripts[] = 'filters';
-                $jsScripts[] = 'detailsItem';
-                $jsScripts[] = 'confirmMessage';
+                $jsScripts[] = '..\scripts\filters.js';
+                $jsScripts[] = '..\scripts\detailsItem.js';
+                $jsScripts[] = '..\scripts\confirmMessage.js';
             break;
             case 'admin_stash':
-                $jsScripts[] = 'filters';
-                $jsScripts[] = 'detailsItem';
-                $jsScripts[] = 'confirmMessage';
+                $jsScripts[] = '..\scripts\filters.js';
+                $jsScripts[] = '..\scripts\detailsItem.js';
+                $jsScripts[] = '..\scripts\confirmMessage.js';
             break;
             case 'admin_speciality':
-                $jsScripts[] = 'filters';
-                $jsScripts[] = 'detailsItem';
-                $jsScripts[] = 'confirmMessage';
+                $jsScripts[] = '..\scripts\filters.js';
+                $jsScripts[] = '..\scripts\detailsItem.js';
+                $jsScripts[] = '..\scripts\confirmMessage.js';
+            break;
+            case 'admin_mission_edit':
+                $jsScripts[] = '..\..\..\scripts\alertMessage.js';
+            break;
+            case 'admin_mission_new':
+                $jsScripts[] = '..\..\scripts\alertMessage.js';
             break;
         }
         return $jsScripts;

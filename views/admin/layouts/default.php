@@ -79,7 +79,7 @@ $jsScripts = $manageJsController->ManageJs($match['name']);
         <p>Créé par Mathieu Bouthors</p>
     </footer>
     <?php foreach($jsScripts as $jsScript): ?>
-        <script src="<?= '..\scripts\\' . $jsScript . '.js' ?>"></script>
+        <script src="<?= $jsScript ?>"></script>
     <?php endforeach ?>
 </body>
 </html>

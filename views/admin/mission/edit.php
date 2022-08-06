@@ -30,6 +30,7 @@ $countriesList = $countriesController->getCountriesList();
 $personsFilters = $missionsPersonsController->filterPersons($_GET);
 $stashsFilters = $missionsStashsController->getStashsFilters($_GET);
 
+
 if (!empty($params)) {
     //Récupération de la mission à éditer
     $mission = $missionsController->findMission($params['id']);
@@ -41,25 +42,38 @@ if (!empty($params)) {
     
     //Validation des modifications et retour à la liste des missions
     if (!empty($_POST)) {
-        $missionsController->updateMission($_POST, $mission->getId_mission());
-        $missionsPersonsController->updateMissionsPersons($_POST, $mission->getId_mission());
-        $missionsStashsController->updateMissionsStashs($_POST, $mission->getId_mission());
-        header('location: ' . $router->url('admin_mission'));
-        header('Location: ' . $router->url('admin_mission') . '?updated=' . $_POST['codeNameMission']);
+        /* var_dump($_POST); */
+        $errors = $missionsController->controlsRules($_POST, $personsLists, $stashsList, $specialitiesList);
+        if (empty($errors)) {
+            $missionsController->updateMission($_POST, $mission->getId_mission());
+            $missionsPersonsController->updateMissionsPersons($_POST, $mission->getId_mission());
+            $missionsStashsController->updateMissionsStashs($_POST, $mission->getId_mission());
+            header('Location: ' . $router->url('admin_mission') . '?updated=' . $_POST['codeNameMission']);
+        } else {
+            $displayErrors = implode('<br>', $errors);
+        }
     }
 } else {
     //Création de la nouvelle mission et retour à la liste des missions
     if (!empty($_POST)) {
-        $newIdMission = $missionsController->createMission($_POST);
-        $missionsPersonsController->createMissionPerson($_POST, $newIdMission);
-        $missionsStashsController->createMissionStash($_POST, $newIdMission);
-        header('Location: ' . $router->url('admin_mission') . '?created=' . $_POST['codeNameMission']);
+        $errors = $missionsController->controlsRules($_POST, $personsLists, $stashsList, $specialitiesList);
+        if (empty($errors)) {
+            $newIdMission = $missionsController->createMission($_POST);
+            $missionsPersonsController->createMissionPerson($_POST, $newIdMission);
+            $missionsStashsController->createMissionStash($_POST, $newIdMission);
+            header('Location: ' . $router->url('admin_mission') . '?created=' . $_POST['codeNameMission']);
+        } else {
+            $displayErrors = implode('<br>', $errors);
+        }
     }
 }
 
 ?>
 
 <div class="missionEdit">
+    <?php if (isset($displayErrors)): ?>
+        <p class="alertMessage"><?= $displayErrors ?></p>
+    <?php endif ?>
     <h1 class="missionEditTitle">
         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
             <path d="M5 4a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1H5z"/>

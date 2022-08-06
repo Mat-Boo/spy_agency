@@ -134,57 +134,154 @@ class MissionsController
         return $missions->createMission($newMission);
     }
 
-    public function controlsRules(array $missionPost): array
+    public function controlsRules(array $missionPost, array $personsLists, array $stashsList, array $specialitiesList): array
     {
+        $errors = [];
+
+        $missionItems = 
+        [
+            'titleMission' => 'Le Titre ',
+            'codeNameMission' => 'Le Code Name ',
+            'countryMission' => 'Le Pays ',
+            'typeMission' => 'Le Type ',
+            'startDateMission' => 'La Date de début ',
+            'endDateMission' => 'La Date de fin ',
+            'descriptionMission' => 'La Description '
+        ];
+
         // Vérifie si tous les champs sont bien renseignés car tous obligatoires
-        foreach($missionPost as $key => $item) {
-            if ($item === '') {
-                $errors['blank_' . $key] = $key . ' est obligatoire';
-            }
-        }
-        $nbAgentsWithMissionSpeciality = 0;
-        foreach($missionPost['agentMission'] as $agentPost) {
-            //Vérifie que les agents et cibles n'ont pas la même nationalité
-            foreach($missionPost['targetMission'] as $targetPost) {
-                if ($agentPost->getNationality() === $targetPost->getNationality()) {
-                    if (empty($errors['nationalityAgentTarget'])) {
-                        $errors['nationalityAgentTarget'] = 'Il ne peut y avoir d\'agent et de cible de même nationalité';
-                    }
-                    $errors['nationalityAgentTarget_' . $agentPost->getId() . '_' . $targetPost->getId()] = 
-                        'L\'agent ' . $agentPost->getLastname() . ' ' . $agentPost->getFirstname() . 
-                        ' et la cible ' . $targetPost->getLastname() . ' ' . $targetPost->getFirstname() .
-                        ' sont originaires du pays ' . strtoupper($agentPost->getNationality());
+        foreach($missionPost as $keyPost => $itemPost) {
+            foreach($missionItems as $key => $item) {
+                if ($itemPost === '' && $keyPost === $key) {
+                    $errors['blank_' . $key] = $item . ' est obligatoire sur la mission';
                 }
-            }
-            // Vérifie si au mlins un agent dispose de la spécialité requise par la mission
-            if (in_array($missionPost['specialityMission'], $agentPost->getNationality())) {
-                $nbAgentsWithMissionSpeciality += 1; 
-            }
-        }
-        if ($nbAgentsWithMissionSpeciality === 0) {
-            $errors['agentsWithMissionSpeciality'] = 'Il doit y avoir au moins un agent disposant de la spécialité requise par la mission';
-        }
-        //Vérifie si les contacts ont la même nationalité que le pays de la mission
-        foreach($missionPost['contactMission'] as $contactPost) {
-            if ($contactPost->getNationality() !== $missionPost['countryMission']) {
-                if (empty($errors['countryMissionContact'])) {
-                    $errors['countryMissionContact'] = 'Les contacts doivent avoir la même nationalité que le pays de la mission, soit ' . strtoupper($missionPost['countryMission']) . ' or:';
-                }
-                $errors['countryMissionContact_' . $missionPost['countryMission'] . '_' . $contactPost->getId()] =
-                'Le contact ' . $contactPost->getLastname() . ' ' . $contactPost->getFirstname() . ' a la nationalité ' . $contactPost->getNationality();
-            }
-        }
-        //Vérifie si les planques sont bien dans le même pays que le pays de la mission
-        foreach($missionPost['stashMission'] as $stashPost) {
-            if ($stashPost->getCountry() !== $missionPost['countryMission']) {
-                if (empty($errors['countryMissionStash'])) {
-                    $errors['countryMissionStash'] = 'Les planques doivent doivent situées dans le même pays que celui de la mission, soit ' . strtoupper($missionPost['countryMission']) . ' or:';
-                }
-                $errors['countryMissionStash_' . $missionPost['countryMission'] . '_' . $stashPost->getId()] =
-                'La planque ' . $stashPost->getCode_name() . ' est située dans le pays ' . $stashPost->getCountry();
             }
         }
 
+        if (!isset($missionPost['status'])) {
+            $errors['blank_status'] = 'La mission doit avoir un Statut';
+        }
+
+        $analyzedAgent = [];
+        $analyzedTarget = [];
+        $analyzedContact = [];
+        $analyzedStash = [];
+        $nbAgentsWithMissionSpeciality = 0;
+
+        //Récupération des informations des items extérieurs de la mission pour pouvoir créer les règles métier
+        if (isset($missionPost['agentMission'])) {
+            foreach($missionPost['agentMission'] as $agentIdPost) {
+                foreach($personsLists['agentsList'] as $agent) {
+                    if($agentIdPost == $agent->getId()) {
+                        $analyzedAgent[$agentIdPost]['nationality'] = $agent->getNationality();
+                        $analyzedAgent[$agentIdPost]['firstname'] = $agent->getFirstname();
+                        $analyzedAgent[$agentIdPost]['lastname'] = $agent->getLastname();
+                        $analyzedAgent[$agentIdPost]['speciality'] = $agent->getSpecialities();
+                    }
+                }
+            }
+        } else {
+            $errors['blank_agentMission'] = 'La mission doit comporter au minimum un Agent';
+        }
+
+        if(isset($missionPost['targetMission'])) {
+            foreach($missionPost['targetMission'] as $targetIdPost) {
+                foreach($personsLists['targetsList'] as $target) {
+                    if($targetIdPost == $target->getId()) {
+                        $analyzedTarget[$targetIdPost]['nationality'] = $target->getNationality();
+                        $analyzedTarget[$targetIdPost]['firstname'] = $target->getFirstname();
+                        $analyzedTarget[$targetIdPost]['lastname'] = $target->getLastname();
+                    }
+                }
+            }
+        } else {
+            $errors['blank_targetMission'] = 'La mission doit comporter au minimum une Cible';
+        }
+
+        if (isset($missionPost['contactMission'])) {
+            foreach($missionPost['contactMission'] as $contactIdPost) {
+                foreach($personsLists['contactsList'] as $contact) {
+                    if($contactIdPost == $contact->getId()) {
+                        $analyzedContact[$contactIdPost]['nationality'] = $contact->getNationality();
+                        $analyzedContact[$contactIdPost]['firstname'] = $contact->getFirstname();
+                        $analyzedContact[$contactIdPost]['lastname'] = $contact->getLastname();
+                    }
+                }
+            }
+        } else {
+            $errors['blank_contactMission'] = 'La mission doit comporter au minimum un Contact';
+        }
+        
+        if (isset($missionPost['stashMission'])) {
+            foreach($missionPost['stashMission'] as $stashIdPost) {
+                foreach($stashsList as $stash) {
+                    if($stashIdPost == $stash->getId_stash()) {
+                        $analyzedStash[$stashIdPost]['code_name'] = $stash->getCode_name();
+                        $analyzedStash[$stashIdPost]['country'] = $stash->getCountry();
+                    }
+                }
+            }
+        } else {
+            $errors['blank_stashMission'] = 'La mission doit comporter au minimum une Planque';
+        }
+        //
+
+        //Vérifie que les agents et cibles n'ont pas la même nationalité
+        if (!empty($analyzedAgent) && !empty($analyzedTarget)) {
+            foreach($analyzedAgent as $keyAgent => $agent) {
+                foreach($analyzedTarget as $keyTarget => $target) {
+                    if ($agent['nationality'] === $target['nationality']) {
+                        if (empty($errors['nationalityAgentTarget'])) {
+                            $errors['nationalityAgentTarget'] = 'Il ne peut y avoir d\'Agent et de Cible de même nationalité, or:';
+                        }
+                        $errors['nationalityAgentTarget_' . $keyAgent . '_' . $keyTarget] = 
+                            'L\'Agent ' . $agent['lastname']  . ' ' . $agent['firstname']  . 
+                            ' et la Cible ' . $target['lastname'] . ' ' . $target['firstname'] .
+                            ' sont originaires du Pays ' . strtoupper($agent['nationality']);
+                    }      
+                }
+            }
+        }
+
+        //Vérifie si les contacts ont la même nationalité que le pays de la mission
+        if (!empty($analyzedContact) && strlen($missionPost['countryMission']) > 0) {
+            foreach($analyzedContact as $keyContact => $contact) {
+                if ($contact['nationality'] !== $missionPost['countryMission']) {
+                    if (empty($errors['countryMissionContact'])) {
+                        $errors['countryMissionContact'] = 'Les Contacts doivent avoir la même nationalité que le Pays de la mission, soit ' . strtoupper($missionPost['countryMission']) . ' or:';
+                    }
+                    $errors['countryMissionContact_' . $missionPost['countryMission'] . '_' . $keyContact] =
+                    'Le Contact ' . $contact['lastname'] . ' ' . $contact['firstname'] . ' a la Nationalité ' . $contact['nationality'];
+                }
+            }
+        }
+        
+        // Vérifie si au moins un agent dispose de la spécialité requise par la mission
+        /* if ($missionPost['specialityMission'] !== 'headerFilter') {
+            foreach($analyzedAgent as $keyAgent => $agent) {
+                if (in_array($missionPost['specialityMission'], $agent['specialities'])) {
+                    $nbAgentsWithMissionSpeciality += 1;
+                }
+            }
+            if ($nbAgentsWithMissionSpeciality === 0) {
+                $errors['agentsWithMissionSpeciality'] = 'Il doit y avoir au moins un Agent disposant de la Spécialité requise par la mission';
+            }
+        } else {
+            $errors['blank_specialityMission'] = 'La mission doit comporter une Spécialité';
+        }  */   
+        
+        //Vérifie si les planques sont bien dans le même pays que le pays de la mission
+        if (!empty($analyzedStash) && strlen($missionPost['countryMission']) > 0) {
+            foreach($analyzedStash as $keyStash => $stash) {
+                if ($stash['country'] !== $missionPost['countryMission']) {
+                    if (empty($errors['countryMissionStash'])) {
+                        $errors['countryMissionStash'] = 'Les Planques doivent être situées dans le même Pays que celui de la mission, soit ' . strtoupper($missionPost['countryMission']) . ' or:';
+                    }
+                    $errors['countryMissionStash_' . $missionPost['countryMission'] . '_' . $keyStash] =
+                    'La Planque ' . $stash['code_name'] . ' est située dans le Pays ' . $stash['country'];
+                }
+            }
+        }
 
         return $errors;
     }
