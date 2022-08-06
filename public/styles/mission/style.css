@@ -243,7 +243,7 @@
 }
 
 .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .agentFilter, .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .contactFilter, .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .targetFilter, .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .stashFilter {
-  height: 262px;
+  height: 230px;
 }
 
 .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem input, .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem select option {

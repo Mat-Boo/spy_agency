@@ -21,7 +21,7 @@ $countriesController = new CountriesController;
 
 //Récupération des listes
 $missionsList = $missionsController->getMissionsList();
-$personsList = $personsController->getPersonsLists('id')[$personItem . 'sList'];
+$personsList = $personsController->getPersonsLists('lastname')[$personItem . 'sList'];
 $specialitiesList = $specialitiesController->getSpecialitiesList('name');
 $countriesList = $countriesController->getCountriesList();
 
@@ -112,6 +112,10 @@ foreach($personsListFiltered as $person) {
                 <div class="filtersItem">
                     <div class="personsFiltersLine">
                         <div class="labelAndFilter">
+                            <label for="codenamePersonFilter" class="filterTitle">Code Name</label>
+                            <input type="text" id="codenamePersonFilter" name="codenamePersonFilter" class="filter  " value="<?= isset($_GET['codenamePersonFilter']) ? $_GET['codenamePersonFilter'] : '' ?>">
+                        </div>
+                        <div class="labelAndFilter">
                             <label for="personfilter" class="filterTitle">Nom</label>
                             <select name="personFilter[]" id="personFilter" multiple class="filter">
                                 <option value="headerFilter" disabled class="headerSelect">Sélectionnez <?= $personItem === 'target' ? 'une' : 'un' ?> ou plusieurs <?= $personItem === 'target' ? 'Cible' : $personItem ?>(s)</option>
@@ -193,19 +197,22 @@ foreach($personsListFiltered as $person) {
             <div class="filtersItemAndTitle">
                 <span class="filtersBlockTitle">Mission</span>
                 <div class="filtersItem">
-                    <select name="missionsFilter[]" id="missionsFilter" multiple class="filter missionFilter">
-                        <option value="headerFilter" disabled class="headerSelect">Sélectionnez une ou plusieurs mission(s)</option>
-                        <?php foreach($missionsList as $mission) : ?>
-                            <option
-                                value="<?= $mission->getId_mission() ?>"
-                                <?php if (isset($_GET['missionsFilter'])): ?>
-                                    <?php if (in_array($mission->getId_mission(), $_GET['missionsFilter'])): ?>
-                                        selected
+                    <div class="labelAndFilter">
+                        <label for="missionsFilter" class="filterTitle">Code Name</label>
+                        <select name="missionsFilter[]" id="missionsFilter" multiple class="filter missionFilter">
+                            <option value="headerFilter" disabled class="headerSelect">Sélectionnez une ou plusieurs mission(s)</option>
+                            <?php foreach($missionsList as $mission) : ?>
+                                <option
+                                    value="<?= $mission->getId_mission() ?>"
+                                    <?php if (isset($_GET['missionsFilter'])): ?>
+                                        <?php if (in_array($mission->getId_mission(), $_GET['missionsFilter'])): ?>
+                                            selected
+                                        <?php endif ?>
                                     <?php endif ?>
-                                <?php endif ?>
-                            ><?= $mission->getCode_name() ?></option>
-                        <?php endforeach ?>
-                    </select>
+                                ><?= $mission->getCode_name() ?></option>
+                            <?php endforeach ?>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
@@ -221,7 +228,7 @@ foreach($personsListFiltered as $person) {
     <?php foreach($personsListFiltered as $person): ?>
         <li class="person">
             <div class="headerPerson">
-                <p class="personItem"><?= ($personItem === 'target' ? 'Cible' : ucfirst($personItem)) . ' ' . $person->getId() ?></p>
+                <p class="personItem"><?= ($personItem === 'target' ? 'Cible' : ucfirst($personItem)) . ' ' . $person->getCode_name() ?></p>
             </div>
             <div class="infosPerson">
                 <div class="personItems">

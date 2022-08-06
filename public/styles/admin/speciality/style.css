@@ -1,4 +1,4 @@
-.confirMessage {
+.confirmMessage {
   position: absolute;
   left: 0;
   color: #07633c;
@@ -206,7 +206,7 @@
 }
 
 .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .specialitiesFilterColumn .labelAndFilter select {
-  height: 160px;
+  height: 230px;
 }
 
 .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .specialitiesFilterColumn .labelAndFilter select option {

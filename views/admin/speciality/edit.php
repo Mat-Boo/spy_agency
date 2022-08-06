@@ -31,15 +31,16 @@ if (!empty($params)) {
     //Validation des modifications et retour à la liste des spécialités
     if (!empty($_POST)) {
         $specialitiesController->updateSpeciality($_POST, $speciality->getId_speciality());
-        header('location: ' . $router->url('admin_speciality') . '?updated=' . $params['id']);
+        header('location: ' . $router->url('admin_speciality') . '?updated=' . $_POST['nameSpeciality']);
+    }
+} else {
+    //Création de la nouvelle spécialité et retour à la liste des spécialités
+    if (!empty($_POST)) {
+        $newIdSpeciality = $specialitiesController->createSpeciality($_POST);
+        header('location: ' . $router->url('admin_speciality') . '?created=' . $_POST['nameSpeciality']);
     }
 }
 
-//Création de la nouvelle spécialité et retour à la liste des spécialités
-if (!empty($_POST)) {
-    $newIdSpeciality = $specialitiesController->createSpeciality($_POST);
-    header('location: ' . $router->url('admin_speciality') . '?created=' . $newIdSpeciality);
-}
 
 ?>
 

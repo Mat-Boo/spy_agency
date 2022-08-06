@@ -21,7 +21,7 @@ class Persons
     {
         if (!is_null($this->pdo)) {
             $stmt = $this->pdo->query(
-                "SELECT id, firstname, lastname, birthdate, nationality
+                "SELECT *
                 FROM " . ucfirst($this->personItem) . "
                 ORDER BY " . $sortBy
             );
@@ -37,7 +37,7 @@ class Persons
     {
         if (!is_null($this->pdo)) {
             $stmt = $this->pdo->query( 
-                "SELECT " . strtoupper($this->personItem) . ".id, firstname, lastname, birthdate, nationality
+                "SELECT *
                 FROM " . strtoupper($this->personItem)
                 . implode('', $filterConditions)
             );
@@ -49,19 +49,10 @@ class Persons
         return $persons;
     }
 
-    /* public function delete(int $idMission): void
-    {
-        $query = $this->pdo->prepare("DELETE FROM Mission WHERE id_mission = :idMission");
-        $ok = $query->execute(['idMission' => $idMission]);
-        if ($ok === false) {
-            throw new Exception("Impossible de supprimer l'enregistrement $idMission dans la table Mission");
-        }
-    } */
-
     public function findPerson(int $idPerson): Person
     {
         $query = $this->pdo->prepare(
-            "SELECT id, firstname, lastname, birthdate, nationality
+            "SELECT *
             FROM " . ucfirst($this->personItem) . "
             WHERE id = :id");
         $query->execute(['id' => $idPerson]);
@@ -76,7 +67,7 @@ class Persons
     {
         $query = $this->pdo->prepare(
             "UPDATE " . ucfirst($this->personItem) . " SET 
-            id = :id,
+            code_name = :code_name,
             firstname = :firstname,
             lastname = :lastname,
             birthdate = :birthdate,
@@ -85,11 +76,12 @@ class Persons
         ");
         $updatePerson = $query->execute(
             [
-                'id' => $person['idPerson'],
+                'code_name' => $person['codenamePerson'],
                 'firstname' => $person['firstnamePerson'],
                 'lastname' => $person['lastnamePerson'],
                 'birthdate' => $person['birthdatePerson'],
                 'nationality' => $person['nationalityPerson'],
+                'id' => $id_person
             ]
         );
         if ($updatePerson === false) {
@@ -112,7 +104,7 @@ class Persons
     {
         $query = $this->pdo->prepare(
             "INSERT INTO " . ucfirst($this->personItem) . " SET 
-            id = :id,
+            code_name = :code_name,
             firstname = :firstname,
             lastname = :lastname,
             birthdate = :birthdate,
@@ -120,7 +112,7 @@ class Persons
         ");
         $createPerson = $query->execute(
             [
-                'id' => $newPerson['idPerson'],
+                'code_name' => $newPerson['codenamePerson'],
                 'firstname' => $newPerson['firstnamePerson'],
                 'lastname' => $newPerson['lastnamePerson'],
                 'birthdate' => $newPerson['birthdatePerson'],

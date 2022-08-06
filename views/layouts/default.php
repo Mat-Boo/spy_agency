@@ -1,6 +1,10 @@
 <?php
-$isAdmin = strpos($_SERVER['REQUEST_URI'], 'admin') !== false;
 
+use App\Controllers\ManageJsController;
+
+$isAdmin = strpos($_SERVER['REQUEST_URI'], 'admin') !== false;
+$manageJsController = new ManageJsController;
+$jsScripts = $manageJsController->ManageJs($match['name']);
 ?>
 
 <!DOCTYPE html>
@@ -34,6 +38,8 @@ $isAdmin = strpos($_SERVER['REQUEST_URI'], 'admin') !== false;
     <footer>
         <p>Créé par Mathieu Bouthors</p>
     </footer>
-    <script src="scripts\script.js"></script>
+    <?php foreach($jsScripts as $jsScript): ?>
+        <script src="<?= 'scripts\\' . $jsScript . '.js' ?>"></script>
+    <?php endforeach ?>
 </body>
 </html>

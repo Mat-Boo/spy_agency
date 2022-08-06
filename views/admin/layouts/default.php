@@ -1,13 +1,15 @@
 <?php
 
 use App\Auth;
+use App\Controllers\ManageJsController;
 
 if (strpos($_SERVER['REQUEST_URI'], 'admin')) {
     Auth::check();
     $isAdmin = true;
 }
 $isEdit = strpos($_SERVER['REQUEST_URI'], 'edit') !== false;
-
+$manageJsController = new ManageJsController;
+$jsScripts = $manageJsController->ManageJs($match['name']);
 ?>
 
 <!DOCTYPE html>
@@ -76,6 +78,8 @@ $isEdit = strpos($_SERVER['REQUEST_URI'], 'edit') !== false;
     <footer class="footer">
         <p>Créé par Mathieu Bouthors</p>
     </footer>
-    <script src="../scripts/script.js"></script>
+    <?php foreach($jsScripts as $jsScript): ?>
+        <script src="<?= '..\scripts\\' . $jsScript . '.js' ?>"></script>
+    <?php endforeach ?>
 </body>
 </html>

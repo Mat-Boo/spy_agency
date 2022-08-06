@@ -45,16 +45,16 @@ if (!empty($params)) {
         $missionsPersonsController->updateMissionsPersons($_POST, $mission->getId_mission());
         $missionsStashsController->updateMissionsStashs($_POST, $mission->getId_mission());
         header('location: ' . $router->url('admin_mission'));
-        header('Location: ' . $router->url('admin_mission') . '?updated=' . $params['id']);
+        header('Location: ' . $router->url('admin_mission') . '?updated=' . $_POST['codeNameMission']);
     }
-}
-
-//Création de la nouvelle mission et retour à la liste des missions
-if (!empty($_POST)) {
-    $newIdMission = $missionsController->createMission($_POST);
-    $missionsPersonsController->createMissionPerson($_POST, $newIdMission);
-    $missionsStashsController->createMissionStash($_POST, $newIdMission);
-    header('Location: ' . $router->url('admin_mission') . '?created=' . $newIdMission);
+} else {
+    //Création de la nouvelle mission et retour à la liste des missions
+    if (!empty($_POST)) {
+        $newIdMission = $missionsController->createMission($_POST);
+        $missionsPersonsController->createMissionPerson($_POST, $newIdMission);
+        $missionsStashsController->createMissionStash($_POST, $newIdMission);
+        header('Location: ' . $router->url('admin_mission') . '?created=' . $_POST['codeNameMission']);
+    }
 }
 
 ?>

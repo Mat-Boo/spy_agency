@@ -30,15 +30,16 @@ if (!empty($params)) {
     //Validation des modifications et retour à la liste des planques
     if (!empty($_POST)) {
         $stashsController->updateStash($_POST, $stash->getId_stash());
-        header('location: ' . $router->url('admin_stash') . '?updated=' . $params['id']);
+        header('location: ' . $router->url('admin_stash') . '?updated=' . $_POST['codenameStash']);
+    }
+} else {
+    //Création de la nouvelle planque et retour à la liste des planques
+    if (!empty($_POST)) {
+        $newIdStash = $stashsController->createStash($_POST);
+        header('location: ' . $router->url('admin_stash') . '?created=' . $_POST['codenameStash']);
     }
 }
 
-//Création de la nouvelle planque et retour à la liste des planques
-if (!empty($_POST)) {
-    $newIdStash = $stashsController->createStash($_POST);
-    header('location: ' . $router->url('admin_stash') . '?created=' . $newIdStash);
-}
 
 ?>
 

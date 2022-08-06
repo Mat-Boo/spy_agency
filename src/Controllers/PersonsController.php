@@ -28,7 +28,8 @@ class PersonsController
         }
 
         $filterConditions = [];
-        $filterConditions['personFilter'] = isset($filterOptions['personFilter']) ? " WHERE id IN (" . implode(",", $filterOptions['personFilter']) . ")" : " WHERE id IN (" . implode(",", $personIds) . ")";
+        $filterConditions['codenamePersonFilter'] = isset($filterOptions['codenamePersonFilter']) ? " WHERE code_name LIKE '%" . $filterOptions['codenamePersonFilter'] . "%'" : " WHERE id IN (" . implode(",", $personIds) . ")";
+        $filterConditions['personFilter'] = isset($filterOptions['personFilter']) ? " AND id IN (" . implode(",", $filterOptions['personFilter']) . ")" : '';
         $filterConditions['nationalityPersonFilter'] = isset($filterOptions['nationalityPersonFilter']) && strlen($filterOptions['nationalityPersonFilter']) > 0 ? " AND nationality = '" . $filterOptions['nationalityPersonFilter'] . "'" : '';
         $filterConditions['specialitiesPersonFilter'] = isset($filterOptions['specialitiesPersonFilter']) ? " AND id IN (" . implode(",", $specialityFilter) . ")" : '';
         $filterConditions['startBirthdatePersonFilter'] = isset($filterOptions['startBirthdatePersonFilter']) && strlen($filterOptions['startBirthdatePersonFilter']) > 0 ? " AND birthdate >= '" . $filterOptions['startBirthdatePersonFilter'] . "'" : '';
@@ -57,41 +58,28 @@ class PersonsController
         $message = '';
         $typeMessage ='';
         if (!empty($person->getMissions())) {
-            /* $missionIds = [];
-            foreach($person->getMissions() as $missionFromPerson) {
-                $missionIds[] = $missionFromPerson->getId_mission();
-            }
-            sort($missionIds);
-            var_dump($missionIds); */
             $CountPersonPerMission = array_count_values($missionIds);
-            /* var_dump($CountPersonPerMission); */
             foreach($person->getMissions() as $missionFromPerson) {
                 foreach($CountPersonPerMission as $mission => $personNb) {
-                   /*  echo 'missionFromPerson ' . $missionFromPerson->getId_mission() . '</br>';
-                    echo 'mission ' . $mission . '</br>';
-                    var_dump(gettype($mission)) . '</br>';
-                    echo 'nbperson ' . $personNb . '</br>';
-                    var_dump(gettype($personNb)) . '</br></br>'; */
-                    /* echo $mission === $missionFromPerson->getId_mission() && $personNb === 1 ? 'vrai' : 'faux'; */
                     if ($mission === $missionFromPerson->getId_mission() && $personNb === 1) {
                         $typeMessage = 'alert';
                         $routerUrl = false;
                         if ($personItem === 'agent') {
-                            $message = "L\'agent " . $person->getId() . " - " . $person->getFirstname() . " " . $person->getLastname() . " est le seul agent qui est affecté à la mission " . $missionFromPerson->getId_mission() . " - " . $missionFromPerson->getCode_name() . ".\\n\\nPour pouvoir le supprimer, veuillez d\'abord affecter un autre agent à cette mission";
+                            $message = "L\'agent " . $person->getCode_name() . " - " . $person->getFirstname() . " " . $person->getLastname() . " est le seul agent qui est affecté à la mission " . $missionFromPerson->getId_mission() . " - " . $missionFromPerson->getCode_name() . ".\\n\\nPour pouvoir le supprimer, veuillez d\'abord affecter un autre agent à cette mission";
                         } elseif ($personItem === 'contact') {
-                            $message = "Le contact " . $person->getId() . " - " . $person->getFirstname() . " " . $person->getLastname() . " est le seul contact qui est affecté à la mission " . $missionFromPerson->getId_mission() . " - " . $missionFromPerson->getCode_name() . ".\\n\\nPour pouvoir le supprimer, veuillez d\'abord affecter un autre contact à cette mission";
+                            $message = "Le contact " . $person->getCode_name() . " - " . $person->getFirstname() . " " . $person->getLastname() . " est le seul contact qui est affecté à la mission " . $missionFromPerson->getId_mission() . " - " . $missionFromPerson->getCode_name() . ".\\n\\nPour pouvoir le supprimer, veuillez d\'abord affecter un autre contact à cette mission";
                         } else {
-                            $message = "La cible " . $person->getId() . " - " . $person->getFirstname() . " " . $person->getLastname() . " est la seule cible qui est affectée à la mission " . $missionFromPerson->getId_mission() . " - " . $missionFromPerson->getCode_name() . ".\\n\\nPour pouvoir la supprimer, veuillez d\'abord affecter une autre cible à cette mission";
+                            $message = "La cible " . $person->getCode_name() . " - " . $person->getFirstname() . " " . $person->getLastname() . " est la seule cible qui est affectée à la mission " . $missionFromPerson->getId_mission() . " - " . $missionFromPerson->getCode_name() . ".\\n\\nPour pouvoir la supprimer, veuillez d\'abord affecter une autre cible à cette mission";
                         }
                     } elseif ($typeMessage !== 'alert') {
                         $typeMessage = 'confirm';
                         $routerUrl = true;
                         if ($personItem === 'agent') {
-                            $message = "L\'agent " . $person->getId() . " - " . $person->getFirstname() . " " . $person->getLastname() . " est affecté à la mission " . $missionFromPerson->getId_mission() . " - " . $missionFromPerson->getCode_name() . ".\\n\\nVoulez-vous vraiment le supprimer ?";
+                            $message = "L\'agent " . $person->getCode_name() . " - " . $person->getFirstname() . " " . $person->getLastname() . " est affecté à la mission " . $missionFromPerson->getId_mission() . " - " . $missionFromPerson->getCode_name() . ".\\n\\nVoulez-vous vraiment le supprimer ?";
                         } elseif ($personItem === 'contact') {
-                            $message = "Le contact " . $person->getId() . " - " . $person->getFirstname() . " " . $person->getLastname() . " est affecté à la mission " . $missionFromPerson->getId_mission() . " - " . $missionFromPerson->getCode_name() . ".\\n\\nVoulez-vous vraiment le supprimer ?";
+                            $message = "Le contact " . $person->getCode_name() . " - " . $person->getFirstname() . " " . $person->getLastname() . " est affecté à la mission " . $missionFromPerson->getId_mission() . " - " . $missionFromPerson->getCode_name() . ".\\n\\nVoulez-vous vraiment le supprimer ?";
                         } else {
-                            $message = "La cible " . $person->getId() . " - " . $person->getFirstname() . " " . $person->getLastname() . " est affectée à la mission " . $missionFromPerson->getId_mission() . " - " . $missionFromPerson->getCode_name() . ".\\n\\nVoulez-vous vraiment la supprimer ?";
+                            $message = "La cible " . $person->getCode_name() . " - " . $person->getFirstname() . " " . $person->getLastname() . " est affectée à la mission " . $missionFromPerson->getId_mission() . " - " . $missionFromPerson->getCode_name() . ".\\n\\nVoulez-vous vraiment la supprimer ?";
                         }
                     }
                 }
@@ -99,7 +87,7 @@ class PersonsController
         } else {
             $routerUrl = true;
             $typeMessage = 'confirm';
-            $message = "Voulez-vous vraiment supprimer ". ($personItem === 'agent' ? 'l\'agent ' : ($personItem === 'contact' ? 'le contact ' : 'la cible ')) . $person->getId() . " ?";
+            $message = "Voulez-vous vraiment supprimer ". ($personItem === 'agent' ? 'l\'agent ' : ($personItem === 'contact' ? 'le contact ' : 'la cible ')) . $person->getCode_name() . " ?";
         }
         return ['onsubmitMessage' => $typeMessage . "('$message')", 'routerUrl' => $routerUrl];
     }

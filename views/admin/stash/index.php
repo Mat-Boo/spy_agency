@@ -82,11 +82,11 @@ $missionsStashsController->hydrateStashs($stashsListFiltered, $missionsList);
                     <div class="stashsFilterColumn">
                         <div class="labelAndFilter">
                             <label for="codenameStashFilter" class="filterTitle">Code Name</label>
-                            <input type="text" id="codenameStashFilter" name="codenameStashFilter" value="<?= isset($_GET['codenameStashFilter']) ? $_GET['codenameStashFilter'] : '' ?>">
+                            <input type="text" id="codenameStashFilter" name="codenameStashFilter" class="filter" value="<?= isset($_GET['codenameStashFilter']) ? $_GET['codenameStashFilter'] : '' ?>">
                         </div>
                         <div class="labelAndFilter">
                             <label for="addressStashFilter" class="filterTitle">Adresse</label>
-                            <input type="text" id="addressStashFilter" name="addressStashFilter" value="<?= isset($_GET['addressStashFilter']) ? $_GET['addressStashFilter'] : '' ?>">
+                            <input type="text" id="addressStashFilter" name="addressStashFilter" class="filter" value="<?= isset($_GET['addressStashFilter']) ? $_GET['addressStashFilter'] : '' ?>">
                         </div>
                         <div class='labelAndFilter'>
                             <label for="countryStashFilter" class="filterTitle">Pays</label>

@@ -35,6 +35,7 @@ $missionsListFiltered = $missionsController->filterMissions($_GET, $personsFilte
 //Hydratation des missions avec les personnes (agents, contacts, cibles) et les planques
 $missionsPersonsController->hydrateMissions($missionsListFiltered, $personsLists, $personsFilters);
 $missionsStashsController->hydrateMissions($missionsListFiltered, $stashsList, $stashsFilters);
+
 ?>
 
 <script>
@@ -141,7 +142,7 @@ $missionsStashsController->hydrateMissions($missionsListFiltered, $stashsList, $
                     <div class="missionsFiltersLine">
                         <div class='labelAndFilter'>
                             <label class="filterTitle">Statut</label>
-                            <div class="filter statusMissionFilter">
+                            <div class="statusMissionFilter">
                                 <?php foreach($missionsController->getStatus() as $status) : ?>
                                     <div style="background:<?= $status['background'] ?>">
                                         <input
@@ -208,44 +209,50 @@ $missionsStashsController->hydrateMissions($missionsListFiltered, $stashsList, $
                 <div class="filtersItemAndTitle">
                     <span class="filtersBlockTitle"><?= $person === 'target' ? 'Cible' : ucfirst($person) ?></span>
                     <div class="filtersItem">
-                        <select name="<?= $person . 'Filter[]' ?>" id="<?= $person . 'Filter[]' ?>" multiple class="<?= 'filter ' . $person . 'Filter' ?>">
-                            <option value="headerFilter" disabled class="headerSelect">Sélectionnez <?= $person === 'target' ? 'une' : 'un' ?> ou plusieurs <?= $person === 'target' ? 'cible' : $person ?>(s)</option>
-                            <?php foreach($personsLists[$person . 'sList'] as ${$person}) : ?>
-                                <option 
-                                    value="<?= ${$person}->getId() ?>"
-                                    <?php if (isset($_GET[$person . 'Filter'])): ?>
-                                        <?php if (in_array(${$person}->getId(), $_GET[$person . 'Filter'])): ?>
-                                            selected
+                        <div class="labelAndFilter">
+                            <label for="stashFilter" class="filterTitle">Nom Prénom</label>
+                            <select name="<?= $person . 'Filter[]' ?>" id="<?= $person . 'Filter[]' ?>" multiple class="<?= 'filter ' . $person . 'Filter' ?>">
+                                <option value="headerFilter" disabled class="headerSelect">Sélectionnez <?= $person === 'target' ? 'une' : 'un' ?> ou plusieurs <?= $person === 'target' ? 'cible' : $person ?>(s)</option>
+                                <?php foreach($personsLists[$person . 'sList'] as ${$person}) : ?>
+                                    <option 
+                                        value="<?= ${$person}->getId() ?>"
+                                        <?php if (isset($_GET[$person . 'Filter'])): ?>
+                                            <?php if (in_array(${$person}->getId(), $_GET[$person . 'Filter'])): ?>
+                                                selected
+                                            <?php endif ?>
                                         <?php endif ?>
-                                    <?php endif ?>
-                                ><?= ${$person}->getLastname() . ' ' . ${$person}->getfirstname() ?></option>
-                            <?php endforeach ?>
-                        </select>
+                                    ><?= ${$person}->getLastname() . ' ' . ${$person}->getfirstname() ?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
                     </div>
                 </div>
             <?php endforeach ?>
             <div class="filtersItemAndTitle">
                 <span class="filtersBlockTitle">Planque</span>
                 <div class="filtersItem">
-                    <select name="stashFilter[]" id="stashFilter" multiple class="filter stashFilter">
-                        <option value="headerFilter" disabled class="headerSelect">Sélectionnez une ou plusieurs planque(s)</option>
-                        <?php foreach($stashsList as $stash) : ?>
-                                <option
-                                    value="<?= $stash->getId_stash() ?>"
-                                    <?php if (isset($_GET['stashFilter'])): ?>
-                                        <?php if (in_array($stash->getId_stash(), $_GET['stashFilter'])): ?>
-                                            selected
+                    <div class="labelAndFilter">
+                        <label for="stashFilter" class="filterTitle">Pays | Adresse | Type</label>
+                        <select name="stashFilter[]" id="stashFilter" multiple class="filter stashFilter">
+                            <option value="headerFilter" disabled class="headerSelect">Sélectionnez une ou plusieurs planque(s)</option>
+                            <?php foreach($stashsList as $stash) : ?>
+                                    <option
+                                        value="<?= $stash->getId_stash() ?>"
+                                        <?php if (isset($_GET['stashFilter'])): ?>
+                                            <?php if (in_array($stash->getId_stash(), $_GET['stashFilter'])): ?>
+                                                selected
+                                            <?php endif ?>
                                         <?php endif ?>
-                                    <?php endif ?>
-                                >
-                                    <div>
-                                        <p><?= $stash->getCountry() . ' | ' ?></p>
-                                        <p><?= $stash->getType() . ' | ' ?></p>
-                                        <p><?= $stash->getaddress() ?></p>
-                                    </div>
-                                </option>
-                        <?php endforeach ?>
-                    </select>
+                                    >
+                                        <div>
+                                            <p><?= $stash->getCountry() . ' | ' ?></p>
+                                            <p><?= $stash->getType() . ' | ' ?></p>
+                                            <p><?= $stash->getaddress() ?></p>
+                                        </div>
+                                    </option>
+                            <?php endforeach ?>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
