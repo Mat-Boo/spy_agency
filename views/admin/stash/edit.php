@@ -74,13 +74,13 @@ if (!empty($params)) {
         <div class="headerStash">
             <div class="titleItem">
                 <label for="codenameStash"><b>Code Name:</b></label>
-                <input type="text" id="idStash" name="codenameStash" value="<?= !empty($params) ? $stash->getCode_name() : '' ?>">
+                <input type="text" id="idStash" name="codenameStash" value="<?= isset($_POST['codenameStash']) ? $_POST['codenameStash'] : (!empty($params) ? $stash->getCode_name() : '') ?>">
             </div>
         </div>
         <div class="infosStash">
             <div class="stashItem">
                 <label for="addressStash"><b>Adresse:</b></label>
-                <input type="text" id="addressStash" name="addressStash" value="<?= !empty($params) ? $stash->getAddress() : '' ?>">
+                <input type="text" id="addressStash" name="addressStash" value="<?= isset($_POST['addressStash']) ? $_POST['addressStash'] : (!empty($params) ? $stash->getAddress() : '') ?>">
             </div>
             <div class="stashItem">
                 <label for="countryStash"><b>Pays: </b></label>
@@ -89,7 +89,11 @@ if (!empty($params)) {
                     <?php foreach($countriesList as $country) : ?>
                         <option
                             value="<?= $country['country'] ?>"
-                            <?php if (!empty($params)): ?>
+                            <?php if (isset($_POST['countryStash'])): ?>
+                                <?php if ($country['country'] === $_POST['countryStash']): ?>
+                                    selected
+                                <?php endif ?>
+                            <?php elseif (!empty($params)): ?>
                                 <?php if ($country['country'] === $stash->getCountry()): ?>
                                     selected
                                 <?php endif ?>
@@ -101,7 +105,7 @@ if (!empty($params)) {
             <div class="stashItem">
                 <div class="stashItem">
                     <label for="typeStash"><b>Type:</b></label>
-                    <input type="text" id="typeStash" name="typeStash" value="<?= !empty($params) ? $stash->getType() : '' ?>">
+                    <input type="text" id="typeStash" name="typeStash" value="<?= isset($_POST['typeStash']) ? $_POST['typeStash'] : (!empty($params) ? $stash->getType() : '') ?>">
                 </div>
             </div>
         </div>

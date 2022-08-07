@@ -34,6 +34,9 @@ $countriesStashs = $stashsController->getCountriesStashs();
 $personsFilters = $missionsPersonsController->filterPersons($_GET);
 $stashsFilters = $missionsStashsController->getStashsFilters($_GET);
 
+//Hydratation des agents listés avec leurs spécialités
+$agentsSpecialities->hydrateAgents($personsLists['agentsList'], $specialitiesList);
+
 if (!empty($params)) {
     //Récupération de la mission à éditer
     $mission = $missionsController->findMission($params['id']);
@@ -43,8 +46,6 @@ if (!empty($params)) {
     $missionsPersonsController->hydrateMissions($missionArray, $personsLists, $personsFilters);
     $missionsStashsController->hydrateMissions($missionArray, $stashsList, $stashsFilters);
     
-    //Hydratation des agents listés avec leurs spécialités
-    $agentsSpecialities->hydrateAgents($personsLists['agentsList'], $specialitiesList);
     
     //Validation des modifications et retour à la liste des missions
     if (!empty($_POST)) {
@@ -233,7 +234,7 @@ if (!empty($params)) {
                             <?php foreach($personsLists['agentsList'] as $agent): ?>
                                 <?php if($person === 'agent'): ?>
                                     <div id=<?= 'specialitiesHover_' . $agent->getId() ?> class="specialitiesHover">
-                                        <span>Spécialités :</span>
+                                        <span><b>Spécialités :</b></span>
                                         <ul>
                                             <?php foreach($agent->getSpecialities() as $speciality): ?>
                                                 <li>

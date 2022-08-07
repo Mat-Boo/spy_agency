@@ -250,7 +250,7 @@
 
 .missionEdit .mission .details .detailsInfos .InfosItems .agents .specialitiesHover {
   position: absolute;
-  left: 50%;
+  left: 40%;
   top: -30px;
   color: #395B64;
   background: #A5C9CA;

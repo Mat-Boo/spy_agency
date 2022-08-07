@@ -42,7 +42,6 @@ if (!empty($params)) {
 
     //Validation des modifications et retour à la liste des personnes concernées
     if (!empty($_POST)) {
-        var_dump($_POST);
         $errors = $personsController->controlsRules($_POST, $personItem);
         if (empty($errors)) {
             $personsController->updatePerson($_POST, $person->getId(), $personItem);
@@ -117,21 +116,21 @@ if (!empty($params)) {
         <div class="headerPerson">
             <div class="titleItem">
                 <label for="codenamePerson"><b>Code Name:</b></label>
-                <input type="text" id="codenamePerson" name="codenamePerson" value="<?= !empty($params) ? $person->getCode_name() : '' ?>">
+                <input type="text" id="codenamePerson" name="codenamePerson" value="<?= isset($_POST['codenamePerson']) ? $_POST['codenamePerson'] : (!empty($params) ? $person->getCode_name() : '') ?>">
             </div>
         </div>
         <div class="infosPerson">
             <div class="personItem">
                 <label for="firstnamePerson"><b>Prénom:</b></label>
-                <input type="text" id="firstnamePerson" name="firstnamePerson" value="<?= !empty($params) ? $person->getFirstname() : '' ?>">
+                <input type="text" id="firstnamePerson" name="firstnamePerson" value="<?= isset($_POST['firstnamePerson']) ? $_POST['firstnamePerson'] : (!empty($params) ? $person->getFirstname() : '') ?>">
             </div>
             <div class="personItem">
                 <label for="lastnamePerson"><b>Nom:</b></label>
-                <input type="text" id="lastnamePerson" name="lastnamePerson" value="<?= !empty($params) ? $person->getLastname() : '' ?>">
+                <input type="text" id="lastnamePerson" name="lastnamePerson" value="<?= isset($_POST['lastnamePerson']) ? $_POST['lastnamePerson'] : (!empty($params) ? $person->getLastname() : '') ?>">
             </div>
             <div class="personItem">
                 <label for="birthdatePerson"><b>Date de naissance: </b></label>
-                <input type="date" id="birthdatePerson" name="birthdatePerson" value="<?= !empty($params) ? $person->getBirthdate() : '' ?>">
+                <input type="date" id="birthdatePerson" name="birthdatePerson" value="<?= isset($_POST['birthdatePerson']) ? $_POST['birthdatePerson'] : (!empty($params) ? $person->getBirthdate() : '') ?>">
             </div>
             <div class="personItem">
                 <label for="nationalityPerson"><b>Nationalité: </b></label>
@@ -140,7 +139,11 @@ if (!empty($params)) {
                     <?php foreach($countriesList as $country) : ?>
                         <option
                             value="<?= $country['country'] ?>"
-                            <?php if (!empty($params)): ?>
+                            <?php if (isset($_POST['nationalityPerson'])): ?>
+                                <?php if ($country['country'] === $_POST['nationalityPerson']): ?>
+                                    selected
+                                <?php endif ?>
+                            <?php elseif (!empty($params)): ?>
                                 <?php if ($country['country'] === $person->getNationality()): ?>
                                     selected
                                 <?php endif ?>
@@ -169,7 +172,11 @@ if (!empty($params)) {
                             <?php foreach($specialitiesList as $speciality) : ?>
                                 <option
                                     value="<?= $speciality->getId_speciality() ?>"
-                                    <?php if (!empty($params)): ?>
+                                    <?php if(isset($_POST['personSpecialities'])): ?>
+                                        <?php if (in_array($speciality->getId_speciality(), $_POST['personSpecialities'])): ?>
+                                            selected
+                                        <?php endif ?>
+                                    <?php elseif (!empty($params)): ?>
                                         <?php foreach($person->getSpecialities() as $specialityAgent): ?>
                                             <?php if ($speciality->getId_speciality() === $specialityAgent->getId_speciality()): ?>
                                                 selected

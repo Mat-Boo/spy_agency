@@ -75,13 +75,13 @@ if (!empty($params)) {
         <div class="headerSpeciality">
             <div class="titleItem">
                 <label for="idSpeciality"><b>Code:</b></label>
-                <input type="text" id="idSpeciality" name="idSpeciality" value="<?= !empty($params) ? $speciality->getId_speciality() : '' ?>">
+                <input type="text" id="idSpeciality" name="idSpeciality" value="<?= isset($_POST['idSpeciality']) ? $_POST['idSpeciality'] : (!empty($params) ? $speciality->getId_speciality() : '') ?>">
             </div>
         </div>
         <div class="infosSpeciality">
             <div class="specialityItems">
                 <label for="nameSpeciality"><b>Titre:</b></label>
-                <input type="text" id="nameSpeciality" name="nameSpeciality" value="<?= !empty($params) ? $speciality->getName() : '' ?>">
+                <input type="text" id="nameSpeciality" name="nameSpeciality" value="<?= isset($_POST['nameSpeciality']) ? $_POST['nameSpeciality'] : (!empty($params) ? $speciality->getName() : '') ?>">
             </div>
         </div>
         <?php if(!empty($params)): ?>
