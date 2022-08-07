@@ -198,8 +198,8 @@ if (!empty($params)) {
                                                         <option 
                                                             value="<?= ${$person}->getId() ?>"
                                                             <?php if (isset($_POST[$person . 'Mission'])): ?>
-                                                                <?php foreach($mission->{'get' . ucfirst($person) . 's'}() as ${$person . 'Mission'}): ?>
-                                                                    <?php if (in_array(${$person}->getId(), $_POST[$person . 'Mission'])): ?>
+                                                                <?php foreach($_POST[$person . 'Mission'] as ${$person . 'Mission'}): ?>
+                                                                    <?php if (${$person}->getId() == ${$person . 'Mission'}): ?>
                                                                         selected
                                                                     <?php endif ?>
                                                                 <?php endforeach ?>
@@ -212,6 +212,15 @@ if (!empty($params)) {
                                                             <?php endif ?>
                                                         >
                                                             <?= ${$person}->getLastname() . ' ' . ${$person}->getfirstname() ?>
+                                                            <?php if($person === 'agent'): ?>
+                                                                <ul class="specialitiesHover">
+                                                                    <?php foreach(${$person}->getSpecialities() as $speciality): ?>
+                                                                        <li>
+                                                                            <?= $speciality->getName() ?>
+                                                                        </li>
+                                                                    <?php endforeach ?>
+                                                                </ul>
+                                                            <?php endif ?>
                                                         </option>
                                                     <?php endif ?>
                                                 <?php endforeach ?>
@@ -239,8 +248,8 @@ if (!empty($params)) {
                                             <option
                                                 value="<?= $stash->getId_stash() ?>"
                                                 <?php if(isset($_POST['stashMission'])): ?>
-                                                    <?php foreach($mission->getStashs() as $stashMission): ?>
-                                                        <?php if (in_array($stash->getId_stash(), $_POST['stashMission'])): ?>
+                                                    <?php foreach($_POST['stashMission'] as $stashMission): ?>
+                                                        <?php if ($stash->getId_stash() == $stashMission): ?>
                                                             selected
                                                         <?php endif ?>
                                                     <?php endforeach ?>
