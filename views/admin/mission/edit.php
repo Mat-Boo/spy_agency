@@ -21,15 +21,16 @@ $specialitiesController = new SpecialitiesController;
 $countriesController = new CountriesController;
 
 //Récupération des listes
-$personsLists = $personsController->getPersonsLists('lastname');
+$personsLists = $personsController->getPersonsLists('nationality, lastname, firstname');
 $stashsList = $stashsController->getStashsList('country, type');
 $specialitiesList = $specialitiesController->getSpecialitiesList('name');
 $countriesList = $countriesController->getCountriesList();
+$nationalitiesPersonsLists = $personsController->getNationalitiesPersons();
+$countriesStashs = $stashsController->getCountriesStashs();
 
 //Application des filtre de recherche sur les missions
 $personsFilters = $missionsPersonsController->filterPersons($_GET);
 $stashsFilters = $missionsStashsController->getStashsFilters($_GET);
-
 
 if (!empty($params)) {
     //Récupération de la mission à éditer
@@ -42,7 +43,6 @@ if (!empty($params)) {
     
     //Validation des modifications et retour à la liste des missions
     if (!empty($_POST)) {
-        /* var_dump($_POST); */
         $errors = $missionsController->controlsRules($_POST, $personsLists, $stashsList, $specialitiesList);
         if (empty($errors)) {
             $missionsController->updateMission($_POST, $mission->getId_mission());
@@ -50,7 +50,7 @@ if (!empty($params)) {
             $missionsStashsController->updateMissionsStashs($_POST, $mission->getId_mission());
             header('Location: ' . $router->url('admin_mission') . '?updated=' . $_POST['codeNameMission']);
         } else {
-            $displayErrors = implode('<br>', $errors);
+            $displayErrors = implode('', $errors);
         }
     }
 } else {
@@ -63,16 +63,17 @@ if (!empty($params)) {
             $missionsStashsController->createMissionStash($_POST, $newIdMission);
             header('Location: ' . $router->url('admin_mission') . '?created=' . $_POST['codeNameMission']);
         } else {
-            $displayErrors = implode('<br>', $errors);
+            $displayErrors = implode('', $errors);
         }
     }
 }
-
 ?>
 
 <div class="missionEdit">
     <?php if (isset($displayErrors)): ?>
-        <p class="alertMessage"><?= $displayErrors ?></p>
+        <ul class="alertMessage">
+            <?= $displayErrors ?>
+        </ul>
     <?php endif ?>
     <h1 class="missionEditTitle">
         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
@@ -85,7 +86,7 @@ if (!empty($params)) {
         <div class="headerMission">
             <div class="titleItem">
                 <label for="titleMission"><b>Titre:</b></label>
-                <input type="text" id="titleMission" name="titleMission" value="<?= !empty($params) ? $mission->getTitle() : '' ?>">
+                <input type="text" id="titleMission" name="titleMission" value="<?= isset($_POST['titleMission']) ? $_POST['titleMission'] : (!empty($params) ? $mission->getTitle() :'') ?>">
             </div>
             <div class="filter statusMission">
                 <?php foreach($missionsController->getStatus() as $status) : ?>
@@ -95,7 +96,11 @@ if (!empty($params)) {
                             id="<?= $status['status'] ?>"
                             name="status"
                             value="<?= $status['status'] ?>"
-                            <?php if (!empty($params)): ?>
+                            <?php if (isset($_POST['status'])): ?>
+                                <?php if ($status['status'] === $_POST['status']): ?>
+                                    checked
+                                <?php endif ?>
+                            <?php elseif (!empty($params)): ?>
                                 <?php if ($status['status'] === $mission->getStatus()['status']): ?>
                                     checked
                                 <?php endif ?>
@@ -109,7 +114,7 @@ if (!empty($params)) {
         <div class="infosMission">
             <div class="missionItem">
                 <label for="codeNameMission"><b>Code Name:</b></label>
-                <input type="text" id="codeNameMission" name="codeNameMission" value="<?= !empty($params) ? $mission->getCode_name() : '' ?>">
+                <input type="text" id="codeNameMission" name="codeNameMission" value="<?= isset($_POST['codeNameMission']) ? $_POST['codeNameMission'] : (!empty($params) ? $mission->getCode_name() : '') ?>">
             </div>
             <div class="missionItem">
                 <label for="countryMission"><b>Pays: </b></label>
@@ -118,7 +123,11 @@ if (!empty($params)) {
                     <?php foreach($countriesList as $country) : ?>
                         <option
                             value="<?= $country['country'] ?>"
-                            <?php if (!empty($params)): ?>
+                            <?php if (isset($_POST['countryMission'])): ?>
+                                <?php if ($country['country'] === $_POST['countryMission']): ?>
+                                    selected
+                                <?php endif ?>
+                            <?php elseif (!empty($params)): ?>
                                 <?php if ($country['country'] === $mission->getCountry()): ?>
                                     selected
                                 <?php endif ?>
@@ -129,15 +138,15 @@ if (!empty($params)) {
             </div>
             <div class="missionItem">
                 <label for="typeMission"><b>Type: </b></label>
-                <input type="text" id="typeMission" name="typeMission" value="<?= !empty($params) ? $mission->getType() : '' ?>">
+                <input type="text" id="typeMission" name="typeMission" value="<?= isset($_POST['typeMission']) ? $_POST['typeMission'] : (!empty($params) ? $mission->getType() : '') ?>">
             </div>
             <div class="missionItem">
                 <label for="startDateMission"><b>Date de début: </b></label>
-                <input type="date" id="startDateMission" name="startDateMission" value="<?= !empty($params) ? $mission->getStart_date() : '' ?>">
+                <input type="date" id="startDateMission" name="startDateMission" value="<?= isset($_POST['startDateMission']) ? $_POST['startDateMission'] : (!empty($params) ? $mission->getStart_date() : '') ?>">
             </div>
             <div class="missionItem">
                 <label for="endDateMission"><b>Date de fin: </b></label>
-                <input type="date" id="endDateMission" name="endDateMission" value="<?= !empty($params) ? $mission->getEnd_date() : '' ?>">
+                <input type="date" id="endDateMission" name="endDateMission" value="<?= isset($_POST['endDateMission']) ? $_POST['endDateMission'] : (!empty($params) ? $mission->getEnd_date() : '') ?>">
             </div>
         </div>
         <div class="details">
@@ -153,7 +162,7 @@ if (!empty($params)) {
                         </svg>
                         <b>Description: </b>
                     </label>
-                    <textarea id="descriptionMission" name="descriptionMission" rows="5"><?= !empty($params) ? $mission->getDescription() : '' ?></textarea>
+                    <textarea id="descriptionMission" name="descriptionMission" rows="5"><?= isset($_POST['descriptionMission']) ? $_POST['descriptionMission'] : (!empty($params) ? $mission->getDescription() : '') ?></textarea>
                 </div>
                 <div class="InfosItems">
                     <?php foreach(['agent', 'contact', 'target'] as $person): ?>
@@ -180,17 +189,35 @@ if (!empty($params)) {
                             </label>
                             <select name="<?= $person ?>Mission[]" id="<?= $person ?>Mission" multiple class="<?= $person ?>Mission">
                                 <option value="headerFilter" disabled class="headerSelect">Sélectionnez <?= $person === 'target' ? 'une' : 'un' ?> ou plusieurs <?= $person ?>(s)</option>
-                                <?php foreach($personsLists[$person . 'sList'] as ${$person}) : ?>
-                                    <option 
-                                        value="<?= ${$person}->getId() ?>"
-                                        <?php if (!empty($params)): ?>
-                                            <?php foreach($mission->{'get' . ucfirst($person) . 's'}() as ${$person . 'Mission'}): ?>
-                                                <?php if (${$person}->getId() === ${$person . 'Mission'}->getId()): ?>
-                                                    selected
-                                                <?php endif ?>
-                                            <?php endforeach ?>
+                                <?php foreach($nationalitiesPersonsLists as $key => $nationalitiesPersonsList): ?>
+                                    <?php foreach($nationalitiesPersonsList as $nationality): ?>
+                                        <?php if ($person === substr($key, 0, -14)): ?>
+                                            <optgroup label=<?= $nationality ?>>
+                                                <?php foreach($personsLists[$person . 'sList'] as ${$person}) : ?>
+                                                    <?php if(${$person}->getNationality() === $nationality): ?>
+                                                        <option 
+                                                            value="<?= ${$person}->getId() ?>"
+                                                            <?php if (isset($_POST[$person . 'Mission'])): ?>
+                                                                <?php foreach($mission->{'get' . ucfirst($person) . 's'}() as ${$person . 'Mission'}): ?>
+                                                                    <?php if (in_array(${$person}->getId(), $_POST[$person . 'Mission'])): ?>
+                                                                        selected
+                                                                    <?php endif ?>
+                                                                <?php endforeach ?>
+                                                            <?php elseif (!empty($params)): ?>
+                                                                <?php foreach($mission->{'get' . ucfirst($person) . 's'}() as ${$person . 'Mission'}): ?>
+                                                                    <?php if (${$person}->getId() === ${$person . 'Mission'}->getId()): ?>
+                                                                        selected
+                                                                    <?php endif ?>
+                                                                <?php endforeach ?>
+                                                            <?php endif ?>
+                                                        >
+                                                            <?= ${$person}->getLastname() . ' ' . ${$person}->getfirstname() ?>
+                                                        </option>
+                                                    <?php endif ?>
+                                                <?php endforeach ?>
+                                            </optgroup>
                                         <?php endif ?>
-                                    ><?= ${$person}->getLastname() . ' ' . ${$person}->getfirstname() ?></option>
+                                    <?php endforeach ?>
                                 <?php endforeach ?>
                             </select>
                         </div>
@@ -205,23 +232,34 @@ if (!empty($params)) {
                         </label>
                         <select name="stashMission[]" id="stashMission" multiple class="stashMission">
                             <option value="headerFilter" disabled class="headerSelect">Sélectionnez une ou plusieurs planque(s)</option>
-                            <?php foreach($stashsList as $stash) : ?>
-                                <option
-                                    value="<?= $stash->getId_stash() ?>"
-                                    <?php if (!empty($params)): ?>
-                                        <?php foreach($mission->getStashs() as $stashMission): ?>
-                                            <?php if ($stash->getId_stash() === $stashMission->getId_stash()): ?>
-                                                selected
-                                            <?php endif ?>
-                                        <?php endforeach ?>
-                                    <?php endif ?>
-                                >
-                                    <div>
-                                        <p><?= $stash->getCountry() . ' | ' ?></p>
-                                        <p><?= $stash->getType() . ' | ' ?></p>
-                                        <p><?= $stash->getAddress() ?></p>
-                                    </div>
-                                </option>
+                            <?php foreach($countriesStashs as $country): ?>
+                                <optgroup label=<?= $country ?>>
+                                    <?php foreach($stashsList as $stash) : ?>
+                                        <?php if($stash->getCountry() === $country): ?>
+                                            <option
+                                                value="<?= $stash->getId_stash() ?>"
+                                                <?php if(isset($_POST['stashMission'])): ?>
+                                                    <?php foreach($mission->getStashs() as $stashMission): ?>
+                                                        <?php if (in_array($stash->getId_stash(), $_POST['stashMission'])): ?>
+                                                            selected
+                                                        <?php endif ?>
+                                                    <?php endforeach ?>
+                                                <?php elseif (!empty($params)): ?>
+                                                    <?php foreach($mission->getStashs() as $stashMission): ?>
+                                                        <?php if ($stash->getId_stash() === $stashMission->getId_stash()): ?>
+                                                            selected
+                                                        <?php endif ?>
+                                                    <?php endforeach ?>
+                                                <?php endif ?>
+                                            >
+                                                <div>
+                                                    <p><?= $stash->getType() . ' | ' ?></p>
+                                                    <p><?= $stash->getAddress() ?></p>
+                                                </div>
+                                            </option>
+                                        <?php endif ?>
+                                    <?php endforeach ?>
+                                </optgroup>
                             <?php endforeach ?>
                         </select>
                     </div>
@@ -238,7 +276,11 @@ if (!empty($params)) {
                         <?php foreach($specialitiesList as $speciality) : ?>
                             <option
                                 value="<?= $speciality->getId_speciality() ?>"
-                                <?php if (!empty($params)): ?>
+                                <?php if(isset($_POST['specialityMission'])): ?>
+                                    <?php if ($speciality->getId_speciality() == $_POST['specialityMission']): ?>
+                                        selected
+                                    <?php endif ?>
+                                <?php elseif (!empty($params)): ?>
                                     <?php if ($speciality->getName() === $mission->getSpeciality()): ?>
                                         selected
                                     <?php endif ?>

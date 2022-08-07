@@ -97,4 +97,16 @@ class StashsController
         $stashs = new Stashs((new Connection)->getPdo());
         return $stashs->createStash($newStash);
     }
+
+    public function getCountriesStashs(): array
+    {
+        $countriesStashs = [];
+        foreach($this->getStashsList('country') as $stash) {
+            if (!in_array($stash->getCountry(), $countriesStashs)) {
+                $countriesStashs[] = $stash->getCountry();
+            }
+        }
+
+        return $countriesStashs;
+    }
 }

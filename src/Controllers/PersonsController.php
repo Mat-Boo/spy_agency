@@ -103,4 +103,18 @@ class PersonsController
         $persons = new Persons((new Connection)->getPdo(), $personItem);
         return $persons->createPerson($newPerson);
     }
+
+    public function getNationalitiesPersons(): array
+    {
+        foreach($this->getPersonsLists('nationality') as $key => $personsList) {
+            ${$key} = [];
+            foreach($personsList as $person) {
+                if (!in_array($person->getNationality(), ${$key})) {
+                    ${$key}[] = $person->getNationality();
+                }
+            }
+            $nationalitiesPersons[substr($key, 0, -4) . 'Nationalities'] = ${$key};
+        }
+        return $nationalitiesPersons;
+    }
 }
