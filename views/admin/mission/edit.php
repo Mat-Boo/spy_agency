@@ -4,6 +4,7 @@ $title = 'Spy Agency - Missions - Admin';
 $styleFolder = '../../../styles/';
 $styleSubFolder = 'admin/mission/editMission_';
 
+use App\Controllers\AgentsSpecialitiesController;
 use App\Controllers\MissionsController;
 use App\Controllers\PersonsController;
 use App\Controllers\StashsController;
@@ -19,6 +20,7 @@ $missionsPersonsController = new MissionsPersonsController;
 $missionsStashsController = new MissionsStashsController;
 $specialitiesController = new SpecialitiesController;
 $countriesController = new CountriesController;
+$agentsSpecialities = new AgentsSpecialitiesController;
 
 //Récupération des listes
 $personsLists = $personsController->getPersonsLists('nationality, lastname, firstname');
@@ -40,6 +42,9 @@ if (!empty($params)) {
     //Hydratation de la mission éditée avec les personnes (agents, contacts, cibles) et les planques
     $missionsPersonsController->hydrateMissions($missionArray, $personsLists, $personsFilters);
     $missionsStashsController->hydrateMissions($missionArray, $stashsList, $stashsFilters);
+    
+    //Hydratation des agents listés avec leurs spécialités
+    $agentsSpecialities->hydrateAgents($personsLists['agentsList'], $specialitiesList);
     
     //Validation des modifications et retour à la liste des missions
     if (!empty($_POST)) {
@@ -187,6 +192,7 @@ if (!empty($params)) {
                                 <?php endif ?>
                                 <b><?=$person === 'target' ? 'Cible' : ucfirst($person) ?>(s) :</b>
                             </label>
+                            <span class="descrSelect">Nom Prénom</span>
                             <select name="<?= $person ?>Mission[]" id="<?= $person ?>Mission" multiple class="<?= $person ?>Mission">
                                 <option value="headerFilter" disabled class="headerSelect">Sélectionnez <?= $person === 'target' ? 'une' : 'un' ?> ou plusieurs <?= $person ?>(s)</option>
                                 <?php foreach($nationalitiesPersonsLists as $key => $nationalitiesPersonsList): ?>
@@ -195,7 +201,11 @@ if (!empty($params)) {
                                             <optgroup label=<?= $nationality ?>>
                                                 <?php foreach($personsLists[$person . 'sList'] as ${$person}) : ?>
                                                     <?php if(${$person}->getNationality() === $nationality): ?>
-                                                        <option 
+                                                        <option
+                                                            <?php if($person === 'agent'): ?>
+                                                                id=<?= 'option_' . $agent->getId() ?>
+                                                                class="optionAgent"
+                                                            <?php endif ?>
                                                             value="<?= ${$person}->getId() ?>"
                                                             <?php if (isset($_POST[$person . 'Mission'])): ?>
                                                                 <?php foreach($_POST[$person . 'Mission'] as ${$person . 'Mission'}): ?>
@@ -212,15 +222,6 @@ if (!empty($params)) {
                                                             <?php endif ?>
                                                         >
                                                             <?= ${$person}->getLastname() . ' ' . ${$person}->getfirstname() ?>
-                                                            <?php if($person === 'agent'): ?>
-                                                                <ul class="specialitiesHover">
-                                                                    <?php foreach(${$person}->getSpecialities() as $speciality): ?>
-                                                                        <li>
-                                                                            <?= $speciality->getName() ?>
-                                                                        </li>
-                                                                    <?php endforeach ?>
-                                                                </ul>
-                                                            <?php endif ?>
                                                         </option>
                                                     <?php endif ?>
                                                 <?php endforeach ?>
@@ -229,6 +230,20 @@ if (!empty($params)) {
                                     <?php endforeach ?>
                                 <?php endforeach ?>
                             </select>
+                            <?php foreach($personsLists['agentsList'] as $agent): ?>
+                                <?php if($person === 'agent'): ?>
+                                    <div id=<?= 'specialitiesHover_' . $agent->getId() ?> class="specialitiesHover">
+                                        <span>Spécialités :</span>
+                                        <ul>
+                                            <?php foreach($agent->getSpecialities() as $speciality): ?>
+                                                <li>
+                                                    <?= $speciality->getName() ?>
+                                                </li>
+                                            <?php endforeach ?>
+                                        </ul>
+                                    </div>
+                                <?php endif ?>
+                            <?php endforeach ?>
                         </div>
                     <?php endforeach ?>
                     <div class="infosItem stashs">
@@ -239,6 +254,7 @@ if (!empty($params)) {
                             </svg>
                             <b>Planque(s) :</b>
                         </label>
+                        <span class="descrSelect">Code Name | Type | Adresse</span>
                         <select name="stashMission[]" id="stashMission" multiple class="stashMission">
                             <option value="headerFilter" disabled class="headerSelect">Sélectionnez une ou plusieurs planque(s)</option>
                             <?php foreach($countriesStashs as $country): ?>
@@ -262,6 +278,7 @@ if (!empty($params)) {
                                                 <?php endif ?>
                                             >
                                                 <div>
+                                                    <p><?= $stash->getCode_name() . ' | ' ?></p>
                                                     <p><?= $stash->getType() . ' | ' ?></p>
                                                     <p><?= $stash->getAddress() ?></p>
                                                 </div>

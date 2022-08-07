@@ -83,4 +83,26 @@ class SpecialitiesController
         $specialities = new Specialities((new Connection)->getPdo());
         return $specialities->createSpeciality($newSpeciality);
     }
+
+    public function controlsRules(array $specialityPost): array
+    {
+        $errors = [];
+
+        $specialityItems = 
+        [
+            'idSpeciality' => 'Le <b>CODE</b> ',
+            'nameSpeciality' => 'Le <b>TITRE</b> ',
+        ];
+
+        // Vérifie si tous les champs sont bien renseignés car tous obligatoires
+        foreach($specialityPost as $keyPost => $itemPost) {
+            foreach($specialityItems as $key => $item) {
+                if ($itemPost === '' && $keyPost === $key) {
+                    $errors['blank_' . $key] = '<li class="error">' . $item . ' est obligatoire sur la spécialité</li>';
+                }
+            }
+        }
+
+        return $errors;
+    }
 }

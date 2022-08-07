@@ -260,8 +260,10 @@ class MissionsController
         $agentsSpecialitiesController->hydrateAgents($analyzedAgents, $specialitiesList);
         if ($missionPost['specialityMission'] !== 'headerFilter') {
             foreach($analyzedAgents as $agent) {
-                if (in_array($missionPost['specialityMission'], $agent->getSpecialities())) {
-                    $nbAgentsWithMissionSpeciality += 1;
+                foreach($agent->getSpecialities() as $speciality) {
+                    if ($missionPost['specialityMission'] == $speciality->getId_speciality()) {
+                        $nbAgentsWithMissionSpeciality += 1;
+                    }
                 }
             }
             if ($nbAgentsWithMissionSpeciality === 0) {

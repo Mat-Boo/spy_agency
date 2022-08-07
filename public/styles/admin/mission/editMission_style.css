@@ -230,8 +230,39 @@
           flex-direction: column;
 }
 
+.missionEdit .mission .details .detailsInfos .InfosItems .infosItem label {
+  margin: 0;
+}
+
+.missionEdit .mission .details .detailsInfos .InfosItems .infosItem .descrSelect {
+  font-style: italic;
+  font-size: 0.9em;
+  text-align: end;
+}
+
 .missionEdit .mission .details .detailsInfos .InfosItems .infosItem select {
   height: 200px;
+}
+
+.missionEdit .mission .details .detailsInfos .InfosItems .agents {
+  position: relative;
+}
+
+.missionEdit .mission .details .detailsInfos .InfosItems .agents .specialitiesHover {
+  position: absolute;
+  left: 50%;
+  top: -30px;
+  color: #395B64;
+  background: #A5C9CA;
+  padding: 5px;
+  border-radius: 3px;
+  display: none;
+  border: white 1px solid;
+  font-size: 0.8em;
+}
+
+.missionEdit .mission .details .detailsInfos .InfosItems .agents .specialitiesHover ul {
+  margin: 0;
 }
 
 .missionEdit .mission .details .detailsInfos .specialityItem {

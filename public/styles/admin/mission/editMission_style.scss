@@ -135,8 +135,34 @@
                         margin: 10px 0;
                         display: flex;
                         flex-direction: column;
+                        label {
+                            margin: 0;
+                        }
+                        .descrSelect {
+                            font-style: italic;
+                            font-size: 0.9em;
+                            text-align: end;
+                        }
                         select {
                             height: 200px;
+                        }
+                    }
+                    .agents {
+                        position: relative;
+                        .specialitiesHover {
+                            position: absolute;
+                            left: 50%;
+                            top: -30px;
+                            color: #395B64;
+                            background: #A5C9CA;
+                            padding: 5px;
+                            border-radius: 3px;
+                            display: none;
+                            border: white 1px solid;
+                            font-size: 0.8em;
+                            ul {
+                                margin: 0;
+                            }
                         }
                     }
                 }

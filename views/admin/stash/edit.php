@@ -29,14 +29,24 @@ if (!empty($params)) {
 
     //Validation des modifications et retour à la liste des planques
     if (!empty($_POST)) {
-        $stashsController->updateStash($_POST, $stash->getId_stash());
-        header('location: ' . $router->url('admin_stash') . '?updated=' . $_POST['codenameStash']);
+        $errors = $stashsController->controlsRules($_POST);
+        if (empty($errors)) {
+            $stashsController->updateStash($_POST, $stash->getId_stash());
+            header('location: ' . $router->url('admin_stash') . '?updated=' . $_POST['codenameStash']);
+        } else {
+            $displayErrors = implode('', $errors);
+        }
     }
 } else {
     //Création de la nouvelle planque et retour à la liste des planques
     if (!empty($_POST)) {
-        $newIdStash = $stashsController->createStash($_POST);
-        header('location: ' . $router->url('admin_stash') . '?created=' . $_POST['codenameStash']);
+        $errors = $stashsController->controlsRules($_POST);
+        if (empty($errors)) {
+            $newIdStash = $stashsController->createStash($_POST);
+            header('location: ' . $router->url('admin_stash') . '?created=' . $_POST['codenameStash']);
+        } else {
+            $displayErrors = implode('', $errors);
+        }
     }
 }
 
@@ -48,6 +58,11 @@ if (!empty($params)) {
 </script>
 
 <div class="stashEdit">
+    <?php if (isset($displayErrors)): ?>
+        <ul class="alertMessage">
+            <?= $displayErrors ?>
+        </ul>
+    <?php endif ?>
     <h1 class="stashEditTitle">
         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
@@ -68,7 +83,7 @@ if (!empty($params)) {
                 <input type="text" id="addressStash" name="addressStash" value="<?= !empty($params) ? $stash->getAddress() : '' ?>">
             </div>
             <div class="stashItem">
-                <label for="countryStash"><b>Nationalité: </b></label>
+                <label for="countryStash"><b>Pays: </b></label>
                 <select name="countryStash" id="countryStash" class="filter countryStashSelect">
                     <option value="" class="headerSelect">Sélectionnez un pays</option>
                     <?php foreach($countriesList as $country) : ?>

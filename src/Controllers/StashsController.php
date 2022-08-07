@@ -109,4 +109,28 @@ class StashsController
 
         return $countriesStashs;
     }
+
+    public function controlsRules(array $stashPost): array
+    {
+        $errors = [];
+
+        $stashItems = 
+        [
+            'codenameStash' => 'Le <b>CODE NAME</b> ',
+            'addressStash' => 'L\' <b>ADRESSE</b> ',
+            'countryStash' => 'Le <b>PAYS</b> ',
+            'typeStash' => 'Le <b>TYPE</b> '
+        ];
+
+        // Vérifie si tous les champs sont bien renseignés car tous obligatoires
+        foreach($stashPost as $keyPost => $itemPost) {
+            foreach($stashItems as $key => $item) {
+                if ($itemPost === '' && $keyPost === $key) {
+                    $errors['blank_' . $key] = '<li class="error">' . $item . ' est obligatoire sur la planque</li>';
+                }
+            }
+        }
+
+        return $errors;
+    }
 }

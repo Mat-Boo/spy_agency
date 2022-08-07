@@ -42,11 +42,17 @@ if (!empty($params)) {
 
     //Validation des modifications et retour à la liste des personnes concernées
     if (!empty($_POST)) {
-        $personsController->updatePerson($_POST, $person->getId(), $personItem);
-        if ($personItem === 'agent') {
-            $agentsSpecialitiesController->updateAgentsSpecialities($_POST, $person->getId(), $personItem);
+        var_dump($_POST);
+        $errors = $personsController->controlsRules($_POST, $personItem);
+        if (empty($errors)) {
+            $personsController->updatePerson($_POST, $person->getId(), $personItem);
+            if ($personItem === 'agent') {
+                $agentsSpecialitiesController->updateAgentsSpecialities($_POST, $person->getId(), $personItem);
+            }
+            header('location: ' . $router->url('admin_' . $personItem) . '?updated=' . $_POST['codenamePerson']);
+        } else {
+            $displayErrors = implode('', $errors);
         }
-        header('location: ' . $router->url('admin_' . $personItem) . '?updated=' . $_POST['codenamePerson']);
     }
     //Permet de récupérer la liste des ids des missions affectées aux personnes concernées, sert à la suppression d'une personne
     $missionIds = [];
@@ -58,11 +64,16 @@ if (!empty($params)) {
 } else {
     //Création de la nouvelle personne et retour à la liste des personnes concernées
     if (!empty($_POST)) {
-        $newIdPerson = $personsController->createPerson($_POST, $personItem);
-        if ($personItem === 'agent') {
-            $agentsSpecialitiesController->createAgentSpeciality($_POST);
+        $errors = $personsController->controlsRules($_POST, $personItem);
+        if (empty($errors)) {
+            $newIdPerson = $personsController->createPerson($_POST, $personItem);
+            if ($personItem === 'agent') {
+                $agentsSpecialitiesController->createAgentSpeciality($_POST);
+            }
+            header('location: ' . $router->url('admin_' . $personItem) . '?created=' . $_POST['codenamePerson']);
+        } else {
+            $displayErrors = implode('', $errors);
         }
-        header('location: ' . $router->url('admin_' . $personItem) . '?created=' . $_POST['codenamePerson']);
     }
 }
 
@@ -75,6 +86,11 @@ if (!empty($params)) {
 </script>
 
 <div class="personEdit">
+    <?php if (isset($displayErrors)): ?>
+        <ul class="alertMessage">
+            <?= $displayErrors ?>
+        </ul>
+    <?php endif ?>
     <h1 class="personEditTitle">
         <?php if($personItem === 'agent'): ?>
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 448 512">

@@ -87,7 +87,7 @@ class PersonsController
         } else {
             $routerUrl = true;
             $typeMessage = 'confirm';
-            $message = "Voulez-vous vraiment supprimer ". ($personItem === 'agent' ? 'l\'agent ' : ($personItem === 'contact' ? 'le contact ' : 'la cible ')) . $person->getCode_name() . " ?";
+            $message = "Voulez-vous vraiment supprimer ". ($personItem === 'agent' ? "l\'agent " : ($personItem === 'contact' ? "le contact " : "la cible ")) . $person->getCode_name() . " ?";
         }
         return ['onsubmitMessage' => $typeMessage . "('$message')", 'routerUrl' => $routerUrl];
     }
@@ -116,5 +116,30 @@ class PersonsController
             $nationalitiesPersons[substr($key, 0, -4) . 'Nationalities'] = ${$key};
         }
         return $nationalitiesPersons;
+    }
+    
+    public function controlsRules(array $personPost, string $personItem): array
+    {
+        $errors = [];
+
+        $personItems = 
+        [
+            'codenamePerson' => 'Le <b>CODE NAME</b> ',
+            'firstnamePerson' => 'Le <b>PRÉNOM</b> ',
+            'lastnamePerson' => 'Le <b>NOM</b> ',
+            'birthdatePerson' => 'La <b>DATE DE NAISSANCE</b> ',
+            'nationalityPerson' => 'La <b>NATIONALITÉ</b>'
+        ];
+
+        // Vérifie si tous les champs sont bien renseignés car tous obligatoires
+        foreach($personPost as $keyPost => $itemPost) {
+            foreach($personItems as $key => $item) {
+                if ($itemPost === '' && $keyPost === $key) {
+                    $errors['blank_' . $key] = '<li class="error">' . $item . ' est obligatoire sur la fiche ' . ($personItem === 'target' ? 'Cible' : ucfirst($personItem)) . '</li>';
+                }
+            }
+        }
+
+        return $errors;
     }
 }

@@ -247,6 +247,7 @@ foreach($personsListFiltered as $person) {
                                 Modifier
                             </span>
                         </a>
+                        
                         <form action="<?= $personsController->checkMissionBeforeDelete($person, $personItem, $missionIds)['routerUrl'] ? $router->url('admin_' . $personItem .'_delete', ['id' => $person->getId()]) : $router->url('admin_' . $personItem) ?>" method="POST" class="deleteBtn actionBtn"
                             onsubmit="
                                 return <?= $personsController->checkMissionBeforeDelete($person, $personItem, $missionIds)['onsubmitMessage'] ?>
