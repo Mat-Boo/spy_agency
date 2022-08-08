@@ -117,13 +117,19 @@ nav .logoutBtn {
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
   z-index: 3;
-  display: block;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   background: #A5C9CA;
   border-radius: 5px;
   padding: 10px;
   opacity: 0.8;
   -webkit-transition: left 500ms;
   transition: left 500ms;
+  min-width: 188px;
 }
 
 nav .logoutBtn:hover {
@@ -170,7 +176,6 @@ main {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin: 0 170px;
   min-height: calc(100vh - 287px);
 }
 
@@ -232,11 +237,9 @@ footer p {
   }
   nav .logoutBtn {
     position: static;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
     -webkit-transform: none;
             transform: none;
+    margin-left: 20px;
   }
   .miniMenuBtns {
     display: none;

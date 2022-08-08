@@ -1,8 +1,19 @@
-.logo {
+.logoImg {
   -webkit-box-shadow: 0 0 10px #395B64;
           box-shadow: 0 0 10px #395B64;
   border-radius: 20px;
-  width: 350px;
+  width: 80%;
   margin-bottom: 50px;
+}
+
+p {
+  max-width: 1700px;
+  width: 90%;
+}
+
+@media screen and (min-width: 380px) {
+  .logoImg {
+    width: 350px;
+  }
 }
 /*# sourceMappingURL=style.css.map */

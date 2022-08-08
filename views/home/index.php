@@ -6,7 +6,7 @@ $styleFolder = '../styles/';
 $styleSubFolder = 'home/';
 ?>
 
-<img src="../../assets/spy_agency_logo.png" alt="logo_spyAgency" class="logo">
+<img src="../../assets/spy_agency_logo.png" alt="logo_spyAgency" class="logoImg">
 
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Phasellus faucibus scelerisque eleifend donec pretium vulputate sapien nec sagittis. Ac turpis egestas sed tempus urna et pharetra pharetra. Ultricies tristique nulla aliquet enim. Mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus. Velit euismod in pellentesque massa placerat duis ultricies lacus. Eget aliquet nibh praesent tristique. Vitae congue eu consequat ac felis donec et. At lectus urna duis convallis convallis tellus id interdum velit. Non blandit massa enim nec dui nunc. Lectus mauris ultrices eros in.</p>
 

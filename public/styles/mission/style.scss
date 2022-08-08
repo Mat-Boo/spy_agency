@@ -11,12 +11,12 @@
 }
 .missionTitle {
     text-align: center;
-    font-size: 3em;
+    font-size: 2em;
     color: #395B64;
     margin: 0;
 }
 .newBtn {
-    position: absolute;
+    position: static;
     right: 0;
     text-decoration: none;
     display: flex;
@@ -26,7 +26,7 @@
     cursor: pointer;
     opacity: 0.8;
     background: #A5C9CA;
-    margin-right: 20px;
+    margin-top: 20px;
     font-size: 1.2em;
     &:hover {
         opacity: 1;
@@ -76,7 +76,10 @@
             align-items: center;
             border: none;
             .cancelSvg {
-                margin-right: 5px;
+                margin-right: 0;
+            }
+            span {
+                display: none;
             }
         }
     }
@@ -189,11 +192,12 @@
     text-align: center;
     .mission {
         display: inline-block;
-        text-align:initial ;
-        margin: 20px;
+        text-align: initial ;
+        margin: 20px 0;
         border-radius: 5px;
         padding: 10px 20px;
-        width: 650px;
+        width: 85%;
+        max-width: 650px;
         box-shadow: 0 0 10px #395B64;
         .headerMission {
             display: flex;
@@ -314,8 +318,47 @@
     }
 }
 
+@media screen and (min-width: 450px) {
+    .filtersBox {
+        .headerFilters {
+            .cancelFiltersBtn {
+                .cancelSvg {
+                    margin-right: 5px;
+                }
+                span {
+                    display: inline;
+                }
+            }
+        }
+    }
+}
 
+@media screen and (min-width: 760px) {
+    .missionTitle {
+        font-size: 3em;
+    }
+    .missionsList {
+        .mission {
+         
+        }
+    }
+}
 
+@media screen and (min-width: 1100px) {
+    .newBtn {
+        position: absolute;
+        margin-top: 0;
+        margin-right: 20px;
+    }
+}
+
+@media screen and (min-width: 1385px) {
+    .missionsList {
+        .mission {
+            margin: 20px;
+        }
+    }
+}
 
 
 

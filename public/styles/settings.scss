@@ -83,12 +83,14 @@ nav {
         left: -50%;
         transform: translateX(-50%);
         z-index: 3;
-        display: block;
+        display: flex;
+        justify-content: center;
         background: #A5C9CA;
         border-radius: 5px;
         padding: 10px;
         opacity: 0.8;
         transition: left 500ms;
+        min-width: 188px;
         &:hover {
             opacity: 1;
         }
@@ -109,7 +111,6 @@ nav {
     .miniMenuBtns {
         color: white;
         margin-right: 20px;
-        display: flex;
         .closeMiniMenuBtn {
             display: none;
         }
@@ -121,7 +122,6 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0 170px;
     min-height: calc(100vh - 287px);
     h1 {
         text-align: center;
@@ -173,13 +173,12 @@ footer {
         }
         .logoutBtn {
             position: static;
-            display: flex;
             transform: none;
+            margin-left: 20px;
         }
     }
     .miniMenuBtns {
         display: none;
         margin-right: 0;
     }
-
 }
