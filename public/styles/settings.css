@@ -32,11 +32,21 @@ nav {
 nav .logo {
   text-decoration: none;
   color: white;
+  margin: 0 0 0 20px;
 }
 
-nav .menuList {
+nav .menu {
   position: absolute;
   top: 80px;
+  left: -100vw;
+  height: calc(100vh - 80px);
+  width: 100vw;
+  z-index: 2;
+  -webkit-transition: left 500ms;
+  transition: left 500ms;
+}
+
+nav .menu .menuList {
   background: #395B64;
   list-style: none;
   display: -webkit-box;
@@ -46,26 +56,23 @@ nav .menuList {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  height: calc(100vh - 80px);
-  width: 100vw;
-  z-index: 2;
+  padding: 80px 0 0 0;
   margin: 0;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 0;
-  opacity: 0.9;
   width: 100%;
+  height: 100%;
 }
 
-nav .menuList .navItem {
+nav .menu .menuList .navItem {
   padding: 20px 0;
   border-bottom: 1px solid white;
   width: 75%;
   text-align: center;
 }
 
-nav .menuList .navItem .navLink {
+nav .menu .menuList .navItem .navLink {
   text-decoration: none;
   color: white;
   padding: 15px;
@@ -73,6 +80,11 @@ nav .menuList .navItem .navLink {
 
 nav .loginBtn {
   position: absolute;
+  top: 100px;
+  left: -50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  z-index: 3;
   text-decoration: none;
   background: #A5C9CA;
   color: #395B64;
@@ -86,6 +98,8 @@ nav .loginBtn {
       -ms-flex-align: center;
           align-items: center;
   font-size: 1.2em;
+  -webkit-transition: left 500ms;
+  transition: left 500ms;
 }
 
 nav .loginBtn:hover {
@@ -98,11 +112,18 @@ nav .loginBtn .loginSvg {
 
 nav .logoutBtn {
   position: absolute;
+  top: 100px;
+  left: -50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  z-index: 3;
   display: block;
   background: #A5C9CA;
   border-radius: 5px;
   padding: 10px;
   opacity: 0.8;
+  -webkit-transition: left 500ms;
+  transition: left 500ms;
 }
 
 nav .logoutBtn:hover {
@@ -130,6 +151,7 @@ nav .logoutBtn button .logoutSvg {
 
 nav .miniMenuBtns {
   color: white;
+  margin-right: 20px;
 }
 
 nav .miniMenuBtns .closeMiniMenuBtn {
@@ -172,12 +194,19 @@ footer p {
   color: white;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 1040px) {
   nav {
     padding: 0 20px;
   }
-  nav .menuList {
+  nav .logo {
+    margin-left: 0;
+  }
+  nav .menu {
     position: static;
+    height: auto;
+    width: auto;
+  }
+  nav .menu .menuList {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -186,12 +215,9 @@ footer p {
     -webkit-box-direction: normal;
         -ms-flex-direction: row;
             flex-direction: row;
-    height: auto;
-    width: auto;
-    opacity: 1;
-    width: auto;
+    padding: 0;
   }
-  nav .menuList .navItem {
+  nav .menu .menuList .navItem {
     padding: 0;
     border-bottom: none;
     width: auto;
@@ -201,15 +227,20 @@ footer p {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    -webkit-transform: none;
+            transform: none;
   }
   nav .logoutBtn {
     position: static;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    -webkit-transform: none;
+            transform: none;
   }
   .miniMenuBtns {
     display: none;
+    margin-right: 0;
   }
 }
 /*# sourceMappingURL=settings.css.map */
