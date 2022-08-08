@@ -15,6 +15,8 @@
     flex-direction: column;
     align-items: center;
     position: relative;
+    width: 85%;
+    max-width: 1500px;
     .mission {
         background: #A5C9CA;
         width: 100%;
@@ -51,13 +53,15 @@
         }
         .headerMission {
             display: flex;
+            flex-direction: column;
             justify-content: space-between;
             align-items: center;
             background: #395B64;
             border-radius: 5px;
-            padding: 0 10px;
+            padding: 10px;
             color: white;
             .titleItem {
+                margin-bottom: 10px;
                 label {
                     margin: 0 10px 10px 0;
                 }
@@ -73,13 +77,18 @@
                     border-radius: 3px;
                     display: flex;
                     align-items: center;
-                    width: 150px;
+                    width: 120px;
+                    label {
+                        font-size: 0.8em;
+                    }
                 }
             }
         }
         .infosMission {
             display: flex;
             justify-content: space-around;
+            flex-direction: column;
+            align-items: center;
             margin: 50px 0;
             label {
                 margin: 0 10px 10px 0;
@@ -116,6 +125,8 @@
                 align-self: start;
                 width: 100%;
                 display: flex;
+                flex-direction: column;
+                align-items: center;
                 flex-direction: column;
                 .descriptionItem {
                     width: 100%;
@@ -204,7 +215,10 @@
                     align-items: center;
                 }
                 .actionSvg {
-                    margin-right: 12px;
+                    margin-right: 0;
+                }
+                .textBtn {
+                    display: none;
                 }
             }
             .cancelBtn {
@@ -240,9 +254,12 @@
         span {
             display: flex;
             align-items: center;
+            .textBtn{
+                display: none;
+            }
         }
         .actionSvg {
-            margin-right: 12px;
+            margin-right: 0;
         }
         button {
             cursor: pointer;
@@ -254,9 +271,37 @@
     }
 }
 
+@media screen and (min-width: 435px) {
+    .missionEdit {
+        .mission {
+            .headerMission {
+                .statusMission {
+                    div {
+                        width: 150px;
+                        label {
+                            font-size: 1em
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 
-
+@media screen and (min-width: 765px) {
+    .missionEdit {
+        .mission {
+            .headerMission {
+                padding: 0 10px;
+                flex-direction: row;
+                .titleItem {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+}
 
 
 

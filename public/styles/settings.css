@@ -181,7 +181,7 @@ main {
 
 main h1 {
   text-align: center;
-  font-size: 3em;
+  font-size: 2em;
   color: #395B64;
   margin-top: 0;
   margin-bottom: 50px;
@@ -197,6 +197,12 @@ footer {
 footer p {
   text-align: center;
   color: white;
+}
+
+@media screen and (min-width: 760px) {
+  main h1 {
+    font-size: 3em;
+  }
 }
 
 @media screen and (min-width: 1040px) {

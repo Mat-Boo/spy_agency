@@ -25,6 +25,8 @@
       -ms-flex-align: center;
           align-items: center;
   position: relative;
+  width: 85%;
+  max-width: 1500px;
 }
 
 .missionEdit .mission {
@@ -74,6 +76,10 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
@@ -82,8 +88,12 @@
           align-items: center;
   background: #395B64;
   border-radius: 5px;
-  padding: 0 10px;
+  padding: 10px;
   color: white;
+}
+
+.missionEdit .mission .headerMission .titleItem {
+  margin-bottom: 10px;
 }
 
 .missionEdit .mission .headerMission .titleItem label {
@@ -112,7 +122,11 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  width: 150px;
+  width: 120px;
+}
+
+.missionEdit .mission .headerMission .statusMission div label {
+  font-size: 0.8em;
 }
 
 .missionEdit .mission .infosMission {
@@ -121,6 +135,13 @@
   display: flex;
   -ms-flex-pack: distribute;
       justify-content: space-around;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   margin: 50px 0;
 }
 
@@ -189,6 +210,10 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  flex-direction: column;
 }
 
 .missionEdit .mission .details .detailsInfos .descriptionItem {
@@ -325,7 +350,11 @@
 }
 
 .missionEdit .mission .actionBtns .actionBtn .actionSvg {
-  margin-right: 12px;
+  margin-right: 0;
+}
+
+.missionEdit .mission .actionBtns .actionBtn .textBtn {
+  display: none;
 }
 
 .missionEdit .mission .actionBtns .cancelBtn {
@@ -375,8 +404,12 @@
           align-items: center;
 }
 
+.missionEdit .deleteBtn span .textBtn {
+  display: none;
+}
+
 .missionEdit .deleteBtn .actionSvg {
-  margin-right: 12px;
+  margin-right: 0;
 }
 
 .missionEdit .deleteBtn button {
@@ -385,5 +418,27 @@
   border: none;
   color: white;
   padding: 0;
+}
+
+@media screen and (min-width: 435px) {
+  .missionEdit .mission .headerMission .statusMission div {
+    width: 150px;
+  }
+  .missionEdit .mission .headerMission .statusMission div label {
+    font-size: 1em;
+  }
+}
+
+@media screen and (min-width: 765px) {
+  .missionEdit .mission .headerMission {
+    padding: 0 10px;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+  }
+  .missionEdit .mission .headerMission .titleItem {
+    margin-bottom: 0;
+  }
 }
 /*# sourceMappingURL=editMission_style.css.map */

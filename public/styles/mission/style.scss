@@ -9,12 +9,6 @@
     transition: opacity 1000ms;
     margin-left: 20px;
 }
-.missionTitle {
-    text-align: center;
-    font-size: 2em;
-    color: #395B64;
-    margin: 0;
-}
 .newBtn {
     position: static;
     right: 0;
@@ -329,17 +323,6 @@
                     display: inline;
                 }
             }
-        }
-    }
-}
-
-@media screen and (min-width: 760px) {
-    .missionTitle {
-        font-size: 3em;
-    }
-    .missionsList {
-        .mission {
-         
         }
     }
 }

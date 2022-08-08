@@ -15,10 +15,12 @@
     flex-direction: column;
     align-items: center;
     position: relative;
+    width: 85%;
+    max-width: 1100px;
     .person {
         background: #A5C9CA;
         width: 100%;
-        max-width: 1500px;
+        max-width: 1100px;
         border-radius: 5px;
         padding: 10px 20px;
         box-shadow: 0 0 10px #395B64;
@@ -66,11 +68,17 @@
         .infosPerson {
             display: flex;
             justify-content: space-around;
+            flex-direction: column;
+            align-items: center;
             margin: 50px 0;
-            label {
-                margin: 0 10px 10px 0;
-            }
             .personItem {
+                display: flex;
+                flex-direction: column;
+                margin: 10px 0;
+                width: 300px;
+                label {
+                    margin: 0 10px 10px 0;
+                }
                 display: flex;
                 flex-direction: column;
             }
@@ -102,6 +110,8 @@
                 align-self: start;
                 width: 100%;
                 display: flex;
+                flex-direction: column;
+                align-items: center;
                 justify-content: space-around;
                 .infosItem {
                     margin: 40px 0;
@@ -146,7 +156,10 @@
                     align-items: center;
                 }
                 .actionSvg {
-                    margin-right: 12px;
+                    margin-right: 0;
+                }
+                .textBtn {
+                    display: none;
                 }
             }
             .cancelBtn {
@@ -181,9 +194,12 @@
         span {
             display: flex;
             align-items: center;
+            .textBtn{
+                display: none;
+            }
         }
         .actionSvg {
-            margin-right: 12px;
+            margin-right: 0;
         }
         background: rgb(221, 76, 76);
         button {
@@ -196,7 +212,65 @@
     }
 }
 
+@media screen and (min-width: 570px) {
+    .personEdit {
+        .person {
+            .actionBtns {
+                .actionBtn {
+                    .textBtn {
+                        display: inline;
+                    }
+                    .actionSvg {
+                        margin-right: 12px;
+                    }
+                }
+            }
+            
+        }
+        .deleteBtn {
+            button {
+                span {
+                    .deleteSvg {
+                        margin-right: 12px;
+                    }
+                    .textBtn {
+                        display: inline;
+                    }
+                }
+            }
+        }
+    }
+    
+}
 
+@media screen and (min-width: 920px) {
+    .personEdit {
+        .person {
+            .details {
+                .detailsInfos {
+                    flex-direction: row;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 1105px) {
+    .personEdit {
+        .person {
+            .infosPerson {
+                flex-direction: row;
+                .personItem {
+                    margin: 0;
+                    width: auto;
+                    label {
+
+                    }
+                }
+            }
+        }
+    }
+}
 
 
 
