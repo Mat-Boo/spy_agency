@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Router;
+namespace App;
 
 use AltoRouter;
 use Exception;
@@ -54,17 +54,17 @@ class Router
         $view = $match['target'] ?: 'e404';
         $params = $match['params'];
         $router= $this;
-        /* $isAdmin = strpos($_SERVER['REQUEST_URI'], 'admin') !== false; */
         $isAdmin = strpos($_SERVER['REQUEST_URI'], 'admin') !== false;
-        $layout = $isAdmin ? 'admin/layouts/default' : 'layouts/default';
+        /* $layout = $isAdmin ? 'admin/layouts/default' : 'layouts/default'; */
+        /* $layout = 'layouts/default'; */
         try {
             ob_start();
             require $this->viewPath . DIRECTORY_SEPARATOR . $view . '.php';            
             $content = ob_get_clean();
-            require $this->viewPath . DIRECTORY_SEPARATOR . $layout . '.php';
+            require $this->viewPath . DIRECTORY_SEPARATOR . $this->layout . '.php';
         } catch (Exception $e) {
-            header('Location: ' . $this->url('login') . '?forbidden=1');
-            echo $e->getMessage();
+            /* header('Location: ' . $this->url('login') . '?forbidden=1'); */
+           echo $e->getMessage();
             exit();
         }
         return $this;

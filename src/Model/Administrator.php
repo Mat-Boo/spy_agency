@@ -5,7 +5,7 @@ namespace App\Model;
 class Administrator
 {
     private $id_admin;
-    private $firstanme;
+    private $firstname;
     private $lastname;
     private $email;
     private $password;
@@ -32,21 +32,21 @@ class Administrator
     }
 
     /**
-     * Get the value of firstanme
+     * Get the value of firstname
      */ 
-    public function getFirstanme()
+    public function getFirstname()
     {
-        return $this->firstanme;
+        return $this->firstname;
     }
 
     /**
-     * Set the value of firstanme
+     * Set the value of firstname
      *
      * @return  self
      */ 
-    public function setFirstanme($firstanme)
+    public function setFirstname($firstname)
     {
-        $this->firstanme = $firstanme;
+        $this->firstnaame = $firstname;
 
         return $this;
     }

@@ -24,25 +24,56 @@ nav {
       -ms-flex-align: center;
           align-items: center;
   background-color: #395B64;
-  padding: 10px 20px;
   margin-bottom: 50px;
-  height: 93px;
+  height: 80px;
+  position: relative;
 }
 
-nav .adminMenu {
+nav .logo {
+  text-decoration: none;
+  color: white;
+}
+
+nav .menuList {
+  position: absolute;
+  top: 80px;
+  background: #395B64;
   list-style: none;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: calc(100vh - 80px);
+  width: 100vw;
+  z-index: 2;
+  margin: 0;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0;
+  opacity: 0.9;
+  width: 100%;
 }
 
-nav .navLink {
+nav .menuList .navItem {
+  padding: 20px 0;
+  border-bottom: 1px solid white;
+  width: 75%;
+  text-align: center;
+}
+
+nav .menuList .navItem .navLink {
   text-decoration: none;
   color: white;
   padding: 15px;
 }
 
 nav .loginBtn {
+  position: absolute;
+  text-decoration: none;
   background: #A5C9CA;
   color: #395B64;
   border-radius: 5px;
@@ -66,6 +97,8 @@ nav .loginBtn .loginSvg {
 }
 
 nav .logoutBtn {
+  position: absolute;
+  display: block;
   background: #A5C9CA;
   border-radius: 5px;
   padding: 10px;
@@ -93,6 +126,14 @@ nav .logoutBtn button {
 
 nav .logoutBtn button .logoutSvg {
   margin-right: 10px;
+}
+
+nav .miniMenuBtns {
+  color: white;
+}
+
+nav .miniMenuBtns .closeMiniMenuBtn {
+  display: none;
 }
 
 main {
@@ -129,5 +170,46 @@ footer {
 footer p {
   text-align: center;
   color: white;
+}
+
+@media screen and (min-width: 800px) {
+  nav {
+    padding: 0 20px;
+  }
+  nav .menuList {
+    position: static;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    background: none;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    height: auto;
+    width: auto;
+    opacity: 1;
+    width: auto;
+  }
+  nav .menuList .navItem {
+    padding: 0;
+    border-bottom: none;
+    width: auto;
+  }
+  nav .loginBtn {
+    position: static;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  nav .logoutBtn {
+    position: static;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .miniMenuBtns {
+    display: none;
+  }
 }
 /*# sourceMappingURL=settings.css.map */

@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Connection;
 use App\model\Stashs;
 use App\model\Stash;
+use Exception;
+use PDOException;
 
 class StashsController
 {
