@@ -28,31 +28,31 @@ class ManageJsController
             break;
             case 'admin_agent':
                 $jsScripts[] = '..\scripts\miniMenu.js';
-                $jsScripts[] = '..\scripts\filters.js';
+                $jsScripts[] = '..\scripts\filtersPerson.js';
                 $jsScripts[] = '..\scripts\detailsItem.js';
                 $jsScripts[] = '..\scripts\confirmMessage.js';
             break;
             case 'admin_contact':
                 $jsScripts[] = '..\scripts\miniMenu.js';
-                $jsScripts[] = '..\scripts\filters.js';
+                $jsScripts[] = '..\scripts\filtersPerson.js';
                 $jsScripts[] = '..\scripts\detailsItem.js';
                 $jsScripts[] = '..\scripts\confirmMessage.js';
             break;
             case 'admin_target':
                 $jsScripts[] = '..\scripts\miniMenu.js';
-                $jsScripts[] = '..\scripts\filters.js';
+                $jsScripts[] = '..\scripts\filtersPerson.js';
                 $jsScripts[] = '..\scripts\detailsItem.js';
                 $jsScripts[] = '..\scripts\confirmMessage.js';
             break;
             case 'admin_stash':
                 $jsScripts[] = '..\scripts\miniMenu.js';
-                $jsScripts[] = '..\scripts\filters.js';
+                $jsScripts[] = '..\scripts\filtersStash.js';
                 $jsScripts[] = '..\scripts\detailsItem.js';
                 $jsScripts[] = '..\scripts\confirmMessage.js';
             break;
             case 'admin_speciality':
                 $jsScripts[] = '..\scripts\miniMenu.js';
-                $jsScripts[] = '..\scripts\filters.js';
+                $jsScripts[] = '..\scripts\filtersSpeciality.js';
                 $jsScripts[] = '..\scripts\detailsItem.js';
                 $jsScripts[] = '..\scripts\confirmMessage.js';
             break;

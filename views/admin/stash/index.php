@@ -45,17 +45,17 @@ $missionsStashsController->hydrateStashs($stashsListFiltered, $missionsList);
         <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
     </svg>
     Administration / Planques
+    <?php if($isAdmin): ?>
+        <button type="button" class="newBtn actionBtn">
+            <a href="<?= $router->url('admin_stash_new') ?>">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="newSvg" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+                </svg>
+                <span>Nouveau</span>
+            </a>
+        </button>
+    <?php endif ?>
 </h1>
-<?php if($isAdmin): ?>
-    <button type="button" class="newBtn actionBtn">
-        <a href="<?= $router->url('admin_stash_new') ?>">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="newSvg" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
-        </svg>
-            Nouveau
-        </a>
-    </button>
-<?php endif ?>
 <form action="" method="GET" class="filtersBox">
     <div class="headerFilters">
         <div class="filtersTitle">
@@ -76,10 +76,10 @@ $missionsStashsController->hydrateStashs($stashsListFiltered, $missionsList);
     </div>
     <div class="filtersAndApplyBtn">
         <div class="filters">
-            <div class="filtersItemAndTitle">
+            <div class="filtersItemAndTitle planque">
                 <span class="filtersBlockTitle">Planque</span>
                 <div class="filtersItem">
-                    <div class="stashsFilterColumn">
+                    <div class="inputItems">
                         <div class="labelAndFilter">
                             <label for="codenameStashFilter" class="filterTitle">Code Name</label>
                             <input type="text" id="codenameStashFilter" name="codenameStashFilter" class="filter" value="<?= isset($_GET['codenameStashFilter']) ? $_GET['codenameStashFilter'] : '' ?>">
@@ -105,30 +105,28 @@ $missionsStashsController->hydrateStashs($stashsListFiltered, $missionsList);
                             </select>
                         </div>
                     </div>
-                    <div class="stashsFilterColumn">
-                        <div class='labelAndFilter'>
-                            <label for="typeStashFilter" class="filterTitle">Type</label>
-                            <select name="typeStashFilter[]" id="typeStashFilter" multiple class="filter typeStashFilter">
-                                <option value="" class="headerSelect">Sélectionnez un ou plusieurs type(s)</option>
-                                <?php foreach($stashsController->getTypes() as $stash) : ?>
-                                    <option
-                                        value="<?= $stash  ?>"
-                                        <?php if (isset($_GET['typeStashFilter'])): ?>
-                                            <?php if (in_array($stash, $_GET['typeStashFilter'])): ?>
-                                                selected
-                                            <?php endif ?>
+                    <div class='labelAndFilter labelAndFilterType'>
+                        <label for="typeStashFilter" class="filterTitle">Type</label>
+                        <select name="typeStashFilter[]" id="typeStashFilter" multiple class="filter typeStashFilter">
+                            <option value="" class="headerSelect">Sélectionnez un ou plusieurs type(s)</option>
+                            <?php foreach($stashsController->getTypes() as $stash) : ?>
+                                <option
+                                    value="<?= $stash  ?>"
+                                    <?php if (isset($_GET['typeStashFilter'])): ?>
+                                        <?php if (in_array($stash, $_GET['typeStashFilter'])): ?>
+                                            selected
                                         <?php endif ?>
-                                    ><?= $stash  ?></option>
-                                <?php endforeach ?>
-                            </select>
-                        </div>
+                                    <?php endif ?>
+                                ><?= $stash  ?></option>
+                            <?php endforeach ?>
+                        </select>
                     </div>
                 </div>
             </div>
-            <div class="filtersItemAndTitle">
+            <div class="filtersItemAndTitle mission">
                 <span class="filtersBlockTitle">Mission</span>
                 <div class="filtersItem">
-                    <div class="stashsFilterColumn">
+                    <div class="stashsFilterLine">
                         <div class="labelAndFilter">
                             <label for="missionsFilter" class="filterTitle">Code Name</label>
                             <select name="missionsFilter[]" id="missionsFilter" multiple class="filter missionFilter">

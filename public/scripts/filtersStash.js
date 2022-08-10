@@ -9,34 +9,18 @@ let applyFiltersBtn = document.querySelector('.applyFiltersBtn');
 let filtersForm = document.querySelectorAll('.filter');
 let timeTransition = 500;
 let heightFilters = 0;
-let heightFiltersSup = 0;
-let filtersSupOpened = false;
-
-let morefiltersBtn = document.querySelector('.morefiltersBtn');
-let filtersSup = document.querySelector('.filtersSup');
-let chevronDownMoreFilters = document.querySelector('.chevronDownMoreFilters');
 
 let margins = 20;
 let heightHeaderFilters = 68;
-let heightMoreFiltersBtn = 42;
 let heightApplyFiltersBtn = 64;
 
 //Hauteur des filtres selon la taille de l'écran
-if (window.matchMedia("(min-width: 1255px)").matches) {
-    heightFilters = 330;
-    heightFiltersSup = 203;
-} else if (window.matchMedia("(min-width: 865px)").matches) {
-    heightFilters = 330;
-    heightFiltersSup = 420;
-} else if (window.matchMedia("(min-width: 700px)").matches) {
-    heightFilters = 470;
-    heightFiltersSup = 420;
-} else if (window.matchMedia("(min-width: 334px)").matches) {
-    heightFilters = 730;
-    heightFiltersSup = 870;
+if (window.matchMedia("(min-width: 1050px)").matches) {
+    heightFilters = 240;
+} else if (window.matchMedia("(min-width: 704px)").matches) {
+    heightFilters = 440;
 } else if (window.matchMedia("(min-width: 0)").matches) {
-    heightFilters = 810;
-    heightFiltersSup = 840;
+    heightFilters = 580;
 }
 
 //Ouverture et fermeture des 1ers filtres
@@ -47,7 +31,7 @@ openFilters = () => {
     headerFilters.style.marginLeft= 0;
     filtersBox.style.width = '90%';
     setTimeout(() => {
-        filtersAndApplyBtn.style.height = heightFilters + margins + heightMoreFiltersBtn + heightApplyFiltersBtn + 'px';
+        filtersAndApplyBtn.style.height = heightFilters + margins + heightApplyFiltersBtn + 'px';
         chevronDownFilters.style.transform = 'rotate(-180deg)';
         cancelFiltersBtn.style.display = 'flex';
     }, timeTransition);
@@ -59,8 +43,6 @@ closeFilters = () => {
     filtersAndApplyBtn.style.transition = 'height ' + timeTransition + 'ms';
     chevronDownFilters.style.transition = 'transform ' + timeTransition + 'ms';
     filtersAndApplyBtn.style.height = 0;
-    filtersSup.style.height = 0;
-    chevronDownMoreFilters.style.transform = 'rotate(0)';
     filtersSupOpened = false;
     setTimeout(() => {
         cancelFiltersBtn.style.display = 'none';
@@ -76,33 +58,6 @@ filtersTitle.addEventListener('click', () => {
         openFilters();
     } else {
         closeFilters();
-    }
-})
-
-//Ouverture et fermeture des filtres supplémentaires
-openMoreFilters = () => {
-    filtersSup.style.transition = 'height ' + timeTransition + 'ms';
-    chevronDownFilters.style.transition = 'transform ' + timeTransition + 'ms';
-    filtersAndApplyBtn.style.height = heightFilters + margins + heightMoreFiltersBtn + heightApplyFiltersBtn + heightFiltersSup + 'px';
-    filtersSup.style.height = heightFiltersSup + 'px';
-    chevronDownMoreFilters.style.transform = 'rotate(-180deg)';
-    filtersSupOpened = true;
-}
-
-closeMoreFilters = () => {
-    filtersSup.style.transition = 'height ' + timeTransition + 'ms';
-    chevronDownMoreFilters.style.transition = 'transform ' + timeTransition + 'ms';
-    filtersSup.style.height = 0;
-    filtersAndApplyBtn.style.height = heightFilters + margins + heightMoreFiltersBtn + heightApplyFiltersBtn + 'px';
-    chevronDownMoreFilters.style.transform = 'rotate(0)';
-    filtersSupOpened = false;
-}
-
-morefiltersBtn.addEventListener('click', () => {
-    if (!filtersSupOpened) {
-        openMoreFilters();
-    } else {
-        closeMoreFilters();
     }
 })
 

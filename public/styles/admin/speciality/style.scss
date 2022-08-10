@@ -9,43 +9,55 @@
     transition: opacity 1000ms;
     margin-left: 20px;
 }
-.newBtn {
-    position: absolute;
-    right: 0;
-    text-decoration: none;
-    display: flex;
-    border: 1px solid #395B64;
-    padding: 9px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    opacity: 0.8;
-    background: #A5C9CA;
-    margin-right: 20px;
-    font-size: 1.2em;
-    &:hover {
-        opacity: 1;
-    }
-    .newSvg {
-        margin-right: 12px;
-    }
-    a {
-        color: #395B64;
+.specialityTitle {
+    position: relative;
+    .newBtn {
+        position: absolute;
+        bottom: -60px;
+        left: 50%;
+        transform: translateX(-50%);
         text-decoration: none;
+        border: 1px solid #395B64;
+        padding: 9px 12px;
+        border-radius: 5px;
+        cursor: pointer;
+        opacity: 0.8;
+        background: #A5C9CA;
+        width: 130px;
+        &:hover {
+            opacity: 1;
+        }
+        a {
+            display: flex;
+            align-items: center;
+            color: #395B64;
+            text-decoration: none;
+            font-size: 1.2em;
+            .newSvg {
+                margin-right: 12px;
+            }
+        }
     }
 }
 .filtersBox {
     box-shadow: 0 0 10px #395B64;
-    margin: 0 50px;
-    padding: 5px 20px;
+    margin: 50px 0 0 0;
+    padding: 5px 10px;
     border-radius: 5px;
     background: #A5C9CA;
-    width: 125px;
+    max-width: 1200px;
+    width: 150px;
     transition: width 500ms;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     .headerFilters {
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 5px;
+        width: 95%;
+        margin-left: 35px;
         .filtersTitle {
             cursor: pointer;
             display: flex;
@@ -70,7 +82,10 @@
             align-items: center;
             border: none;
             .cancelSvg {
-                margin-right: 5px;
+                margin-right: 0;
+            }
+            span {
+                display: none;
             }
         }
     }
@@ -81,53 +96,61 @@
         height: 0;
         overflow: hidden;
         transition: height 500ms;
+        width: 95%;
+        select {
+            option {
+                font-size: 0.9em;
+            }
+        }
         .filters {
             display: flex;
-            justify-content: space-between;
-            align-items: start;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
             .filtersItemAndTitle {
                 display: flex;
                 flex-direction: column;
-                justify-content: space-between;
+                justify-content: center;
                 align-items: center;
                 background: #E7F6F2;
-                margin: 20px;
+                margin: 10px;
                 padding: 10px;
                 border-radius: 5px;
-
+                width: 95%;
                 .filtersBlockTitle {
                     font-size: 1.3em;
                     color: #395B64;
                 }
                 .filtersItem {
                     display: flex;
+                    flex-direction: column;
                     justify-content: center;
-                    flex-wrap: wrap;
-                    .specialitiesFilterColumn {
+                    align-items: center;
+                    width: 100%;
+                    .labelAndFilter {
                         display: flex;
                         flex-direction: column;
-                        justify-content: space-between;
-                        .labelAndFilter {
-                            display: flex;
-                            flex-direction: column;
-                            margin: 15px 25px;
-                            .filterTitle {
-                                margin-bottom: 5px;
-                                color: #395B64;
-                            }
-                            input {
+                        margin-bottom: 10px;
+                        width: 100%;
+                        max-width: 300px;
+                        .filterTitle {
+                            margin-bottom: 5px;
+                            color: #395B64;
+                        }
+                        input {
+                            padding: 5px 10px;
+                        }
+                        select {
+                            
+                            option {
                                 padding: 5px 10px;
                             }
-                            select {
-                                height: 230px;
-                                option {
-                                    padding: 5px 10px;
-                                }
-                                .headerSelect {
-                                    padding: 5px 10px;
-                                    background:#A5C9CA ;
-                                    color:#395B64 ;
-                                }
+                            .headerSelect {
+                                padding: 5px 10px;
+                                background:#A5C9CA ;
+                                color:#395B64 ;
                             }
                         }
                     }
@@ -160,10 +183,11 @@
     .speciality {
         display: inline-block;
         text-align:initial ;
-        margin: 20px;
+        margin: 20px 0;
         border-radius: 5px;
         padding: 10px 20px;
-        width: 650px;
+        width: 85%;
+        max-width: 650px;
         box-shadow: 0 0 10px #395B64;
         background: #A5C9CA;
         .headerSpeciality {
@@ -281,6 +305,55 @@
                     }
                 }
             }
+        }
+    }
+}
+
+@media screen and (min-width: 560px) {
+    .filtersBox {
+        .headerFilters {
+            .cancelFiltersBtn {
+                .cancelSvg {
+                    margin-right: 5px;
+                }
+                span {
+                    display: inline;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 968px) {
+    .filtersBox {
+        .filtersAndApplyBtn {
+            .filters {
+                flex-wrap: nowrap;
+                .filtersItemAndTitle {
+                    
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 1100px) {
+    .specialityTitle {
+        .newBtn {
+            left: 122%;
+            bottom: 50%;
+            transform: translate(-50%, 50%);
+        }
+    }
+    .filtersBox {
+        margin: 0 50px;
+    }
+}
+
+@media screen and (min-width: 1385px) {
+    .specialitiesList {
+        .speciality {
+            margin: 20px;
         }
     }
 }

@@ -54,8 +54,8 @@
 .filtersBox {
   -webkit-box-shadow: 0 0 10px #395B64;
           box-shadow: 0 0 10px #395B64;
-  margin: 50px 0 0 0;
-  padding: 5px 0;
+  margin: 50px 50px 0 50px;
+  padding: 5px 10px;
   border-radius: 5px;
   background: #A5C9CA;
   max-width: 1200px;
@@ -149,7 +149,7 @@
   overflow: hidden;
   -webkit-transition: height 500ms;
   transition: height 500ms;
-  width: 95%;
+  width: 100%;
 }
 
 .filtersBox .filtersAndApplyBtn select option {
@@ -188,7 +188,8 @@
       -ms-flex-align: center;
           align-items: center;
   background: #E7F6F2;
-  margin: 10px 0;
+  margin: 10px;
+  padding: 10px;
   border-radius: 5px;
   width: 100%;
 }
@@ -196,6 +197,7 @@
 .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersBlockTitle {
   font-size: 1.3em;
   color: #395B64;
+  margin-bottom: 10px;
 }
 
 .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem {
@@ -324,6 +326,7 @@
       -ms-flex-align: center;
           align-items: center;
   margin: 10px 0;
+  cursor: pointer;
 }
 
 .filtersBox .filtersAndApplyBtn .filters .morefiltersBtn .moreFiltersSvg {
@@ -627,7 +630,7 @@
   }
 }
 
-@media screen and (min-width: 863px) {
+@media screen and (min-width: 865px) {
   .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .missionsFiltersLine .countryAndDates {
     margin-left: 50px;
   }

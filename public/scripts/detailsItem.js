@@ -6,7 +6,7 @@ let missionOpened = [];
 for (let i = 0 ; i < detailsBtn.length ; i++) {
     detailsBtn[i].addEventListener('click', (e) => {
         if (!missionOpened[i]) {
-            detailsBtn[i].parentNode.style.width = '610px';
+            detailsBtn[i].parentNode.style.width = 'calc(100% - 40px)';
             let heightDetails = 0;
             setTimeout(() => {
                 for (let child of detailsInfos[i].children) {

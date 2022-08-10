@@ -9,43 +9,55 @@
     transition: opacity 1000ms;
     margin-left: 20px;
 }
-.newBtn {
-    position: absolute;
-    right: 0;
-    text-decoration: none;
-    display: flex;
-    border: 1px solid #395B64;
-    padding: 9px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    opacity: 0.8;
-    background: #A5C9CA;
-    margin-right: 20px;
-    font-size: 1.2em;
-    &:hover {
-        opacity: 1;
-    }
-    .newSvg {
-        margin-right: 12px;
-    }
-    a {
-        color: #395B64;
+.stashTitle {
+    position: relative;
+    .newBtn {
+        position: absolute;
+        bottom: -60px;
+        left: 50%;
+        transform: translateX(-50%);
         text-decoration: none;
+        border: 1px solid #395B64;
+        padding: 9px 12px;
+        border-radius: 5px;
+        cursor: pointer;
+        opacity: 0.8;
+        background: #A5C9CA;
+        width: 130px;
+        &:hover {
+            opacity: 1;
+        }
+        a {
+            display: flex;
+            align-items: center;
+            color: #395B64;
+            text-decoration: none;
+            font-size: 1.2em;
+            .newSvg {
+                margin-right: 12px;
+            }
+        }
     }
 }
 .filtersBox {
-box-shadow: 0 0 10px #395B64;
-margin: 0 50px;
-padding: 5px 20px;
-border-radius: 5px;
-background: #A5C9CA;
-width: 125px;
-transition: width 500ms;
+    box-shadow: 0 0 10px #395B64;
+    margin: 50px 50px 0 50px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: #A5C9CA;
+    max-width: 1200px;
+    width: 150px;
+    transition: width 500ms;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     .headerFilters {
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 5px;
+        width: 95%;
+        margin-left: 35px;
         .filtersTitle {
             cursor: pointer;
             display: flex;
@@ -70,7 +82,10 @@ transition: width 500ms;
             align-items: center;
             border: none;
             .cancelSvg {
-                margin-right: 5px;
+                margin-right: 0;
+            }
+            span {
+                display: none;
             }
         }
     }
@@ -81,59 +96,71 @@ transition: width 500ms;
         height: 0;
         overflow: hidden;
         transition: height 500ms;
+        width: 95%;
+        select {
+            option {
+                font-size: 0.9em;
+            }
+        }
         .filters {
             display: flex;
-            justify-content: space-between;
-            align-items: start;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
             .filtersItemAndTitle {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
                 align-items: center;
                 background: #E7F6F2;
-                margin: 20px;
+                margin: 10px;
                 padding: 10px;
                 border-radius: 5px;
-
+                width: 95%;
                 .filtersBlockTitle {
                     font-size: 1.3em;
                     color: #395B64;
                 }
                 .filtersItem {
                     display: flex;
+                    flex-direction: row;
                     justify-content: center;
                     flex-wrap: wrap;
-                    .stashsFilterColumn {
+                    width: 100%;
+                    .labelAndFilter {
+                        display: flex;
+                        flex-direction: column;
+                        margin-bottom: 10px;
+                        width: 100%;
+                        max-width: 300px;
+                        .filterTitle {
+                            margin-bottom: 5px;
+                            color: #395B64;
+                        }
+                        input {
+                            padding: 5px 10px;
+                        }
+                        select {
+                            padding: 5px 10px;
+                            option {
+                                padding: 5px 10px;
+                            }
+                            .headerSelect {
+                                padding: 5px 10px;
+                                background:#A5C9CA ;
+                                color:#395B64 ;
+                            }
+                        }
+                        .typeStashFilter, .missionFilter {
+                            padding: 0;
+                        }
+                    }
+                    .inputItems {
                         display: flex;
                         flex-direction: column;
                         justify-content: space-between;
-                        .labelAndFilter {
-                            display: flex;
-                            flex-direction: column;
-                            margin: 15px 25px;
-                            .filterTitle {
-                                margin-bottom: 5px;
-                                color: #395B64;
-                            }
-                            input {
-                                padding: 5px 10px;
-                            }
-                            select {
-                                padding: 5px 10px;
-                                option {
-                                    padding: 5px 10px;
-                                }
-                                .headerSelect {
-                                    padding: 5px 10px;
-                                    background:#A5C9CA ;
-                                    color:#395B64 ;
-                                }
-                            }
-                            .typeStashFilter, .missionFilter {
-                                padding: 0;
-                                height: 230px;
-                            }
-                        }
                     }
                 }
             }
@@ -156,18 +183,20 @@ transition: width 500ms;
     }
 }
 .stashsList {
-margin: 0;
-list-style: none;
-padding: 50px 0;
-margin: 0;
-text-align: center;
+    margin: 0;
+    list-style: none;
+    padding: 50px 0;
+    margin: 0;
+    text-align: center;
+    width: 95%;
     .stash {
         display: inline-block;
         text-align:initial ;
-        margin: 20px;
+        margin: 20px 0;
         border-radius: 5px;
         padding: 10px 20px;
-        width: 650px;
+        width: 85%;
+        max-width: 650px;
         box-shadow: 0 0 10px #395B64;
         background: #A5C9CA;
         .headerStash {
@@ -285,6 +314,87 @@ text-align: center;
                     }
                 }
             }
+        }
+    }
+}
+
+@media screen and (min-width: 560px) {
+    .filtersBox {
+        .headerFilters {
+            .cancelFiltersBtn {
+                .cancelSvg {
+                    margin-right: 5px;
+                }
+                span {
+                    display: inline;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 683px) {
+    .filtersBox {
+        .filtersAndApplyBtn {
+            .filters {
+                .filtersItemAndTitle {
+                    .filtersItem {
+                        justify-content: space-around;
+                        .inputItems {
+                            margin-right: 10px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 1050px) {
+    .filtersBox {
+        .filtersAndApplyBtn {
+            .filters {
+                justify-content: space-around;
+                .filtersItemAndTitle {
+                    width: auto;
+                    height: 85%;
+                    .filtersItem {
+                        flex-wrap: nowrap;
+                        .labelAndFilter {
+                            .typeStashFilter, .missionFilter {
+                                height: 162px;
+                            }
+                        }
+                    }
+                }
+                .planque {
+                    width: 60%;
+                }
+                .mission {
+                    width: 30%;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 1100px) {
+    .stashTitle {
+        .newBtn {
+            left: 122%;
+            bottom: 50%;
+            transform: translate(-50%, 50%);
+        }
+    }
+    .filtersBox {
+        margin: 0 50px;
+    }
+}
+
+@media screen and (min-width: 1385px) {
+    .stashsList {
+        .stash {
+            margin: 20px;
         }
     }
 }
