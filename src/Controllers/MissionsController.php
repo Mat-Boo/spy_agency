@@ -169,7 +169,7 @@ class MissionsController
         $analyzedStashs = [];
         $nbAgentsWithMissionSpeciality = 0;
 
-        //Récupération des informations des items extérieurs de la mission pour pouvoir créer les règles métier
+        //Récupération des informations des items extérieurs de la mission pour pouvoir créer les règles métier et vérifie si bien renseigné car obligatoire sauf pour les planques
         if (isset($missionPost['agentMission'])) {
             foreach($missionPost['agentMission'] as $agentIdPost) {
                 foreach($personsLists['agentsList'] as $agent) {
@@ -214,8 +214,6 @@ class MissionsController
                     }
                 }
             }
-        } else {
-            $errors['blank_stashMission'] = '<li class="error">La mission doit comporter au minimum une <b>PLANQUE</b></li>';
         }
         //
 

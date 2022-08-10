@@ -119,6 +119,9 @@
                     flex-direction: column;
                     select {
                         height: 240px;
+                        option {
+                            font-size: 0.9em;
+                        }
                     }
                     .textMissions {
                         font-size: 0.65em;
@@ -240,7 +243,6 @@
             }
         }
     }
-    
 }
 
 @media screen and (min-width: 920px) {
@@ -263,9 +265,6 @@
                 .personItem {
                     margin: 0;
                     width: auto;
-                    label {
-
-                    }
                 }
             }
         }

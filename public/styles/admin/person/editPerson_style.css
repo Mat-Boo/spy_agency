@@ -1,4 +1,5 @@
 .alertMessage {
+  text-align: center;
   color: #630707;
   padding: 10px 40px 0 40px;
   background: #d48c8c;
@@ -197,6 +198,10 @@
 
 .personEdit .person .details .detailsInfos .infosItem select {
   height: 240px;
+}
+
+.personEdit .person .details .detailsInfos .infosItem select option {
+  font-size: 0.9em;
 }
 
 .personEdit .person .details .detailsInfos .infosItem .textMissions {

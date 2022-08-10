@@ -1,5 +1,5 @@
 .confirmMessage {
-    position: absolute;
+    position: static;
     left: 0;
     color: rgb(7, 99, 60);
     padding: 10px 40px;
@@ -285,14 +285,8 @@
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
+@media screen and (min-width: 1520px) {
+    .confirmMessage {
+        position: absolute;
+    }
+}

@@ -118,41 +118,45 @@ if (!empty($params)) {
             </div>
         </div>
         <div class="infosMission">
-            <div class="missionItem">
-                <label for="codeNameMission"><b>Code Name:</b></label>
-                <input type="text" id="codeNameMission" name="codeNameMission" value="<?= isset($_POST['codeNameMission']) ? $_POST['codeNameMission'] : (!empty($params) ? $mission->getCode_name() : '') ?>">
-            </div>
-            <div class="missionItem">
-                <label for="countryMission"><b>Pays: </b></label>
-                <select name="countryMission" id="countryMission" class="filter countryMissionSelect">
-                    <option value="" class="headerSelect">Sélectionnez un pays</option>
-                    <?php foreach($countriesList as $country) : ?>
-                        <option
-                            value="<?= $country['country'] ?>"
-                            <?php if (isset($_POST['countryMission'])): ?>
-                                <?php if ($country['country'] === $_POST['countryMission']): ?>
-                                    selected
+            <div class="codenameCountryType">
+                <div class="missionItem">
+                    <label for="codeNameMission"><b>Code Name:</b></label>
+                    <input type="text" id="codeNameMission" name="codeNameMission" value="<?= isset($_POST['codeNameMission']) ? $_POST['codeNameMission'] : (!empty($params) ? $mission->getCode_name() : '') ?>">
+                </div>
+                <div class="missionItem">
+                    <label for="countryMission"><b>Pays: </b></label>
+                    <select name="countryMission" id="countryMission" class="filter countryMissionSelect">
+                        <option value="" class="headerSelect">Sélectionnez un pays</option>
+                        <?php foreach($countriesList as $country) : ?>
+                            <option
+                                value="<?= $country['country'] ?>"
+                                <?php if (isset($_POST['countryMission'])): ?>
+                                    <?php if ($country['country'] === $_POST['countryMission']): ?>
+                                        selected
+                                    <?php endif ?>
+                                <?php elseif (!empty($params)): ?>
+                                    <?php if ($country['country'] === $mission->getCountry()): ?>
+                                        selected
+                                    <?php endif ?>
                                 <?php endif ?>
-                            <?php elseif (!empty($params)): ?>
-                                <?php if ($country['country'] === $mission->getCountry()): ?>
-                                    selected
-                                <?php endif ?>
-                            <?php endif ?>
-                        ><?= $country['country'] ?></option>
-                    <?php endforeach ?>
-                </select>
+                            ><?= $country['country'] ?></option>
+                        <?php endforeach ?>
+                    </select>
+                </div>
+                <div class="missionItem">
+                    <label for="typeMission"><b>Type: </b></label>
+                    <input type="text" id="typeMission" name="typeMission" value="<?= isset($_POST['typeMission']) ? $_POST['typeMission'] : (!empty($params) ? $mission->getType() : '') ?>">
+                </div>
             </div>
-            <div class="missionItem">
-                <label for="typeMission"><b>Type: </b></label>
-                <input type="text" id="typeMission" name="typeMission" value="<?= isset($_POST['typeMission']) ? $_POST['typeMission'] : (!empty($params) ? $mission->getType() : '') ?>">
-            </div>
-            <div class="missionItem">
-                <label for="startDateMission"><b>Date de début: </b></label>
-                <input type="date" id="startDateMission" name="startDateMission" value="<?= isset($_POST['startDateMission']) ? $_POST['startDateMission'] : (!empty($params) ? $mission->getStart_date() : '') ?>">
-            </div>
-            <div class="missionItem">
-                <label for="endDateMission"><b>Date de fin: </b></label>
-                <input type="date" id="endDateMission" name="endDateMission" value="<?= isset($_POST['endDateMission']) ? $_POST['endDateMission'] : (!empty($params) ? $mission->getEnd_date() : '') ?>">
+            <div class="dates">
+                <div class="missionItem">
+                    <label for="startDateMission"><b>Date de début: </b></label>
+                    <input type="date" id="startDateMission" name="startDateMission" value="<?= isset($_POST['startDateMission']) ? $_POST['startDateMission'] : (!empty($params) ? $mission->getStart_date() : '') ?>">
+                </div>
+                <div class="missionItem">
+                    <label for="endDateMission"><b>Date de fin: </b></label>
+                    <input type="date" id="endDateMission" name="endDateMission" value="<?= isset($_POST['endDateMission']) ? $_POST['endDateMission'] : (!empty($params) ? $mission->getEnd_date() : '') ?>">
+                </div>
             </div>
         </div>
         <div class="details">

@@ -145,10 +145,6 @@
   margin: 50px 0;
 }
 
-.missionEdit .mission .infosMission label {
-  margin: 0 10px 10px 0;
-}
-
 .missionEdit .mission .infosMission .missionItem {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -157,6 +153,12 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  margin: 10px 0;
+  width: 300px;
+}
+
+.missionEdit .mission .infosMission .missionItem label {
+  margin: 0 10px 10px 0;
 }
 
 .missionEdit .mission .details {
@@ -236,16 +238,17 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  width: 100%;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   margin: 30px 0;
 }
 
 .missionEdit .mission .details .detailsInfos .InfosItems .infosItem {
-  margin: 10px 0;
+  margin: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -267,6 +270,10 @@
 
 .missionEdit .mission .details .detailsInfos .InfosItems .infosItem select {
   height: 200px;
+}
+
+.missionEdit .mission .details .detailsInfos .InfosItems .infosItem select option {
+  font-size: 0.9em;
 }
 
 .missionEdit .mission .details .detailsInfos .InfosItems .agents {
@@ -292,15 +299,13 @@
 
 .missionEdit .mission .details .detailsInfos .specialityItem {
   margin-bottom: 30px;
-}
-
-.missionEdit .mission .details .detailsInfos .specialityItem label {
-  margin-right: 10px;
+  text-align: center;
 }
 
 .missionEdit .mission .details .detailsInfos .specialityItem select {
   padding: 5px 10px;
-  font-size: 1rem;
+  margin: 10px 0;
+  font-size: 0.9em;
   width: 250px;
 }
 
@@ -429,6 +434,27 @@
   }
 }
 
+@media screen and (min-width: 510px) {
+  .missionEdit .mission .details .detailsInfos .infosItems .infosItem select option {
+    font-size: 2em;
+  }
+}
+
+@media screen and (min-width: 570px) {
+  .missionEdit .mission .actionBtns .actionBtn .textBtn {
+    display: inline;
+  }
+  .missionEdit .mission .actionBtns .actionBtn .actionSvg {
+    margin-right: 12px;
+  }
+  .missionEdit .deleteBtn button span .deleteSvg {
+    margin-right: 12px;
+  }
+  .missionEdit .deleteBtn button span .textBtn {
+    display: inline;
+  }
+}
+
 @media screen and (min-width: 765px) {
   .missionEdit .mission .headerMission {
     padding: 0 10px;
@@ -439,6 +465,54 @@
   }
   .missionEdit .mission .headerMission .titleItem {
     margin-bottom: 0;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .missionEdit .mission .infosMission {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+  }
+  .missionEdit .mission .infosMission .codenameCountryType, .missionEdit .mission .infosMission .dates {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .missionEdit .mission .infosMission .missionItem {
+    width: auto;
+  }
+}
+
+@media screen and (min-width: 1375px) {
+  .missionEdit .mission .infosMission {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .missionEdit .mission .infosMission .codenameCountryType, .missionEdit .mission .infosMission .dates {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+  }
+  .missionEdit .mission .infosMission .missionItem {
+    margin: 0 10px;
+    width: auto;
   }
 }
 /*# sourceMappingURL=editMission_style.css.map */

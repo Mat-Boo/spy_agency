@@ -1,5 +1,5 @@
 .confirmMessage {
-  position: absolute;
+  position: static;
   left: 0;
   color: #07633c;
   padding: 10px 40px;
@@ -11,46 +11,67 @@
   margin-left: 20px;
 }
 
-.newBtn {
-  position: static;
-  right: 0;
+.missionTitle {
+  position: relative;
+}
+
+.missionTitle .newBtn {
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
   text-decoration: none;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
   border: 1px solid #395B64;
   padding: 9px 12px;
   border-radius: 5px;
   cursor: pointer;
   opacity: 0.8;
   background: #A5C9CA;
-  margin-top: 20px;
-  font-size: 1.2em;
+  width: 130px;
 }
 
-.newBtn:hover {
+.missionTitle .newBtn:hover {
   opacity: 1;
 }
 
-.newBtn .newSvg {
-  margin-right: 12px;
-}
-
-.newBtn a {
+.missionTitle .newBtn a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   color: #395B64;
   text-decoration: none;
+  font-size: 1.2em;
+}
+
+.missionTitle .newBtn a .newSvg {
+  margin-right: 12px;
 }
 
 .filtersBox {
   -webkit-box-shadow: 0 0 10px #395B64;
           box-shadow: 0 0 10px #395B64;
-  margin: 50px 50px 0 50px;
-  padding: 5px 20px;
+  margin: 50px 0 0 0;
+  padding: 5px 0;
   border-radius: 5px;
   background: #A5C9CA;
-  width: 125px;
+  max-width: 1200px;
+  width: 150px;
   -webkit-transition: width 500ms;
   transition: width 500ms;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .filtersBox .headerFilters {
@@ -64,6 +85,8 @@
       -ms-flex-align: center;
           align-items: center;
   padding: 5px;
+  width: 95%;
+  margin-left: 35px;
 }
 
 .filtersBox .headerFilters .filtersTitle {
@@ -126,18 +149,28 @@
   overflow: hidden;
   -webkit-transition: height 500ms;
   transition: height 500ms;
+  width: 95%;
+}
+
+.filtersBox .filtersAndApplyBtn select option {
+  font-size: 0.9em;
 }
 
 .filtersBox .filtersAndApplyBtn .filters {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
 }
 
 .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle {
@@ -155,10 +188,9 @@
       -ms-flex-align: center;
           align-items: center;
   background: #E7F6F2;
-  margin: 20px;
-  padding: 10px;
+  margin: 10px 0;
   border-radius: 5px;
-  height: 328px;
+  width: 100%;
 }
 
 .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersBlockTitle {
@@ -177,18 +209,42 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  width: 100%;
 }
 
 .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .missionsFiltersLine {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .countryAndDates {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 135px;
+}
+
+.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .countryAndDates .dates {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  margin-bottom: 10px;
 }
 
 .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .labelAndFilter {
@@ -199,7 +255,9 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  margin: 15px 25px;
+  margin-bottom: 10px;
+  width: 100%;
+  max-width: 300px;
 }
 
 .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .labelAndFilter .filterTitle {
@@ -216,7 +274,8 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
   background: white;
   border: 1px solid #767676;
   border-radius: 2px;
@@ -239,10 +298,6 @@
   font-size: 0.9em;
 }
 
-.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .agentFilter, .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .contactFilter, .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .targetFilter, .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .stashFilter {
-  height: 230px;
-}
-
 .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem input, .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem select option {
   padding: 5px 10px;
 }
@@ -261,6 +316,56 @@
   color: #395B64;
 }
 
+.filtersBox .filtersAndApplyBtn .filters .morefiltersBtn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 10px 0;
+}
+
+.filtersBox .filtersAndApplyBtn .filters .morefiltersBtn .moreFiltersSvg {
+  margin-right: 5px;
+}
+
+.filtersBox .filtersAndApplyBtn .filters .morefiltersBtn .chevronDownMoreFilters {
+  margin-left: 5px;
+}
+
+.filtersBox .filtersAndApplyBtn .filters .filtersSup {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 0;
+  overflow: hidden;
+}
+
+.filtersBox .filtersAndApplyBtn .filters .filtersSup .filtersItemAndTitle {
+  margin: 10px 0;
+  width: 100%;
+}
+
+.filtersBox .filtersAndApplyBtn .filters .filtersSup .filtersItemAndTitle .filtersItem {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
 .filtersBox .filtersAndApplyBtn .applyFiltersBtn {
   font-size: 1em;
   background: #395B64;
@@ -268,6 +373,7 @@
   border: none;
   border-radius: 5px;
   color: white;
+  margin: 10px 0;
   cursor: pointer;
   max-width: 150px;
   display: -webkit-box;
@@ -288,6 +394,7 @@
   padding: 50px 0;
   margin: 0;
   text-align: center;
+  width: 95%;
 }
 
 .missionsList .mission {
@@ -487,26 +594,77 @@
   margin-right: 5px;
 }
 
-@media screen and (min-width: 450px) {
+@media screen and (min-width: 560px) {
   .filtersBox .headerFilters .cancelFiltersBtn .cancelSvg {
     margin-right: 5px;
   }
   .filtersBox .headerFilters .cancelFiltersBtn span {
     display: inline;
   }
+  .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .missionsFiltersLine .labelAndFilter {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .labelAndFilterStatus {
+    margin-right: 10px;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .missionsFiltersLine .labelAndFilter {
+    width: auto;
+  }
+  .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .missionsFiltersLine .labelAndFilterStatus {
+    margin-right: 10px;
+  }
+  .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .missionsFiltersLine .labelAndFilterStatus .statusMissionFilter {
+    height: 95px;
+  }
+  .filtersBox .filtersAndApplyBtn .filters .filtersSup .filtersItemAndTitle {
+    width: auto;
+    padding: 10px;
+    margin: 10px;
+  }
+}
+
+@media screen and (min-width: 863px) {
+  .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .missionsFiltersLine .countryAndDates {
+    margin-left: 50px;
+  }
 }
 
 @media screen and (min-width: 1100px) {
-  .newBtn {
-    position: absolute;
-    margin-top: 0;
-    margin-right: 20px;
+  .missionTitle .newBtn {
+    left: 122%;
+    bottom: 50%;
+    -webkit-transform: translate(-50%, 50%);
+            transform: translate(-50%, 50%);
+  }
+  .filtersBox {
+    margin: 0 50px;
+  }
+}
+
+@media screen and (min-width: 1255px) {
+  .filtersBox .filtersAndApplyBtn .filters .filtersSup {
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+  .filtersBox .filtersAndApplyBtn .filters .filtersSup .filtersItemAndTitle {
+    margin: 10px 0;
   }
 }
 
 @media screen and (min-width: 1385px) {
   .missionsList .mission {
     margin: 20px;
+  }
+}
+
+@media screen and (min-width: 1520px) {
+  .confirmMessage {
+    position: absolute;
   }
 }
 /*# sourceMappingURL=style.css.map */

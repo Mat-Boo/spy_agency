@@ -14,7 +14,7 @@ class Administrators
         $this->pdo = $pdo;
     }
 
-    public function login(array $loginOptions): Administrator
+    public function login(array $loginOptions)
     {
         $query = $this->pdo->prepare(
             "SELECT * FROM Administrator
@@ -26,9 +26,9 @@ class Administrators
             ]
         );
         $foundAdmin = $query->fetchObject(Administrator::class);
-        if ($foundAdmin ===false) {
+/*         if ($foundAdmin ===false) {
             throw new NotFoundException('Administrator', $loginOptions['email']);
-        }
+        } */
         return $foundAdmin;
     }
 }

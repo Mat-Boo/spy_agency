@@ -1,5 +1,5 @@
 .confirmMessage {
-  position: absolute;
+  position: static;
   left: 0;
   color: #07633c;
   padding: 10px 40px;
@@ -448,5 +448,11 @@
 
 .stashsList .stash .details .detailsInfos .infosItem span svg {
   margin-right: 5px;
+}
+
+@media screen and (min-width: 1520px) {
+  .confirmMessage {
+    position: absolute;
+  }
 }
 /*# sourceMappingURL=style.css.map */

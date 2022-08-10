@@ -8,10 +8,14 @@ $styleSubFolder = 'auth/';
 
 $administrators = new AdministratorsController;
 
+$connectionError = false;
 if (!empty($_POST)) {
-    $administrators->login($_POST);
-    header('Location: ' . $router->url('admin'));
-    exit();
+    if ($administrators->login($_POST)) {
+        header('Location: ' . $router->url('admin'));
+        exit();
+    } else {
+        $connectionError = true;
+    }
 }
 
 ?>
@@ -19,7 +23,11 @@ if (!empty($_POST)) {
     let emptyGet = <?= json_encode(empty($_GET)) ?>;
 </script>
 <h1 class="loginTitle">Connexion à l'espace Administration</h1>
-<?php if (isset($_GET['forbidden'])): ?>
+<?php if ($connectionError): ?>
+    <div class="alertMessage">
+        Vos identifiants sont incorrects. Veuillez les corriger et réessayer.
+    </div>
+<?php elseif (isset($_GET['forbidden'])): ?>
     <div class="alertMessage">
         Veuillez vous authentifier pour pouvoir accéder à cette page.
     </div>

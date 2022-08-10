@@ -450,4 +450,10 @@
 .personsList .person .details .detailsInfos .infosItem span svg {
   margin-right: 5px;
 }
+
+@media screen and (min-width: 1520px) {
+  .confirmMessage {
+    position: absolute;
+  }
+}
 /*# sourceMappingURL=style.css.map */
