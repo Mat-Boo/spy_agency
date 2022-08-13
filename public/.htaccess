@@ -1,4 +1,3 @@
 DirectoryIndex index.php
-Options +FollowSymlinks
+Options -MultiViews
 RewriteEngine On
-
