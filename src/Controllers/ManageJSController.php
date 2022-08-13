@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controllers;
-
+//
 class ManageJsController
 {
     public function ManageJs(string $urlName): array
