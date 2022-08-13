@@ -4,7 +4,7 @@ $styleFolder = 'home/';
 
 $styleFolder = '../assets/styles/';
 $styleSubFolder = 'home/';
-
+var_dump($router);
 ?>
 
 <img src="../../assets/spy_agency_logo.png" alt="logo_spyAgency" class="logoImg">
