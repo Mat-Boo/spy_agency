@@ -15,8 +15,6 @@ if (isset($_SESSION['auth'])) {
     $foundAdmin = $administrators->findAdministrator(isset($_SESSION['auth']));
 }
 
-
-
 $manageJsController = new ManageJsController;
 $jsScripts = $manageJsController->ManageJs($match['name']);
 ?>
