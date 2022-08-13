@@ -2,8 +2,9 @@
 $title = 'Spy Agency';
 $styleFolder = 'home/';
 
-$styleFolder = '../styles/';
+$styleFolder = '../assets/styles/';
 $styleSubFolder = 'home/';
+
 ?>
 
 <img src="../../assets/spy_agency_logo.png" alt="logo_spyAgency" class="logoImg">
@@ -15,5 +16,3 @@ $styleSubFolder = 'home/';
 <p>Potenti nullam ac tortor vitae purus faucibus. Aliquam sem fringilla ut morbi tincidunt augue interdum velit. Risus ultricies tristique nulla aliquet. Porta non pulvinar neque laoreet suspendisse interdum consectetur libero. Quis imperdiet massa tincidunt nunc pulvinar sapien et ligula ullamcorper. Sit amet consectetur adipiscing elit duis. Sodales ut eu sem integer vitae. Turpis cursus in hac habitasse platea dictumst quisque. Amet tellus cras adipiscing enim eu turpis egestas. Nunc sed velit dignissim sodales ut. Ultrices in iaculis nunc sed augue lacus. Donec adipiscing tristique risus nec feugiat in fermentum posuere urna. Egestas integer eget aliquet nibh praesent tristique magna sit. Facilisis volutpat est velit egestas dui id ornare arcu odio. Vitae aliquet nec ullamcorper sit amet risus nullam. Sit amet justo donec enim diam. Vitae congue mauris rhoncus aenean vel elit scelerisque mauris pellentesque. Dui nunc mattis enim ut tellus elementum sagittis vitae et. Risus commodo viverra maecenas accumsan lacus vel facilisis volutpat est.</p>
 
 <p>Nulla aliquet enim tortor at. Blandit libero volutpat sed cras ornare arcu dui. Morbi tristique senectus et netus et malesuada fames. Condimentum id venenatis a condimentum. Sapien pellentesque habitant morbi tristique senectus et netus. Vel risus commodo viverra maecenas accumsan lacus vel. Etiam dignissim diam quis enim lobortis scelerisque fermentum dui faucibus. Etiam erat velit scelerisque in dictum non. Mattis molestie a iaculis at erat pellentesque adipiscing. Tempus egestas sed sed risus pretium quam vulputate dignissim suspendisse. Eu facilisis sed odio morbi quis commodo. Proin sagittis nisl rhoncus mattis rhoncus. Dapibus ultrices in iaculis nunc sed augue lacus viverra vitae. Enim ut tellus elementum sagittis vitae et. Tortor aliquam nulla facilisi cras fermentum odio eu feugiat pretium. Id volutpat lacus laoreet non curabitur gravida arcu ac tortor.</p>
-
-<p>Accumsan in nisl nisi scelerisque. Arcu dictum varius duis at consectetur lorem donec massa sapien. Sit amet luctus venenatis lectus magna fringilla urna. Laoreet suspendisse interdum consectetur libero id faucibus nisl tincidunt. Nibh cras pulvinar mattis nunc sed blandit libero. Aenean et tortor at risus viverra adipiscing at. Vulputate sapien nec sagittis aliquam malesuada. Aliquam ultrices sagittis orci a. Venenatis urna cursus eget nunc scelerisque. Mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus et netus. Tellus in hac habitasse platea dictumst vestibulum rhoncus est pellentesque. Lacus laoreet non curabitur gravida arcu ac tortor. Scelerisque in dictum non consectetur a erat nam at lectus. Diam vel quam elementum pulvinar. Proin sed libero enim sed faucibus.</p>

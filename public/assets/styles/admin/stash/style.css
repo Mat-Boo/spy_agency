@@ -1,0 +1,633 @@
+.confirmMessage {
+  position: static;
+  left: 0;
+  color: #07633c;
+  padding: 10px 40px;
+  background: #8cd4b6;
+  border-radius: 5px;
+  opacity: 0;
+  -webkit-transition: opacity 1000ms;
+  transition: opacity 1000ms;
+  margin-left: 20px;
+}
+
+.stashTitle {
+  position: relative;
+}
+
+.stashTitle .newBtn {
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  text-decoration: none;
+  border: 1px solid #395B64;
+  padding: 9px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  opacity: 0.8;
+  background: #A5C9CA;
+  width: 130px;
+}
+
+.stashTitle .newBtn:hover {
+  opacity: 1;
+}
+
+.stashTitle .newBtn a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #395B64;
+  text-decoration: none;
+  font-size: 1.2em;
+}
+
+.stashTitle .newBtn a .newSvg {
+  margin-right: 12px;
+}
+
+.filtersBox {
+  -webkit-box-shadow: 0 0 10px #395B64;
+          box-shadow: 0 0 10px #395B64;
+  margin: 50px 50px 0 50px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background: #A5C9CA;
+  max-width: 1200px;
+  width: 150px;
+  -webkit-transition: width 500ms;
+  transition: width 500ms;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.filtersBox .headerFilters {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 5px;
+  width: 95%;
+  margin-left: 35px;
+}
+
+.filtersBox .headerFilters .filtersTitle {
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 1.2em;
+}
+
+.filtersBox .headerFilters .filtersTitle .sliders {
+  margin-right: 10px;
+}
+
+.filtersBox .headerFilters .filtersTitle .chevronDownFilters {
+  margin-left: 10px;
+  -webkit-transition: -webkit-transform 500ms;
+  transition: -webkit-transform 500ms;
+  transition: transform 500ms;
+  transition: transform 500ms, -webkit-transform 500ms;
+}
+
+.filtersBox .headerFilters .cancelFiltersBtn {
+  display: none;
+  font-size: 1em;
+  background: #395B64;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border: none;
+}
+
+.filtersBox .headerFilters .cancelFiltersBtn .cancelSvg {
+  margin-right: 0;
+}
+
+.filtersBox .headerFilters .cancelFiltersBtn span {
+  display: none;
+}
+
+.filtersBox .filtersAndApplyBtn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 0;
+  overflow: hidden;
+  -webkit-transition: height 500ms;
+  transition: height 500ms;
+  width: 95%;
+}
+
+.filtersBox .filtersAndApplyBtn .orderBy {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #395B64;
+}
+
+.filtersBox .filtersAndApplyBtn .orderBy .orderByFilterBox {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.filtersBox .filtersAndApplyBtn .orderBy .orderByFilterBox label {
+  margin-bottom: 10px;
+}
+
+.filtersBox .filtersAndApplyBtn .orderBy .orderByFilterBox .orderBySelect {
+  padding: 5px 10px;
+}
+
+.filtersBox .filtersAndApplyBtn .orderBy .orderByFilterBox .orderBySelect option {
+  padding: 5px 10px;
+  font-size: 0.9em;
+}
+
+.filtersBox .filtersAndApplyBtn .orderBy .orderByFilterBox .orderBySelect .headerSelect {
+  padding: 5px 10px;
+  background: #A5C9CA;
+  color: #395B64;
+}
+
+.filtersBox .filtersAndApplyBtn .orderBy .orderByDirectionBox {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.filtersBox .filtersAndApplyBtn select option {
+  font-size: 0.9em;
+}
+
+.filtersBox .filtersAndApplyBtn .filters {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+}
+
+.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: #E7F6F2;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  width: 95%;
+}
+
+.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersBlockTitle {
+  font-size: 1.3em;
+  color: #395B64;
+}
+
+.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 100%;
+}
+
+.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .labelAndFilter {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-bottom: 10px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .labelAndFilter .filterTitle {
+  margin-bottom: 5px;
+  color: #395B64;
+}
+
+.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .labelAndFilter input {
+  padding: 5px 10px;
+}
+
+.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .labelAndFilter select {
+  padding: 5px 10px;
+}
+
+.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .labelAndFilter select option {
+  padding: 5px 10px;
+}
+
+.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .labelAndFilter select .headerSelect {
+  padding: 5px 10px;
+  background: #A5C9CA;
+  color: #395B64;
+}
+
+.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .labelAndFilter .typeStashFilter, .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .labelAndFilter .missionFilter {
+  padding: 0;
+}
+
+.filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .inputItems {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.filtersBox .filtersAndApplyBtn .applyFiltersBtn {
+  font-size: 1em;
+  background: #395B64;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  max-width: 150px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.filtersBox .filtersAndApplyBtn .applyFiltersBtn .confirmSvg {
+  margin-right: 5px;
+}
+
+.stashsList {
+  margin: 0;
+  list-style: none;
+  padding: 50px 0;
+  margin: 0;
+  text-align: center;
+  width: 95%;
+}
+
+.stashsList .stash {
+  display: inline-block;
+  text-align: initial;
+  margin: 20px 0;
+  border-radius: 5px;
+  padding: 10px 20px;
+  width: 85%;
+  max-width: 650px;
+  -webkit-box-shadow: 0 0 10px #395B64;
+          box-shadow: 0 0 10px #395B64;
+  background: #A5C9CA;
+}
+
+.stashsList .stash .headerStash {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  background: #395B64;
+  border-radius: 5px;
+  padding: 0 10px;
+  color: white;
+}
+
+.stashsList .stash .infosStash {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin: 20px;
+  position: relative;
+}
+
+.stashsList .stash .infosStash .stashItems {
+  bottom: 0;
+}
+
+.stashsList .stash .infosStash .stashItems .stashItem {
+  margin: 5px;
+}
+
+.stashsList .stash .infosStash .actionBtns {
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+
+.stashsList .stash .infosStash .actionBtns .actionBtn {
+  text-decoration: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border: 1px solid #395B64;
+  color: white;
+  padding: 9px 12px;
+  border-radius: 5px;
+  width: 16px;
+  -webkit-transition: width 500ms;
+  transition: width 500ms;
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.stashsList .stash .infosStash .actionBtns .actionBtn:hover {
+  opacity: 1;
+  width: 100px;
+}
+
+.stashsList .stash .infosStash .actionBtns .actionBtn span {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 0.9em;
+}
+
+.stashsList .stash .infosStash .actionBtns .actionBtn .actionSvg {
+  margin-right: 12px;
+}
+
+.stashsList .stash .infosStash .actionBtns .editBtn {
+  background: #2a60b3;
+  margin-bottom: 5px;
+}
+
+.stashsList .stash .infosStash .actionBtns .deleteBtn {
+  background: #dd4c4c;
+}
+
+.stashsList .stash .infosStash .actionBtns .deleteBtn button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: white;
+  padding: 0;
+}
+
+.stashsList .stash .details {
+  background: #395B64;
+  border-radius: 5px;
+  padding: 5px 20px;
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100px;
+  -webkit-transition: width 500ms;
+  transition: width 500ms;
+  position: relative;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
+
+.stashsList .stash .details .detailsBtn {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: #395B64;
+  border-radius: 5px 5px 0 0;
+  padding: 5px 0;
+  color: white;
+  cursor: pointer;
+  -webkit-transition: border-bottom 500ms;
+  transition: border-bottom 500ms;
+}
+
+.stashsList .stash .details .detailsBtn .chevronDownDetails {
+  margin-left: 10px;
+  -webkit-transition: -webkit-transform 500ms;
+  transition: -webkit-transform 500ms;
+  transition: transform 500ms;
+  transition: transform 500ms, -webkit-transform 500ms;
+}
+
+.stashsList .stash .details .detailsInfos {
+  -ms-flex-item-align: start;
+      -ms-grid-row-align: start;
+      align-self: start;
+  height: 0;
+  -webkit-transition: height 500ms;
+  transition: height 500ms;
+  overflow: hidden;
+}
+
+.stashsList .stash .details .detailsInfos .infosItem {
+  margin: 10px 0;
+}
+
+.stashsList .stash .details .detailsInfos .infosItem ul, .stashsList .stash .details .detailsInfos .infosItem p {
+  list-style: none;
+  padding: 5px 0 0 20px;
+  margin: 0;
+}
+
+.stashsList .stash .details .detailsInfos .infosItem span {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.stashsList .stash .details .detailsInfos .infosItem span svg {
+  margin-right: 5px;
+}
+
+@media screen and (min-width: 560px) {
+  .filtersBox .headerFilters .cancelFiltersBtn .cancelSvg {
+    margin-right: 5px;
+  }
+  .filtersBox .headerFilters .cancelFiltersBtn span {
+    display: inline;
+  }
+  .filtersBox .filtersAndApplyBtn .orderBy {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+  }
+  .filtersBox .filtersAndApplyBtn .orderBy .orderByFilterBox {
+    margin-right: 30px;
+  }
+}
+
+@media screen and (min-width: 683px) {
+  .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem {
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+  }
+  .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .inputItems {
+    margin-right: 10px;
+  }
+}
+
+@media screen and (min-width: 1050px) {
+  .filtersBox .filtersAndApplyBtn .filters {
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+  }
+  .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle {
+    width: auto;
+    height: 85%;
+  }
+  .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem {
+    -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+  }
+  .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .labelAndFilter .typeStashFilter, .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .labelAndFilter .missionFilter {
+    height: 162px;
+  }
+  .filtersBox .filtersAndApplyBtn .filters .planque {
+    width: 60%;
+  }
+  .filtersBox .filtersAndApplyBtn .filters .mission {
+    width: 30%;
+  }
+}
+
+@media screen and (min-width: 1100px) {
+  .stashTitle .newBtn {
+    left: 122%;
+    bottom: 50%;
+    -webkit-transform: translate(-50%, 50%);
+            transform: translate(-50%, 50%);
+  }
+  .filtersBox {
+    margin: 0 50px;
+  }
+}
+
+@media screen and (min-width: 1385px) {
+  .stashsList .stash {
+    margin: 20px;
+  }
+}
+
+@media screen and (min-width: 1520px) {
+  .confirmMessage {
+    position: absolute;
+  }
+}
+/*# sourceMappingURL=style.css.map */

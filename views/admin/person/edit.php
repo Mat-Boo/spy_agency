@@ -6,7 +6,7 @@ if (!empty($params)) {
 }
 
 $title = 'Spy Agency - ' . ($personItem === 'target' ? 'Cible' : ucfirst($personItem)) . 's - Admin';
-$styleFolder = '../../../styles/';
+$styleFolder = '../../../assets/styles/';
 $styleSubFolder = 'admin/person/editPerson_';
 
 use App\Controllers\AgentsSpecialitiesController;
@@ -29,20 +29,26 @@ $personsList = $personsController->getPersonsLists('id')[$personItem . 'sList'];
 $specialitiesList = $specialitiesController->getSpecialitiesList('name');
 $countriesList = $countriesController->getCountriesList();
 
+
 if (!empty($params)) {
     //Récupération de la personne à éditer
     $person = $personsController->findPerson($params['id'], $personItem);
     $personArray[] = $person;
-
+    
     //Hydratation des personnes avec les spécialités (pour les agents) et les missions
     if ($personItem === 'agent') {
         $agentsSpecialitiesController->hydrateAgents($personArray, $specialitiesList);
     }
     $missionsPersonsController->hydratePersons($personArray, $missionsList, $personItem);
+    
+    //Hydratation des missions de la personne éditées avec les contacts, agents et cibles fin de pouvoir vérifier les règles métiers
+    $personsLists = $personsController->getPersonsLists('id');
+    $personsFilters = $missionsPersonsController->filterPersons([]);
+    $missionsPersonsController->hydrateMissions($missionsList, $personsLists, $personsFilters);
 
     //Validation des modifications et retour à la liste des personnes concernées
     if (!empty($_POST)) {
-        $errors = $personsController->controlsRules($_POST, $personItem);
+        $errors = $personsController->controlsRules($_POST, $personItem, $person);
         if (empty($errors)) {
             $personsController->updatePerson($_POST, $person->getId(), $personItem);
             if ($personItem === 'agent') {
@@ -63,7 +69,7 @@ if (!empty($params)) {
 } else {
     //Création de la nouvelle personne et retour à la liste des personnes concernées
     if (!empty($_POST)) {
-        $errors = $personsController->controlsRules($_POST, $personItem);
+        $errors = $personsController->controlsRules($_POST, $personItem, $person);
         if (empty($errors)) {
             $newIdPerson = $personsController->createPerson($_POST, $personItem);
             if ($personItem === 'agent') {
@@ -75,8 +81,6 @@ if (!empty($params)) {
         }
     }
 }
-
-
 
 ?>
 

@@ -1,7 +1,7 @@
 <?php
 
 $title = 'Spy Agency - Spécialités - Admin';
-$styleFolder = '../../../styles/';
+$styleFolder = '../../../assets/styles/';
 $styleSubFolder = 'admin/speciality/editSpeciality_';
 
 use App\Controllers\MissionsController;
@@ -72,10 +72,12 @@ if (!empty($params)) {
     </h1>
     <form action="" method="POST" class="speciality">
         <div class="headerSpeciality">
-            <div class="titleItem">
-                <label for="idSpeciality"><b>Code:</b></label>
-                <input type="text" id="idSpeciality" name="idSpeciality" value="<?= isset($_POST['idSpeciality']) ? $_POST['idSpeciality'] : (!empty($params) ? $speciality->getId_speciality() : '') ?>">
-            </div>
+            <?php if (!empty($params)): ?>
+                <div class="titleItem">
+                    <label for="idSpeciality"><b>Code:</b></label>
+                    <input type="text" id="idSpeciality" name="idSpeciality" disabled value="<?= isset($_POST['idSpeciality']) ? $_POST['idSpeciality'] : (!empty($params) ? $speciality->getId_speciality() : '') ?>">
+                </div>
+            <?php endif ?>
         </div>
         <div class="infosSpeciality">
             <div class="specialityItems">

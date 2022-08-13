@@ -2,6 +2,7 @@
 
 namespace App\model;
 
+use App\Model\Administrator;
 use App\Model\Exception\NotFoundException;
 use PDO;
 
@@ -26,9 +27,21 @@ class Administrators
             ]
         );
         $foundAdmin = $query->fetchObject(Administrator::class);
-/*         if ($foundAdmin ===false) {
-            throw new NotFoundException('Administrator', $loginOptions['email']);
-        } */
+
+        return $foundAdmin;
+    }
+
+    public function findAdministrator(int $idAdministrator): Administrator
+    {
+        $query = $this->pdo->prepare(
+            "SELECT *
+            FROM Administrator
+            WHERE id_admin = :id_admin");
+        $query->execute(['id_admin' => $idAdministrator]);
+        $foundAdmin = $query->fetchObject(Administrator::class);
+        if ($foundAdmin === false) {
+            throw new NotFoundException('Admin', $idAdministrator);
+        }
         return $foundAdmin;
     }
 }

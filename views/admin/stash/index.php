@@ -1,7 +1,7 @@
 <?php
 
 $title = 'Spy Agency - Planques - Admin';
-$styleFolder = '../../../styles/';
+$styleFolder = '../../../assets/styles/';
 $styleSubFolder = 'admin/stash/';
 
 use App\Controllers\MissionsController;
@@ -75,6 +75,47 @@ $missionsStashsController->hydrateStashs($stashsListFiltered, $missionsList);
         </button>
     </div>
     <div class="filtersAndApplyBtn">
+    <div class="orderBy">
+            <div class="orderByFilterBox">
+                <label for="orderByFilter" class="orderByLabel">Tri par</label>
+                <select name="orderByFilter" id="orderByFilter" class="orderBySelect">
+                    <option value="headerFilter" class="headerSelect">Sélectionnez le tri souhaité</option>
+                    <?php foreach([
+                        'code_name' => 'Code Name',
+                        'address' => 'Adresse',
+                        'country' => 'Pays',
+                        'type' => 'Type'
+                        ] as $key => $item) : ?>
+                        <option
+                            value="<?= $key ?>"
+                            <?php if (isset($_GET['orderByFilter'])): ?>
+                                <?php if ($key === $_GET['orderByFilter']): ?>
+                                    selected
+                                <?php endif ?>
+                            <?php endif ?>
+                        ><?= $item ?></option>
+                    <?php endforeach ?>
+                </select>
+            </div>
+            <div class="orderByDirectionBox">
+                <?php foreach(['ASC' => 'Ascendant ↓', 'DESC' => 'Descendant ↑'] as $key => $value): ?>
+                    <div class="orderByRadio">
+                        <input
+                            type="radio"
+                            id=<?= $key ?>
+                            name="orderByDirection"
+                            value=<?= $key ?>
+                            <?php if (isset($_POST['orderByDirection'])): ?>
+                                <?php if ('ASC' === $_POST['orderByDirection']): ?>
+                                    checked
+                                <?php endif ?>
+                            <?php endif ?>
+                        >
+                        <label for=<?= $key ?>><?= $value ?></label>
+                    </div>
+                <?php endforeach ?>
+            </div>
+        </div>
         <div class="filters">
             <div class="filtersItemAndTitle planque">
                 <span class="filtersBlockTitle">Planque</span>

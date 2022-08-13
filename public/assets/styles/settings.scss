@@ -1,0 +1,213 @@
+html {
+
+}
+body {
+    font-family:'Open Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #EEEAE7;
+
+    position: relative;
+    box-sizing: border-box;
+}
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #395B64;
+    margin-bottom: 80px;
+    height: 80px;
+    position: relative;
+    .logo {
+        text-decoration: none;
+        color: white;
+        margin: 0 0 0 20px;
+    }
+    .infoMessage {
+        text-align: center;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: -67px;
+        color: #395B64;
+        padding: 10px 10px;
+        background: #A5C9CA;
+        border-radius: 5px;
+        opacity: 0;
+        transition: opacity 1000ms;
+        z-index: 2;
+        font-size: 0.9em;
+        width: 335px;
+    }
+    .menu {
+        position: absolute;
+        top: 80px;
+        left: -100vw;
+        height: calc(100vh - 80px);
+        width: 100vw;
+        z-index: 2;
+        transition: left 500ms;
+        .menuList {
+            background: #395B64;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            padding: 80px 0 0 0;
+            margin: 0;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            .navItem {
+                padding: 20px 0;
+                border-bottom: 1px solid white;
+                width: 75%;
+                text-align: center;
+                .navLink {
+                    text-decoration: none;
+                    color: white;
+                    padding: 15px;
+                }
+            }
+        }
+    }
+    .loginBtn {
+        position: absolute;
+        top: 100px;
+        left: -50%;
+        transform: translateX(-50%);
+        z-index: 3;
+        text-decoration: none;
+        background: #A5C9CA;
+        color: #395B64;
+        border-radius: 5px;
+        padding: 10px;
+        opacity: 0.8;
+        display: flex;
+        align-items: center;
+        font-size: 1.2em;
+        transition: left 500ms;
+        &:hover {
+            opacity: 1;
+        }
+        .loginSvg {
+            margin-right: 10px;
+        }
+    }
+    .logoutBtn {
+        position: absolute;
+        top: 100px;
+        left: -50%;
+        transform: translateX(-50%);
+        z-index: 3;
+        display: flex;
+        justify-content: center;
+        background: #A5C9CA;
+        border-radius: 5px;
+        padding: 10px;
+        opacity: 0.8;
+        transition: left 500ms;
+        min-width: 188px;
+        &:hover {
+            opacity: 1;
+        }
+        button {
+            display: flex;
+            align-items: center;
+            font-size: 1.2em;
+            cursor: pointer;
+            color: #395B64;
+            background: none;
+            border: none;
+            padding: 0;
+            .logoutSvg {
+                margin-right: 10px;
+            }
+        }
+    }
+    .miniMenuBtns {
+        color: white;
+        margin-right: 20px;
+        .closeMiniMenuBtn {
+            display: none;
+        }
+    }
+}
+
+main {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: calc(100vh - 287px);
+    h1 {
+        text-align: center;
+        font-size: 2em;
+        color: #395B64;
+        margin-top: 0;
+        margin-bottom: 50px;
+        padding: 0 10px;
+    }
+}
+
+footer {
+    position: absolute;
+    bottom: -157px;
+    background-color: #2C3333;
+    padding: 10px 0;
+    margin-top: 50px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    p {
+        text-align: center;
+        color: white;
+    }
+}
+
+@media screen and (min-width: 760px) {
+    main {
+        h1 {
+            font-size: 3em;
+        }
+    }
+}
+
+@media screen and (min-width: 1040px) {
+    nav {
+        padding: 0 20px;
+        .logo {
+            margin-left: 0;
+        }
+        .menu {
+            position: static;
+            height: auto;
+            width: auto;
+            .menuList {
+                display: flex;
+                background: none;
+                flex-direction: row;
+                padding: 0;
+                .navItem {
+                    padding: 0;
+                    border-bottom: none;
+                    width: auto;
+                }
+            }
+        }
+        .loginBtn {
+            position: static;
+            display: flex;
+            transform: none;
+        }
+        .logoutBtn {
+            position: static;
+            transform: none;
+            margin-left: 20px;
+        }
+    }
+    .miniMenuBtns {
+        display: none;
+        margin-right: 0;
+    }
+}

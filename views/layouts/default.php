@@ -1,5 +1,6 @@
 <?php
 use App\Auth;
+use App\Controllers\AdministratorsController;
 use App\Controllers\ManageJsController;
 
 Auth::check();
@@ -8,7 +9,14 @@ if ($isAdmin && !isset($_SESSION['auth'])) {
     header('Location: ' . $this->url('login') . '?forbidden=1');
 }
 
-/* $isEdit = strpos($_SERVER['REQUEST_URI'], 'edit') !== false; */
+$administrators = new AdministratorsController;
+
+if (isset($_SESSION['auth'])) {
+    $foundAdmin = $administrators->findAdministrator(isset($_SESSION['auth']));
+}
+
+
+
 $manageJsController = new ManageJsController;
 $jsScripts = $manageJsController->ManageJs($match['name']);
 ?>
@@ -27,6 +35,9 @@ $jsScripts = $manageJsController->ManageJs($match['name']);
 <body>
     <nav class="navbar">
         <a href="<?= $router->url('home') ?>" class="logo"><h1>Spy Agency</h1></a>
+        <?php if (isset($_SESSION['auth'])): ?>
+            <span class="infoMessage">Bienvenue <strong><?= $foundAdmin->getFirstname() ?></strong>,<br/> Vous êtes connecté en tant qu'<strong>Administrateur</strong>.</span>
+        <?php endif ?>
         <div class="menu">
             <ul class="menuList">
                 <li class="navItem">

@@ -1,7 +1,7 @@
 <?php
 
 $title = 'Spy Agency - Planques - Admin';
-$styleFolder = '../../../styles/';
+$styleFolder = '../../../assets/styles/';
 $styleSubFolder = 'admin/stash/editStash_';
 
 use App\Controllers\MissionsController;
@@ -29,7 +29,7 @@ if (!empty($params)) {
 
     //Validation des modifications et retour à la liste des planques
     if (!empty($_POST)) {
-        $errors = $stashsController->controlsRules($_POST);
+        $errors = $stashsController->controlsRules($_POST, $stash);
         if (empty($errors)) {
             $stashsController->updateStash($_POST, $stash->getId_stash());
             header('location: ' . $router->url('admin_stash') . '?updated=' . $_POST['codenameStash']);
@@ -40,7 +40,7 @@ if (!empty($params)) {
 } else {
     //Création de la nouvelle planque et retour à la liste des planques
     if (!empty($_POST)) {
-        $errors = $stashsController->controlsRules($_POST);
+        $errors = $stashsController->controlsRules($_POST, $stash);
         if (empty($errors)) {
             $newIdStash = $stashsController->createStash($_POST);
             header('location: ' . $router->url('admin_stash') . '?created=' . $_POST['codenameStash']);
@@ -49,7 +49,6 @@ if (!empty($params)) {
         }
     }
 }
-
 
 ?>
 

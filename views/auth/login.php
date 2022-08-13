@@ -3,7 +3,7 @@
 use App\Controllers\AdministratorsController;
 
 $title = 'Spy Agency - Connexion';
-$styleFolder = 'styles/';
+$styleFolder = 'assets/styles/';
 $styleSubFolder = 'auth/';
 
 $administrators = new AdministratorsController;

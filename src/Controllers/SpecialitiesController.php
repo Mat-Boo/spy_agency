@@ -25,6 +25,7 @@ class SpecialitiesController
         $filterConditions['idSpecialityFilter'] = isset($filterOptions['idSpecialityFilter']) ? " WHERE id_speciality IN (" . implode(",", $filterOptions['idSpecialityFilter']) . ")" : " WHERE id_speciality IN (" . implode(",", $specialityIds) . ")";
         $filterConditions['agentsFilter'] = isset($filterOptions['agentsFilter']) ? " AND id_speciality IN (" . implode(",", $agentsFilter) . ")" : '';
         $filterConditions['missionsFilter'] = isset($filterOptions['missionsFilter']) ? " AND id_speciality IN (" . implode(",", $missionsFilter) . ")" : '';
+        $filterConditions['orderByfilterAndDirection'] = isset($filterOptions['orderByFilter']) && isset($filterOptions['orderByDirection']) ? " ORDER BY " . $filterOptions['orderByFilter'] . ' ' . $filterOptions['orderByDirection']: '';
 
         $specialities = new Specialities((new Connection)->getPdo());
 

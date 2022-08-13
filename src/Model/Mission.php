@@ -2,22 +2,22 @@
 
 namespace App\Model;
 
-class Mission
+class Mission extends Table
 {
-    private $id_mission;
-    private $code_name;
-    private $title;
-    private $description;
-    private $country;
-    private $type;
-    private $status;
-    private $start_date;
-    private $end_date;
-    private $speciality;
-    private $agents = [];
-    private $contacts = [];
-    private $targets = [];
-    private $stashs = [];
+    protected $id_mission;
+    protected $code_name;
+    protected $title;
+    protected $description;
+    protected $country;
+    protected $type;
+    protected $status;
+    protected $start_date;
+    protected $end_date;
+    protected $speciality;
+    protected $agents = [];
+    protected $contacts = [];
+    protected $targets = [];
+    protected $stashs = [];
 
     /**
      * Get the value of id_mission

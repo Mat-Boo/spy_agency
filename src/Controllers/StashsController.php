@@ -56,6 +56,7 @@ class StashsController
         $filterConditions['countryStashFilter'] = isset($filterOptions['countryStashFilter']) && strlen($filterOptions['countryStashFilter']) > 0 ? " AND country = '" . $filterOptions['countryStashFilter'] . "'" : '';
         $filterConditions['typeStashFilter'] = isset($filterOptions['typeStashFilter']) ? " AND type IN (" . $this->convertToStringList($filterOptions['typeStashFilter']) . ")" : '';
         $filterConditions['missionsFilter'] = isset($filterOptions['missionsFilter']) ? " AND id_stash IN (" . implode(",", $missionsFilter) . ")" : '';
+        $filterConditions['orderByfilterAndDirection'] = isset($filterOptions['orderByFilter']) && isset($filterOptions['orderByDirection']) ? " ORDER BY " . $filterOptions['orderByFilter'] . ' ' . $filterOptions['orderByDirection']: '';
 
         $stashs = new Stashs((new Connection)->getPdo());
 
@@ -112,7 +113,7 @@ class StashsController
         return $countriesStashs;
     }
 
-    public function controlsRules(array $stashPost): array
+    public function controlsRules(array $stashPost, Stash $stash): array
     {
         $errors = [];
 
@@ -129,6 +130,26 @@ class StashsController
             foreach($stashItems as $key => $item) {
                 if ($itemPost === '' && $keyPost === $key) {
                     $errors['blank_' . $key] = '<li class="error">' . $item . ' est obligatoire sur la planque</li>';
+                }
+            }
+        }
+
+        // Vérifie l'unicité du champs CodeName
+        foreach($this->getStashsList('id_stash') as $stash) {
+            if ($stash->getCode_name() == $stashPost['codenameStash']) {
+                $errors['uniqueCodeName'] = '<li class="error">Le <b>CODE NAME</b> saisi existe déjà</li>';
+            }
+        }
+
+        // Vérifie que si on change le pays de la planque, celle ci n'est pas affecté à une mission, sinon message d'erreur
+        if ($stashPost['countryStash'] !== $stash->getCountry()) {
+            if (!empty($stash->getMissions())) {
+                foreach ($stash->getMissions() as $mission) {
+                    if ($stashPost['countryStash'] !== $mission->getCountry()) {
+                        $errors['countryChange_' . $stash->getId_stash() . '-' . $mission->getId_mission()] = 
+                        "<li class='error'>Cette planque est affectée à la mission <b>" . strtoupper($mission->getCode_name()) ."</b> dont la pays est <b>" . strtoupper($mission->getCountry()) . 
+                        "</b> or la mission doit avoir sa ou ses planque(s) dans le même pays. Si vous souhaitez vraiment changer le pays, veuillez d'abord la désaffecter de la mission concernée.</li>";
+                    }
                 }
             }
         }

@@ -24,4 +24,10 @@ class AdministratorsController
         }
         return $found;
     }
+
+    public function findAdministrator(int $idAdministrator): Administrator
+    {
+        $administrators = new Administrators((new Connection)->getPdo());
+        return $administrators->findAdministrator($idAdministrator);
+    }
 }

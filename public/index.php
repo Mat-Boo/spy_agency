@@ -11,7 +11,7 @@ $router
     ->match('/login', 'auth/login', 'login')
     ->match('/logout', 'auth/logout', 'logout')
 //ADMIN
-    ->get('/admin', 'admin/index', 'admin')
+    ->get('/admin', 'home/index', 'admin')
     // Gestion des missions
     ->match('/admin/mission', 'mission/index', 'admin_mission')
     ->match('/admin/mission/[i:id]/edit', 'admin/mission/edit', 'admin_mission_edit')

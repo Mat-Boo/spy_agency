@@ -1,7 +1,7 @@
 <?php
 
 $title = 'Spy Agency - Missions - Admin';
-$styleFolder = '../../../styles/';
+$styleFolder = '../../../assets/styles/';
 $styleSubFolder = 'admin/mission/editMission_';
 
 use App\Controllers\AgentsSpecialitiesController;
@@ -73,6 +73,7 @@ if (!empty($params)) {
         }
     }
 }
+
 ?>
 
 <div class="missionEdit">

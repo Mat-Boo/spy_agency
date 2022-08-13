@@ -1,6 +1,6 @@
 <?php
 $title = 'Spy Agency - Administration';
-$styleFolder = '../../../styles/';
+$styleFolder = '../../../assets/styles/';
 $styleSubFolder = 'admin/';
 
 ?>

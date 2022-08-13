@@ -2,7 +2,7 @@
 $personItem = substr($match['name'], 6);
 
 $title = 'Spy Agency - ' . ($personItem === 'target' ? 'Cible' : ucfirst($personItem)) . 's - Admin';
-$styleFolder = '../../../styles/';
+$styleFolder = '../../../assets/styles/';
 $styleSubFolder = 'admin/person/';
 
 use App\Controllers\AgentsSpecialitiesController;
@@ -48,6 +48,7 @@ foreach($personsListFiltered as $person) {
 
 <script>
     let emptyGet = <?= json_encode(empty($_GET) || isset($_GET['deleted']) || isset($_GET['updated']) || isset($_GET['created'])) ?>;
+    let personItem = <?= json_encode($personItem) ?>
 </script>
 
 <?php if (isset($_GET['deleted'])): ?>
@@ -106,6 +107,48 @@ foreach($personsListFiltered as $person) {
         </button>
     </div>
     <div class="filtersAndApplyBtn">
+    <div class="orderBy">
+            <div class="orderByFilterBox">
+                <label for="orderByFilter" class="orderByLabel">Tri par</label>
+                <select name="orderByFilter" id="orderByFilter" class="orderBySelect">
+                    <option value="headerFilter" class="headerSelect">Sélectionnez le tri souhaité</option>
+                    <?php foreach([
+                        'code_name' => 'Code Name',
+                        'firstname' => 'Prénom',
+                        'lastname' => 'nom',
+                        'nationality' => 'Nationalité',
+                        'birthdate' => 'Date de naissance'
+                        ] as $key => $item) : ?>
+                        <option
+                            value="<?= $key ?>"
+                            <?php if (isset($_GET['orderByFilter'])): ?>
+                                <?php if ($key === $_GET['orderByFilter']): ?>
+                                    selected
+                                <?php endif ?>
+                            <?php endif ?>
+                        ><?= $item ?></option>
+                    <?php endforeach ?>
+                </select>
+            </div>
+            <div class="orderByDirectionBox">
+                <?php foreach(['ASC' => 'Ascendant ↓', 'DESC' => 'Descendant ↑'] as $key => $value): ?>
+                    <div class="orderByRadio">
+                        <input
+                            type="radio"
+                            id=<?= $key ?>
+                            name="orderByDirection"
+                            value=<?= $key ?>
+                            <?php if (isset($_POST['orderByDirection'])): ?>
+                                <?php if ('ASC' === $_POST['orderByDirection']): ?>
+                                    checked
+                                <?php endif ?>
+                            <?php endif ?>
+                        >
+                        <label for=<?= $key ?>><?= $value ?></label>
+                    </div>
+                <?php endforeach ?>
+            </div>
+        </div>
         <div class="filters">
             <div class="filtersItemAndTitle">
                 <span class="filtersBlockTitle"><?= $personItem === 'target' ? 'Cible' : ucfirst($personItem) ?></span>
@@ -116,7 +159,7 @@ foreach($personsListFiltered as $person) {
                             <input type="text" id="codenamePersonFilter" name="codenamePersonFilter" class="filter  " value="<?= isset($_GET['codenamePersonFilter']) ? $_GET['codenamePersonFilter'] : '' ?>">
                         </div>
                         <div class="labelAndFilter">
-                            <label for="personfilter" class="filterTitle">Nom</label>
+                            <label for="personfilter" class="filterTitle">Nom Prénom</label>
                             <select name="personFilter[]" id="personFilter" multiple class="filter">
                                 <option value="headerFilter" disabled class="headerSelect">Sélectionnez <?= $personItem === 'target' ? 'une' : 'un' ?> ou plusieurs <?= $personItem === 'target' ? 'Cible' : $personItem ?>(s)</option>
                                 <?php foreach($personsList as $person) : ?>
