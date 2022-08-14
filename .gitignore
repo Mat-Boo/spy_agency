@@ -2,4 +2,4 @@
 /vendor
 
 # local env files
-.env
+# .env
