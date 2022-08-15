@@ -79,7 +79,7 @@ $missionsController->hydrateSpecialities($specialitiesListFiltered);
             <div class="orderByFilterBox">
                 <label for="orderByFilter" class="orderByLabel">Tri par</label>
                 <select name="orderByFilter" id="orderByFilter" class="orderBySelect filter">
-                    <option value="headerFilter" class="headerSelect">Sélectionnez le tri souhaité</option>
+                    <option value="" class="headerSelect">Sélectionnez le tri souhaité</option>
                     <?php foreach([
                         'name' => 'Spécialité'
                         ] as $key => $item) : ?>

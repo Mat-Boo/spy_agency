@@ -144,6 +144,6 @@ cancelFiltersBtn.addEventListener('click', () => {
     })
     if (appliedFilters) {
         filtersBox.reset();
-       /*  applyFiltersBtn.click(); */
+        applyFiltersBtn.click();
     }
 })

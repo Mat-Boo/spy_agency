@@ -54,7 +54,7 @@ class StashsController
         $filterConditions['countryStashFilter'] = isset($filterOptions['countryStashFilter']) && strlen($filterOptions['countryStashFilter']) > 0 ? " AND country = '" . $filterOptions['countryStashFilter'] . "'" : '';
         $filterConditions['typeStashFilter'] = isset($filterOptions['typeStashFilter']) ? " AND type IN (" . $this->convertToStringList($filterOptions['typeStashFilter']) . ")" : '';
         $filterConditions['missionsFilter'] = isset($filterOptions['missionsFilter']) ? " AND id_stash IN (" . implode(",", $missionsFilter) . ")" : '';
-        $filterConditions['orderByfilterAndDirection'] = isset($filterOptions['orderByFilter']) && isset($filterOptions['orderByDirection'])  && $filterOptions['orderByFilter'] !== 'headerFilter' ? " ORDER BY " . $filterOptions['orderByFilter'] . ' ' . $filterOptions['orderByDirection']: '';
+        $filterConditions['orderByfilterAndDirection'] = isset($filterOptions['orderByFilter']) && isset($filterOptions['orderByDirection'])  && $filterOptions['orderByFilter'] !== '' ? " ORDER BY " . $filterOptions['orderByFilter'] . ' ' . $filterOptions['orderByDirection']: '';
 
         $stashs = new Stashs((new Connection)->getPdo());
 
