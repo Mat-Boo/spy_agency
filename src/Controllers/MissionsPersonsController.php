@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Connection;
-use App\model\MissionsPersons;
+use App\Model\MissionsPersons;
 
 class MissionsPersonsController
 {

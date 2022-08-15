@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Connection;
-use App\model\Specialities;
+use App\Model\Specialities;
 use App\Model\Speciality;
 
 class SpecialitiesController

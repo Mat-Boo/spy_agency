@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Connection;
-use App\model\Countries;
+use App\Model\Countries;
 
 class CountriesController
 {

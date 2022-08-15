@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Connection;
-use App\model\AgentsSpecialities;
+use App\Model\AgentsSpecialities;
 
 class AgentsSpecialitiesController
 {

@@ -3,10 +3,8 @@
 namespace App\Controllers;
 
 use App\Connection;
-use App\model\Stashs;
-use App\model\Stash;
-use Exception;
-use PDOException;
+use App\Model\Stashs;
+use App\Model\Stash;
 
 class StashsController
 {

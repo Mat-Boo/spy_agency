@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Connection;
-use App\model\Person;
+use App\Model\Person;
 use App\Model\Persons;
 
 class PersonsController

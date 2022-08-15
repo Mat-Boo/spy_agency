@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Connection;
 use App\Model\Administrator;
-use App\model\Administrators;
+use App\Model\Administrators;
 
 class AdministratorsController
 {
