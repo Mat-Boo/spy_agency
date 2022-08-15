@@ -68,7 +68,7 @@ class Stashs
             code_name = :code_name,
             address = :address,
             country = :country,
-            type = :type
+            `type` = :type
             WHERE id_stash = :id_stash
         ");
         $updateStash = $query->execute(
@@ -103,7 +103,7 @@ class Stashs
             code_name = :code_name,
             address = :address,
             country = :country,
-            type = :type
+            `type` = :type
         ");
         $createStash = $query->execute(
             [

@@ -19,8 +19,8 @@ class Missions
     {
         if (!is_null($this->pdo)) {
             $stmt = $this->pdo->query(
-                'SELECT Mission.id_mission, code_name, title, description, country, type,
-                status, start_date, end_date, Speciality.name AS speciality
+                'SELECT Mission.id_mission, code_name, title, description, country, `type`,
+                `status`, start_date, end_date, Speciality.name AS speciality
                 FROM Mission
                 INNER JOIN Speciality ON Mission.id_speciality = Speciality.id_speciality
                 ORDER BY start_date, title;'
@@ -37,8 +37,8 @@ class Missions
     {
         if (!is_null($this->pdo)) {
             $stmt = $this->pdo->query( 
-                "SELECT Mission.id_mission, code_name, title, description, country, type,
-                status, start_date, end_date, Speciality.name AS speciality
+                "SELECT Mission.id_mission, code_name, title, description, country, `type`,
+                `status`, start_date, end_date, Speciality.name AS speciality
                 FROM Mission
                 INNER JOIN Speciality ON Mission.id_speciality = Speciality.id_speciality"
                 . implode('', $filterConditions)
@@ -54,8 +54,8 @@ class Missions
     public function findMission(int $idMission): Mission
     {
         $query = $this->pdo->prepare(
-            'SELECT Mission.id_mission, code_name, title, description, country, type,
-            status, start_date, end_date, Speciality.name AS speciality
+            'SELECT Mission.id_mission, code_name, title, description, country, `type`,
+            `status`, start_date, end_date, Speciality.name AS speciality
             FROM Mission
             INNER JOIN Speciality ON Mission.id_speciality = Speciality.id_speciality
             WHERE id_mission = :id_mission');
@@ -75,8 +75,8 @@ class Missions
             title = :title,
             description = :description,
             country = :country,
-            type = :type,
-            status = :status,
+            `type` = :type,
+            `status` = :status,
             start_date = :start_date,
             end_date = :end_date,
             id_speciality = :id_speciality
@@ -149,8 +149,8 @@ class Missions
             title = :title,
             description = :description,
             country = :country,
-            type = :type,
-            status = :status,
+            `type` = :type,
+            `status` = :status,
             start_date = :start_date,
             end_date = :end_date,
             id_speciality = :id_speciality
