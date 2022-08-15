@@ -35,7 +35,7 @@ class PersonsController
         $filterConditions['startBirthdatePersonFilter'] = isset($filterOptions['startBirthdatePersonFilter']) && strlen($filterOptions['startBirthdatePersonFilter']) > 0 ? " AND birthdate >= '" . $filterOptions['startBirthdatePersonFilter'] . "'" : '';
         $filterConditions['endBirthdatePersonFilter'] = isset($filterOptions['endBirthdatePersonFilter']) && strlen($filterOptions['endBirthdatePersonFilter']) > 0 ? " AND birthdate <= '" . $filterOptions['endBirthdatePersonFilter'] . "'" : '';
         $filterConditions['missionsFilter'] = isset($filterOptions['missionsFilter']) ? " AND id IN (" . implode(",", $missionsFilter) . ")" : '';
-        $filterConditions['orderByfilterAndDirection'] = isset($filterOptions['orderByFilter']) && isset($filterOptions['orderByDirection']) ? " ORDER BY " . $filterOptions['orderByFilter'] . ' ' . $filterOptions['orderByDirection']: '';
+        $filterConditions['orderByfilterAndDirection'] = isset($filterOptions['orderByFilter']) && isset($filterOptions['orderByDirection'])  && $filterOptions['orderByFilter'] !== 'headerFilter' ? " ORDER BY " . $filterOptions['orderByFilter'] . ' ' . $filterOptions['orderByDirection']: '';
 
         $persons = new Persons((new Connection)->getPdo(), $personItem);
 

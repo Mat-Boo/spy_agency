@@ -110,7 +110,7 @@ foreach($personsListFiltered as $person) {
     <div class="orderBy">
             <div class="orderByFilterBox">
                 <label for="orderByFilter" class="orderByLabel">Tri par</label>
-                <select name="orderByFilter" id="orderByFilter" class="orderBySelect">
+                <select name="orderByFilter" id="orderByFilter" class="orderBySelect filter">
                     <option value="headerFilter" class="headerSelect">Sélectionnez le tri souhaité</option>
                     <?php foreach([
                         'code_name' => 'Code Name',
@@ -138,8 +138,9 @@ foreach($personsListFiltered as $person) {
                             id=<?= $key ?>
                             name="orderByDirection"
                             value=<?= $key ?>
-                            <?php if (isset($_POST['orderByDirection'])): ?>
-                                <?php if ('ASC' === $_POST['orderByDirection']): ?>
+                            class="filter"
+                            <?php if (isset($_GET['orderByDirection'])): ?>
+                                <?php if ($key === $_GET['orderByDirection']): ?>
                                     checked
                                 <?php endif ?>
                             <?php endif ?>
