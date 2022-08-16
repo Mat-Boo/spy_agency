@@ -80,7 +80,7 @@ class MissionsController
         }
 
         $filterConditions = [];
-        $filterConditions['missionFilter'] = isset($filterOptions['idMissionFilter']) ? " WHERE Mission.id_mission IN (" . implode(",", $filterOptions['idMissionFilter']) . ")" : " WHERE Mission.id_mission IN (" . implode(",", $missionIds) . ")";
+/*         $filterConditions['missionFilter'] = isset($filterOptions['idMissionFilter']) ? " WHERE Mission.id_mission IN (" . implode(",", $filterOptions['idMissionFilter']) . ")" : " WHERE Mission.id_mission IN (" . implode(",", $missionIds) . ")";
         $filterConditions['countryMissionFilter'] = isset($filterOptions['countryMissionFilter']) && strlen($filterOptions['countryMissionFilter']) > 0 ? " AND country = '" . $filterOptions['countryMissionFilter'] . "'" : '';
         $filterConditions['typeMissionFilter'] = isset($filterOptions['typeMissionFilter']) ? " AND type IN (" . $this->convertToStringList($filterOptions['typeMissionFilter']) . ")" : '';
         $filterConditions['specialityMissionFilter'] = isset($filterOptions['specialityMissionFilter']) ? " AND Mission.id_speciality IN (" . implode(",", $filterOptions['specialityMissionFilter']) . ")" : '';
@@ -91,11 +91,58 @@ class MissionsController
         $filterConditions['contactFilter'] = isset($filterOptions['contactFilter']) ? " AND Mission.id_mission IN (" . implode(",", $personsFilters['contactsListFiltered']) . ")" :'';
         $filterConditions['targetFilter'] = isset($filterOptions['targetFilter']) ? " AND Mission.id_mission IN (" . implode(",", $personsFilters['targetsListFiltered']) . ")" :'';
         $filterConditions['stashFilter'] = isset($filterOptions['stashFilter']) ? " AND Mission.id_mission IN (" . implode(",", $stashsFilters['stashsListFiltered']) . ")" :'';
-        $filterConditions['orderByfilterAndDirection'] = isset($filterOptions['orderByFilter']) && isset($filterOptions['orderByDirection']) && strlen($filterOptions['orderByFilter']) > 0 ? " ORDER BY " . $filterOptions['orderByFilter'] . ' ' . $filterOptions['orderByDirection']: '';
+        $filterConditions['orderByfilterAndDirection'] = isset($filterOptions['orderByFilter']) && isset($filterOptions['orderByDirection']) && strlen($filterOptions['orderByFilter']) > 0 ? " ORDER BY " . $filterOptions['orderByFilter'] . ' ' . $filterOptions['orderByDirection']: ''; */
+
+        $filterSort = '';
+        if (isset($filterOptions['idMissionFilter'])) {
+            $filterConditions[] =  "Mission.id_mission IN (" . implode(",", $filterOptions['idMissionFilter']) . ")";
+        }
+        if (isset($filterOptions['countryMissionFilter']) && strlen($filterOptions['countryMissionFilter']) > 0) {
+            $filterConditions[] = "country = '" . $filterOptions['countryMissionFilter'] . "'";
+        }
+        if (isset($filterOptions['typeMissionFilter'])) {
+            $filterConditions[] = "type IN (" . $this->convertToStringList($filterOptions['typeMissionFilter']) . ")";
+        }
+
+        if (isset($filterOptions['specialityMissionFilter'])) {
+            $filterConditions[] = "Mission.id_speciality IN (" . implode(",", $filterOptions['specialityMissionFilter']) . ")";
+        }
+
+        if (isset($filterOptions['statusMissionFilter'])) {
+            $filterConditions[] = "status IN (" . $this->convertToStringList($filterOptions['statusMissionFilter']) . ")";
+        }
+
+        if (isset($filterOptions['startDateMissionFilter']) && strlen($filterOptions['startDateMissionFilter']) > 0) {
+            $filterConditions[] = "start_date >= '" . $filterOptions['startDateMissionFilter'] . "'";
+        }
+
+        if (isset($filterOptions['endDateMissionFilter']) && strlen($filterOptions['endDateMissionFilter']) > 0) {
+            $filterConditions[] = "end_date <= '" . $filterOptions['endDateMissionFilter'] . "'";
+        }
+
+        if (isset($filterOptions['agentFilter'])) {
+            $filterConditions[] = "Mission.id_mission IN (" . implode(",", $personsFilters['agentsListFiltered']) . ")";
+        }
+
+        if (isset($filterOptions['contactFilter'])) {
+            $filterConditions[] = "Mission.id_mission IN (" . implode(",", $personsFilters['contactsListFiltered']) . ")";
+        }
+
+        if (isset($filterOptions['targetFilter'])) {
+            $filterConditions[] = "Mission.id_mission IN (" . implode(",", $personsFilters['targetsListFiltered']) . ")";
+        }
+
+        if (isset($filterOptions['stashFilter'])) {
+            $filterConditions[] = "Mission.id_mission IN (" . implode(",", $stashsFilters['stashsListFiltered']) . ")";
+        }
+
+        if (isset($filterOptions['orderByFilter']) && isset($filterOptions['orderByDirection']) && strlen($filterOptions['orderByFilter']) > 0) {
+            $filterSort = $filterOptions['orderByFilter'] . ' ' . $filterOptions['orderByDirection'];
+        }
 
         $missions = new Missions((new Connection)->getPdo());
 
-        return $missions->filterMissions($filterConditions);
+        return $missions->filterMissions($filterConditions, $filterSort);
     }
 
     public function findMission(int $idMission): Mission

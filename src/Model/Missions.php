@@ -33,7 +33,7 @@ class Missions
         return $missions;
     }
 
-    public function filterMissions(array $filterConditions): array
+    public function filterMissions(array $filterConditions, string $filterSort): array
     {
         /* if (!is_null($this->pdo)) {
             $stmt = $this->pdo->query( 
@@ -51,11 +51,30 @@ class Missions
         }
         return $missions; */
         
-        $sql = "SELECT Mission.id_mission, code_name, title, description, country, `type`,
+        /* $sql = "SELECT Mission.id_mission, code_name, title, description, country, `type`,
         `status`, start_date, end_date, Speciality.name AS speciality
         FROM Mission
         INNER JOIN Speciality ON Mission.id_speciality = Speciality.id_speciality"
-        . implode('', $filterConditions);
+        . implode('', $filterConditions); */
+
+        $sql = "SELECT Mission.id_mission, code_name, title, description, country, `type`,
+        `status`, start_date, end_date, Speciality.name AS speciality
+        FROM Mission
+        INNER JOIN Speciality ON Mission.id_speciality = Speciality.id_speciality";
+
+        if (count($filterConditions) > 0) {
+            $sql .= " WHERE " . $filterConditions[0];
+        }
+
+        if (count($filterConditions) > 1) {
+            for ($i = 1 ; $i < count($filterConditions) ; $i++) {
+                $sql .= " AND " . $filterConditions[$i];
+            }
+        }
+
+        if (strlen($filterSort) > 0) {
+            $sql .= " ORDER BY " . $filterSort;
+        }
         
         $missions = $this->pdo->query($sql, PDO::FETCH_CLASS, Mission::class)->fetchAll();
 
