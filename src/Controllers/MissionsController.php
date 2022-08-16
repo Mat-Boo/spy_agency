@@ -93,7 +93,6 @@ class MissionsController
         $filterConditions['stashFilter'] = isset($filterOptions['stashFilter']) ? " AND Mission.id_mission IN (" . implode(",", $stashsFilters['stashsListFiltered']) . ")" :'';
         $filterConditions['orderByfilterAndDirection'] = isset($filterOptions['orderByFilter']) && isset($filterOptions['orderByDirection']) && strlen($filterOptions['orderByFilter']) > 0 ? " ORDER BY " . $filterOptions['orderByFilter'] . ' ' . $filterOptions['orderByDirection']: '';
 
-
         $missions = new Missions((new Connection)->getPdo());
 
         return $missions->filterMissions($filterConditions);

@@ -35,7 +35,7 @@ class Missions
 
     public function filterMissions(array $filterConditions): array
     {
-        if (!is_null($this->pdo)) {
+        /* if (!is_null($this->pdo)) {
             $stmt = $this->pdo->query( 
                 "SELECT Mission.id_mission, code_name, title, description, country, `type`,
                 `status`, start_date, end_date, Speciality.name AS speciality
@@ -44,10 +44,21 @@ class Missions
                 . implode('', $filterConditions)
             );
         }
+
         $missions = [];
         while ($mission = $stmt->fetchObject(Mission::class)) {
             $missions[] = $mission;
         }
+        return $missions; */
+        
+        $sql = "SELECT Mission.id_mission, code_name, title, description, country, `type`,
+        `status`, start_date, end_date, Speciality.name AS speciality
+        FROM Mission
+        INNER JOIN Speciality ON Mission.id_speciality = Speciality.id_speciality"
+        . implode('', $filterConditions);
+        
+        $missions = $this->pdo->query($sql, PDO::FETCH_CLASS, Mission::class)->fetchAll();
+
         return $missions;
     }
 
