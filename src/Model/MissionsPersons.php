@@ -18,7 +18,7 @@ class MissionsPersons
 
     public function getMissionsPersonsLists(): array
     {
-        if (!is_null($this->pdo)) {
+        /* if (!is_null($this->pdo)) {
             $stmt = $this->pdo->query(
                 "SELECT id_mission, id
                 FROM Mission" . $this->personItem
@@ -27,7 +27,12 @@ class MissionsPersons
         $missionsPersons = [];
         while ($missionPerson = $stmt->fetchObject(MissionPerson::class)) {
             $missionsPersons[] = $missionPerson;
-        }
+        } */
+
+        $sql = "SELECT id_mission, id FROM Mission" . $this->personItem;
+
+        $missionsPersons = $this->pdo->query($sql, PDO::FETCH_CLASS, MissionPerson::class)->fetchAll();
+
         return $missionsPersons;
     }
 
@@ -63,7 +68,7 @@ class MissionsPersons
 
     public function filterPersons(array $filterOptions): array
     {
-        if (!is_null($this->pdo)) {
+        /* if (!is_null($this->pdo)) {
             $personFilter = isset($filterOptions[$this->personItem . 'Filter']) ? " WHERE id IN (" . implode(",", $filterOptions[$this->personItem . 'Filter']) . ")" : '';
 
             $stmt = $this->pdo->query(
@@ -75,14 +80,24 @@ class MissionsPersons
             while (${'missionIdsFrom' . $this->personItem} = $stmt->fetchColumn()) {
                 ${'missionIdsFrom' . $this->personItem . 's'}[] = ${'missionIdsFrom' . $this->personItem};
             }
+        } */
+
+        $personFilter = isset($filterOptions[$this->personItem . 'Filter']) ? " WHERE id IN (" . implode(",", $filterOptions[$this->personItem . 'Filter']) . ")" : '';
+        $sql = "SELECT id_mission FROM Mission" . $this->personItem . $personFilter;
+        
+        ${'missionIdsFrom' . $this->personItem . 's'} = $this->pdo->query($sql, PDO::FETCH_COLUMN, 0)->fetchAll();
+
+        if (empty(${'missionIdsFrom' . $this->personItem . 's'})) {
+            ${'missionIdsFrom' . $this->personItem . 's'} = [0];
         }
+
         return ${'missionIdsFrom' . $this->personItem . 's'};
     }
 
     public function filterMissions(array $filterOptions): array
     {
-        if (!is_null($this->pdo)) {
-            $MissionFilter = isset($filterOptions['missionsFilter']) ? " WHERE id_mission IN (" . implode(",", $filterOptions['missionsFilter']) . ")" : '';
+        /* if (!is_null($this->pdo)) {
+            $missionFilter = isset($filterOptions['missionsFilter']) ? " WHERE id_mission IN (" . implode(",", $filterOptions['missionsFilter']) . ")" : '';
 
             $stmt = $this->pdo->query(
                 "SELECT id
@@ -93,7 +108,13 @@ class MissionsPersons
             while ($personIdsFromMission = $stmt->fetchColumn()) {
                 $personIdsFromMissions[] = $personIdsFromMission;
             }
-        }
+        } */
+
+        $missionFilter = isset($filterOptions['missionsFilter']) ? " WHERE id_mission IN (" . implode(",", $filterOptions['missionsFilter']) . ")" : '';
+        $sql = "SELECT id FROM Mission" . ucfirst($this->personItem) . $missionFilter;
+        
+        $personIdsFromMissions = $this->pdo->query($sql, PDO::FETCH_COLUMN, 0)->fetchAll();
+
         return $personIdsFromMissions;
     }
 

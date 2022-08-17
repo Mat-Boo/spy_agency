@@ -271,7 +271,7 @@ $missionsStashsController->hydrateMissions($missionsListFiltered, $stashsList, $
                         <div class="filtersItem">
                             <div class="labelAndFilter">
                                 <label for="stashFilter" class="filterTitle">Nom Prénom</label>
-                                <select name="<?= $person . 'Filter[]' ?>" id="<?= $person . 'Filter[]' ?>" multiple class="<?= 'filter ' . $person . 'Filter' ?>">
+                                <select name="<?= $person . 'Filter[]' ?>" id="<?= $person . 'Filter[]' ?>" multiple class="<?= 'filter filterSup ' . $person . 'Filter' ?>">
                                     <option value="headerFilter" disabled class="headerSelect">Sélectionnez <?= $person === 'target' ? 'une' : 'un' ?> ou plusieurs <?= $person === 'target' ? 'cible' : $person ?>(s)</option>
                                     <?php foreach($personsLists[$person . 'sList'] as ${$person}) : ?>
                                         <option 
@@ -293,7 +293,7 @@ $missionsStashsController->hydrateMissions($missionsListFiltered, $stashsList, $
                     <div class="filtersItem">
                         <div class="labelAndFilter">
                             <label for="stashFilter" class="filterTitle">Pays | Adresse | Type</label>
-                            <select name="stashFilter[]" id="stashFilter" multiple class="filter stashFilter">
+                            <select name="stashFilter[]" id="stashFilter" multiple class="filter filterSup stashFilter">
                                 <option value="headerFilter" disabled class="headerSelect">Sélectionnez une ou plusieurs planque(s)</option>
                                 <?php foreach($stashsList as $stash) : ?>
                                         <option

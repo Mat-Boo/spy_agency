@@ -17,7 +17,7 @@ class Specialities
 
     public function getSpecialitiesList($sortBy)
     {
-        if (!is_null($this->pdo)) {
+        /* if (!is_null($this->pdo)) {
             $stmt = $this->pdo->query(
                 "SELECT *
                 FROM Speciality
@@ -27,13 +27,17 @@ class Specialities
         $specialities = [];
         while ($speciality = $stmt->fetchObject(Speciality::class)) {
             $specialities[] = $speciality;
-        }
+        } */
+
+        $sql = "SELECT * FROM Speciality ORDER BY " . $sortBy;
+        $specialities = $this->pdo->query($sql, PDO::FETCH_CLASS, Speciality::class)->fetchAll();
+
         return $specialities;
     }
 
     public function filterSpecialities(array $filterConditions): array
     {
-        if (!is_null($this->pdo)) {
+        /* if (!is_null($this->pdo)) {
             $stmt = $this->pdo->query( 
                 "SELECT id_speciality, name
                 FROM Speciality"
@@ -43,7 +47,11 @@ class Specialities
         $specialities = [];
         while ($speciality = $stmt->fetchObject(Speciality::class)) {
             $specialities[] = $speciality;
-        }
+        } */
+
+        $sql = "SELECT id_speciality, name FROM Speciality" . implode('', $filterConditions);
+        $specialities = $this->pdo->query($sql, PDO::FETCH_CLASS, Speciality::class)->fetchAll();
+
         return $specialities;
     }
 

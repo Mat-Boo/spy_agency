@@ -16,7 +16,7 @@ class AgentsSpecialities
 
     public function getAgentsSpecialitiesList(): array
     {
-        if (!is_null($this->pdo)) {
+        /* if (!is_null($this->pdo)) {
             $stmt = $this->pdo->query(
                 "SELECT id, id_speciality
                 FROM AgentSpeciality"
@@ -25,7 +25,12 @@ class AgentsSpecialities
         $agentsSpecialities = [];
         while ($agentSpeciality = $stmt->fetchObject(AgentSpeciality::class)) {
             $agentsSpecialities[] = $agentSpeciality;
-        }
+        } */
+
+        $sql = "SELECT id, id_speciality FROM AgentSpeciality";
+
+        $agentsSpecialities = $this->pdo->query($sql, PDO::FETCH_CLASS, AgentSpeciality::class)->fetchAll();
+        
         return $agentsSpecialities;
     }
 
@@ -46,7 +51,7 @@ class AgentsSpecialities
 
     public function filterSpecialities(array $filterOptions): array
     {
-        if (!is_null($this->pdo)) {
+        /* if (!is_null($this->pdo)) {
             $specialityFilter = isset($filterOptions['specialitiesPersonFilter']) ? " WHERE id_speciality IN (" . implode(",", $filterOptions['specialitiesPersonFilter']) . ")" : '';
 
             $stmt = $this->pdo->query(
@@ -58,7 +63,17 @@ class AgentsSpecialities
             while ($agentIdsFromSpeciality = $stmt->fetchColumn()) {
                 $agentIdsFromSpecialities[] = $agentIdsFromSpeciality;
             }
+        } */
+
+        $specialityFilter = isset($filterOptions['specialitiesPersonFilter']) ? " WHERE id_speciality IN (" . implode(",", $filterOptions['specialitiesPersonFilter']) . ")" : '';
+        $sql = "SELECT id FROM AgentSpeciality" . $specialityFilter;
+
+        $agentIdsFromSpecialities = $this->pdo->query($sql, PDO::FETCH_COLUMN, 0)->fetchAll();
+
+        if (empty($agentIdsFromSpecialities)) {
+            $agentIdsFromSpecialities = [0];
         }
+
         return $agentIdsFromSpecialities;
     }
 
@@ -88,7 +103,7 @@ class AgentsSpecialities
 
     public function filterAgents(array $filterOptions): array
     {
-        if (!is_null($this->pdo)) {
+        /* if (!is_null($this->pdo)) {
             $agentFilter = isset($filterOptions['agentsFilter']) ? " WHERE id IN (" . implode(",", $filterOptions['agentsFilter']) . ")" : '';
 
             $stmt = $this->pdo->query(
@@ -100,7 +115,13 @@ class AgentsSpecialities
             while ($specialityIdsFromAgent = $stmt->fetchColumn()) {
                 $specialityIdsFromAgents[] = $specialityIdsFromAgent;
             }
-        }
+        } */
+
+        $agentFilter = isset($filterOptions['agentsFilter']) ? " WHERE id IN (" . implode(",", $filterOptions['agentsFilter']) . ")" : '';
+        $sql = "SELECT id_speciality FROM AgentSpeciality" . $agentFilter;
+
+        $specialityIdsFromAgents = $this->pdo->query($sql, PDO::FETCH_COLUMN, 0)->fetchAll();
+
         return $specialityIdsFromAgents;
     }
 

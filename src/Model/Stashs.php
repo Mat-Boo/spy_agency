@@ -17,7 +17,7 @@ class Stashs
 
     public function getStashsList(string $sortBy): array
     {
-        if (!is_null($this->pdo)) {
+        /* if (!is_null($this->pdo)) {
             $stmt = $this->pdo->query(
                 'SELECT *
                 FROM Stash
@@ -27,13 +27,18 @@ class Stashs
         $stashs = [];
         while ($stash = $stmt->fetchObject(Stash::class)) {
             $stashs[] = $stash;
-        }
+        } */
+
+        $sql = 'SELECT * FROM Stash ORDER BY ' . $sortBy;
+
+        $stashs = $this->pdo->query($sql, PDO::FETCH_CLASS, Stash::class)->fetchAll();
+
         return $stashs;
     }
 
     public function filterStashs(array $filterConditions): array
     {
-        if (!is_null($this->pdo)) {
+        /* if (!is_null($this->pdo)) {
             $stmt = $this->pdo->query( 
                 "SELECT *
                 FROM Stash"
@@ -43,7 +48,12 @@ class Stashs
         $stashs = [];
         while ($stash = $stmt->fetchObject(Stash::class)) {
             $stashs[] = $stash;
-        }
+        } */
+
+        $sql = "SELECT * FROM Stash" . implode('', $filterConditions);
+
+        $stashs = $this->pdo->query($sql, PDO::FETCH_CLASS, Stash::class)->fetchAll();
+
         return $stashs;
     }
 

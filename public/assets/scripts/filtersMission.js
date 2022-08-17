@@ -15,6 +15,7 @@ let filtersSupOpened = false;
 let morefiltersBtn = document.querySelector('.morefiltersBtn');
 let filtersSup = document.querySelector('.filtersSup');
 let chevronDownMoreFilters = document.querySelector('.chevronDownMoreFilters');
+let filterSupSelects = document.querySelectorAll('.filterSup');
 
 let margins = 20;
 let heightHeaderFilters = 68;
@@ -111,14 +112,25 @@ morefiltersBtn.addEventListener('click', () => {
     }
 })
 
+
 if (!emptyGet) {
     filtersBox.style.transition = 'none';
-    filtersAndApplyBtn.style.transition = 'none';
-    chevronDownFilters.style.transition = 'none';
     timeTransition = 0;
-    openFilters();
+    headerFilters.style.marginLeft= 0;
+    filtersBox.style.width = '90%';
+    filtersAndApplyBtn.style.height = heightFilters + margins + heightMoreFiltersBtn + heightApplyFiltersBtn + 'px';
+    chevronDownFilters.style.transform = 'rotate(-180deg)';
+    cancelFiltersBtn.style.display = 'flex';
+
+    filtersOpened = true;
+    filterSupSelects.forEach((select) => {
+        if (select.value !== '') {
+            openMoreFilters();
+        }
+    })
     timeTransition = 500;
 }
+
 
 cancelFiltersBtn.addEventListener('click', () => {
     let appliedFilters = false;

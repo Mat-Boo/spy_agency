@@ -16,7 +16,7 @@ class MissionsStashs
 
     public function getMissionsStashsList(): array
     {
-        if (!is_null($this->pdo)) {
+        /* if (!is_null($this->pdo)) {
             $stmt = $this->pdo->query(
                 "SELECT id_mission, id_stash
                 FROM MissionStash"
@@ -25,7 +25,11 @@ class MissionsStashs
         $missionsStashs = [];
         while ($missionStash = $stmt->fetchObject(MissionStash::class)) {
             $missionsStashs[] = $missionStash;
-        }
+        } */
+
+        $sql = "SELECT id_mission, id_stash FROM MissionStash";
+
+        $missionsStashs = $this->pdo->query($sql, PDO::FETCH_CLASS, MissionStash::class)->fetchAll();
         return $missionsStashs;
     }
 
@@ -46,7 +50,7 @@ class MissionsStashs
 
     public function filterStashs(array $filterOptions): array
     {
-        if (!is_null($this->pdo)) {
+        /* if (!is_null($this->pdo)) {
             $stashFilter = isset($filterOptions['stashFilter']) ? " WHERE id_stash IN (" . implode(",", $filterOptions['stashFilter']) . ")" : '';
 
             $stmt = $this->pdo->query(
@@ -54,10 +58,20 @@ class MissionsStashs
                 FROM MissionStash"
                 . $stashFilter
             );
+
+            
             $missionIdsFromStashs = [];
             while ($missionIdsFromStash = $stmt->fetchColumn()) {
                 $missionIdsFromStashs[] = $missionIdsFromStash;
             }
+        } */
+        
+        $stashFilter = isset($filterOptions['stashFilter']) ? " WHERE id_stash IN (" . implode(",", $filterOptions['stashFilter']) . ")" : '';
+        $sql = "SELECT id_mission FROM MissionStash" . $stashFilter;
+        $missionIdsFromStashs = $this->pdo->query($sql, PDO::FETCH_COLUMN, 0)->fetchAll();
+
+        if (empty($missionIdsFromStashs)) {
+            $missionIdsFromStashs = [0];
         }
         return $missionIdsFromStashs;
     }

@@ -19,7 +19,7 @@ class Persons
 
     public function getPersonsList($sortBy)
     {
-        if (!is_null($this->pdo)) {
+        /* if (!is_null($this->pdo)) {
             $stmt = $this->pdo->query(
                 "SELECT *
                 FROM " . ucfirst($this->personItem) . "
@@ -29,13 +29,18 @@ class Persons
         ${$this->personItem . 's'} = [];
         while (${$this->personItem} = $stmt->fetchObject(Person::class)) {
             ${$this->personItem . 's'}[] = ${$this->personItem};
-        }
+        } */
+
+        $sql = "SELECT * FROM " . ucfirst($this->personItem) . " ORDER BY " . $sortBy;
+
+        ${$this->personItem . 's'} = $this->pdo->query($sql, PDO::FETCH_CLASS, Person::class)->fetchAll();
+        
         return ${$this->personItem . 's'};
     }
 
     public function filterPersons(array $filterConditions): array
     {
-        if (!is_null($this->pdo)) {
+        /* if (!is_null($this->pdo)) {
             $stmt = $this->pdo->query( 
                 "SELECT *
                 FROM " . strtoupper($this->personItem)
@@ -45,7 +50,12 @@ class Persons
         $persons = [];
         while ($person = $stmt->fetchObject(Person::class)) {
             $persons[] = $person;
-        }
+        } */
+
+        $sql = "SELECT * FROM " . strtoupper($this->personItem) . implode('', $filterConditions);
+
+        $persons = $this->pdo->query($sql, PDO::FETCH_CLASS, Person::class)->fetchAll();
+
         return $persons;
     }
 

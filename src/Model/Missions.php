@@ -17,7 +17,7 @@ class Missions
 
     public function getMissionsList(): array
     {
-        if (!is_null($this->pdo)) {
+        /* if (!is_null($this->pdo)) {
             $stmt = $this->pdo->query(
                 'SELECT Mission.id_mission, code_name, title, description, country, `type`,
                 `status`, start_date, end_date, Speciality.name AS speciality
@@ -29,11 +29,19 @@ class Missions
         $missions = [];
         while ($mission = $stmt->fetchObject(Mission::class)) {
             $missions[] = $mission;
-        }
+        } */
+
+        $sql = 'SELECT Mission.id_mission, code_name, title, description, country, `type`,
+        `status`, start_date, end_date, Speciality.name AS speciality
+        FROM Mission
+        INNER JOIN Speciality ON Mission.id_speciality = Speciality.id_speciality
+        ORDER BY start_date, title;';
+
+        $missions = $this->pdo->query($sql, PDO::FETCH_CLASS, Mission::class)->fetchAll();
         return $missions;
     }
 
-    public function filterMissions(array $filterConditions, string $filterSort): array
+    public function filterMissions(array $filterConditions/* , string $filterSort */): array
     {
         /* if (!is_null($this->pdo)) {
             $stmt = $this->pdo->query( 
@@ -51,13 +59,13 @@ class Missions
         }
         return $missions; */
         
-        /* $sql = "SELECT Mission.id_mission, code_name, title, description, country, `type`,
+        $sql = "SELECT Mission.id_mission, code_name, title, description, country, `type`,
         `status`, start_date, end_date, Speciality.name AS speciality
         FROM Mission
         INNER JOIN Speciality ON Mission.id_speciality = Speciality.id_speciality"
-        . implode('', $filterConditions); */
+        . implode('', $filterConditions);
 
-        $sql = "SELECT Mission.id_mission, code_name, title, description, country, `type`,
+        /* $sql = "SELECT Mission.id_mission, code_name, title, description, country, `type`,
         `status`, start_date, end_date, Speciality.name AS speciality
         FROM Mission
         INNER JOIN Speciality ON Mission.id_speciality = Speciality.id_speciality";
@@ -74,7 +82,7 @@ class Missions
 
         if (strlen($filterSort) > 0) {
             $sql .= " ORDER BY " . $filterSort;
-        }
+        } */
         
         $missions = $this->pdo->query($sql, PDO::FETCH_CLASS, Mission::class)->fetchAll();
 
@@ -133,7 +141,7 @@ class Missions
 
     public function filterMissionsForSpeciality(array $filterOptions): array
     {
-        if (!is_null($this->pdo)) {
+        /* if (!is_null($this->pdo)) {
             $missionFilter = isset($filterOptions['missionsFilter']) ? " WHERE id_mission IN (" . implode(",", $filterOptions['missionsFilter']) . ")" : '';
 
             $stmt = $this->pdo->query(
@@ -145,7 +153,13 @@ class Missions
             while ($specialityIdsFromMission = $stmt->fetchColumn()) {
                 $specialityIdsFromMissions[] = $specialityIdsFromMission;
             }
-        }
+        } */
+
+        $missionFilter = isset($filterOptions['missionsFilter']) ? " WHERE id_mission IN (" . implode(",", $filterOptions['missionsFilter']) . ")" : '';
+
+        $sql = "SELECT id_speciality FROM Mission" . $missionFilter;
+        $specialityIdsFromMissions = $this->pdo->query($sql, PDO::FETCH_COLUMN, 0)->fetchAll();
+
         return $specialityIdsFromMissions;
     }
 
