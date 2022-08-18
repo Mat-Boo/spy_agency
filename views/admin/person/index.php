@@ -131,7 +131,7 @@ foreach($personsListFiltered as $person) {
                 </select>
             </div>
             <div class="orderByDirectionBox">
-                <?php foreach(['ASC' => 'Ascendant ↓', 'DESC' => 'Descendant ↑'] as $key => $value): ?>
+                <?php foreach(['ASC' => 'Ascendant ↑', 'DESC' => 'Descendant ↓'] as $key => $value): ?>
                     <div class="orderByRadio">
                         <input
                             type="radio"

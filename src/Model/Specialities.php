@@ -35,7 +35,7 @@ class Specialities
         return $specialities;
     }
 
-    public function filterSpecialities(array $filterConditions): array
+    public function filterSpecialities(array $missionIds, string $filterSort): array
     {
         /* if (!is_null($this->pdo)) {
             $stmt = $this->pdo->query( 
@@ -48,17 +48,31 @@ class Specialities
         while ($speciality = $stmt->fetchObject(Speciality::class)) {
             $specialities[] = $speciality;
         } */
+/**********************/
 
-        $sql = "SELECT id_speciality, name FROM Speciality" . implode('', $filterConditions);
+        $sql = "SELECT * FROM Speciality";
+        var_dump($missionIds);
+        if (!empty($missionIds)) {
+            $sql .= " WHERE id_speciality IN (" . implode(",", $missionIds) . ")";
+        }
+
+        if (strlen($filterSort) > 0) {
+            $sql .= " ORDER BY " . $filterSort;
+        }
+
+/*****/
+        /* $sql = "SELECT * FROM Speciality" . implode('', $filterConditions); */
+
         $specialities = $this->pdo->query($sql, PDO::FETCH_CLASS, Speciality::class)->fetchAll();
 
+        var_dump($sql, $specialities);
         return $specialities;
     }
 
     public function findSpeciality(int $idSpeciality): Speciality
     {
         $query = $this->pdo->prepare(
-            "SELECT id_speciality, name
+            "SELECT *
             FROM Speciality
             WHERE id_speciality = :id_speciality");
         $query->execute(['id_speciality' => $idSpeciality]);
