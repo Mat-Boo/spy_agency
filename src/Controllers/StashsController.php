@@ -43,22 +43,36 @@ class StashsController
 
     public function filterStashs(array $filterOptions, array $missionsFilter): array
     {
-        $stashIds = [];
-        foreach($this->getStashsList('id_stash') as $stash) {
-            $stashIds[] = $stash->getId_stash();
+        $filterConditions = [];
+        $filterSort = '';
+
+        if (isset($filterOptions['codenameStashFilter'])) {
+            $filterConditions[] = "code_name LIKE '%" . $filterOptions['codenameStashFilter'] . "%'";
         }
 
-        $filterConditions = [];
-        $filterConditions['codenameStashFilter'] = isset($filterOptions['codenameStashFilter']) ? " WHERE code_name LIKE '%" . $filterOptions['codenameStashFilter'] . "%'" : " WHERE id_stash IN (" . implode(",", $stashIds) . ")";
-        $filterConditions['addressStashFilter'] = isset($filterOptions['addressStashFilter']) ? " AND address LIKE '%" . $filterOptions['addressStashFilter'] . "%'" : '';
-        $filterConditions['countryStashFilter'] = isset($filterOptions['countryStashFilter']) && strlen($filterOptions['countryStashFilter']) > 0 ? " AND country = '" . $filterOptions['countryStashFilter'] . "'" : '';
-        $filterConditions['typeStashFilter'] = isset($filterOptions['typeStashFilter']) ? " AND type IN (" . $this->convertToStringList($filterOptions['typeStashFilter']) . ")" : '';
-        $filterConditions['missionsFilter'] = isset($filterOptions['missionsFilter']) ? " AND id_stash IN (" . implode(",", $missionsFilter) . ")" : '';
-        $filterConditions['orderByfilterAndDirection'] = isset($filterOptions['orderByFilter']) && isset($filterOptions['orderByDirection'])  && strlen($filterOptions['orderByFilter']) > 0 ? " ORDER BY " . $filterOptions['orderByFilter'] . ' ' . $filterOptions['orderByDirection']: '';
+        if (isset($filterOptions['addressStashFilter'])) {
+            $filterConditions[] = "address LIKE '%" . $filterOptions['addressStashFilter'] . "%'";
+        }
+
+        if (isset($filterOptions['countryStashFilter']) && strlen($filterOptions['countryStashFilter']) > 0) {
+            $filterConditions[] = "country = '" . $filterOptions['countryStashFilter'] . "'";
+        }
+
+        if (isset($filterOptions['typeStashFilter'])) {
+            $filterConditions[] = "type IN (" . $this->convertToStringList($filterOptions['typeStashFilter']) . ")";
+        }
+
+        if (isset($filterOptions['missionsFilter'])) {
+            $filterConditions[] = "id_stash IN (" . implode(",", $missionsFilter) . ")";
+        }
+
+        if (isset($filterOptions['orderByFilter']) && isset($filterOptions['orderByDirection'])  && strlen($filterOptions['orderByFilter']) > 0) {
+            $filterSort = $filterOptions['orderByFilter'] . ' ' . $filterOptions['orderByDirection'];
+        }
 
         $stashs = new Stashs((new Connection)->getPdo());
 
-        return $stashs->filterStashs($filterConditions);
+        return $stashs->filterStashs($filterConditions, $filterSort);
     }
 
     public function findStash(int $idStash): Stash

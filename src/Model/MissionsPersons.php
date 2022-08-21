@@ -18,18 +18,7 @@ class MissionsPersons
 
     public function getMissionsPersonsLists(): array
     {
-        /* if (!is_null($this->pdo)) {
-            $stmt = $this->pdo->query(
-                "SELECT id_mission, id
-                FROM Mission" . $this->personItem
-            );
-        }
-        $missionsPersons = [];
-        while ($missionPerson = $stmt->fetchObject(MissionPerson::class)) {
-            $missionsPersons[] = $missionPerson;
-        } */
-
-        $sql = "SELECT id_mission, id FROM Mission" . $this->personItem;
+        $sql = "SELECT * FROM Mission" . $this->personItem;
 
         $missionsPersons = $this->pdo->query($sql, PDO::FETCH_CLASS, MissionPerson::class)->fetchAll();
 
@@ -68,23 +57,12 @@ class MissionsPersons
 
     public function filterPersons(array $filterOptions): array
     {
-        /* if (!is_null($this->pdo)) {
-            $personFilter = isset($filterOptions[$this->personItem . 'Filter']) ? " WHERE id IN (" . implode(",", $filterOptions[$this->personItem . 'Filter']) . ")" : '';
-
-            $stmt = $this->pdo->query(
-                "SELECT id_mission
-                FROM Mission" . $this->personItem
-                . $personFilter
-            );
-            ${'missionIdsFrom' . $this->personItem . 's'} = [];
-            while (${'missionIdsFrom' . $this->personItem} = $stmt->fetchColumn()) {
-                ${'missionIdsFrom' . $this->personItem . 's'}[] = ${'missionIdsFrom' . $this->personItem};
-            }
-        } */
-
-        $personFilter = isset($filterOptions[$this->personItem . 'Filter']) ? " WHERE id IN (" . implode(",", $filterOptions[$this->personItem . 'Filter']) . ")" : '';
-        $sql = "SELECT id_mission FROM Mission" . $this->personItem . $personFilter;
-        
+        if (isset($filterOptions[$this->personItem . 'Filter'])) {
+            $sql = "SELECT id_mission FROM Mission" . $this->personItem . " WHERE id IN (" . implode(",", $filterOptions[$this->personItem . 'Filter']) . ")";
+        } else {
+            $sql = "SELECT id_mission FROM Mission" . $this->personItem;
+        }
+       
         ${'missionIdsFrom' . $this->personItem . 's'} = $this->pdo->query($sql, PDO::FETCH_COLUMN, 0)->fetchAll();
 
         if (empty(${'missionIdsFrom' . $this->personItem . 's'})) {
@@ -95,24 +73,13 @@ class MissionsPersons
     }
 
     public function filterMissions(array $filterOptions): array
-    {
-        /* if (!is_null($this->pdo)) {
-            $missionFilter = isset($filterOptions['missionsFilter']) ? " WHERE id_mission IN (" . implode(",", $filterOptions['missionsFilter']) . ")" : '';
+    {       
+        if (isset($filterOptions['missionsFilter'])) {
+            $sql = "SELECT id FROM Mission" . ucfirst($this->personItem) . " WHERE id_mission IN (" . implode(",", $filterOptions['missionsFilter']) . ")";
+        } else {
+            $sql = "SELECT id FROM Mission" . ucfirst($this->personItem);
+        }
 
-            $stmt = $this->pdo->query(
-                "SELECT id
-                FROM Mission" . ucfirst($this->personItem)
-                . $MissionFilter
-            );
-            $personIdsFromMissions = [];
-            while ($personIdsFromMission = $stmt->fetchColumn()) {
-                $personIdsFromMissions[] = $personIdsFromMission;
-            }
-        } */
-
-        $missionFilter = isset($filterOptions['missionsFilter']) ? " WHERE id_mission IN (" . implode(",", $filterOptions['missionsFilter']) . ")" : '';
-        $sql = "SELECT id FROM Mission" . ucfirst($this->personItem) . $missionFilter;
-        
         $personIdsFromMissions = $this->pdo->query($sql, PDO::FETCH_COLUMN, 0)->fetchAll();
 
         return $personIdsFromMissions;
@@ -120,7 +87,6 @@ class MissionsPersons
 
     public function updateMissionsPersons(array $mission, int $id_mission)
     {
-        /* foreach(['Agent', 'Contact', 'Target'] as $item) { */
             $this->pdo->exec("DELETE FROM Mission" . ucfirst($this->personItem) . " WHERE id_mission = " . $id_mission);
     
             $query = $this->pdo->prepare(
@@ -140,7 +106,6 @@ class MissionsPersons
                     throw new Exception("Impossible de modifier l'enregistrement {$id_mission} dans la table 'Mission" . ucfirst($this->personItem) . "'");
                 }
             }
-        /* } */
     }
 
      public function deleteMissionPersonFromPerson($id): void

@@ -16,47 +16,19 @@ class SpecialitiesController
 
     public function filterSpecialities(array $filterOptions, array $agentsFilter, array $missionsFilter): array
     {
-        $specialityIds = [];
-        foreach($this->getSpecialitiesList('id_speciality') as $speciality) {
-            $specialityIds[] = $speciality->getId_speciality();
-        }
-
-        /* $filterConditions = []; */
-        /* $filterConditions['idSpecialityFilter'] = isset($filterOptions['idSpecialityFilter']) ? " WHERE id_speciality IN (" . implode(",", $filterOptions['idSpecialityFilter']) . ")" : " WHERE id_speciality IN (" . implode(",", $specialityIds) . ")";
-        $filterConditions['agentsFilter'] = isset($filterOptions['agentsFilter']) ? " AND id_speciality IN (" . implode(",", $agentsFilter) . ")" : '';
-        $filterConditions['missionsFilter'] = isset($filterOptions['missionsFilter']) ? " AND id_speciality IN (" . implode(",", $missionsFilter) . ")" : '';
-        $filterConditions['orderByfilterAndDirection'] = isset($filterOptions['orderByFilter']) && isset($filterOptions['orderByDirection'])  && strlen($filterOptions['orderByFilter']) > 0 ? " ORDER BY " . $filterOptions['orderByFilter'] . ' ' . $filterOptions['orderByDirection']: '';
- */
-        $missionIds = [];
+        $filterConditions = [];
         $filterSort = '';
 
         if (isset($filterOptions['idSpecialityFilter'])) {
-            foreach($filterOptions['idSpecialityFilter'] as $missionId) {
-                if (!in_array($missionId, $missionIds)) {
-                    $missionIds[] = $missionId;
-                }
-            }
-            /* $filterConditions[] = "id_speciality IN (" . implode(",", $filterOptions['idSpecialityFilter']) . ")"; */
+            $filterConditions[] = "id_speciality IN (" . implode(",", $filterOptions['idSpecialityFilter']) . ")";
         }
 
         if (isset($filterOptions['agentsFilter'])) {
-            foreach($agentsFilter as $missionId) {
-                if (!in_array($missionId, $missionIds)) {
-                    $missionIds[] = $missionId;
-                }
-            }
-
-            /* $filterConditions[] = "id_speciality IN (" . implode(",", $agentsFilter) . ")"; */
+            $filterConditions[] = "id_speciality IN (" . implode(",", $agentsFilter) . ")";
         }
 
         if (isset($filterOptions['missionsFilter'])) {
-            foreach($missionsFilter as $missionId) {
-                if (!in_array($missionId, $missionIds)) {
-                    $missionIds[] = $missionId;
-                }
-            }
-
-            /* $filterConditions[] = "id_speciality IN (" . implode(",", $missionsFilter) . ")"; */
+            $filterConditions[] = "id_speciality IN (" . implode(",", $missionsFilter) . ")";
         }
 
         if (isset($filterOptions['orderByFilter']) && isset($filterOptions['orderByDirection'])  && strlen($filterOptions['orderByFilter']) > 0) {
@@ -66,7 +38,7 @@ class SpecialitiesController
 
         $specialities = new Specialities((new Connection)->getPdo());
 
-        return $specialities->filterSpecialities($missionIds, $filterSort);
+        return $specialities->filterSpecialities($filterConditions, $filterSort);
     }
 
     public function findSpeciality(int $idSpeciality): Speciality

@@ -115,6 +115,8 @@ morefiltersBtn.addEventListener('click', () => {
 
 if (!emptyGet) {
     filtersBox.style.transition = 'none';
+    filtersAndApplyBtn.style.transition = 'none';
+    chevronDownFilters.style.transition = 'none';
     timeTransition = 0;
     headerFilters.style.marginLeft= 0;
     filtersBox.style.width = '90%';

@@ -20,26 +20,55 @@ class PersonsController
 
     public function filterPersons(array $filterOptions, array $specialityFilter, array $missionsFilter, string $personItem): array
     {
-        $personIds = [];
-        foreach($this->getPersonsLists('id') as $personsList) {
-            foreach($personsList as $person) {
-                $personIds[] = $person->getId();
-            }
+        $filterConditions = [];
+        $filterSort = '';
+
+    /*     $filterConditions['codenamePersonFilter'] = isset($filterOptions['codenamePersonFilter']) ? "code_name LIKE '%" . $filterOptions['codenamePersonFilter'] . "%'" : " WHERE id IN (" . implode(",", $personIds) . ")";
+        $filterConditions['personFilter'] = isset($filterOptions['personFilter']) ? "id IN (" . implode(",", $filterOptions['personFilter']) . ")" : '';
+        $filterConditions['nationalityPersonFilter'] = isset($filterOptions['nationalityPersonFilter']) && strlen($filterOptions['nationalityPersonFilter']) > 0 ? "nationality = '" . $filterOptions['nationalityPersonFilter'] . "'" : '';
+        $filterConditions['specialitiesPersonFilter'] = isset($filterOptions['specialitiesPersonFilter']) ? "id IN (" . implode(",", $specialityFilter) . ")" : '';
+        $filterConditions['startBirthdatePersonFilter'] = isset($filterOptions['startBirthdatePersonFilter']) && strlen($filterOptions['startBirthdatePersonFilter']) > 0 ? "birthdate >= '" . $filterOptions['startBirthdatePersonFilter'] . "'" : '';
+        $filterConditions['endBirthdatePersonFilter'] = isset($filterOptions['endBirthdatePersonFilter']) && strlen($filterOptions['endBirthdatePersonFilter']) > 0 ? "birthdate <= '" . $filterOptions['endBirthdatePersonFilter'] . "'" : '';
+        $filterConditions['missionsFilter'] = isset($filterOptions['missionsFilter']) ? "id IN (" . implode(",", $missionsFilter) . ")" : '';
+        $filterConditions['orderByfilterAndDirection'] = isset($filterOptions['orderByFilter']) && isset($filterOptions['orderByDirection'])  && strlen($filterOptions['orderByFilter']) > 0 ? $filterOptions['orderByFilter'] . ' ' . $filterOptions['orderByDirection']: '';
+ */
+
+        if (isset($filterOptions['codenamePersonFilter'])) {
+            $filterConditions[] = "code_name LIKE '%" . $filterOptions['codenamePersonFilter'] . "%'";
         }
 
-        $filterConditions = [];
-        $filterConditions['codenamePersonFilter'] = isset($filterOptions['codenamePersonFilter']) ? " WHERE code_name LIKE '%" . $filterOptions['codenamePersonFilter'] . "%'" : " WHERE id IN (" . implode(",", $personIds) . ")";
-        $filterConditions['personFilter'] = isset($filterOptions['personFilter']) ? " AND id IN (" . implode(",", $filterOptions['personFilter']) . ")" : '';
-        $filterConditions['nationalityPersonFilter'] = isset($filterOptions['nationalityPersonFilter']) && strlen($filterOptions['nationalityPersonFilter']) > 0 ? " AND nationality = '" . $filterOptions['nationalityPersonFilter'] . "'" : '';
-        $filterConditions['specialitiesPersonFilter'] = isset($filterOptions['specialitiesPersonFilter']) ? " AND id IN (" . implode(",", $specialityFilter) . ")" : '';
-        $filterConditions['startBirthdatePersonFilter'] = isset($filterOptions['startBirthdatePersonFilter']) && strlen($filterOptions['startBirthdatePersonFilter']) > 0 ? " AND birthdate >= '" . $filterOptions['startBirthdatePersonFilter'] . "'" : '';
-        $filterConditions['endBirthdatePersonFilter'] = isset($filterOptions['endBirthdatePersonFilter']) && strlen($filterOptions['endBirthdatePersonFilter']) > 0 ? " AND birthdate <= '" . $filterOptions['endBirthdatePersonFilter'] . "'" : '';
-        $filterConditions['missionsFilter'] = isset($filterOptions['missionsFilter']) ? " AND id IN (" . implode(",", $missionsFilter) . ")" : '';
-        $filterConditions['orderByfilterAndDirection'] = isset($filterOptions['orderByFilter']) && isset($filterOptions['orderByDirection'])  && strlen($filterOptions['orderByFilter']) > 0 ? " ORDER BY " . $filterOptions['orderByFilter'] . ' ' . $filterOptions['orderByDirection']: '';
+        if (isset($filterOptions['personFilter'])) {
+            $filterConditions[] = "id IN (" . implode(",", $filterOptions['personFilter']) . ")";
+        }
+
+        if (isset($filterOptions['nationalityPersonFilter']) && strlen($filterOptions['nationalityPersonFilter']) > 0) {
+            $filterConditions[] = "nationality = '" . $filterOptions['nationalityPersonFilter'] . "'";
+        }
+
+        if (isset($filterOptions['specialitiesPersonFilter'])) {
+            $filterConditions[] = "id IN (" . implode(",", $specialityFilter) . ")";
+        }
+
+        if (isset($filterOptions['startBirthdatePersonFilter']) && strlen($filterOptions['startBirthdatePersonFilter']) > 0) {
+            $filterConditions[] = "birthdate >= '" . $filterOptions['startBirthdatePersonFilter'] . "'";
+        }
+
+        if (isset($filterOptions['endBirthdatePersonFilter']) && strlen($filterOptions['endBirthdatePersonFilter']) > 0) {
+            $filterConditions[] = "birthdate <= '" . $filterOptions['endBirthdatePersonFilter'] . "'";
+        }
+
+        if (isset($filterOptions['missionsFilter'])) {
+            $filterConditions[] = "id IN (" . implode(",", $missionsFilter) . ")";
+        }
+
+        if (isset($filterOptions['orderByFilter']) && isset($filterOptions['orderByDirection'])  && strlen($filterOptions['orderByFilter']) > 0) {
+            $filterSort = $filterOptions['orderByFilter'] . ' ' . $filterOptions['orderByDirection'];
+        }
+
 
         $persons = new Persons((new Connection)->getPdo(), $personItem);
 
-        return $persons->filterPersons($filterConditions);
+        return $persons->filterPersons($filterConditions, $filterSort);
     }
 
     public function findPerson(int $idPerson, string $personItem): Person

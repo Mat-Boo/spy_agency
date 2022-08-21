@@ -19,18 +19,6 @@ class Persons
 
     public function getPersonsList($sortBy)
     {
-        /* if (!is_null($this->pdo)) {
-            $stmt = $this->pdo->query(
-                "SELECT *
-                FROM " . ucfirst($this->personItem) . "
-                ORDER BY " . $sortBy
-            );
-        }
-        ${$this->personItem . 's'} = [];
-        while (${$this->personItem} = $stmt->fetchObject(Person::class)) {
-            ${$this->personItem . 's'}[] = ${$this->personItem};
-        } */
-
         $sql = "SELECT * FROM " . ucfirst($this->personItem) . " ORDER BY " . $sortBy;
 
         ${$this->personItem . 's'} = $this->pdo->query($sql, PDO::FETCH_CLASS, Person::class)->fetchAll();
@@ -38,21 +26,23 @@ class Persons
         return ${$this->personItem . 's'};
     }
 
-    public function filterPersons(array $filterConditions): array
+    public function filterPersons(array $filterConditions, string $filterSort): array
     {
-        /* if (!is_null($this->pdo)) {
-            $stmt = $this->pdo->query( 
-                "SELECT *
-                FROM " . strtoupper($this->personItem)
-                . implode('', $filterConditions)
-            );
-        }
-        $persons = [];
-        while ($person = $stmt->fetchObject(Person::class)) {
-            $persons[] = $person;
-        } */
+        $sql = "SELECT * FROM " . strtoupper($this->personItem);
 
-        $sql = "SELECT * FROM " . strtoupper($this->personItem) . implode('', $filterConditions);
+        if (count($filterConditions) > 0) {
+            $sql .= " WHERE " . $filterConditions[0];
+        }
+
+        if (count($filterConditions) > 1) {
+            for ($i = 1 ; $i < count($filterConditions) ; $i++) {
+                $sql .= " AND " . $filterConditions[$i];
+            }
+        }
+
+        if (strlen($filterSort) > 0) {
+            $sql .= " ORDER BY " . $filterSort;
+        }
 
         $persons = $this->pdo->query($sql, PDO::FETCH_CLASS, Person::class)->fetchAll();
 

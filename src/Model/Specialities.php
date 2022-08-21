@@ -17,55 +17,32 @@ class Specialities
 
     public function getSpecialitiesList($sortBy)
     {
-        /* if (!is_null($this->pdo)) {
-            $stmt = $this->pdo->query(
-                "SELECT *
-                FROM Speciality
-                ORDER BY " . $sortBy
-            );
-        }
-        $specialities = [];
-        while ($speciality = $stmt->fetchObject(Speciality::class)) {
-            $specialities[] = $speciality;
-        } */
-
         $sql = "SELECT * FROM Speciality ORDER BY " . $sortBy;
         $specialities = $this->pdo->query($sql, PDO::FETCH_CLASS, Speciality::class)->fetchAll();
 
         return $specialities;
     }
 
-    public function filterSpecialities(array $missionIds, string $filterSort): array
+    public function filterSpecialities(array $filterConditions, string $filterSort): array
     {
-        /* if (!is_null($this->pdo)) {
-            $stmt = $this->pdo->query( 
-                "SELECT id_speciality, name
-                FROM Speciality"
-                . implode('', $filterConditions)
-            );
-        }
-        $specialities = [];
-        while ($speciality = $stmt->fetchObject(Speciality::class)) {
-            $specialities[] = $speciality;
-        } */
-/**********************/
-
         $sql = "SELECT * FROM Speciality";
-        var_dump($missionIds);
-        if (!empty($missionIds)) {
-            $sql .= " WHERE id_speciality IN (" . implode(",", $missionIds) . ")";
+
+        if (count($filterConditions) > 0) {
+            $sql .= " WHERE " . $filterConditions[0];
+        }
+
+        if (count($filterConditions) > 1) {
+            for ($i = 1 ; $i < count($filterConditions) ; $i++) {
+                $sql .= " AND " . $filterConditions[$i];
+            }
         }
 
         if (strlen($filterSort) > 0) {
             $sql .= " ORDER BY " . $filterSort;
         }
 
-/*****/
-        /* $sql = "SELECT * FROM Speciality" . implode('', $filterConditions); */
-
         $specialities = $this->pdo->query($sql, PDO::FETCH_CLASS, Speciality::class)->fetchAll();
 
-        var_dump($sql, $specialities);
         return $specialities;
     }
 
