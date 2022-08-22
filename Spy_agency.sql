@@ -366,3 +366,109 @@ INNER JOIN Target ON MissionTarget.id = Target.id
 INNER JOIN MissionStash ON Mission.id_mission = MissionStash.id_mission
 INNER JOIN Stash ON MissionStash.id_stash = stash.id_stash
 ORDER BY start_date, title;
+
+
+
+/************* POSTGRES ****************/
+CREATE TABLE IF NOT EXISTS Agent (
+    id SERIAL PRIMARY KEY NOT NULL,
+    code_name VARCHAR(50) NOT NULL UNIQUE,
+    firstname VARCHAR(50) NOT NULL,
+    lastname VARCHAR(50) NOT NULL,
+    birthdate DATE NOT NULL,
+    nationality VARCHAR(50) NOT NULL
+).
+
+CREATE TABLE IF NOT EXISTS Speciality (
+    id_speciality SERIAL PRIMARY KEY NOT NULL,
+    name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS AgentSpeciality (
+    id SERIAL NOT NULL,
+    id_speciality SERIAL NOT NULL,
+    PRIMARY KEY(id, id_speciality),
+    FOREIGN KEY(id) REFERENCES Agent(id),
+    FOREIGN KEY(id_speciality) REFERENCES Speciality(id_speciality)
+);
+
+CREATE TABLE IF NOT EXISTS Mission (
+    id_mission SERIAL PRIMARY KEY NOT NULL,
+    code_name VARCHAR(50) NOT NULL UNIQUE,
+    title VARCHAR(50) NOT NULL,
+    description TEXT,
+    country VARCHAR(50) NOT NULL,
+    type VARCHAR(50) NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    id_speciality INTEGER(4) NOT NULL,
+    FOREIGN KEY(id_speciality) REFERENCES Speciality(id_speciality)
+);
+
+CREATE TABLE IF NOT EXISTS MissionAgent (
+    id_mission SERIAL NOT NULL,
+    id SERIAL NOT NULL,
+    PRIMARY KEY(id_mission, id),
+    FOREIGN KEY(id_mission) REFERENCES Mission(id_mission),
+    FOREIGN KEY(id) REFERENCES Agent(id)
+);
+
+CREATE TABLE IF NOT EXISTS Contact (
+    id SERIAL PRIMARY KEY NOT NULL,
+    code_name VARCHAR(50) NOT NULL UNIQUE,
+    firstname VARCHAR(50) NOT NULL,
+    lastname VARCHAR(50) NOT NULL,
+    birthdate DATE NOT NULL,
+    nationality VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS MissionContact (
+    id_mission SERIAL NOT NULL,
+    id SERIAL NOT NULL,
+    PRIMARY KEY(id_mission, id),
+    FOREIGN KEY(id_mission) REFERENCES Mission(id_mission),
+    FOREIGN KEY(id) REFERENCES Contact(id)
+);
+
+CREATE TABLE IF NOT EXISTS Target (
+    id SERIAL PRIMARY KEY NOT NULL,
+    code_name VARCHAR(50) NOT NULL UNIQUE,
+    firstname VARCHAR(50) NOT NULL,
+    lastname VARCHAR(50) NOT NULL,
+    birthdate DATE NOT NULL,
+    nationality VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS MissionTarget (
+    id_mission SERIAL NOT NULL,
+    id SERIAL NOT NULL,
+    PRIMARY KEY(id_mission, id),
+    FOREIGN KEY(id_mission) REFERENCES Mission(id_mission),
+    FOREIGN KEY(id) REFERENCES Target(id)
+);
+
+CREATE TABLE IF NOT EXISTS Stash (
+    id_stash SERIAL PRIMARY KEY NOT NULL,
+    code_name VARCHAR(50) NOT NULL UNIQUE,
+    address TEXT NOT NULL,
+    country VARCHAR(50) NOT NULL,
+    type VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS MissionStash (
+    id_mission SERIAL NOT NULL,
+    id_stash SERIAL NOT NULL,
+    PRIMARY KEY(id_mission, id_stash),
+    FOREIGN KEY(id_mission) REFERENCES Mission(id_mission),
+    FOREIGN KEY(id_stash) REFERENCES Stash(id_stash)
+);
+
+CREATE TABLE IF NOT EXISTS Administrator (
+    id_admin SERIAL PRIMARY KEY NOT NULL,
+    firstname VARCHAR(50) NOT NULL,
+    lastname VARCHAR(50) NOT NULL,
+    email VARCHAR(254) NOT NULL,
+    password VARCHAR (100) NOT NULL,
+    created_at DATE NOT NULL
+);
