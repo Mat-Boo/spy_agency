@@ -159,7 +159,7 @@ $missionsStashsController->hydrateStashs($stashsListFiltered, $missionsList);
                                             selected
                                         <?php endif ?>
                                     <?php endif ?>
-                                ><?= $stash  ?></option>
+                                ><?= htmlspecialchars($stash)  ?></option>
                             <?php endforeach ?>
                         </select>
                     </div>
@@ -181,7 +181,7 @@ $missionsStashsController->hydrateStashs($stashsListFiltered, $missionsList);
                                                 selected
                                             <?php endif ?>
                                         <?php endif ?>
-                                    ><?= $mission->getCode_name() ?></option>
+                                    ><?= htmlspecialchars($mission->getCode_name()) ?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>
@@ -201,13 +201,13 @@ $missionsStashsController->hydrateStashs($stashsListFiltered, $missionsList);
     <?php foreach($stashsListFiltered as $stash): ?>
         <li class="stash">
             <div class="headerStash">
-                <p class="stashItem"><?= 'Planque ' . $stash->getCode_name() ?></p>
+                <p class="stashItem"><?= 'Planque ' . htmlspecialchars($stash->getCode_name()) ?></p>
             </div>
             <div class="infosStash">
                 <div class="stashItems">
-                    <p class="stashItem"><b>Adresse: </b><?= $stash->getAddress() ?></p>
+                    <p class="stashItem"><b>Adresse: </b><?= htmlspecialchars($stash->getAddress()) ?></p>
                     <p class="stashItem"><b>Pays: </b><?= $stash->getCountry() ?></p>
-                    <p class="stashItem"><b>Type: </b><?= $stash->getType() ?></p>
+                    <p class="stashItem"><b>Type: </b><?= htmlspecialchars($stash->getType()) ?></p>
                 </div>
                 <?php if($isAdmin) : ?>
                     <div class="actionBtns">
@@ -260,7 +260,7 @@ $missionsStashsController->hydrateStashs($stashsListFiltered, $missionsList);
                                 <p>Cette planque n'est affectée à aucune mission.</p>
                             <?php else: ?>
                                 <?php foreach($stash->getMissions() as $mission): ?>
-                                    <li><?= $mission->getCode_name() ?></li>
+                                    <li><?= htmlspecialchars($mission->getCode_name()) ?></li>
                                 <?php endforeach ?>
                             <?php endif ?>
                         </ul>

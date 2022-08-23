@@ -29,10 +29,10 @@ if (!empty($params)) {
 
     //Validation des modifications et retour à la liste des planques
     if (!empty($_POST)) {
-        $errors = $stashsController->controlsRules($_POST, $stash);
+        $errors = $stashsController->controlsRules($_POST, $stashArray[0]);
         if (empty($errors)) {
             $stashsController->updateStash($_POST, $stash->getId_stash());
-            header('location: ' . $router->url('admin_stash') . '?updated=' . $_POST['codenameStash']);
+            header('location: ' . $router->url('admin_stash') . '?updated=' . htmlspecialchars($_POST['codenameStash']));
         } else {
             $displayErrors = implode('', $errors);
         }
@@ -40,10 +40,10 @@ if (!empty($params)) {
 } else {
     //Création de la nouvelle planque et retour à la liste des planques
     if (!empty($_POST)) {
-        $errors = $stashsController->controlsRules($_POST, $stash);
+        $errors = $stashsController->controlsRules($_POST);
         if (empty($errors)) {
             $newIdStash = $stashsController->createStash($_POST);
-            header('location: ' . $router->url('admin_stash') . '?created=' . $_POST['codenameStash']);
+            header('location: ' . $router->url('admin_stash') . '?created=' . htmlspecialchars($_POST['codenameStash']));
         } else {
             $displayErrors = implode('', $errors);
         }

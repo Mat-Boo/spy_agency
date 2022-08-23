@@ -148,7 +148,7 @@ $missionsStashsController->hydrateMissions($missionsListFiltered, $stashsList, $
                                                 selected
                                             <?php endif ?>
                                         <?php endif ?>
-                                    ><?= $mission->getCode_name() ?></option>
+                                    ><?= htmlspecialchars($mission->getCode_name()) ?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>
@@ -164,7 +164,7 @@ $missionsStashsController->hydrateMissions($missionsListFiltered, $stashsList, $
                                                 selected
                                             <?php endif ?>
                                         <?php endif ?>
-                                    ><?= $type ?></option>
+                                    ><?= htmlspecialchars($type) ?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>
@@ -180,7 +180,7 @@ $missionsStashsController->hydrateMissions($missionsListFiltered, $stashsList, $
                                                 selected
                                             <?php endif ?>
                                         <?php endif ?>
-                                    ><?= $speciality->getName() ?></option>
+                                    ><?= htmlspecialchars($speciality->getName()) ?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>
@@ -331,14 +331,14 @@ $missionsStashsController->hydrateMissions($missionsListFiltered, $stashsList, $
             class="mission"
             style="background:<?= $mission->getStatus()['background'] ?>">
             <div class="headerMission">
-                <p class="missionItem"><?= $mission->getTitle() ?></p>
+                <p class="missionItem"><?= htmlentities($mission->getTitle()) ?></p>
                 <p class="missionItem"><?= $mission->getStatus()['status'] ?></p>
             </div>
             <div class="infosMission">
                 <div class="missionItems">
-                    <p class="missionItem"><b>Code Name: </b><?= $mission->getCode_name() ?></p>
+                    <p class="missionItem"><b>Code Name: </b><?= htmlspecialchars($mission->getCode_name()) ?></p>
                     <p class="missionItem"><b>Pays: </b><?= $mission->getCountry() ?></p>
-                    <p class="missionItem"><b>Type: </b><?= $mission->getType() ?></p>
+                    <p class="missionItem"><b>Type: </b><?= htmlspecialchars($mission->getType()) ?></p>
                     <p class="missionItem"><b>Du </b><?= $mission->getConvertedStart_date() ?></p>
                     <p class="missionItem"><b>Au </b><?= $mission->getConvertedEnd_date() ?></p>
                 </div>
@@ -382,7 +382,7 @@ $missionsStashsController->hydrateMissions($missionsListFiltered, $stashsList, $
                             </svg>
                             <b>Description :</b>
                         </span>
-                        <p><?= $mission->getDescription() ?></p>
+                        <p><?= htmlspecialchars($mission->getDescription()) ?></p>
                     </div>
                     <div class="infosItem speciality">
                         <span>

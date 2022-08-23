@@ -12,5 +12,5 @@ $nameSpeciality = $specialitiesController->findSpeciality($params['id'])->getNam
 
 $agentsSpecialitiesController->deleteAgentSpecialityFromSpeciality($params['id']);
 $specialitiesController->deleteSpeciality($params['id']);
-header('Location: ' . $router->url('admin_speciality') . '?deleted=' . $nameSpeciality);
+header('Location: ' . $router->url('admin_speciality') . '?deleted=' . htmlspecialchars($nameSpeciality));
 ?>

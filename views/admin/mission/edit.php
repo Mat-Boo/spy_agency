@@ -49,12 +49,12 @@ if (!empty($params)) {
     
     //Validation des modifications et retour à la liste des missions
     if (!empty($_POST)) {
-        $errors = $missionsController->controlsRules($_POST, $personsLists, $stashsList, $specialitiesList);
+        $errors = $missionsController->controlsRules($_POST, $personsLists, $stashsList, $specialitiesList, $missionArray[0]);
         if (empty($errors)) {
             $missionsController->updateMission($_POST, $mission->getId_mission());
             $missionsPersonsController->updateMissionsPersons($_POST, $mission->getId_mission());
             $missionsStashsController->updateMissionsStashs($_POST, $mission->getId_mission());
-            header('Location: ' . $router->url('admin_mission') . '?updated=' . $_POST['codeNameMission']);
+            header('Location: ' . $router->url('admin_mission') . '?updated=' . htmlspecialchars($_POST['codeNameMission']));
         } else {
             $displayErrors = implode('', $errors);
         }
@@ -62,12 +62,13 @@ if (!empty($params)) {
 } else {
     //Création de la nouvelle mission et retour à la liste des missions
     if (!empty($_POST)) {
+        exit();
         $errors = $missionsController->controlsRules($_POST, $personsLists, $stashsList, $specialitiesList);
         if (empty($errors)) {
             $newIdMission = $missionsController->createMission($_POST);
             $missionsPersonsController->createMissionPerson($_POST, $newIdMission);
             $missionsStashsController->createMissionStash($_POST, $newIdMission);
-            header('Location: ' . $router->url('admin_mission') . '?created=' . $_POST['codeNameMission']);
+            header('Location: ' . $router->url('admin_mission') . '?created=' . htmlspecialchars($_POST['codeNameMission']));
         } else {
             $displayErrors = implode('', $errors);
         }
@@ -93,7 +94,7 @@ if (!empty($params)) {
         <div class="headerMission">
             <div class="titleItem">
                 <label for="titleMission"><b>Titre:</b></label>
-                <input type="text" id="titleMission" name="titleMission" value="<?= isset($_POST['titleMission']) ? $_POST['titleMission'] : (!empty($params) ? $mission->getTitle() :'') ?>">
+                <input type="text" id="titleMission" name="titleMission" value="<?= isset($_POST['titleMission']) ?  $_POST['titleMission'] : (!empty($params) ? $mission->getTitle() :'') ?>">
             </div>
             <div class="filter statusMission">
                 <?php foreach($missionsController->getStatus() as $status) : ?>

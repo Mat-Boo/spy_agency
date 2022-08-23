@@ -16,5 +16,5 @@ foreach(['agent', 'contact', 'target'] as $personItem) {
 $missionsStashsController->deleteMissionStashFromMission($params['id']);
 $missionsController->deleteMission($params['id']);
 
-header('Location: ' . $router->url('admin_mission') . '?deleted=' . $codenameMission);
+header('Location: ' . $router->url('admin_mission') . '?deleted=' . htmlspecialchars($codenameMission));
 ?>

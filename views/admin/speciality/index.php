@@ -130,7 +130,7 @@ $missionsController->hydrateSpecialities($specialitiesListFiltered);
                                             selected
                                         <?php endif ?>
                                     <?php endif ?>
-                                ><?= $speciality->getName()  ?></option>
+                                ><?= htmlspecialchars($speciality->getName())  ?></option>
                             <?php endforeach ?>
                         </select>
                     </div>
@@ -140,7 +140,7 @@ $missionsController->hydrateSpecialities($specialitiesListFiltered);
                 <span class="filtersBlockTitle">Agent</span>
                 <div class="filtersItem">
                     <div class="labelAndFilter">
-                        <label for="missionsFilter" class="filterTitle">Nom</label>
+                        <label for="missionsFilter" class="filterTitle">Nom Prénom</label>
                         <select name="agentsFilter[]" id="agentsFilter" multiple class="filter agentsFilter">
                             <option value="headerFilter" disabled class="headerSelect">Sélectionnez un ou plusieurs agent(s)</option>
                             <?php foreach($agentsList as $agent) : ?>
@@ -151,7 +151,7 @@ $missionsController->hydrateSpecialities($specialitiesListFiltered);
                                             selected
                                         <?php endif ?>
                                     <?php endif ?>
-                                ><?= $agent->getLastname() . ' ' . $agent->getfirstname() ?></option>
+                                ><?= htmlspecialchars($agent->getLastname() . ' ' . $agent->getfirstname()) ?></option>
                             <?php endforeach ?>
                         </select>
                     </div>
@@ -172,7 +172,7 @@ $missionsController->hydrateSpecialities($specialitiesListFiltered);
                                             selected
                                         <?php endif ?>
                                     <?php endif ?>
-                                ><?= $mission->getCode_name() ?></option>
+                                ><?= htmlspecialchars($mission->getCode_name()) ?></option>
                             <?php endforeach ?>
                         </select>
                     </div>
@@ -195,7 +195,7 @@ $missionsController->hydrateSpecialities($specialitiesListFiltered);
             </div>
             <div class="infosSpeciality">
                 <div class="specialityItems">
-                    <p class="specialityItem"><b>Titre: </b><?= $speciality->getName() ?></p>
+                    <p class="specialityItem"><b>Titre: </b><?= htmlspecialchars($speciality->getName()) ?></p>
                 </div>
                 <?php if($isAdmin) : ?>
                     <div class="actionBtns">
@@ -212,6 +212,7 @@ $missionsController->hydrateSpecialities($specialitiesListFiltered);
                                 <?php if (!empty($speciality->getMissions())): ?>
                                     return alert('***** ATTENTION ***** \n<?= $specialitiesController->checkMissionBeforeDelete($speciality)?>')
                                 <?php elseif(!empty($speciality->getAgents())): ?>
+                                    
                                     return confirm('***** ATTENTION ***** \n<?= $specialitiesController->checkAgentBeforeDelete($speciality)?>\n\nVoulez-vous tout de même la supprimer ?')
                                 <?php else: ?>
                                     return confirm('Voulez-vous vraiment supprimer la spécialité <?=$speciality->getId_speciality() . ' - ' . strtoupper($speciality->getName()) ?> ?')
@@ -249,7 +250,7 @@ $missionsController->hydrateSpecialities($specialitiesListFiltered);
                                 <p>Cette spécialité ne concerne aucun agent.</p>
                             <?php else: ?>
                                 <?php foreach($speciality->getAgents() as $agent): ?>
-                                    <li><?= $agent->getFirstname() . ' ' . $agent->getLastname() ?></li>
+                                    <li><?= htmlspecialchars($agent->getFirstname() . ' ' . $agent->getLastname()) ?></li>
                                 <?php endforeach ?>
                             <?php endif ?>
                         </ul>
@@ -267,7 +268,7 @@ $missionsController->hydrateSpecialities($specialitiesListFiltered);
                                 <p>Cette spécialité ne concerne aucune mission.</p>
                             <?php else: ?>
                                 <?php foreach($speciality->getMissions() as $mission): ?>
-                                    <li><?= $mission->getCode_name() ?></li>
+                                    <li><?= htmlspecialchars($mission->getCode_name()) ?></li>
                                 <?php endforeach ?>
                             <?php endif ?>
                         </ul>

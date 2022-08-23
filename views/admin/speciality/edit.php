@@ -33,7 +33,7 @@ if (!empty($params)) {
         $errors = $specialitiesController->controlsRules($_POST);
         if (empty($errors)) {
             $specialitiesController->updateSpeciality($_POST, $speciality->getId_speciality());
-            header('location: ' . $router->url('admin_speciality') . '?updated=' . $_POST['nameSpeciality']);
+            header('location: ' . $router->url('admin_speciality') . '?updated=' . htmlspecialchars($_POST['nameSpeciality']));
         } else {
             $displayErrors = implode('', $errors);
         }
@@ -44,7 +44,7 @@ if (!empty($params)) {
         $errors = $specialitiesController->controlsRules($_POST);
         if (empty($errors)) {
             $newIdSpeciality = $specialitiesController->createSpeciality($_POST);
-            header('location: ' . $router->url('admin_speciality') . '?created=' . $_POST['nameSpeciality']);
+            header('location: ' . $router->url('admin_speciality') . '?created=' . htmlspecialchars($_POST['nameSpeciality']));
         } else {
             $displayErrors = implode('', $errors);
         }

@@ -129,7 +129,7 @@ class AgentsSpecialities
         }
     }
 
-    public function createAgentSpeciality(array $newAgent): void
+    public function createAgentSpeciality(array $newAgent, int $id): void
     {
         $query = $this->pdo->prepare(
             "INSERT INTO AgentSpeciality SET 
@@ -139,7 +139,7 @@ class AgentsSpecialities
         foreach($newAgent['personSpecialities'] as $id_speciality) {
             $createAgentSpeciality = $query->execute(
                 [
-                    'id' => $newAgent['idPerson'],
+                    'id' => $id,
                     'id_speciality' => $id_speciality
                 ]
             );

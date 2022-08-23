@@ -48,13 +48,13 @@ if (!empty($params)) {
 
     //Validation des modifications et retour à la liste des personnes concernées
     if (!empty($_POST)) {
-        $errors = $personsController->controlsRules($_POST, $personItem, $person);
+        $errors = $personsController->controlsRules($_POST, $personItem, $personArray[0]);
         if (empty($errors)) {
             $personsController->updatePerson($_POST, $person->getId(), $personItem);
             if ($personItem === 'agent') {
                 $agentsSpecialitiesController->updateAgentsSpecialities($_POST, $person->getId(), $personItem);
             }
-            header('location: ' . $router->url('admin_' . $personItem) . '?updated=' . $_POST['codenamePerson']);
+            header('location: ' . $router->url('admin_' . $personItem) . '?updated=' . htmlspecialchars($_POST['codenamePerson']));
         } else {
             $displayErrors = implode('', $errors);
         }
@@ -69,13 +69,14 @@ if (!empty($params)) {
 } else {
     //Création de la nouvelle personne et retour à la liste des personnes concernées
     if (!empty($_POST)) {
-        $errors = $personsController->controlsRules($_POST, $personItem, $person);
+        $errors = $personsController->controlsRules($_POST, $personItem);
         if (empty($errors)) {
             $newIdPerson = $personsController->createPerson($_POST, $personItem);
+            var_dump($_POST, $newIdPerson);
             if ($personItem === 'agent') {
-                $agentsSpecialitiesController->createAgentSpeciality($_POST);
+                $agentsSpecialitiesController->createAgentSpeciality($_POST, $newIdPerson);
             }
-            header('location: ' . $router->url('admin_' . $personItem) . '?created=' . $_POST['codenamePerson']);
+            header('location: ' . $router->url('admin_' . $personItem) . '?created=' . htmlspecialchars($_POST['codenamePerson']));
         } else {
             $displayErrors = implode('', $errors);
         }

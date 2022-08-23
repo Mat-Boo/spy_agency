@@ -70,16 +70,18 @@ class SpecialitiesController
 
     public function checkAgentBeforeDelete(Speciality $speciality): string
     {
+        
         if (!empty($speciality->getAgents())) {
             $agentIds = [];
             foreach($speciality->getAgents() as $agent) {
                 $agentIds[] = $agent->getId() . ' - ' . strtoupper($agent->getFirstname() . ' ' . strtoupper($agent->getLastname()));
             }
         }
+        
         return 
-            "La specialité " . $speciality->getId_speciality() . ' - ' . strtoupper($speciality->getName()) . " est encore affectée "
-            . (count($speciality->getAgents()) > 1 ? 'aux agents:\\n' : ' à l\'agent: \\n')
-            . implode('\\n', $agentIds);
+            "La specialité " . $speciality->getId_speciality() . " - " . strtoupper($speciality->getName()) . " est encore affectée "
+            . (count($speciality->getAgents()) > 1 ? "aux agents:" : "à l\'agent:") . "\\n"
+            . implode("\\n", $agentIds);
     }
 
     public function deleteSpeciality(int $id_speciality): void

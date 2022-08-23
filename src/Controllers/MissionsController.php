@@ -80,20 +80,8 @@ class MissionsController
         }
 
         $filterConditions = [];
-/*         $filterConditions['missionFilter'] = isset($filterOptions['idMissionFilter']) ? " WHERE Mission.id_mission IN (" . implode(",", $filterOptions['idMissionFilter']) . ")" : " WHERE Mission.id_mission IN (" . implode(",", $missionIds) . ")";
-        $filterConditions['countryMissionFilter'] = isset($filterOptions['countryMissionFilter']) && strlen($filterOptions['countryMissionFilter']) > 0 ? " AND country = '" . $filterOptions['countryMissionFilter'] . "'" : '';
-        $filterConditions['typeMissionFilter'] = isset($filterOptions['typeMissionFilter']) ? " AND type IN (" . $this->convertToStringList($filterOptions['typeMissionFilter']) . ")" : '';
-        $filterConditions['specialityMissionFilter'] = isset($filterOptions['specialityMissionFilter']) ? " AND Mission.id_speciality IN (" . implode(",", $filterOptions['specialityMissionFilter']) . ")" : '';
-        $filterConditions['statusMissionFilter'] = isset($filterOptions['statusMissionFilter']) ? " AND status IN (" . $this->convertToStringList($filterOptions['statusMissionFilter']) . ")" : '';
-        $filterConditions['startDateMissionFilter'] = isset($filterOptions['startDateMissionFilter']) && strlen($filterOptions['startDateMissionFilter']) > 0 ? " AND start_date >= '" . $filterOptions['startDateMissionFilter'] . "'" : '';
-        $filterConditions['endDateMissionFilter'] = isset($filterOptions['endDateMissionFilter']) && strlen($filterOptions['endDateMissionFilter']) > 0 ? " AND end_date <= '" . $filterOptions['endDateMissionFilter'] . "'" : '';
-        $filterConditions['agentFilter'] = isset($filterOptions['agentFilter']) ? " AND Mission.id_mission IN (" . implode(",", $personsFilters['agentsListFiltered']) . ")" :'';
-        $filterConditions['contactFilter'] = isset($filterOptions['contactFilter']) ? " AND Mission.id_mission IN (" . implode(",", $personsFilters['contactsListFiltered']) . ")" :'';
-        $filterConditions['targetFilter'] = isset($filterOptions['targetFilter']) ? " AND Mission.id_mission IN (" . implode(",", $personsFilters['targetsListFiltered']) . ")" :'';
-        $filterConditions['stashFilter'] = isset($filterOptions['stashFilter']) ? " AND Mission.id_mission IN (" . implode(",", $stashsFilters['stashsListFiltered']) . ")" :'';
-        $filterConditions['orderByfilterAndDirection'] = isset($filterOptions['orderByFilter']) && isset($filterOptions['orderByDirection']) && strlen($filterOptions['orderByFilter']) > 0 ? " ORDER BY " . $filterOptions['orderByFilter'] . ' ' . $filterOptions['orderByDirection']: '';
- */
         $filterSort = '';
+
         if (isset($filterOptions['idMissionFilter'])) {
             $filterConditions[] =  "Mission.id_mission IN (" . implode(",", $filterOptions['idMissionFilter']) . ")";
         }
@@ -182,7 +170,7 @@ class MissionsController
         return $missions->createMission($newMission);
     }
 
-    public function controlsRules(array $missionPost, array $personsLists, array $stashsList, array $specialitiesList): array
+    public function controlsRules(array $missionPost, array $personsLists, array $stashsList, array $specialitiesList, Mission $editedMission = null): array
     {
         $errors = [];
 
@@ -215,6 +203,24 @@ class MissionsController
         $analyzedContacts = [];
         $analyzedStashs = [];
         $nbAgentsWithMissionSpeciality = 0;
+
+        // Vérifie l'unicité du champs CodeName
+        if ($editedMission === null || $editedMission->getCode_name() !== $missionPost['codeNameMission']) {
+            foreach($this->getMissionsList() as $mission) {
+                if (strtolower($mission->getCode_name()) === strtolower($missionPost['codeNameMission'])) {
+                    $errors['uniqueCodeName'] = '<li class="error">Le <b>CODE NAME</b> saisi existe déjà</li>';
+                }
+            }
+        }
+
+        // Vérifie l'unicité du champs Title
+        if ($editedMission === null || $editedMission->getTitle() !== $missionPost['titleMission']) {
+            foreach($this->getMissionsList() as $mission) {
+                if (strtolower($mission->getTitle()) === strtolower($missionPost['titleMission'])) {
+                    $errors['uniqueTitle'] = '<li class="error">Le <b>TITRE</b> saisi existe déjà</li>';
+                }
+            }
+        }
 
         //Récupération des informations des items extérieurs de la mission pour pouvoir créer les règles métier et vérifie si bien renseigné car obligatoire sauf pour les planques
         if (isset($missionPost['agentMission'])) {

@@ -171,7 +171,7 @@ foreach($personsListFiltered as $person) {
                                                 selected
                                             <?php endif ?>
                                         <?php endif ?>
-                                    ><?= $person->getLastname() . ' ' . $person->getfirstname() ?></option>
+                                    ><?= htmlspecialchars($person->getLastname() . ' ' . $person->getfirstname()) ?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>
@@ -188,7 +188,7 @@ foreach($personsListFiltered as $person) {
                                                     selected
                                                 <?php endif ?>
                                             <?php endif ?>
-                                        ><?= $speciality->getName() ?></option>
+                                        ><?= htmlspecialchars($speciality->getName()) ?></option>
                                     <?php endforeach ?>
                                 </select>
                             </div>
@@ -253,7 +253,7 @@ foreach($personsListFiltered as $person) {
                                             selected
                                         <?php endif ?>
                                     <?php endif ?>
-                                ><?= $mission->getCode_name() ?></option>
+                                ><?= htmlspecialchars($mission->getCode_name()) ?></option>
                             <?php endforeach ?>
                         </select>
                     </div>
@@ -272,12 +272,12 @@ foreach($personsListFiltered as $person) {
     <?php foreach($personsListFiltered as $person): ?>
         <li class="person">
             <div class="headerPerson">
-                <p class="personItem"><?= ($personItem === 'target' ? 'Cible' : ucfirst($personItem)) . ' ' . $person->getCode_name() ?></p>
+                <p class="personItem"><?= ($personItem === 'target' ? 'Cible' : ucfirst($personItem)) . ' ' . htmlspecialchars($person->getCode_name()) ?></p>
             </div>
             <div class="infosPerson">
                 <div class="personItems">
-                    <p class="personItem"><b>Prénom: </b><?= $person->getFirstname() ?></p>
-                    <p class="personItem"><b>Nom: </b><?= $person->getLastname() ?></p>
+                    <p class="personItem"><b>Prénom: </b><?= htmlspecialchars($person->getFirstname()) ?></p>
+                    <p class="personItem"><b>Nom: </b><?= htmlspecialchars($person->getLastname()) ?></p>
                     <p class="personItem"><b>Date de Naissance: </b><?= $person->getConvertedBirthdate() ?></p>
                     <p class="personItem"><b>Nationalité: </b><?= $person->getNationality() ?></p>
                 </div>
@@ -329,7 +329,7 @@ foreach($personsListFiltered as $person) {
                                         <p>Cet agent ne dispose d'aucune spécialité.</p>
                                 <?php else: ?>
                                     <?php foreach($person->getSpecialities() as $speciality): ?>
-                                        <p><?= $speciality->getName() ?></p>
+                                        <p><?= htmlspecialchars($speciality->getName()) ?></p>
                                     <?php endforeach ?>
                                 <?php endif ?>
                             </ul>
@@ -354,7 +354,7 @@ foreach($personsListFiltered as $person) {
                                 <?php endif ?>
                             <?php else: ?>
                                 <?php foreach($person->getMissions() as $mission): ?>
-                                    <li><?= $mission->getCode_name() ?></li>
+                                    <li><?= htmlspecialchars($mission->getCode_name()) ?></li>
                                 <?php endforeach ?>
                             <?php endif ?>
                         </ul>
