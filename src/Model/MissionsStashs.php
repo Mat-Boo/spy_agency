@@ -24,9 +24,12 @@ class MissionsStashs
 
     public function hydrateMissions(array $missions, array $stashs): void
     {
+
+        $missionsStashsList = $this->getMissionsStashsList();
+
         foreach($missions as $mission) {
             foreach($stashs as $stash) {
-                    foreach($this->getMissionsStashsList() as $missionStash) {
+                foreach($missionsStashsList as $missionStash) {
                     if ($mission->getId_mission() === $missionStash->getId_mission()) {
                         if ($stash->getId_stash() === $missionStash->getId_stash()) {
                             $mission->addStashs($stash);
@@ -97,9 +100,11 @@ class MissionsStashs
 
     public function hydrateStashs(array $stashs, array $missions): void
     {
+        $missionsStashsList = $this->getMissionsStashsList();
+
         foreach($stashs as $stash) {
             foreach($missions as $mission) {
-                    foreach($this->getMissionsStashsList() as $missionStash) {
+                    foreach($missionsStashsList as $missionStash) {
                     if ($stash->getId_stash() === $missionStash->getId_stash()) {
                         if ($mission->getId_mission() === $missionStash->getId_mission()) {
                             $stash->addMissions($mission);

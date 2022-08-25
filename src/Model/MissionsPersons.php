@@ -27,9 +27,11 @@ class MissionsPersons
 
     public function hydrateMissions(array $missions, array $persons): void
     {
+        $missionsPersons = $this->getMissionsPersonsLists();
+
         foreach($missions as $mission) {
             foreach($persons as $person) {
-                    foreach($this->getMissionsPersonsLists() as $missionPerson) {
+                    foreach($missionsPersons as $missionPerson) {
                     if ($mission->getId_mission() === $missionPerson->getId_mission()) {
                         if ($person->getId() === $missionPerson->getId()) {
                             $mission->addPersons($person, $this->personItem);
@@ -42,9 +44,11 @@ class MissionsPersons
 
     public function hydratePersons(array $persons, array $missions): void
     {
+        $missionsPersons = $this->getMissionsPersonsLists();
+
         foreach($persons as $person) {
             foreach($missions as $mission) {
-                    foreach($this->getMissionsPersonsLists() as $missionPerson) {
+                    foreach($missionsPersons as $missionPerson) {
                     if ($person->getId() === $missionPerson->getId()) {
                         if ($mission->getId_mission() === $missionPerson->getId_mission()) {
                             $person->addMissions($mission, $this->personItem);

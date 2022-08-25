@@ -24,7 +24,7 @@ class PersonsController
         $filterSort = '';
 
         if (isset($filterOptions['codenamePersonFilter'])) {
-            $filterConditions[] = "code_name LIKE '%" . $filterOptions['codenamePersonFilter'] . "%'";
+            $filterConditions[] = "LOWER(code_name) LIKE '%" . strtolower($filterOptions['codenamePersonFilter']) . "%'";
         }
 
         if (isset($filterOptions['personFilter'])) {
@@ -126,7 +126,8 @@ class PersonsController
 
     public function getNationalitiesPersons(): array
     {
-        foreach($this->getPersonsLists('nationality') as $key => $personsList) {
+        $personsListsByNationality = $this->getPersonsLists('nationality');
+        foreach($personsListsByNationality as $key => $personsList) {
             ${$key} = [];
             foreach($personsList as $person) {
                 if (!in_array($person->getNationality(), ${$key})) {
@@ -165,8 +166,9 @@ class PersonsController
         }
 
         // Vérifie l'unicité du champs CodeName
+        $personsList = $this->getPersonsLists('id')[$personItem . 'sList'];
         if ($editedPerson === null || $editedPerson->getCode_name() !== $personPost['codenamePerson']) {
-            foreach($this->getPersonsLists('id')[$personItem . 'sList'] as $person) {
+            foreach($personsList as $person) {
                 if (strtolower($person->getCode_name()) === strtolower($personPost['codenamePerson'])) {
                     $errors['uniqueCodeName'] = '<li class="error">Le <b>CODE NAME</b> saisi existe déjà</li>';
                 }

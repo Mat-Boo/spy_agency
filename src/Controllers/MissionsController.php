@@ -16,8 +16,10 @@ class MissionsController
 
     public function getStatus(): array
     {
+        $missionsList = $this->getMissionsList();
+
         $status = [];
-        foreach($this->getMissionsList() as $mission) {
+        foreach($missionsList as $mission) {
             if (!in_array($mission->getStatus(), $status)) {
                 $status[] = $mission->getStatus();
             }
@@ -37,8 +39,10 @@ class MissionsController
 
     public function getTypes(): array
     {
+        $missionsList = $this->getMissionsList();
+
         $types = [];
-        foreach($this->getMissionsList() as $mission) {
+        foreach($missionsList as $mission) {
             if (!in_array($mission->getType(), $types)) {
                 $types[] = $mission->getType();
             }
@@ -74,11 +78,6 @@ class MissionsController
 
     public function filterMissions(array $filterOptions, array $personsFilters, array $stashsFilters): array
     {
-        $missionIds = [];
-        foreach($this->getMissionsList() as $mission) {
-            $missionIds[] = $mission->getId_mission();
-        }
-
         $filterConditions = [];
         $filterSort = '';
 
@@ -204,9 +203,10 @@ class MissionsController
         $analyzedStashs = [];
         $nbAgentsWithMissionSpeciality = 0;
 
+        $missionsList = $this->getMissionsList();
         // Vérifie l'unicité du champs CodeName
         if ($editedMission === null || $editedMission->getCode_name() !== $missionPost['codeNameMission']) {
-            foreach($this->getMissionsList() as $mission) {
+            foreach($missionsList as $mission) {
                 if (strtolower($mission->getCode_name()) === strtolower($missionPost['codeNameMission'])) {
                     $errors['uniqueCodeName'] = '<li class="error">Le <b>CODE NAME</b> saisi existe déjà</li>';
                 }
@@ -215,7 +215,7 @@ class MissionsController
 
         // Vérifie l'unicité du champs Title
         if ($editedMission === null || $editedMission->getTitle() !== $missionPost['titleMission']) {
-            foreach($this->getMissionsList() as $mission) {
+            foreach($missionsList as $mission) {
                 if (strtolower($mission->getTitle()) === strtolower($missionPost['titleMission'])) {
                     $errors['uniqueTitle'] = '<li class="error">Le <b>TITRE</b> saisi existe déjà</li>';
                 }

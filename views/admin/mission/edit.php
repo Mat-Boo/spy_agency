@@ -62,7 +62,6 @@ if (!empty($params)) {
 } else {
     //Création de la nouvelle mission et retour à la liste des missions
     if (!empty($_POST)) {
-        exit();
         $errors = $missionsController->controlsRules($_POST, $personsLists, $stashsList, $specialitiesList);
         if (empty($errors)) {
             $newIdMission = $missionsController->createMission($_POST);

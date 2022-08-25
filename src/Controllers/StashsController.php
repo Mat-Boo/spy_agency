@@ -16,8 +16,10 @@ class StashsController
 
     public function getTypes(): array
     {
+        $stashsListByType = $this->getStashsList('type');
+
         $types = [];
-        foreach($this->getStashsList('type') as $stash) {
+        foreach($stashsListByType as $stash) {
             if (!in_array($stash->getType(), $types)) {
                 $types[] = $stash->getType();
             }
@@ -47,11 +49,11 @@ class StashsController
         $filterSort = '';
 
         if (isset($filterOptions['codenameStashFilter'])) {
-            $filterConditions[] = "code_name LIKE '%" . $filterOptions['codenameStashFilter'] . "%'";
+            $filterConditions[] = "LOWER(code_name) LIKE '%" . strtolower($filterOptions['codenameStashFilter']) . "%'";
         }
 
         if (isset($filterOptions['addressStashFilter'])) {
-            $filterConditions[] = "address LIKE '%" . $filterOptions['addressStashFilter'] . "%'";
+            $filterConditions[] = "LOWER(address) LIKE '%" . strtolower($filterOptions['addressStashFilter']) . "%'";
         }
 
         if (isset($filterOptions['countryStashFilter']) && strlen($filterOptions['countryStashFilter']) > 0) {
@@ -115,8 +117,10 @@ class StashsController
 
     public function getCountriesStashs(): array
     {
+        $stashsListByCountry = $this->getStashsList('country');
+
         $countriesStashs = [];
-        foreach($this->getStashsList('country') as $stash) {
+        foreach($stashsListByCountry as $stash) {
             if (!in_array($stash->getCountry(), $countriesStashs)) {
                 $countriesStashs[] = $stash->getCountry();
             }
@@ -147,8 +151,9 @@ class StashsController
         }
 
         // Vérifie l'unicité du champs CodeName
+        $stashsList = $this->getStashsList('id_stash');
         if ($editedStash === null || $editedStash->getCode_name() !== $stashPost['codenameStash']) {
-            foreach($this->getStashsList('id_stash') as $stash) {
+            foreach($stashsList as $stash) {
                 if (strtolower($stash->getCode_name()) == strtolower($stashPost['codenameStash'])) {
                     $errors['uniqueCodeName'] = '<li class="error">Le <b>CODE NAME</b> saisi existe déjà</li>';
                 }

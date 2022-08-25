@@ -68,7 +68,7 @@ class Stashs
             code_name = :code_name,
             address = :address,
             country = :country,
-            `type` = :type
+            type = :type
             WHERE id_stash = :id_stash
         ");
         $updateStash = $query->execute(
@@ -104,7 +104,9 @@ class Stashs
             address = :address,
             country = :country,
             `type` = :type
-        ");
+        "
+            /* " INSERT INTO Stash (code_name, address, country, type) VALUES (:code_name, :address, :country, :type) RETURNING id_stash" */
+        );
         $createStash = $query->execute(
             [
                 'code_name' => $newStash['codenameStash'],

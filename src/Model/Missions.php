@@ -22,7 +22,8 @@ class Missions
         INNER JOIN Speciality ON Mission.id_speciality = Speciality.id_speciality
         ORDER BY start_date, title;';
 
-        $missions = $this->pdo->query($sql, PDO::FETCH_CLASS, Mission::class)->fetchAll();
+       $missions = $this->pdo->query($sql, PDO::FETCH_CLASS, Mission::class)->fetchAll();
+
         return $missions;
     }
 
@@ -112,8 +113,10 @@ class Missions
 
     public function hydrateSpecialities(array $specialities): void
     {
+        $missionsList = $this->getMissionsList();
+
         foreach($specialities as $speciality) {
-            foreach($this->getMissionsList() as $mission) {
+            foreach($missionsList as $mission) {
                 if ($speciality->getName() === $mission->getSpeciality()) {
                     $speciality->addMissions($mission);
                 }

@@ -25,9 +25,11 @@ class AgentsSpecialities
 
     public function hydrateAgents(array $agents, array $specialities): void
     {
+        $agentsSpecialities = $this->getAgentsSpecialitiesList();
+
         foreach($agents as $agent) {
             foreach($specialities as $speciality) {
-                    foreach($this->getAgentsSpecialitiesList() as $agentSpeciality) {
+                    foreach($agentsSpecialities as $agentSpeciality) {
                     if ($agent->getId() === $agentSpeciality->getId()) {
                         if ($speciality->getId_speciality() === $agentSpeciality->getId_speciality()) {
                             $agent->addSpecialities($speciality);
@@ -94,11 +96,13 @@ class AgentsSpecialities
 
     public function hydrateSpecialities(array $specialities, array $agents): void
     {
+        $agentsSpecialities = $this->getAgentsSpecialitiesList();
+
         foreach($specialities as $speciality) {
             foreach($agents as $agent) {
-                foreach($this->getAgentsSpecialitiesList() as $agentsSpecialities) {
-                    if ($speciality->getId_speciality() === $agentsSpecialities->getId_speciality()) {
-                        if ($agent->getId() === $agentsSpecialities->getId()) {
+                foreach($agentsSpecialities as $agentSpeciality) {
+                    if ($speciality->getId_speciality() === $agentSpeciality->getId_speciality()) {
+                        if ($agent->getId() === $agentSpeciality->getId()) {
                             $speciality->addAgents($agent);
                         }
                     }
