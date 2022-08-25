@@ -5,9 +5,17 @@ namespace App\Controllers;
 use App\Connection;
 use App\Model\Mission;
 use App\Model\Missions;
+use Exception;
 
 class MissionsController
 {
+
+/*     public function pagination($page)
+    {
+        $missions = new Missions((new Connection)->getPdo());
+        return $missions->pagination($page);
+    } */
+
     public function getMissionsList(): array
     {
         $missions = new Missions((new Connection)->getPdo());
@@ -75,8 +83,14 @@ class MissionsController
         return $newString = substr($newString, 0, -1);
     }
 
+    public function pagination($page)
+    {
+        $missions = new Missions((new Connection)->getPdo());
+        return $missions->pagination($page);
+    }
 
-    public function filterMissions(array $filterOptions, array $personsFilters, array $stashsFilters): array
+
+    public function filterMissions(array $filterOptions, array $personsFilters, array $stashsFilters, $page): array
     {
         $filterConditions = [];
         $filterSort = '';
@@ -129,7 +143,7 @@ class MissionsController
 
         $missions = new Missions((new Connection)->getPdo());
 
-        return $missions->filterMissions($filterConditions, $filterSort);
+        return $missions->filterMissions($filterConditions, $filterSort, $page);
     }
 
     public function findMission(int $idMission): Mission
@@ -184,7 +198,7 @@ class MissionsController
             'descriptionMission' => 'La <b>DESCRIPTION</b> '
         ];
 
-        // Vérifie si tous les champs sont bien renseignés car tous obligatoires
+        //Vérifie si tous les champs sont bien renseignés car tous obligatoires
         foreach($missionPost as $keyPost => $itemPost) {
             foreach($missionItems as $key => $item) {
                 if ($itemPost === '' && $keyPost === $key) {
@@ -204,7 +218,7 @@ class MissionsController
         $nbAgentsWithMissionSpeciality = 0;
 
         $missionsList = $this->getMissionsList();
-        // Vérifie l'unicité du champs CodeName
+        //Vérifie l'unicité du champs CodeName
         if ($editedMission === null || $editedMission->getCode_name() !== $missionPost['codeNameMission']) {
             foreach($missionsList as $mission) {
                 if (strtolower($mission->getCode_name()) === strtolower($missionPost['codeNameMission'])) {
@@ -213,13 +227,18 @@ class MissionsController
             }
         }
 
-        // Vérifie l'unicité du champs Title
+        //Vérifie l'unicité du champs Title
         if ($editedMission === null || $editedMission->getTitle() !== $missionPost['titleMission']) {
             foreach($missionsList as $mission) {
                 if (strtolower($mission->getTitle()) === strtolower($missionPost['titleMission'])) {
                     $errors['uniqueTitle'] = '<li class="error">Le <b>TITRE</b> saisi existe déjà</li>';
                 }
             }
+        }
+
+        //Vérifie que la date de fin de mission est bien supérieure à la date de début de mission
+        if ($missionPost['startDateMission'] > $missionPost['endDateMission']) {
+            $errors['dates_compare'] = '<li class="error">La <b>DATE DE FIN DE MISSION</b> doit être supérieure à la <b>DATE DE DÉBUT DE MISSION</b></li>';
         }
 
         //Récupération des informations des items extérieurs de la mission pour pouvoir créer les règles métier et vérifie si bien renseigné car obligatoire sauf pour les planques
@@ -339,7 +358,6 @@ class MissionsController
                 $errors['countryMissionStash'] .= '</ul></li>';
             }
         }
-
         return $errors;
     }
 }

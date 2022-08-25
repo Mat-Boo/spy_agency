@@ -340,8 +340,14 @@
                         margin-right: 12px;
                     }
                 }
+                .seeBtn {
+                    background: #395B64;
+                    font-size: 14px;
+                    margin-bottom: 5px;
+                }
                 .editBtn {
                     background: rgb(42, 96, 179);
+                    font-size: 14px;
                     margin-bottom: 5px;
                 }
                 .deleteBtn {
@@ -444,6 +450,34 @@
                     }
                 }
             }
+        }
+    }
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    width: 95%;
+    
+    .paginationBtn {
+        background: #395B64;
+        margin-right: 20px;
+        text-decoration: none;
+        display: flex;
+        border: 1px solid #395B64;
+        color: white;
+        padding: 9px 12px;
+        border-radius: 5px;
+        cursor: pointer;
+        opacity: 0.8;
+        &:hover {
+            opacity: 1;
+        }
+        .textBtn {
+            font-size: 13px;
+            display: none;
+        }
+        .actionSvg {
+            margin-right: 0;
         }
     }
 }

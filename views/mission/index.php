@@ -20,6 +20,15 @@ $missionsStashsController = new MissionsStashsController;
 $specialitiesController = new SpecialitiesController;
 $countriesController = new CountriesController;
 
+//Pagination
+$page = $_GET['page'] ?? 1;
+$pagination = $missionsController->pagination($page);
+$previousLink = $isAdmin ? $router->url('admin_mission') : $router->url('mission');
+if ($page > 2) {
+    $previousLink .= '?page=' . ($page - 1);
+}
+$nextLink = $isAdmin ? $router->url('admin_mission') . '?page=' . $page + 1 : $router->url('mission') . '?page=' . $page + 1;
+
 //Récupération des listes
 $missionsList = $missionsController->getMissionsList();
 $personsLists = $personsController->getPersonsLists('lastname');
@@ -30,16 +39,16 @@ $countriesList = $countriesController->getCountriesList();
 //Application des filtre de recherche sur les missions
 $personsFilters = $missionsPersonsController->filterPersons($_GET);
 $stashsFilters = $missionsStashsController->getStashsFilters($_GET);
-$missionsListFiltered = $missionsController->filterMissions($_GET, $personsFilters, $stashsFilters);
+$missionsListFiltered = $missionsController->filterMissions($_GET, $personsFilters, $stashsFilters, $page);
 
 //Hydratation des missions avec les personnes (agents, contacts, cibles) et les planques
 $missionsPersonsController->hydrateMissions($missionsListFiltered, $personsLists, $personsFilters);
 $missionsStashsController->hydrateMissions($missionsListFiltered, $stashsList, $stashsFilters);
-
+var_dump($_GET);
 ?>
 
 <script>
-    let emptyGet = <?= json_encode(empty($_GET) || isset($_GET['deleted']) || isset($_GET['updated']) || isset($_GET['created'])) ?>;
+    let emptyGet = <?= json_encode(empty($_GET) || isset($_GET['page']) || isset($_GET['deleted']) || isset($_GET['updated']) || isset($_GET['created'])) ?>;
 </script>
 
 <?php if (isset($_GET['deleted'])): ?>
@@ -342,29 +351,38 @@ $missionsStashsController->hydrateMissions($missionsListFiltered, $stashsList, $
                     <p class="missionItem"><b>Du </b><?= $mission->getConvertedStart_date() ?></p>
                     <p class="missionItem"><b>Au </b><?= $mission->getConvertedEnd_date() ?></p>
                 </div>
-                <?php if($isAdmin) : ?>
-                    <div class="actionBtns">
-                        <a href="<?= 'mission/' . $mission->getId_mission() .'/edit'?>" class="editBtn actionBtn">
-                            <span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="editSvg actionSvg" viewBox="0 0 16 16">
-                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-                                </svg>
-                                Modifier
-                            </span>
-                        </a>
-                        <form action="<?= $router->url('admin_mission_delete', ['id' => $mission->getId_mission()]) ?>" method="POST" class="deleteBtn actionBtn"
-                            onsubmit="return confirm('Voulez-vous vraiment supprimer la mission <?=$mission->getId_mission() ?> ?')">
-                            <button type="submit" >
+                <div class="actionBtns">
+                    <a href="<?= ($isAdmin) ? $router->url('admin_mission_view', ['id' => $mission->getId_mission()]) : $router->url('mission_view', ['id' => $mission->getId_mission()])?>" class="seeBtn actionBtn">
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="fullSvg actionSvg" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z"/>
+                                <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z"/>
+                            </svg>
+                            Afficher
+                        </span>
+                    </a>
+                        <?php if($isAdmin) : ?>
+                            <a href="<?= $router->url('admin_mission_edit', ['id' => $mission->getId_mission()])?>" class="editBtn actionBtn">
                                 <span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="deleteSvg actionSvg" viewBox="0 0 16 16">
-                                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="editSvg actionSvg" viewBox="0 0 16 16">
+                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
                                     </svg>
-                                    Supprimer
+                                    Modifier
                                 </span>
-                            </button>
-                        </form>
+                            </a>
+                            <form action="<?= $router->url('admin_mission_delete', ['id' => $mission->getId_mission()]) ?>" method="POST" class="deleteBtn actionBtn"
+                                onsubmit="return confirm('Voulez-vous vraiment supprimer la mission <?=$mission->getId_mission() ?> ?')">
+                                <button type="submit" >
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="deleteSvg actionSvg" viewBox="0 0 16 16">
+                                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                        </svg>
+                                        Supprimer
+                                    </span>
+                                </button>
+                            </form>
+                        <?php endif ?>
                     </div>
-                <?php endif ?>
             </div>
             <div class="details">
                 <div class="detailsBtn">
@@ -450,3 +468,11 @@ $missionsStashsController->hydrateMissions($missionsListFiltered, $stashsList, $
         </li>
     <?php endforeach ?>
 </ul>
+<div class="pagination">
+    <?php if ($page > 1): ?>
+        <a href="<?= $previousLink ?>" class="paginationBtn previousBtn">Page précédente</a>
+    <?php endif ?>
+    <?php if ($page < $pagination['pages']): ?>
+        <a href="<?= $nextLink ?>" class="paginationBtn nextBtn">Page suivante</a>
+    <?php endif ?>
+</div>

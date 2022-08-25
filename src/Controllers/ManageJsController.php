@@ -17,6 +17,9 @@ class ManageJsController
                 $jsScripts[] = 'assets\scripts\filtersMission.js';
                 $jsScripts[] = 'assets\scripts\detailsItem.js';
             break;
+            case 'mission_view':
+                $jsScripts[] = '..\assets\scripts\miniMenu.js';
+            break;
             case 'admin':
                 $jsScripts[] = 'assets\scripts\miniMenu.js';
                 $jsScripts[] = 'assets\scripts\infoMessage.js';
@@ -30,6 +33,9 @@ class ManageJsController
                 $jsScripts[] = '..\assets\scripts\filtersMission.js';
                 $jsScripts[] = '..\assets\scripts\detailsItem.js';
                 $jsScripts[] = '..\assets\scripts\confirmMessage.js';
+            break;
+            case 'admin_mission_view':
+                $jsScripts[] = '..\..\assets\scripts\miniMenu.js';
             break;
             case 'admin_agent':
                 $jsScripts[] = '..\assets\scripts\miniMenu.js';

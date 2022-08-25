@@ -8,12 +8,14 @@ $router = new Router(dirname(__DIR__) . '/views');
 $router
     ->get('/', 'home/index', 'home')
     ->get('/mission', 'mission/index', 'mission')
+    ->match('/mission/[i:id]', 'mission/view', 'mission_view')
     ->match('/login', 'auth/login', 'login')
     ->match('/logout', 'auth/logout', 'logout')
 //ADMIN
     ->get('/admin', 'home/index', 'admin')
     // Gestion des missions
     ->match('/admin/mission', 'mission/index', 'admin_mission')
+    ->match('/admin/mission/[i:id]', 'mission/view', 'admin_mission_view')
     ->match('/admin/mission/[i:id]/edit', 'admin/mission/edit', 'admin_mission_edit')
     ->post('/admin/mission/[i:id]/delete', 'admin/mission/delete', 'admin_mission_delete')
     ->match('/admin/mission/new', 'admin/mission/edit', 'admin_mission_new')

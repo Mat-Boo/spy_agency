@@ -20,14 +20,44 @@ class Missions
         $sql = 'SELECT *, Speciality.name AS speciality
         FROM Mission
         INNER JOIN Speciality ON Mission.id_speciality = Speciality.id_speciality
-        ORDER BY start_date, title;';
+        ORDER BY start_date, title';
 
        $missions = $this->pdo->query($sql, PDO::FETCH_CLASS, Mission::class)->fetchAll();
 
         return $missions;
     }
 
-    public function filterMissions(array $filterConditions, string $filterSort): array
+    public function pagination($page): array
+    {
+        $page = $_GET['page'] ?? 1;
+
+        $currentPage = (int)$page;
+        if ($currentPage <= 0) {
+            throw new Exception('Numéro de page invalide');
+        }
+
+        $sql = 'SELECT COUNT(id_mission)
+        FROM Mission';
+
+       $count = $this->pdo->query($sql)->fetch(PDO::FETCH_NUM)[0];
+       
+       $perPage = 3;
+       $pages = ceil($count / $perPage);
+
+        if ($currentPage > $pages) {
+            throw new Exception('Cette page n\'existe pas');
+        }
+
+        $offset = $perPage * ($currentPage - 1);
+
+        return [
+            'perPage' => $perPage,
+            'offset' => $offset,
+            'pages' => $pages
+        ];
+    }
+
+    public function filterMissions(array $filterConditions, string $filterSort, $page): array
     {
         $sql = "SELECT *, Speciality.name AS speciality
         FROM Mission
@@ -46,6 +76,10 @@ class Missions
         if (strlen($filterSort) > 0) {
             $sql .= " ORDER BY " . $filterSort;
         }
+
+        $pagination = $this->pagination($page);
+
+        $sql .= " LIMIT " . $pagination['perPage'] . " OFFSET " . $pagination['offset'];
         
         $missions = $this->pdo->query($sql, PDO::FETCH_CLASS, Mission::class)->fetchAll();
 

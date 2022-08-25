@@ -9,6 +9,11 @@ class Speciality
     private $missions = [];
     private $agents = [];
 
+    public function __tostring()
+    {
+        return $this->getName();
+    }
+
     /**
      * Get the value of id_speciality
      */ 
