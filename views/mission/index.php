@@ -22,12 +22,37 @@ $countriesController = new CountriesController;
 
 //Pagination
 $page = $_GET['page'] ?? 1;
-$pagination = $missionsController->pagination($page);
-$previousLink = $isAdmin ? $router->url('admin_mission') : $router->url('mission');
-if ($page > 2) {
-    $previousLink .= '?page=' . ($page - 1);
+if ($isAdmin) {
+    $link = $router->url('admin_mission');
+} else {
+    $link = $router->url('mission');
 }
-$nextLink = $isAdmin ? $router->url('admin_mission') . '?page=' . $page + 1 : $router->url('mission') . '?page=' . $page + 1;
+
+if (!isset($_SERVER['QUERY_STRING'])) {
+    $previousLink = $link;
+    if ($page > 2) {
+        $previousLink = $link . '?page=' . ($page - 1);
+    }
+    $nextLink = $link . '?page=' . $page + 1;
+} else {
+    if (isset($_GET['page'])) {
+        if (strpos($_SERVER['QUERY_STRING'], '&')) {
+            $previousLink = $link . '?' . substr($_SERVER['QUERY_STRING'], strpos($_SERVER['QUERY_STRING'], '&') + 1);
+        } else {
+            $previousLink = $link;
+        }
+        if ($page > 2) {
+            $previousLink = $link . '?page=' . ($page - 1) . stristr($_SERVER['QUERY_STRING'], '&');
+        }
+        $nextLink = $link . '?page=' . $page + 1 . stristr($_SERVER['QUERY_STRING'], '&');
+    } else {
+        $previousLink = $link . '&' . $_SERVER['QUERY_STRING'];
+        if ($page > 2) {
+            $previousLink = $link . '?page=' . ($page - 1) . '&' . $_SERVER['QUERY_STRING'];
+        }   
+        $nextLink = $link . '?page=' . $page + 1 . '&' . $_SERVER['QUERY_STRING'];
+    }
+}
 
 //Récupération des listes
 $missionsList = $missionsController->getMissionsList();
@@ -39,12 +64,13 @@ $countriesList = $countriesController->getCountriesList();
 //Application des filtre de recherche sur les missions
 $personsFilters = $missionsPersonsController->filterPersons($_GET);
 $stashsFilters = $missionsStashsController->getStashsFilters($_GET);
-$missionsListFiltered = $missionsController->filterMissions($_GET, $personsFilters, $stashsFilters, $page);
+$missionsListFiltered = $missionsController->filterMissions($_GET, $personsFilters, $stashsFilters, $page)['missions'];
+$pages = $missionsController->filterMissions($_GET, $personsFilters, $stashsFilters, $page)['pages'];
 
 //Hydratation des missions avec les personnes (agents, contacts, cibles) et les planques
 $missionsPersonsController->hydrateMissions($missionsListFiltered, $personsLists, $personsFilters);
 $missionsStashsController->hydrateMissions($missionsListFiltered, $stashsList, $stashsFilters);
-var_dump($_GET);
+
 ?>
 
 <script>
@@ -472,7 +498,7 @@ var_dump($_GET);
     <?php if ($page > 1): ?>
         <a href="<?= $previousLink ?>" class="paginationBtn previousBtn">Page précédente</a>
     <?php endif ?>
-    <?php if ($page < $pagination['pages']): ?>
+    <?php if ($page < $pages): ?>
         <a href="<?= $nextLink ?>" class="paginationBtn nextBtn">Page suivante</a>
     <?php endif ?>
 </div>

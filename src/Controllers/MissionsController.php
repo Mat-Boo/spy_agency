@@ -83,13 +83,6 @@ class MissionsController
         return $newString = substr($newString, 0, -1);
     }
 
-    public function pagination($page)
-    {
-        $missions = new Missions((new Connection)->getPdo());
-        return $missions->pagination($page);
-    }
-
-
     public function filterMissions(array $filterOptions, array $personsFilters, array $stashsFilters, $page): array
     {
         $filterConditions = [];

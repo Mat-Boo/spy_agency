@@ -27,49 +27,32 @@ class Missions
         return $missions;
     }
 
-    public function pagination($page): array
+    public function filterMissions(array $filterConditions, string $filterSort, $page): array
     {
-        $page = $_GET['page'] ?? 1;
-
+        //Pagination
+        $perPage = 3;
         $currentPage = (int)$page;
         if ($currentPage <= 0) {
             throw new Exception('Numéro de page invalide');
         }
-
-        $sql = 'SELECT COUNT(id_mission)
-        FROM Mission';
-
-       $count = $this->pdo->query($sql)->fetch(PDO::FETCH_NUM)[0];
-       
-       $perPage = 3;
-       $pages = ceil($count / $perPage);
-
-        if ($currentPage > $pages) {
-            throw new Exception('Cette page n\'existe pas');
-        }
-
         $offset = $perPage * ($currentPage - 1);
 
-        return [
-            'perPage' => $perPage,
-            'offset' => $offset,
-            'pages' => $pages
-        ];
-    }
+        $sqlCount = 'SELECT COUNT(id_mission) FROM Mission';
 
-    public function filterMissions(array $filterConditions, string $filterSort, $page): array
-    {
+
         $sql = "SELECT *, Speciality.name AS speciality
         FROM Mission
         INNER JOIN Speciality ON Mission.id_speciality = Speciality.id_speciality";
 
         if (count($filterConditions) > 0) {
             $sql .= " WHERE " . $filterConditions[0];
+            $sqlCount .= " WHERE " . $filterConditions[0];
         }
 
         if (count($filterConditions) > 1) {
             for ($i = 1 ; $i < count($filterConditions) ; $i++) {
                 $sql .= " AND " . $filterConditions[$i];
+                $sqlCount .= " AND " . $filterConditions[$i];
             }
         }
 
@@ -77,13 +60,15 @@ class Missions
             $sql .= " ORDER BY " . $filterSort;
         }
 
-        $pagination = $this->pagination($page);
-
-        $sql .= " LIMIT " . $pagination['perPage'] . " OFFSET " . $pagination['offset'];
+        $sql .= " LIMIT " . $perPage . " OFFSET " . $offset;
         
         $missions = $this->pdo->query($sql, PDO::FETCH_CLASS, Mission::class)->fetchAll();
+        
 
-        return $missions;
+        $count = $this->pdo->query($sqlCount)->fetch(PDO::FETCH_NUM)[0];
+        $pages = ceil($count / $perPage);
+
+        return ['missions' => $missions, 'pages' => $pages];
     }
 
     public function findMission(int $idMission): Mission
