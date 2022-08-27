@@ -6,6 +6,11 @@ class Pagination
 {
     public function paginationLinks(string $link, int $page): array
     {
+
+        var_dump($_SERVER['QUERY_STRING']);
+        var_dump(stristr($_SERVER['QUERY_STRING'], '&'));
+        var_dump(substr($_SERVER['QUERY_STRING'], strpos($_SERVER['QUERY_STRING'], '&') + 1));
+
         if (!isset($_SERVER['QUERY_STRING'])) {
             $previousLink = $link;
             if ($page > 2) {
