@@ -11,14 +11,14 @@ use App\Controllers\MissionsController;
 use App\Controllers\PersonsController;
 use App\Controllers\MissionsPersonsController;
 use App\Controllers\SpecialitiesController;
-use App\Controllers\CountriesController;
+use App\Class\Countries;
 
 $missionsController = new MissionsController;
 $personsController = new PersonsController;
 $missionsPersonsController = new MissionsPersonsController;
 $specialitiesController = new SpecialitiesController;
 $agentsSpecialitiesController = new AgentsSpecialitiesController;
-$countriesController = new CountriesController;
+$countriesController = new Countries;
 
 $page = $_GET['page'] ?? 1;
 

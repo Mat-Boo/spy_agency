@@ -7,12 +7,12 @@ $styleSubFolder = 'admin/stash/editStash_';
 use App\Controllers\MissionsController;
 use App\Controllers\StashsController;
 use App\Controllers\MissionsStashsController;
-use App\Controllers\CountriesController;
+use App\Class\Countries;
 
 $missionsController = new MissionsController;
 $stashsController = new StashsController;
 $missionsStashsController = new MissionsStashsController;
-$countriesController = new CountriesController;
+$countriesController = new Countries;
 
 //Récupération des listes
 $missionsList = $missionsController->getMissionsList();

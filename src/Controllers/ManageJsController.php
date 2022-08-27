@@ -117,6 +117,9 @@ class ManageJsController
                 $jsScripts[] = '..\..\assets\scripts\miniMenu.js';
                 $jsScripts[] = '..\..\assets\scripts\alertMessage.js';
             break;
+            case 'e404':
+                $jsScripts[] = '..\assets\scripts\miniMenu.js';
+            break;
         }
         return $jsScripts;
     }

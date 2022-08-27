@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Connection;
-use App\Model\AgentsSpecialities;
 use App\Model\MissionsStashs;
 
 class MissionsStashsController

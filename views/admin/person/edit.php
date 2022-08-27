@@ -14,14 +14,14 @@ use App\Controllers\MissionsController;
 use App\Controllers\PersonsController;
 use App\Controllers\MissionsPersonsController;
 use App\Controllers\SpecialitiesController;
-use App\Controllers\CountriesController;
+use App\Class\Countries;
 
 $missionsController = new MissionsController;
 $personsController = new PersonsController;
 $missionsPersonsController = new MissionsPersonsController;
 $specialitiesController = new SpecialitiesController;
 $agentsSpecialitiesController = new AgentsSpecialitiesController;
-$countriesController = new CountriesController;
+$countriesController = new Countries;
 
 //Récupération des listes
 $missionsList = $missionsController->getMissionsList();
@@ -72,7 +72,6 @@ if (!empty($params)) {
         $errors = $personsController->controlsRules($_POST, $personItem);
         if (empty($errors)) {
             $newIdPerson = $personsController->createPerson($_POST, $personItem);
-            var_dump($_POST, $newIdPerson);
             if ($personItem === 'agent') {
                 $agentsSpecialitiesController->createAgentSpeciality($_POST, $newIdPerson);
             }

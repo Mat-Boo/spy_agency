@@ -31,7 +31,6 @@ class Pagination
                 $nextLink = $link . '?page=' . $page + 1 . '&' . $_SERVER['QUERY_STRING'];
             }
         }
-
         return [
             'previousLink' => $previousLink,
             'nextLink' => $nextLink

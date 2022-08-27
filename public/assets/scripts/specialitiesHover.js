@@ -1,9 +1,6 @@
 let optionAgentList = document.querySelectorAll('.optionAgent');
 let specialitiesHoverLists = document.querySelectorAll('.specialitiesHover');
 
-console.dir(optionAgentList);
-console.dir(specialitiesHoverLists);
-
 optionAgentList.forEach((optionAgent) => {
     let idAgentHover;
     optionAgent.addEventListener('mouseenter', (e) => {

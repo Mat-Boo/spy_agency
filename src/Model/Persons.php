@@ -101,9 +101,6 @@ class Persons
                 'id' => $id_person
             ]
         );
-        /* if ($updatePerson === false) {
-            throw new Exception("Impossible de modifier l'enregistrement {$id_person} dans la table '" . ucfirst($this->personItem) . "'");
-        } */
     }
 
     public function deletePerson(int $id): void

@@ -136,7 +136,6 @@ if (!emptyGet) {
 
 cancelFiltersBtn.addEventListener('click', () => {
     let appliedFilters = false;
-    console.log(filtersForm);
     filtersForm.forEach((filterForm) => {
         if (filterForm.nodeName === 'INPUT') {
             if (filterForm.defaultChecked === true) {

@@ -8,12 +8,12 @@ use App\Class\Pagination;
 use App\Controllers\MissionsController;
 use App\Controllers\StashsController;
 use App\Controllers\MissionsStashsController;
-use App\Controllers\CountriesController;
+use App\Class\Countries;
 
 $missionsController = new MissionsController;
 $stashsController = new StashsController;
 $missionsStashsController = new MissionsStashsController;
-$countriesController = new CountriesController;
+$countriesController = new Countries;
 
 $page = $_GET['page'] ?? 1;
 

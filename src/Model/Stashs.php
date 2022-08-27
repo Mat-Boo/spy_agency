@@ -123,7 +123,6 @@ class Stashs
             country = :country,
             `type` = :type
         "
-            /* " INSERT INTO Stash (code_name, address, country, type) VALUES (:code_name, :address, :country, :type) RETURNING id_stash" */
         );
         $createStash = $query->execute(
             [

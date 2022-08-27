@@ -5,17 +5,9 @@ namespace App\Controllers;
 use App\Connection;
 use App\Model\Mission;
 use App\Model\Missions;
-use Exception;
 
 class MissionsController
 {
-
-/*     public function pagination($page)
-    {
-        $missions = new Missions((new Connection)->getPdo());
-        return $missions->pagination($page);
-    } */
-
     public function getMissionsList(): array
     {
         $missions = new Missions((new Connection)->getPdo());

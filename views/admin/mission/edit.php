@@ -11,7 +11,7 @@ use App\Controllers\StashsController;
 use App\Controllers\MissionsPersonsController;
 use App\Controllers\MissionsStashsController;
 use App\Controllers\SpecialitiesController;
-use App\Controllers\CountriesController;
+use App\Class\Countries;
 
 $missionsController = new MissionsController;
 $personsController = new PersonsController;
@@ -19,7 +19,7 @@ $stashsController = new StashsController;
 $missionsPersonsController = new MissionsPersonsController;
 $missionsStashsController = new MissionsStashsController;
 $specialitiesController = new SpecialitiesController;
-$countriesController = new CountriesController;
+$countriesController = new Countries;
 $agentsSpecialities = new AgentsSpecialitiesController;
 
 //Récupération des listes

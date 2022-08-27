@@ -14,8 +14,6 @@ let margins = 20;
 let heightHeaderFilters = 68;
 let heightApplyFiltersBtn = 64;
 
-console.log(personItem);
-
 //Hauteur des filtres selon la taille de l'écran
 if (personItem === 'agent') {
     if (window.matchMedia("(min-width: 923px)").matches) {
