@@ -6,7 +6,9 @@ class Pagination
 {
     public function paginationLinks(string $link, int $page): array
     {
-
+        var_dump($_SERVER);
+        var_dump($_GET);
+        var_dump(isset($_SERVER['QUERY_STRING']));
         var_dump($_SERVER['QUERY_STRING']);
         var_dump(stristr($_SERVER['QUERY_STRING'], '&'));
         var_dump(substr($_SERVER['QUERY_STRING'], strpos($_SERVER['QUERY_STRING'], '&') + 1));
