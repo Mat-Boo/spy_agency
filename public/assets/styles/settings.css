@@ -202,6 +202,32 @@ main h1 {
   padding: 0 10px;
 }
 
+main .pagination .paginationBtn {
+  margin: 0;
+  width: 102px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+main .pagination .paginationBtn .previousChevron {
+  margin-right: 5px;
+}
+
+main .pagination .paginationBtn .nextChevron {
+  margin-left: 5px;
+}
+
+main .pagination .previousBtn {
+  margin-right: 20px;
+}
+
 footer {
   position: absolute;
   bottom: -157px;

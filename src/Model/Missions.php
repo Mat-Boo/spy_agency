@@ -30,13 +30,12 @@ class Missions
     public function filterMissions(array $filterConditions, string $filterSort, $page): array
     {
         //Pagination
-        $perPage = 3;
+        $perPage = 5;
         $currentPage = (int)$page;
         if ($currentPage <= 0) {
             throw new Exception('Numéro de page invalide');
         }
         $offset = $perPage * ($currentPage - 1);
-
         $sqlCount = 'SELECT COUNT(id_mission) FROM Mission';
 
 
