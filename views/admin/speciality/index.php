@@ -4,6 +4,7 @@ $title = 'Spy Agency - Spécialités - Admin';
 $styleFolder = '../../../assets/styles/';
 $styleSubFolder = 'admin/speciality/';
 
+use App\Class\Pagination;
 use App\Controllers\MissionsController;
 use App\Controllers\SpecialitiesController;
 use App\Controllers\PersonsController;
@@ -14,6 +15,8 @@ $specialitiesController = new SpecialitiesController;
 $personsController = new PersonsController;
 $agentsSpecialitiesController = new AgentsSpecialitiesController;
 
+$page = $_GET['page'] ?? 1;
+
 //Récupération des listes
 $missionsList = $missionsController->getMissionsList();
 $specialitiesList = $specialitiesController->getSpecialitiesList('id_speciality');
@@ -22,15 +25,21 @@ $agentsList = $personsController->getPersonsLists('id')['agentsList'];
 //Application des filtre de recherche sur les spécialités
 $agentsFilters = $agentsSpecialitiesController->filterAgents($_GET);
 $missionsFilters = $missionsController->filterMissionsForSpeciality($_GET);
-$specialitiesListFiltered = $specialitiesController->filterSpecialities($_GET, $agentsFilters, $missionsFilters);
+$specialitiesListFiltered = $specialitiesController->filterSpecialities($_GET, $agentsFilters, $missionsFilters, $page)['specialities'];
 
 //Hydratation des spécialités avec les agents et les missions
 $agentsSpecialitiesController->hydrateSpecialities($specialitiesListFiltered, $agentsList);
 $missionsController->hydrateSpecialities($specialitiesListFiltered);
+
+//Pagination
+$link = $router->url('admin_speciality');
+$paginationLinks = (new Pagination)->paginationLinks($link, $page);
+$pages = $specialitiesController->filterSpecialities($_GET, $agentsFilters, $missionsFilters, $page)['pages'];
+
 ?>
 
 <script>
-    let emptyGet = <?= json_encode(empty($_GET) || isset($_GET['deleted']) || isset($_GET['updated']) || isset($_GET['created'])) ?>;
+    let emptyGet = <?= json_encode(empty($_GET) || !stristr($_SERVER['QUERY_STRING'], '&') || isset($_GET['deleted']) || isset($_GET['updated']) || isset($_GET['created'])) ?>;
 </script>
 
 <?php if (isset($_GET['deleted'])): ?>
@@ -278,3 +287,4 @@ $missionsController->hydrateSpecialities($specialitiesListFiltered);
         </li>
     <?php endforeach ?>
 </ul>
+<?php require dirname(__DIR__, 2) . '\pagination\pagination.php' ?>

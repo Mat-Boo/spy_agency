@@ -27,10 +27,10 @@ class Missions
         return $missions;
     }
 
-    public function filterMissions(array $filterConditions, string $filterSort, $page): array
+    public function filterMissions(array $filterConditions, string $filterSort, int $page): array
     {
         //Pagination
-        $perPage = 5;
+        $perPage = 6;
         $currentPage = (int)$page;
         if ($currentPage <= 0) {
             throw new Exception('Numéro de page invalide');

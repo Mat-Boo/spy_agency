@@ -83,7 +83,7 @@ class MissionsController
         return $newString = substr($newString, 0, -1);
     }
 
-    public function filterMissions(array $filterOptions, array $personsFilters, array $stashsFilters, $page): array
+    public function filterMissions(array $filterOptions, array $personsFilters, array $stashsFilters, int $page): array
     {
         $filterConditions = [];
         $filterSort = '';

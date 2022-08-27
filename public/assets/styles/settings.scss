@@ -3,7 +3,6 @@ body {
     margin: 0;
     padding: 0;
     background-color: #EEEAE7;
-
     position: relative;
     box-sizing: border-box;
 }
@@ -145,12 +144,26 @@ main {
         padding: 0 10px;
     }
     .pagination {
+        display: flex;
+        justify-content: center;
+        width: 95%;
         .paginationBtn {
-            margin: 0;
-            width: 102px;
+            background: #395B64;
+            text-decoration: none;
             display: flex;
             justify-content: center;
             align-items: center;
+            border: 1px solid #395B64;
+            color: white;
+            margin: 0;
+            width: 102px;
+            padding: 9px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            opacity: 0.8;
+            &:hover {
+                opacity: 1;
+            }
             .previousChevron {
                 margin-right: 5px;
             }

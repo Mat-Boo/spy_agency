@@ -43,7 +43,7 @@ class StashsController
         return $newString = substr($newString, 0, -1);
     }
 
-    public function filterStashs(array $filterOptions, array $missionsFilter): array
+    public function filterStashs(array $filterOptions, array $missionsFilter, int $page): array
     {
         $filterConditions = [];
         $filterSort = '';
@@ -74,7 +74,7 @@ class StashsController
 
         $stashs = new Stashs((new Connection)->getPdo());
 
-        return $stashs->filterStashs($filterConditions, $filterSort);
+        return $stashs->filterStashs($filterConditions, $filterSort, $page);
     }
 
     public function findStash(int $idStash): Stash

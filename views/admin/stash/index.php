@@ -1,9 +1,10 @@
 <?php
 
 $title = 'Spy Agency - Planques - Admin';
-$styleFolder = '../../../assets/styles/';
+$styleFolder = '../../assets/styles/';
 $styleSubFolder = 'admin/stash/';
 
+use App\Class\Pagination;
 use App\Controllers\MissionsController;
 use App\Controllers\StashsController;
 use App\Controllers\MissionsStashsController;
@@ -14,6 +15,8 @@ $stashsController = new StashsController;
 $missionsStashsController = new MissionsStashsController;
 $countriesController = new CountriesController;
 
+$page = $_GET['page'] ?? 1;
+
 //Récupération des listes
 $missionsList = $missionsController->getMissionsList();
 $stashsList = $stashsController->getStashsList('id_stash');
@@ -21,15 +24,20 @@ $countriesList = $countriesController->getCountriesList();
 
 //Application des filtre de recherche sur les planques
 $missionsFilters = $missionsStashsController->filterMissions($_GET);
-$stashsListFiltered = $stashsController->filterStashs($_GET, $missionsFilters);
+$stashsListFiltered = $stashsController->filterStashs($_GET, $missionsFilters, $page)['stashs'];
 
 //Hydratation des planques avec les missions
 $missionsStashsController->hydrateStashs($stashsListFiltered, $missionsList);
 
+//Pagination
+$link = $router->url('admin_stash');
+$paginationLinks = (new Pagination)->paginationLinks($link, $page);
+$pages = $stashsController->filterStashs($_GET, $missionsFilters, $page)['pages'];
+
 ?>
 
 <script>
-    let emptyGet = <?= json_encode(empty($_GET) || isset($_GET['deleted']) || isset($_GET['updated']) || isset($_GET['created'])) ?>;
+    let emptyGet = <?= json_encode(empty($_GET) || !stristr($_SERVER['QUERY_STRING'], '&') || isset($_GET['deleted']) || isset($_GET['updated']) || isset($_GET['created'])) ?>;
 </script>
 
 <?php if (isset($_GET['deleted'])): ?>
@@ -270,3 +278,4 @@ $missionsStashsController->hydrateStashs($stashsListFiltered, $missionsList);
         </li>
     <?php endforeach ?>
 </ul>
+<?php require dirname(__DIR__, 2) . '/pagination/pagination.php' ?>

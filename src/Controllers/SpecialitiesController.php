@@ -14,7 +14,7 @@ class SpecialitiesController
         return $specialities->getSpecialitiesList($sortBy);
     }
 
-    public function filterSpecialities(array $filterOptions, array $agentsFilter, array $missionsFilter): array
+    public function filterSpecialities(array $filterOptions, array $agentsFilter, array $missionsFilter, int $page): array
     {
         $filterConditions = [];
         $filterSort = '';
@@ -38,7 +38,7 @@ class SpecialitiesController
 
         $specialities = new Specialities((new Connection)->getPdo());
 
-        return $specialities->filterSpecialities($filterConditions, $filterSort);
+        return $specialities->filterSpecialities($filterConditions, $filterSort, $page);
     }
 
     public function findSpeciality(int $idSpeciality): Speciality

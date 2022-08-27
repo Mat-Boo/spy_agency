@@ -18,7 +18,7 @@ class PersonsController
         return $personsLists;
     }
 
-    public function filterPersons(array $filterOptions, array $specialityFilter, array $missionsFilter, string $personItem): array
+    public function filterPersons(array $filterOptions, array $specialityFilter, array $missionsFilter, string $personItem, int $page): array
     {
         $filterConditions = [];
         $filterSort = '';
@@ -58,7 +58,7 @@ class PersonsController
 
         $persons = new Persons((new Connection)->getPdo(), $personItem);
 
-        return $persons->filterPersons($filterConditions, $filterSort);
+        return $persons->filterPersons($filterConditions, $filterSort, $page);
     }
 
     public function findPerson(int $idPerson, string $personItem): Person

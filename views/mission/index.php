@@ -471,4 +471,4 @@ $pages = $missionsController->filterMissions($_GET, $personsFilters, $stashsFilt
         </li>
     <?php endforeach ?>
 </ul>
-<?php require ('pagination.php') ?>
+<?php require dirname(__DIR__, 1) . '\pagination\pagination.php' ?>

@@ -5,6 +5,7 @@ $title = 'Spy Agency - ' . ($personItem === 'target' ? 'Cible' : ucfirst($person
 $styleFolder = '../../../assets/styles/';
 $styleSubFolder = 'admin/person/';
 
+use App\Class\Pagination;
 use App\Controllers\AgentsSpecialitiesController;
 use App\Controllers\MissionsController;
 use App\Controllers\PersonsController;
@@ -19,6 +20,8 @@ $specialitiesController = new SpecialitiesController;
 $agentsSpecialitiesController = new AgentsSpecialitiesController;
 $countriesController = new CountriesController;
 
+$page = $_GET['page'] ?? 1;
+
 //Récupération des listes
 $missionsList = $missionsController->getMissionsList();
 $personsList = $personsController->getPersonsLists('lastname')[$personItem . 'sList'];
@@ -28,7 +31,7 @@ $countriesList = $countriesController->getCountriesList();
 //Application des filtre de recherche sur les personnes
 $specialitiesFilters = $agentsSpecialitiesController->filterSpecialities($_GET);
 $missionsFilters = $missionsPersonsController->filterMissions($_GET, $personItem);
-$personsListFiltered = $personsController->filterPersons($_GET, $specialitiesFilters, $missionsFilters, $personItem);
+$personsListFiltered = $personsController->filterPersons($_GET, $specialitiesFilters, $missionsFilters, $personItem, $page)['persons'];
 
 //Hydratation des personnes avec les spécialités (pour les agents) et les missions
 if ($personItem === 'agent') {
@@ -44,10 +47,15 @@ foreach($personsListFiltered as $person) {
     }
 }
 
+//Pagination
+$link = $router->url('admin_' . $personItem);
+$paginationLinks = (new Pagination)->paginationLinks($link, $page);
+$pages = $personsController->filterPersons($_GET, $specialitiesFilters, $missionsFilters, $personItem, $page)['pages'];
+
 ?>
 
 <script>
-    let emptyGet = <?= json_encode(empty($_GET) || isset($_GET['deleted']) || isset($_GET['updated']) || isset($_GET['created'])) ?>;
+    let emptyGet = <?= json_encode(empty($_GET) || !stristr($_SERVER['QUERY_STRING'], '&') || isset($_GET['deleted']) || isset($_GET['updated']) || isset($_GET['created'])) ?>;
     let personItem = <?= json_encode($personItem) ?>
 </script>
 
@@ -364,3 +372,4 @@ foreach($personsListFiltered as $person) {
         </li>
     <?php endforeach ?>
 </ul>
+<?php require dirname(__DIR__, 2) . '\pagination\pagination.php' ?>

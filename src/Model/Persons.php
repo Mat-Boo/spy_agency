@@ -26,17 +26,29 @@ class Persons
         return ${$this->personItem . 's'};
     }
 
-    public function filterPersons(array $filterConditions, string $filterSort): array
+    public function filterPersons(array $filterConditions, string $filterSort, int $page): array
     {
+        //Pagination
+        $perPage = 6;
+        $currentPage = (int)$page;
+        if ($currentPage <= 0) {
+            throw new Exception('Numéro de page invalide');
+        }
+        $offset = $perPage * ($currentPage - 1);
+        $sqlCount = 'SELECT COUNT(id) FROM ' . strtoupper($this->personItem);
+
+
         $sql = "SELECT * FROM " . strtoupper($this->personItem);
 
         if (count($filterConditions) > 0) {
             $sql .= " WHERE " . $filterConditions[0];
+            $sqlCount .= " WHERE " . $filterConditions[0];
         }
 
         if (count($filterConditions) > 1) {
             for ($i = 1 ; $i < count($filterConditions) ; $i++) {
                 $sql .= " AND " . $filterConditions[$i];
+                $sqlCount .= " AND " . $filterConditions[$i];
             }
         }
 
@@ -44,9 +56,14 @@ class Persons
             $sql .= " ORDER BY " . $filterSort;
         }
 
+        $sql .= " LIMIT " . $perPage . " OFFSET " . $offset;
+
         $persons = $this->pdo->query($sql, PDO::FETCH_CLASS, Person::class)->fetchAll();
 
-        return $persons;
+        $count = $this->pdo->query($sqlCount)->fetch(PDO::FETCH_NUM)[0];
+        $pages = ceil($count / $perPage);
+
+        return ['persons' => $persons, 'pages' => $pages];
     }
 
     public function findPerson(int $idPerson): Person

@@ -686,44 +686,6 @@
   }
 }
 
-.pagination {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  width: 95%;
-}
-
-.pagination .paginationBtn {
-  background: #395B64;
-  margin-right: 20px;
-  text-decoration: none;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  border: 1px solid #395B64;
-  color: white;
-  padding: 9px 12px;
-  border-radius: 5px;
-  cursor: pointer;
-  opacity: 0.8;
-}
-
-.pagination .paginationBtn:hover {
-  opacity: 1;
-}
-
-.pagination .paginationBtn .textBtn {
-  font-size: 13px;
-  display: none;
-}
-
-.pagination .paginationBtn .actionSvg {
-  margin-right: 0;
-}
-
 @media screen and (min-width: 700px) {
   .filtersBox .filtersAndApplyBtn .filters .filtersItemAndTitle .filtersItem .missionsFiltersLine .labelAndFilter {
     width: auto;

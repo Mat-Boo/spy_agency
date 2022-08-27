@@ -1,4 +1,4 @@
-<div class="pagination" id="pagination">
+<div class="pagination">
     <?php if ($pages > 1): ?>
         <a href="<?= $paginationLinks['previousLink'] ?>" class="paginationBtn previousBtn"
             style="<?= $page > 1 ? "" : "pointer-events: none; cursor: default;opacity: 0.3" ?>"
