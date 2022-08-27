@@ -13,7 +13,7 @@ class Pagination
         var_dump(stristr($_SERVER['QUERY_STRING'], '&'));
         var_dump(substr($_SERVER['QUERY_STRING'], strpos($_SERVER['QUERY_STRING'], '&') + 1));
 
-        if (!isset($_SERVER['QUERY_STRING'])) {
+        if (!isset($_SERVER['QUERY_STRING']) || strlen($_SERVER['QUERY_STRING']) === 0) {
             $previousLink = $link;
             if ($page > 2) {
                 $previousLink = $link . '?page=' . ($page - 1);
