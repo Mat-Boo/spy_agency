@@ -1,7 +1,5 @@
 <?php
-namespace App;
-
-use App\Security\ForbiddenException;
+namespace App\Class;
 
 class Auth
 {

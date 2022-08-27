@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Class;
 use Dotenv\Dotenv;
 use PDO;
 
@@ -9,7 +9,7 @@ class Connection
     public function getPdo(): PDO
     {
         
-        $dotenv = Dotenv::createImmutable(dirname(__DIR__));
+        $dotenv = Dotenv::createImmutable(dirname(__DIR__, 2));
         $dotenv->load();
 
         if ($_ENV['APP_ENV'] === 'prod') {

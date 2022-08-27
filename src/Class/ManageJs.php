@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Class;
 
-class ManageJsController
+class ManageJs
 {
-    public function ManageJs(string $urlName): array
+    public function manageJs(string $urlName): array
     {
         $jsScripts = [];
         switch ($urlName) {

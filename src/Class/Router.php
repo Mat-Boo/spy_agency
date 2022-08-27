@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Class;
 
 use AltoRouter;
 use Exception;

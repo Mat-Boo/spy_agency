@@ -1,7 +1,7 @@
 <?php
-use App\Auth;
+use App\Class\Auth;
 use App\Controllers\AdministratorsController;
-use App\Controllers\ManageJsController;
+use App\Class\ManageJs;
 
 Auth::check();
 
@@ -15,8 +15,8 @@ if (isset($_SESSION['auth'])) {
     $foundAdmin = $administrators->findAdministrator(isset($_SESSION['auth']));
 }
 
-$manageJsController = new ManageJsController;
-$jsScripts = $manageJsController->ManageJs($match['name']);
+$manageJs = new ManageJs;
+$jsScripts = $manageJs->manageJs($match['name']);
 ?>
 
 <!DOCTYPE html>

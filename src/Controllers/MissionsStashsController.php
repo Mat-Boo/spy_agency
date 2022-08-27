@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Connection;
+use App\Class\Connection;
 use App\Model\MissionsStashs;
 
 class MissionsStashsController
