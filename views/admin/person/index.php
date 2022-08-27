@@ -372,4 +372,4 @@ $pages = $personsController->filterPersons($_GET, $specialitiesFilters, $mission
         </li>
     <?php endforeach ?>
 </ul>
-<?php require dirname(__DIR__, 2) . '\pagination\pagination.php' ?>
+<?php require dirname(__DIR__, 2) . '/pagination/pagination.php' ?>
