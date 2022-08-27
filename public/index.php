@@ -44,5 +44,7 @@ $router
     ->match('/admin/speciality/[i:id]/edit', 'admin/speciality/edit', 'admin_speciality_edit')
     ->post('/admin/speciality/[i:id]/delete', 'admin/speciality/delete', 'admin_speciality_delete')
     ->match('/admin/speciality/new', 'admin/speciality/edit', 'admin_speciality_new')
+    //Erreur 404
+    ->match('/[*]', 'e404', 'e404')
     ->run();
 ?>

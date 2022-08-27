@@ -190,7 +190,7 @@ main {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  min-height: calc(100vh - 287px);
+  min-height: calc(100vh - 317px);
 }
 
 main h1 {

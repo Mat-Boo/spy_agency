@@ -51,19 +51,16 @@ class Router
     public function run(): self
     {
         $match = $this->router->match();
-        $view = $match['target'] ?: 'e404';
+        $view = $match['target'];
         $params = $match['params'];
         $router= $this;
         $isAdmin = strpos($_SERVER['REQUEST_URI'], 'admin') !== false;
-        /* $layout = $isAdmin ? 'admin/layouts/default' : 'layouts/default'; */
-        /* $layout = 'layouts/default'; */
         try {
             ob_start();
             require $this->viewPath . DIRECTORY_SEPARATOR . $view . '.php';            
             $content = ob_get_clean();
             require $this->viewPath . DIRECTORY_SEPARATOR . $this->layout . '.php';
         } catch (Exception $e) {
-            /* header('Location: ' . $this->url('login') . '?forbidden=1'); */
            echo $e->getMessage();
             exit();
         }

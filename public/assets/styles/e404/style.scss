@@ -1,0 +1,19 @@
+.backHomeBtnFrom404 {
+    background: #395B64;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #395B64;
+    color: white;
+    padding: 9px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    opacity: 0.8;
+    &:hover {
+        opacity: 1;
+    }
+    .previousChevron {
+        margin-right: 5px;
+    }
+}
