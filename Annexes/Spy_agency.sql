@@ -29,8 +29,8 @@ CREATE TABLE IF NOT EXISTS AgentSpeciality (
 CREATE TABLE IF NOT EXISTS Mission (
     id_mission INTEGER(4) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     code_name VARCHAR(50) NOT NULL UNIQUE,
-    title VARCHAR(50) NOT NULL,
-    description TEXT,
+    title VARCHAR(50) NOT NULL UNIQUE,
+    description TEXT NOT NULL,
     country VARCHAR(50) NOT NULL,
     type VARCHAR(50) NOT NULL,
     status VARCHAR(50) NOT NULL,
