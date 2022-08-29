@@ -338,7 +338,7 @@ INSERT INTO MissionStash (id_mission, id_stash) VALUES (14, 14);
 INSERT INTO MissionStash (id_mission, id_stash) VALUES (15, 15);
 
 INSERT INTO Administrator (id_admin, firstname, lastname, email, password, created_at) VALUES (1, 'Mathieu', 'Bouthors', 'mathieubouthors@hotmail.com', '$2y$10$G.3vcLJlpKgXL/.ro0BvKuCR.Hcix6nAewHoaeNCPwd8ACxKcIn.2', '2022-07-15');
-INSERT INTO Administrator (id_admin, firstname, lastname, email, password, created_at) VALUES (2, 'studi', 'studi', 'studi@gmail.com', '$2y$10$RpJhW99yYHXAsVLzsxooa.J8UIgQgHQmMRGy35sztlkqSpIWCo9Ha', '2022-07-16');
+INSERT INTO Administrator (id_admin, firstname, lastname, email, password, created_at) VALUES (2, 'Studi', 'Studi', 'studi@gmail.com', '$2y$10$RpJhW99yYHXAsVLzsxooa.J8UIgQgHQmMRGy35sztlkqSpIWCo9Ha', '2022-07-16');
 INSERT INTO Administrator (id_admin, firstname, lastname, email, password, created_at) VALUES (3, 'Leena', 'Aylwin', 'laylwin2@google.cn', '$2y$10$9USMqYMT9VgyBXHXn9SomesuYUqlx/jArgcy4w0om.bLbXJmA1uOG', '2022-07-17');
 INSERT INTO Administrator (id_admin, firstname, lastname, email, password, created_at) VALUES (4, 'Hermione', 'Millard', 'hmillard3@psu.edu', '$2y$10$BGNk9getX/oJCUQodG/YuO84K.8URl/GCVwMPaJHrL3gRCI7HVTFW', '2022-07-18');
 INSERT INTO Administrator (id_admin, firstname, lastname, email, password, created_at) VALUES (5, 'Stanislaus', 'Leaburn', 'sleaburn4@fema.gov', '$2y$10$8mFSP4NkKcyWh7A8czKEJOkYnFe.qOWRFqg//vMsC60lzh5NZv/3S', '2022-07-19');

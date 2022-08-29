@@ -12,11 +12,12 @@ if ($isAdmin && !isset($_SESSION['auth'])) {
 $administrators = new AdministratorsController;
 
 if (isset($_SESSION['auth'])) {
-    $foundAdmin = $administrators->findAdministrator(isset($_SESSION['auth']));
+    $foundAdmin = $administrators->findAdministrator($_SESSION['auth']);
 }
 
 $manageJs = new ManageJs;
 $jsScripts = $manageJs->manageJs($match['name']);
+
 ?>
 
 <!DOCTYPE html>
