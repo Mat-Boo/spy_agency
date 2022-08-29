@@ -84,7 +84,7 @@ foreach(['agent', 'contact', 'target', 'stash'] as $item) {
     <div class="mission">
         <div class="headerMission">
             <div class="titleItem">
-                <span><?= $mission->getTitle() ?></span>
+                <span><?= htmlspecialchars($mission->getTitle()) ?></span>
             </div>
             <div class="statusMission" style="background:<?= $mission->getStatus()['background'] ?>">
                 <span><?= $mission->getStatus()['status'] ?></span>
@@ -94,7 +94,7 @@ foreach(['agent', 'contact', 'target', 'stash'] as $item) {
             <div class="codenameCountryType">
                 <div class="missionItem">
                     <span class="spanLabel"><b>Code Name:</b></span>
-                    <span class="spanInput"><?= $mission->getCode_name() ?></span>
+                    <span class="spanInput"><?= htmlspecialchars($mission->getCode_name()) ?></span>
                 </div>
                 <div class="missionItem">
                     <span class="spanLabel"><b>Pays: </b></span>
@@ -102,7 +102,7 @@ foreach(['agent', 'contact', 'target', 'stash'] as $item) {
                 </div>
                 <div class="missionItem">
                     <span class="spanLabel"><b>Type: </b></span>
-                    <span class="spanInput"><?= $mission->getType() ?></span>
+                    <span class="spanInput"><?= htmlspecialchars($mission->getType()) ?></span>
                 </div>
             </div>
             <div class="dates">
@@ -129,7 +129,7 @@ foreach(['agent', 'contact', 'target', 'stash'] as $item) {
                         </svg>
                         <b>Description: </b>
                     </span>
-                    <p class="pTextarea"><?= $mission->getDescription() ?></p>
+                    <p class="pTextarea"><?= htmlspecialchars($mission->getDescription()) ?></p>
                 </div>
                 <div class="InfosItems">
                     <?php foreach(['agent', 'contact', 'target'] as $person): ?>
@@ -162,7 +162,7 @@ foreach(['agent', 'contact', 'target', 'stash'] as $item) {
                                             <?php foreach($mission->{'get' . ucfirst($person) . 's'}() as ${$person . 'Mission'}): ?>
                                                 <?php if(${$person . 'Mission'}->getNationality() === $country): ?>
                                                     <li class="personItem">
-                                                        <span class="person"><?= ${$person . 'Mission'}->getFirstname() . ' ' . ${$person . 'Mission'}->getLastname() ?></span>
+                                                        <span class="person"><?= htmlspecialchars(${$person . 'Mission'}->getFirstname() . ' ' . ${$person . 'Mission'}->getLastname()) ?></span>
                                                         <div class="specialities">
                                                             <small>
                                                                 <?php if ($person === 'agent'): ?>
@@ -198,8 +198,8 @@ foreach(['agent', 'contact', 'target', 'stash'] as $item) {
                                             <?php foreach($mission->getStashs() as $stashMission): ?>
                                                 <?php if($stashMission->getCountry() === $country): ?>
                                                     <li class="stashItem">
-                                                        <span class="stashCodeAndType"><?= $stashMission->getCode_name() . ' | ' . $stashMission->getType() ?></span><br/>
-                                                        <span class="stashAddress"><?= $stashMission->getAddress() ?></span>
+                                                        <span class="stashCodeAndType"><?= htmlspecialchars($stashMission->getCode_name()) . ' | ' . htmlspecialchars($stashMission->getType()) ?></span><br/>
+                                                        <span class="stashAddress"><?= htmlspecialchars($stashMission->getAddress()) ?></span>
                                                     </li>
                                                 <?php endif ?>
                                             <?php endforeach ?>
@@ -218,7 +218,7 @@ foreach(['agent', 'contact', 'target', 'stash'] as $item) {
                         </svg>
                         <b>Spécialité :</b>
                     </span>
-                    <span class="spanInput speciality"><?= $mission->getSpeciality() ?></span>
+                    <span class="spanInput speciality"><?= htmlspecialchars($mission->getSpeciality()) ?></span>
                 </div>
             </div>
         </div>

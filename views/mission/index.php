@@ -293,7 +293,7 @@ $pages = $missionsController->filterMissions($_GET, $personsFilters, $stashsFilt
                                                     selected
                                                 <?php endif ?>
                                             <?php endif ?>
-                                        ><?= ${$person}->getLastname() . ' ' . ${$person}->getfirstname() ?></option>
+                                        ><?= htmlspecialchars(${$person}->getLastname() . ' ' . ${$person}->getfirstname()) ?></option>
                                     <?php endforeach ?>
                                 </select>
                             </div>
@@ -318,8 +318,8 @@ $pages = $missionsController->filterMissions($_GET, $personsFilters, $stashsFilt
                                         >
                                             <div>
                                                 <p><?= $stash->getCountry() . ' | ' ?></p>
-                                                <p><?= $stash->getType() . ' | ' ?></p>
-                                                <p><?= $stash->getaddress() ?></p>
+                                                <p><?= htmlspecialchars($stash->getType()) . ' | ' ?></p>
+                                                <p><?= htmlspecialchars($stash->getaddress()) ?></p>
                                             </div>
                                         </option>
                                 <?php endforeach ?>

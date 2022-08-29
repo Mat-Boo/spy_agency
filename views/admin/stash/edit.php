@@ -127,7 +127,7 @@ if (!empty($params)) {
                                 <p>Cette planque n'est affectée à aucune mission.</p>
                             <?php else: ?>
                                 <?php foreach($stash->getMissions() as $mission): ?>
-                                    <li><?= $mission->getCode_name() ?></li>
+                                    <li><?= htmlspecialchars($mission->getCode_name()) ?></li>
                                 <?php endforeach ?>
                             <?php endif ?>
                         </ul>

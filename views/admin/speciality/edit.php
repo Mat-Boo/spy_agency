@@ -125,7 +125,7 @@ if (!empty($params)) {
                             <p>Cette spécialité ne concerne aucune mission.</p>
                         <?php else: ?>
                             <?php foreach($speciality->getMissions() as $mission): ?>
-                                <li><?= $mission->getCode_name() ?></li>
+                                <li><?= htmlspecialchars($mission->getCode_name()) ?></li>
                             <?php endforeach ?>
                         <?php endif ?>
                     </ul>

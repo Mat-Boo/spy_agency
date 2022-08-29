@@ -227,7 +227,7 @@ if (!empty($params)) {
                                                                 <?php endforeach ?>
                                                             <?php endif ?>
                                                         >
-                                                            <?= ${$person}->getLastname() . ' ' . ${$person}->getfirstname() ?>
+                                                            <?= htmlspecialchars(${$person}->getLastname() . ' ' . ${$person}->getfirstname()) ?>
                                                         </option>
                                                     <?php endif ?>
                                                 <?php endforeach ?>
@@ -243,7 +243,7 @@ if (!empty($params)) {
                                         <ul>
                                             <?php foreach($agent->getSpecialities() as $speciality): ?>
                                                 <li>
-                                                    <?= $speciality->getName() ?>
+                                                    <?= htmlspecialchars($speciality->getName()) ?>
                                                 </li>
                                             <?php endforeach ?>
                                         </ul>
@@ -284,9 +284,9 @@ if (!empty($params)) {
                                                 <?php endif ?>
                                             >
                                                 <div>
-                                                    <p><?= $stash->getCode_name() . ' | ' ?></p>
-                                                    <p><?= $stash->getType() . ' | ' ?></p>
-                                                    <p><?= $stash->getAddress() ?></p>
+                                                    <p><?= htmlspecialchars($stash->getCode_name()) . ' | ' ?></p>
+                                                    <p><?= htmlspecialchars($stash->getType()) . ' | ' ?></p>
+                                                    <p><?= htmlspecialchars($stash->getAddress()) ?></p>
                                                 </div>
                                             </option>
                                         <?php endif ?>
@@ -317,7 +317,7 @@ if (!empty($params)) {
                                         selected
                                     <?php endif ?>
                                 <?php endif ?>
-                            ><?= $speciality->getName() ?></option>
+                            ><?= htmlspecialchars($speciality->getName()) ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
