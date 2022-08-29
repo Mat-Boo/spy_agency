@@ -6,7 +6,7 @@ class Pagination
 {
     public function paginationLinks(string $link, int $page): array
     {
-        if (!isset($_SERVER['QUERY_STRING']) || strlen($_SERVER['QUERY_STRING']) === 0) {
+        if (!isset($_SERVER['QUERY_STRING']) || strlen($_SERVER['QUERY_STRING']) === 0 || isset($_GET['created']) || isset($_GET['updated']) || isset($_GET['deleted'])) {
             $previousLink = $link;
             if ($page > 2) {
                 $previousLink = $link . '?page=' . ($page - 1);
