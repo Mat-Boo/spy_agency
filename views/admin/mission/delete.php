@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 use App\Controllers\MissionsPersonsController;
 use App\Controllers\MissionsStashsController;
 use App\Controllers\MissionsController;
@@ -10,11 +10,13 @@ $missionsController = new MissionsController;
 
 $codenameMission = $missionsController->findMission($params['id'])->getCode_name();
 
-foreach(['agent', 'contact', 'target'] as $personItem) {
-    $missionsPersonsController->deleteMissionPersonFromMission($params['id'], $personItem);
+if (isset($_SESSION['token'])) {
+    foreach(['agent', 'contact', 'target'] as $personItem) {
+        $missionsPersonsController->deleteMissionPersonFromMission($params['id'], $personItem);
+    }
+    $missionsStashsController->deleteMissionStashFromMission($params['id']);
+    $missionsController->deleteMission($params['id']);
+    header('Location: ' . $router->url('admin_mission') . '?deleted=' . htmlspecialchars($codenameMission) . '&token=' . $_SESSION['token']);
 }
-$missionsStashsController->deleteMissionStashFromMission($params['id']);
-$missionsController->deleteMission($params['id']);
 
-header('Location: ' . $router->url('admin_mission') . '?deleted=' . htmlspecialchars($codenameMission));
 ?>

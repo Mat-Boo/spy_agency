@@ -9,6 +9,11 @@ if ($isAdmin && !isset($_SESSION['auth'])) {
     header('Location: ' . $this->url('login') . '?forbidden=1');
 }
 
+//Vérification que s'il y a un token, il correspond bien à celui de l'administrateur connecté actuellement
+if (isset($_GET['token']) && $_GET['token'] !== $_SESSION['token']){
+    die('Token périmé');
+}
+
 $administrators = new AdministratorsController;
 
 if (isset($_SESSION['auth'])) {

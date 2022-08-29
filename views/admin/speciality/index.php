@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 $title = 'Spy Agency - Spécialités - Admin';
 $styleFolder = '../../../assets/styles/';
 $styleSubFolder = 'admin/speciality/';

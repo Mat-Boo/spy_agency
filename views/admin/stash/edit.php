@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 $title = 'Spy Agency - Planques - Admin';
 $styleFolder = '../../../assets/styles/';
 $styleSubFolder = 'admin/stash/editStash_';
@@ -28,22 +28,22 @@ if (!empty($params)) {
     $missionsStashsController->hydrateStashs($stashArray, $missionsList);
 
     //Validation des modifications et retour à la liste des planques
-    if (!empty($_POST)) {
+    if (!empty($_POST) && isset($_SESSION['token'])) {
         $errors = $stashsController->controlsRules($_POST, $stashArray[0]);
         if (empty($errors)) {
             $stashsController->updateStash($_POST, $stash->getId_stash());
-            header('location: ' . $router->url('admin_stash') . '?updated=' . htmlspecialchars($_POST['codenameStash']));
+            header('location: ' . $router->url('admin_stash') . '?updated=' . htmlspecialchars($_POST['codenameStash']) . '&token=' . $_SESSION['token']);
         } else {
             $displayErrors = implode('', $errors);
         }
     }
 } else {
     //Création de la nouvelle planque et retour à la liste des planques
-    if (!empty($_POST)) {
+    if (!empty($_POST) && isset($_SESSION['token'])) {
         $errors = $stashsController->controlsRules($_POST);
         if (empty($errors)) {
             $newIdStash = $stashsController->createStash($_POST);
-            header('location: ' . $router->url('admin_stash') . '?created=' . htmlspecialchars($_POST['codenameStash']));
+            header('location: ' . $router->url('admin_stash') . '?created=' . htmlspecialchars($_POST['codenameStash']) . '&token=' . $_SESSION['token']);
         } else {
             $displayErrors = implode('', $errors);
         }

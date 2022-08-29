@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 $title = 'Spy Agency - Planques - Admin';
 $styleFolder = '../../assets/styles/';
 $styleSubFolder = 'admin/stash/';

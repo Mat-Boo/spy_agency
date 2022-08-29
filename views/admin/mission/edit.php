@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 $title = 'Spy Agency - Missions - Admin';
 $styleFolder = '../../../assets/styles/';
 $styleSubFolder = 'admin/mission/editMission_';
@@ -48,26 +48,26 @@ if (!empty($params)) {
     
     
     //Validation des modifications et retour à la liste des missions
-    if (!empty($_POST)) {
+    if (!empty($_POST) && isset($_SESSION['token'])) {
         $errors = $missionsController->controlsRules($_POST, $personsLists, $stashsList, $specialitiesList, $missionArray[0]);
         if (empty($errors)) {
             $missionsController->updateMission($_POST, $mission->getId_mission());
             $missionsPersonsController->updateMissionsPersons($_POST, $mission->getId_mission());
             $missionsStashsController->updateMissionsStashs($_POST, $mission->getId_mission());
-            header('Location: ' . $router->url('admin_mission') . '?updated=' . htmlspecialchars($_POST['codeNameMission']));
+            header('Location: ' . $router->url('admin_mission') . '?updated=' . htmlspecialchars($_POST['codeNameMission']) . '&token=' . $_SESSION['token']);
         } else {
             $displayErrors = implode('', $errors);
         }
     }
 } else {
     //Création de la nouvelle mission et retour à la liste des missions
-    if (!empty($_POST)) {
+    if (!empty($_POST) && isset($_SESSION['token'])) {
         $errors = $missionsController->controlsRules($_POST, $personsLists, $stashsList, $specialitiesList);
         if (empty($errors)) {
             $newIdMission = $missionsController->createMission($_POST);
             $missionsPersonsController->createMissionPerson($_POST, $newIdMission);
             $missionsStashsController->createMissionStash($_POST, $newIdMission);
-            header('Location: ' . $router->url('admin_mission') . '?created=' . htmlspecialchars($_POST['codeNameMission']));
+            header('Location: ' . $router->url('admin_mission') . '?created=' . htmlspecialchars($_POST['codeNameMission']) . '&token=' . $_SESSION['token']);
         } else {
             $displayErrors = implode('', $errors);
         }

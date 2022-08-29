@@ -1,4 +1,5 @@
 <?php
+session_start();
 $personItem = substr($match['name'], 6);
 
 $title = 'Spy Agency - ' . ($personItem === 'target' ? 'Cible' : ucfirst($personItem)) . 's - Admin';

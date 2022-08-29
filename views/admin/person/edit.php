@@ -1,4 +1,5 @@
 <?php
+session_start();
 if (!empty($params)) {
     $personItem = substr($match['name'], 6, -5);
 } else {
@@ -47,14 +48,14 @@ if (!empty($params)) {
     $missionsPersonsController->hydrateMissions($missionsList, $personsLists, $personsFilters);
 
     //Validation des modifications et retour à la liste des personnes concernées
-    if (!empty($_POST)) {
+    if (!empty($_POST) && isset($_SESSION['token'])) {
         $errors = $personsController->controlsRules($_POST, $personItem, $personArray[0]);
         if (empty($errors)) {
             $personsController->updatePerson($_POST, $person->getId(), $personItem);
             if ($personItem === 'agent') {
                 $agentsSpecialitiesController->updateAgentsSpecialities($_POST, $person->getId(), $personItem);
             }
-            header('location: ' . $router->url('admin_' . $personItem) . '?updated=' . htmlspecialchars($_POST['codenamePerson']));
+            header('location: ' . $router->url('admin_' . $personItem) . '?updated=' . htmlspecialchars($_POST['codenamePerson']) . '&token=' . $_SESSION['token']);
         } else {
             $displayErrors = implode('', $errors);
         }
@@ -68,14 +69,14 @@ if (!empty($params)) {
     }
 } else {
     //Création de la nouvelle personne et retour à la liste des personnes concernées
-    if (!empty($_POST)) {
+    if (!empty($_POST) && isset($_SESSION['token'])) {
         $errors = $personsController->controlsRules($_POST, $personItem);
         if (empty($errors)) {
             $newIdPerson = $personsController->createPerson($_POST, $personItem);
             if ($personItem === 'agent') {
                 $agentsSpecialitiesController->createAgentSpeciality($_POST, $newIdPerson);
             }
-            header('location: ' . $router->url('admin_' . $personItem) . '?created=' . htmlspecialchars($_POST['codenamePerson']));
+            header('location: ' . $router->url('admin_' . $personItem) . '?created=' . htmlspecialchars($_POST['codenamePerson']) . '&token=' . $_SESSION['token']);
         } else {
             $displayErrors = implode('', $errors);
         }

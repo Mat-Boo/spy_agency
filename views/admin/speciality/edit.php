@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 $title = 'Spy Agency - Spécialités - Admin';
 $styleFolder = '../../../assets/styles/';
 $styleSubFolder = 'admin/speciality/editSpeciality_';
@@ -29,22 +29,22 @@ if (!empty($params)) {
     $missionsController->hydrateSpecialities($specialityArray);
     
     //Validation des modifications et retour à la liste des spécialités
-    if (!empty($_POST)) {
+    if (!empty($_POST) && isset($_SESSION['token'])) {
         $errors = $specialitiesController->controlsRules($_POST);
         if (empty($errors)) {
             $specialitiesController->updateSpeciality($_POST, $speciality->getId_speciality());
-            header('location: ' . $router->url('admin_speciality') . '?updated=' . htmlspecialchars($_POST['nameSpeciality']));
+            header('location: ' . $router->url('admin_speciality') . '?updated=' . htmlspecialchars($_POST['nameSpeciality']) . '&token=' . $_SESSION['token']);
         } else {
             $displayErrors = implode('', $errors);
         }
     }
 } else {
     //Création de la nouvelle spécialité et retour à la liste des spécialités
-    if (!empty($_POST)) {
+    if (!empty($_POST) && isset($_SESSION['token'])) {
         $errors = $specialitiesController->controlsRules($_POST);
         if (empty($errors)) {
             $newIdSpeciality = $specialitiesController->createSpeciality($_POST);
-            header('location: ' . $router->url('admin_speciality') . '?created=' . htmlspecialchars($_POST['nameSpeciality']));
+            header('location: ' . $router->url('admin_speciality') . '?created=' . htmlspecialchars($_POST['nameSpeciality']) . '&token=' . $_SESSION['token']);
         } else {
             $displayErrors = implode('', $errors);
         }

@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 $title = $isAdmin ? 'Spy Agency - Missions - Admin' : 'Spy Agency - Missions';
 $styleFolder = $isAdmin ? '../../../assets/styles/': 'assets/styles/';
 $styleSubFolder = 'mission/';

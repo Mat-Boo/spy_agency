@@ -17,6 +17,7 @@ class AdministratorsController
             if (password_verify($loginOptions['password'], $foundAdmin->getPassword()) === true) {
                 session_start();
                 $_SESSION['auth'] = $foundAdmin->getId_admin();
+                $_SESSION['token'] = md5(time() * rand(352,785));
                 $found = true;
             } else {
                 $found = false;
