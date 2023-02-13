@@ -16,7 +16,7 @@ class MissionsStashs
 
     public function getMissionsStashsList(): array
     {
-        $sql = "SELECT * FROM MissionStash";
+        $sql = "SELECT * FROM missionstash";
 
         $missionsStashs = $this->pdo->query($sql, PDO::FETCH_CLASS, MissionStash::class)->fetchAll();
         return $missionsStashs;
@@ -43,9 +43,9 @@ class MissionsStashs
     public function filterStashs(array $filterOptions): array
     {              
         if (isset($filterOptions['stashFilter'])) {
-            $sql = "SELECT id_mission FROM MissionStash WHERE id_stash IN (" . implode(",", $filterOptions['stashFilter']) . ")";
+            $sql = "SELECT id_mission FROM missionstash WHERE id_stash IN (" . implode(",", $filterOptions['stashFilter']) . ")";
         } else {
-            $sql = "SELECT id_mission FROM MissionStash";
+            $sql = "SELECT id_mission FROM missionstash";
         }
 
         $missionIdsFromStashs = $this->pdo->query($sql, PDO::FETCH_COLUMN, 0)->fetchAll();
@@ -58,10 +58,10 @@ class MissionsStashs
 
     public function updateMissionsStashs(array $mission, int $id_mission)
     {
-        $this->pdo->exec("DELETE FROM MissionStash WHERE id_mission = " . $id_mission);
+        $this->pdo->exec("DELETE FROM missionstash WHERE id_mission = " . $id_mission);
 
         $query = $this->pdo->prepare(
-            "INSERT INTO Missionstash SET 
+            "INSERT INTO missionstash SET 
             id_mission = :id_mission,
             id_stash = :id_stash
         ");
@@ -118,7 +118,7 @@ class MissionsStashs
     public function deleteMissionStashFromStash(int $id_stash): void
     {
         $query = $this->pdo->prepare(
-            "DELETE FROM MissionStash 
+            "DELETE FROM missionstash 
             WHERE id_stash = :id_stash");
         $deleteMissionStash = $query->execute(['id_stash' => $id_stash]);
         if ($deleteMissionStash === false) {
@@ -129,7 +129,7 @@ class MissionsStashs
     public function deleteMissionStashFromMission(int $id_mission): void
     {
         $query = $this->pdo->prepare(
-            "DELETE FROM MissionStash 
+            "DELETE FROM missionstash 
             WHERE id_mission = :id_mission");
         $deleteMissionStash = $query->execute(['id_mission' => $id_mission]);
         if ($deleteMissionStash === false) {
@@ -140,7 +140,7 @@ class MissionsStashs
     public function createMissionStash(array $newMissionStash, int $newId_mission): void
     {
         $query = $this->pdo->prepare(
-            "INSERT INTO MissionStash SET 
+            "INSERT INTO missionstash SET 
             id_mission = :id_mission,
             id_stash = :id_stash
         ");

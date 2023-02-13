@@ -17,7 +17,7 @@ class Stashs
 
     public function getStashsList(string $sortBy): array
     {
-        $sql = 'SELECT * FROM Stash ORDER BY ' . $sortBy;
+        $sql = 'SELECT * FROM stash ORDER BY ' . $sortBy;
 
         $stashs = $this->pdo->query($sql, PDO::FETCH_CLASS, Stash::class)->fetchAll();
 
@@ -36,7 +36,7 @@ class Stashs
         $sqlCount = 'SELECT COUNT(id_stash) FROM Stash';
 
 
-        $sql = "SELECT * FROM Stash";
+        $sql = "SELECT * FROM stash";
 
         if (count($filterConditions) > 0) {
             $sql .= " WHERE " . $filterConditions[0];
@@ -69,7 +69,7 @@ class Stashs
     {
         $query = $this->pdo->prepare(
             "SELECT *
-            FROM Stash
+            FROM stash
             WHERE id_stash = :id_stash");
         $query->execute(['id_stash' => $idStash]);
         $foundStash = $query->fetchObject(Stash::class);
@@ -82,7 +82,7 @@ class Stashs
     public function updateStash(array $stash, int $id_stash): void
     {
         $query = $this->pdo->prepare(
-            "UPDATE Stash SET 
+            "UPDATE stash SET 
             code_name = :code_name,
             address = :address,
             country = :country,
@@ -106,7 +106,7 @@ class Stashs
     public function deleteStash(int $id_stash): void
     {
         $query = $this->pdo->prepare(
-            "DELETE FROM Stash 
+            "DELETE FROM stash 
             WHERE id_stash = :id_stash");
         $deleteStash = $query->execute(['id_stash' => $id_stash]);
         if ($deleteStash === false) {
@@ -117,7 +117,7 @@ class Stashs
     public function createStash(array $newStash): int
     {
         $query = $this->pdo->prepare(
-            "INSERT INTO Stash SET 
+            "INSERT INTO stash SET 
             code_name = :code_name,
             address = :address,
             country = :country,

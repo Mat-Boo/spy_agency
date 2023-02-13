@@ -18,7 +18,7 @@ class Administrators
     public function login(array $loginOptions)
     {
         $query = $this->pdo->prepare(
-            "SELECT * FROM Administrator
+            "SELECT * FROM administrator
             WHERE email = :email"
         );
         $query->execute(
@@ -35,7 +35,7 @@ class Administrators
     {
         $query = $this->pdo->prepare(
             "SELECT *
-            FROM Administrator
+            FROM administrator
             WHERE id_admin = :id_admin");
         $query->execute(['id_admin' => $idAdministrator]);
         $foundAdmin = $query->fetchObject(Administrator::class);

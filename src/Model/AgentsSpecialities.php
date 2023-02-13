@@ -16,7 +16,7 @@ class AgentsSpecialities
 
     public function getAgentsSpecialitiesList(): array
     {
-        $sql = "SELECT id, id_speciality FROM AgentSpeciality";
+        $sql = "SELECT id, id_speciality FROM agentspeciality";
 
         $agentsSpecialities = $this->pdo->query($sql, PDO::FETCH_CLASS, AgentSpeciality::class)->fetchAll();
         
@@ -43,9 +43,9 @@ class AgentsSpecialities
     public function filterSpecialities(array $filterOptions): array
     {
         if (isset($filterOptions['specialitiesPersonFilter'])) {
-            $sql = "SELECT id FROM AgentSpeciality WHERE id_speciality IN (" . implode(",", $filterOptions['specialitiesPersonFilter']) . ")";
+            $sql = "SELECT id FROM agentspeciality WHERE id_speciality IN (" . implode(",", $filterOptions['specialitiesPersonFilter']) . ")";
         } else {
-            $sql = "SELECT id FROM AgentSpeciality";
+            $sql = "SELECT id FROM agentspeciality";
         }
 
         $agentIdsFromSpecialities = $this->pdo->query($sql, PDO::FETCH_COLUMN, 0)->fetchAll();
@@ -59,10 +59,10 @@ class AgentsSpecialities
 
     public function updateAgentsSpecialities($agent, $id_agent)
     {
-        $this->pdo->exec("DELETE FROM AgentSpeciality WHERE id = " . $id_agent);
+        $this->pdo->exec("DELETE FROM agentspeciality WHERE id = " . $id_agent);
 
         $query = $this->pdo->prepare(
-            "INSERT INTO AgentSpeciality SET 
+            "INSERT INTO agentspeciality SET 
             id = :id,
             id_speciality = :id_speciality
         ");
@@ -84,9 +84,9 @@ class AgentsSpecialities
     public function filterAgents(array $filterOptions): array
     {
         if (isset($filterOptions['agentsFilter'])) {
-            $sql = "SELECT id_speciality FROM AgentSpeciality WHERE id IN (" . implode(",", $filterOptions['agentsFilter']) . ")";
+            $sql = "SELECT id_speciality FROM agentspeciality WHERE id IN (" . implode(",", $filterOptions['agentsFilter']) . ")";
         } else {
-            $sql = "SELECT id_speciality FROM AgentSpeciality";
+            $sql = "SELECT id_speciality FROM agentspeciality";
         }
 
         $specialityIdsFromAgents = $this->pdo->query($sql, PDO::FETCH_COLUMN, 0)->fetchAll();
@@ -114,7 +114,7 @@ class AgentsSpecialities
     public function deleteAgentSpecialityFromSpeciality($id_speciality): void
     {
         $query = $this->pdo->prepare(
-            "DELETE FROM AgentSpeciality 
+            "DELETE FROM agentspeciality 
             WHERE id_speciality = :id_speciality");
         $deleteAgentSpeciality = $query->execute(['id_speciality' => $id_speciality]);
         if ($deleteAgentSpeciality === false) {
@@ -125,7 +125,7 @@ class AgentsSpecialities
     public function deleteAgentSpecialityFromAgent($id_agent): void
     {
         $query = $this->pdo->prepare(
-            "DELETE FROM AgentSpeciality 
+            "DELETE FROM agentspeciality 
             WHERE id = :id_agent");
         $deleteAgentSpeciality = $query->execute(['id_agent' => $id_agent]);
         if ($deleteAgentSpeciality === false) {
@@ -136,7 +136,7 @@ class AgentsSpecialities
     public function createAgentSpeciality(array $newAgent, int $id): void
     {
         $query = $this->pdo->prepare(
-            "INSERT INTO AgentSpeciality SET 
+            "INSERT INTO agentspeciality SET 
             id = :id,
             id_speciality = :id_speciality
         ");

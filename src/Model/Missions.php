@@ -39,9 +39,9 @@ class Missions
         $sqlCount = 'SELECT COUNT(id_mission) FROM Mission';
 
 
-        $sql = "SELECT *, Speciality.name AS speciality
-        FROM Mission
-        INNER JOIN Speciality ON Mission.id_speciality = Speciality.id_speciality";
+        $sql = "SELECT *, speciality.name AS speciality
+        FROM mission
+        INNER JOIN speciality ON mission.id_speciality = speciality.id_speciality";
 
         if (count($filterConditions) > 0) {
             $sql .= " WHERE " . $filterConditions[0];
@@ -73,9 +73,9 @@ class Missions
     public function findMission(int $idMission): Mission
     {
         $query = $this->pdo->prepare(
-            'SELECT *, Speciality.name AS speciality
-            FROM Mission
-            INNER JOIN Speciality ON Mission.id_speciality = Speciality.id_speciality
+            'SELECT *, speciality.name AS speciality
+            FROM mission
+            INNER JOIN speciality ON mission.id_speciality = speciality.id_speciality
             WHERE id_mission = :id_mission');
         $query->execute(['id_mission' => $idMission]);
         $foundMission = $query->fetchObject(Mission::class);
@@ -88,7 +88,7 @@ class Missions
     public function updateMission(array $mission, int $id_mission): void
     {
         $query = $this->pdo->prepare(
-            "UPDATE Mission SET 
+            "UPDATE mission SET 
             code_name = :code_name,
             title = :title,
             description = :description,
@@ -123,7 +123,7 @@ class Missions
     {
         $missionFilter = isset($filterOptions['missionsFilter']) ? " WHERE id_mission IN (" . implode(",", $filterOptions['missionsFilter']) . ")" : '';
 
-        $sql = "SELECT id_speciality FROM Mission" . $missionFilter;
+        $sql = "SELECT id_speciality FROM mission" . $missionFilter;
         $specialityIdsFromMissions = $this->pdo->query($sql, PDO::FETCH_COLUMN, 0)->fetchAll();
 
         return $specialityIdsFromMissions;
@@ -145,7 +145,7 @@ class Missions
     public function deleteMission(int $id_mission): void
     {
         $query = $this->pdo->prepare(
-            "DELETE FROM Mission
+            "DELETE FROM mission
             WHERE id_mission = :id_mission");
         $deleteMission = $query->execute(['id_mission' => $id_mission]);
         if ($deleteMission === false) {
@@ -156,7 +156,7 @@ class Missions
     public function createMission(array $newMission)
     {
         $query = $this->pdo->prepare(
-            "INSERT INTO Mission SET 
+            "INSERT INTO mission SET 
             code_name = :code_name,
             title = :title,
             description = :description,

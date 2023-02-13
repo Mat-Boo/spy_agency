@@ -18,7 +18,7 @@ class MissionsPersons
 
     public function getMissionsPersonsLists(): array
     {
-        $sql = "SELECT * FROM Mission" . $this->personItem;
+        $sql = "SELECT * FROM mission" . $this->personItem;
 
         $missionsPersons = $this->pdo->query($sql, PDO::FETCH_CLASS, MissionPerson::class)->fetchAll();
 
@@ -62,9 +62,9 @@ class MissionsPersons
     public function filterPersons(array $filterOptions): array
     {
         if (isset($filterOptions[$this->personItem . 'Filter'])) {
-            $sql = "SELECT id_mission FROM Mission" . $this->personItem . " WHERE id IN (" . implode(",", $filterOptions[$this->personItem . 'Filter']) . ")";
+            $sql = "SELECT id_mission FROM mission" . $this->personItem . " WHERE id IN (" . implode(",", $filterOptions[$this->personItem . 'Filter']) . ")";
         } else {
-            $sql = "SELECT id_mission FROM Mission" . $this->personItem;
+            $sql = "SELECT id_mission FROM mission" . $this->personItem;
         }
        
         ${'missionIdsFrom' . $this->personItem . 's'} = $this->pdo->query($sql, PDO::FETCH_COLUMN, 0)->fetchAll();
@@ -79,9 +79,9 @@ class MissionsPersons
     public function filterMissions(array $filterOptions): array
     {       
         if (isset($filterOptions['missionsFilter'])) {
-            $sql = "SELECT id FROM Mission" . ucfirst($this->personItem) . " WHERE id_mission IN (" . implode(",", $filterOptions['missionsFilter']) . ")";
+            $sql = "SELECT id FROM mission" . ucfirst($this->personItem) . " WHERE id_mission IN (" . implode(",", $filterOptions['missionsFilter']) . ")";
         } else {
-            $sql = "SELECT id FROM Mission" . ucfirst($this->personItem);
+            $sql = "SELECT id FROM mission" . ucfirst($this->personItem);
         }
 
         $personIdsFromMissions = $this->pdo->query($sql, PDO::FETCH_COLUMN, 0)->fetchAll();
@@ -91,10 +91,10 @@ class MissionsPersons
 
     public function updateMissionsPersons(array $mission, int $id_mission)
     {
-            $this->pdo->exec("DELETE FROM Mission" . ucfirst($this->personItem) . " WHERE id_mission = " . $id_mission);
+            $this->pdo->exec("DELETE FROM mission" . ucfirst($this->personItem) . " WHERE id_mission = " . $id_mission);
     
             $query = $this->pdo->prepare(
-                "INSERT INTO Mission" . ucfirst($this->personItem) . " SET 
+                "INSERT INTO mission" . ucfirst($this->personItem) . " SET 
                 id_mission = :id_mission,
                 id = :id
             ");
@@ -115,7 +115,7 @@ class MissionsPersons
      public function deleteMissionPersonFromPerson($id): void
      {
         $query = $this->pdo->prepare(
-            "DELETE FROM Mission" . ucfirst($this->personItem) .
+            "DELETE FROM mission" . ucfirst($this->personItem) .
             " WHERE id = :id");
         $deleteMissionAgent = $query->execute(['id' => $id]);
         if ($deleteMissionAgent === false) {
@@ -126,7 +126,7 @@ class MissionsPersons
      public function deleteMissionPersonFromMission($id_mission): void
      {
         $query = $this->pdo->prepare(
-            "DELETE FROM Mission" . ucfirst($this->personItem) .
+            "DELETE FROM mission" . ucfirst($this->personItem) .
             " WHERE id_mission = :id_mission");
         $deleteMissionAgent = $query->execute(['id_mission' => $id_mission]);
         if ($deleteMissionAgent === false) {
@@ -137,7 +137,7 @@ class MissionsPersons
      public function createMissionPerson(array $newMissionPerson, int $newId_mission): void
     {
         $query = $this->pdo->prepare(
-            "INSERT INTO Mission" . ucfirst($this->personItem) . " SET 
+            "INSERT INTO mission" . ucfirst($this->personItem) . " SET 
             id_mission = :id_mission,
             id = :id
         ");

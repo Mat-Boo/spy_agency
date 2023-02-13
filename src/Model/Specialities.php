@@ -17,7 +17,7 @@ class Specialities
 
     public function getSpecialitiesList($sortBy)
     {
-        $sql = "SELECT * FROM Speciality ORDER BY " . $sortBy;
+        $sql = "SELECT * FROM speciality ORDER BY " . $sortBy;
         $specialities = $this->pdo->query($sql, PDO::FETCH_CLASS, Speciality::class)->fetchAll();
 
         return $specialities;
@@ -32,10 +32,10 @@ class Specialities
             throw new Exception('Numéro de page invalide');
         }
         $offset = $perPage * ($currentPage - 1);
-        $sqlCount = 'SELECT COUNT(id_speciality) FROM Speciality';
+        $sqlCount = 'SELECT COUNT(id_speciality) FROM speciality';
 
 
-        $sql = "SELECT * FROM Speciality";
+        $sql = "SELECT * FROM speciality";
 
         if (count($filterConditions) > 0) {
             $sql .= " WHERE " . $filterConditions[0];
@@ -67,7 +67,7 @@ class Specialities
     {
         $query = $this->pdo->prepare(
             "SELECT *
-            FROM Speciality
+            FROM speciality
             WHERE id_speciality = :id_speciality");
         $query->execute(['id_speciality' => $idSpeciality]);
         $foundSpeciality = $query->fetchObject(Speciality::class);
@@ -80,7 +80,7 @@ class Specialities
     public function updateSpeciality(array $speciality, int $id_speciality): void
     {
         $query = $this->pdo->prepare(
-            "UPDATE Speciality SET 
+            "UPDATE speciality SET 
             id_speciality = :id_speciality,
             name = :name
             WHERE id_speciality = :id_speciality
@@ -99,7 +99,7 @@ class Specialities
     public function deleteSpeciality(int $id_speciality): void
     {
         $query = $this->pdo->prepare(
-            "DELETE FROM Speciality 
+            "DELETE FROM speciality 
             WHERE id_speciality = :id_speciality");
         $deleteSpeciality = $query->execute(['id_speciality' => $id_speciality]);
         if ($deleteSpeciality === false) {
@@ -110,7 +110,7 @@ class Specialities
     public function createSpeciality(array $newSpeciality): int
     {
         $query = $this->pdo->prepare(
-            "INSERT INTO Speciality SET 
+            "INSERT INTO speciality SET 
             id_speciality = :id_speciality,
             name = :name
         ");
