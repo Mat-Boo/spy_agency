@@ -17,9 +17,9 @@ class Missions
 
     public function getMissionsList(): array
     {
-        $sql = 'SELECT *, Speciality.name AS speciality
-        FROM Mission
-        INNER JOIN Speciality ON Mission.id_speciality = Speciality.id_speciality
+        $sql = 'SELECT *, speciality.name AS speciality
+        FROM mission
+        INNER JOIN speciality ON mission.id_speciality = speciality.id_speciality
         ORDER BY start_date, title';
 
        $missions = $this->pdo->query($sql, PDO::FETCH_CLASS, Mission::class)->fetchAll();
