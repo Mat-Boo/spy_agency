@@ -19,7 +19,7 @@ class Persons
 
     public function getPersonsList($sortBy)
     {
-        $sql = "SELECT * FROM " . strtolower($this->personItem) . " ORDER BY " . $sortBy;
+        $sql = "SELECT * FROM " . $this->personItem . " ORDER BY " . $sortBy;
 
         ${$this->personItem . 's'} = $this->pdo->query($sql, PDO::FETCH_CLASS, Person::class)->fetchAll();
         
@@ -35,10 +35,10 @@ class Persons
             throw new Exception('Numéro de page invalide');
         }
         $offset = $perPage * ($currentPage - 1);
-        $sqlCount = 'SELECT COUNT(id) FROM ' . strtoupper($this->personItem);
+        $sqlCount = 'SELECT COUNT(id) FROM ' . $this->personItem;
 
 
-        $sql = "SELECT * FROM " . strtoupper($this->personItem);
+        $sql = "SELECT * FROM " . $this->personItem;
 
         if (count($filterConditions) > 0) {
             $sql .= " WHERE " . $filterConditions[0];
@@ -70,7 +70,7 @@ class Persons
     {
         $query = $this->pdo->prepare(
             "SELECT *
-            FROM " . strtolower($this->personItem) . "
+            FROM " . $this->personItem . "
             WHERE id = :id");
         $query->execute(['id' => $idPerson]);
         $foundPerson = $query->fetchObject(Person::class);
@@ -83,7 +83,7 @@ class Persons
     public function updatePerson(array $person, int $id_person): void
     {
         $query = $this->pdo->prepare(
-            "UPDATE " . strtolower($this->personItem) . " SET 
+            "UPDATE " . $this->personItem . " SET 
             code_name = :code_name,
             firstname = :firstname,
             lastname = :lastname,
@@ -106,18 +106,18 @@ class Persons
     public function deletePerson(int $id): void
     {
         $query = $this->pdo->prepare(
-            "DELETE FROM " . strtolower($this->personItem) . "
+            "DELETE FROM " . $this->personItem . "
             WHERE id = :id");
         $deletePerson = $query->execute(['id' => $id]);
         if ($deletePerson === false) {
-            throw new Exception("Impossible de supprimer l'enregistrement $id dans la table '" . strtolower($this->personItem) . "'");
+            throw new Exception("Impossible de supprimer l'enregistrement $id dans la table '" . $this->personItem . "'");
         }
     }
 
     public function createPerson(array $newPerson): int
     {
         $query = $this->pdo->prepare(
-            "INSERT INTO " . strtolower($this->personItem) . " SET 
+            "INSERT INTO " . $this->personItem . " SET 
             code_name = :code_name,
             firstname = :firstname,
             lastname = :lastname,
@@ -134,7 +134,7 @@ class Persons
             ]
         );
         if ($createPerson === false) {
-            throw new Exception("Impossible de créer le nouvel enregistrement {$newPerson['idPerson']} dans la table '" . strtolower($this->personItem) . "'");
+            throw new Exception("Impossible de créer le nouvel enregistrement {$newPerson['idPerson']} dans la table '" . $this->personItem . "'");
         }
         return $this->pdo->lastInsertId();
     }
