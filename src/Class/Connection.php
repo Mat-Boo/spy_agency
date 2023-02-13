@@ -13,7 +13,7 @@ class Connection
         $dotenv->load();
 
         if ($_ENV['APP_ENV'] === 'prod') {
-            $url = parse_url($_ENV["CLEARDB_DATABASE_URL"]);
+            $url = parse_url($_ENV["PROD_DATABASE_URL"]);
         } elseif ($_ENV['APP_ENV'] === 'dev') {
             $url = parse_url($_ENV["LOCAL_DATABASE_URL"]);
         }

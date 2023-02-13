@@ -296,7 +296,7 @@ INSERT INTO MissionTarget (id_mission, id) VALUES (15, 18);
 
 INSERT INTO Stash (id_stash, code_name, address, country, type) VALUES (1, '1', '8 Vahlen Pass, Paris', 'France', 'Maison');
 INSERT INTO Stash (id_stash, code_name, address, country, type) VALUES (2, '2', '36 Myrtle Park, Lima', 'Pérou', 'Cave');
-INSERT INTO Stash (id_stash, code_name, address, country, type) VALUES (3, '3', '231 Butternut Street, Londres', 'Angleterre', 'Cave');
+INSERT INTO Stash (id_stash, code_name, address, country, type) VALUES (3, '3', '231 Butternut Street, Londres', 'Royaume-Uni', 'Cave');
 INSERT INTO Stash (id_stash, code_name, address, country, type) VALUES (4, '4', '4 Rowland Center, Moscou', 'Russie', 'Camion');
 INSERT INTO Stash (id_stash, code_name, address, country, type) VALUES (5, '5', '23 Amoth Point, Pékin', 'Chine', 'Cave');
 INSERT INTO Stash (id_stash, code_name, address, country, type) VALUES (6, '6', '441 Bellgrove Place, Tokyo', 'Japon', 'Appartement');
