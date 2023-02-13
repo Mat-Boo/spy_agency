@@ -87,7 +87,7 @@ class MissionsStashs
 
             $stmt = $this->pdo->query(
                 "SELECT id_stash
-                FROM MissionStash"
+                FROM missionstash"
                 . $MissionFilter
             );
             $stashIdsFromMissions = [];

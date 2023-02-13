@@ -36,7 +36,7 @@ class Missions
             throw new Exception('Numéro de page invalide');
         }
         $offset = $perPage * ($currentPage - 1);
-        $sqlCount = 'SELECT COUNT(id_mission) FROM Mission';
+        $sqlCount = 'SELECT COUNT(id_mission) FROM mission';
 
 
         $sql = "SELECT *, speciality.name AS speciality

@@ -33,7 +33,7 @@ class Stashs
             throw new Exception('Numéro de page invalide');
         }
         $offset = $perPage * ($currentPage - 1);
-        $sqlCount = 'SELECT COUNT(id_stash) FROM Stash';
+        $sqlCount = 'SELECT COUNT(id_stash) FROM stash';
 
 
         $sql = "SELECT * FROM stash";

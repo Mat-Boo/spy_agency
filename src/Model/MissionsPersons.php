@@ -79,9 +79,9 @@ class MissionsPersons
     public function filterMissions(array $filterOptions): array
     {       
         if (isset($filterOptions['missionsFilter'])) {
-            $sql = "SELECT id FROM mission" . ucfirst($this->personItem) . " WHERE id_mission IN (" . implode(",", $filterOptions['missionsFilter']) . ")";
+            $sql = "SELECT id FROM mission" . $this->personItem . " WHERE id_mission IN (" . implode(",", $filterOptions['missionsFilter']) . ")";
         } else {
-            $sql = "SELECT id FROM mission" . ucfirst($this->personItem);
+            $sql = "SELECT id FROM mission" . $this->personItem;
         }
 
         $personIdsFromMissions = $this->pdo->query($sql, PDO::FETCH_COLUMN, 0)->fetchAll();
@@ -91,10 +91,10 @@ class MissionsPersons
 
     public function updateMissionsPersons(array $mission, int $id_mission)
     {
-            $this->pdo->exec("DELETE FROM mission" . ucfirst($this->personItem) . " WHERE id_mission = " . $id_mission);
+            $this->pdo->exec("DELETE FROM mission" . $this->personItem . " WHERE id_mission = " . $id_mission);
     
             $query = $this->pdo->prepare(
-                "INSERT INTO mission" . ucfirst($this->personItem) . " SET 
+                "INSERT INTO mission" . $this->personItem . " SET 
                 id_mission = :id_mission,
                 id = :id
             ");
@@ -107,7 +107,7 @@ class MissionsPersons
                     ]
                 );
                 if ('updateMission' . $this->personItem === false) {
-                    throw new Exception("Impossible de modifier l'enregistrement {$id_mission} dans la table 'Mission" . ucfirst($this->personItem) . "'");
+                    throw new Exception("Impossible de modifier l'enregistrement {$id_mission} dans la table 'Mission" . $this->personItem . "'");
                 }
             }
     }
@@ -115,7 +115,7 @@ class MissionsPersons
      public function deleteMissionPersonFromPerson($id): void
      {
         $query = $this->pdo->prepare(
-            "DELETE FROM mission" . ucfirst($this->personItem) .
+            "DELETE FROM mission" . $this->personItem .
             " WHERE id = :id");
         $deleteMissionAgent = $query->execute(['id' => $id]);
         if ($deleteMissionAgent === false) {
@@ -126,7 +126,7 @@ class MissionsPersons
      public function deleteMissionPersonFromMission($id_mission): void
      {
         $query = $this->pdo->prepare(
-            "DELETE FROM mission" . ucfirst($this->personItem) .
+            "DELETE FROM mission" . $this->personItem .
             " WHERE id_mission = :id_mission");
         $deleteMissionAgent = $query->execute(['id_mission' => $id_mission]);
         if ($deleteMissionAgent === false) {
@@ -137,7 +137,7 @@ class MissionsPersons
      public function createMissionPerson(array $newMissionPerson, int $newId_mission): void
     {
         $query = $this->pdo->prepare(
-            "INSERT INTO mission" . ucfirst($this->personItem) . " SET 
+            "INSERT INTO mission" . $this->personItem . " SET 
             id_mission = :id_mission,
             id = :id
         ");
